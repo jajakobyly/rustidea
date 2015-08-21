@@ -21,15 +21,11 @@ import javax.swing.Icon
 import com.intellij.openapi.fileTypes.LanguageFileType
 
 object RustFileType extends LanguageFileType(RustLanguage) {
-  final val DEFAULT_EXTENSION = "rs"
+  override def getName: String = "Rust"
 
-  override def getName: String =
-    RustBundle.message("rust.file.type.name")
+  override def getDescription: String = "Rust"
 
-  override def getDescription: String =
-    RustBundle.message("rust.file.type.description")
-
-  override def getDefaultExtension: String = DEFAULT_EXTENSION
+  override def getDefaultExtension: String = "rs"
 
   override def getIcon: Icon = RustIcons.FILE
 }
