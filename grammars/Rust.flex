@@ -133,11 +133,11 @@ IDENTIFIER   = {XID_START} {XID_CONTINUE}*
 //=== https://doc.rust-lang.org/nightly/reference.html#literals
 
 // Notice that there is no forward slash at the beginning
-BYTE_ESCAPE    = [nrt\\] | "x" [a-fA-F0-9]{1,2}
+BYTE_ESCAPE    = [nrt\\0'\"] | "x" [a-fA-F0-9]{2} // \" \' \0 are undocumented
 UNICODE_ESCAPE = "u{" [a-fA-F0-9]{1,6} "}"
 
-CHAR_LIT = "'" ( [^\t\r\n'] | ( "\\" ( "'" | {BYTE_ESCAPE} | {UNICODE_ESCAPE} ) ) ) "'"
-BYTE_LIT = "b'" ( [\x00-\x08\x0B\x0C\x0E-\x21\x23-\x7F] | ( "\\" ( "'" | {BYTE_ESCAPE} ) ) ) "'"
+CHAR_LIT = "'" ( [^\t\r\n'] | ( "\\" ( {BYTE_ESCAPE} | {UNICODE_ESCAPE} ) ) ) "'"
+BYTE_LIT = "b'" ( [\x00-\x08\x0B\x0C\x0E-\x21\x23-\x7F] | ( "\\" {BYTE_ESCAPE} ) ) "'"
 
 INT_SUFFIX   = [ui]("8"|"16"|"32"|"64"|"size")
 FLOAT_SUFFIX = "f"("32"|"64")
@@ -284,6 +284,8 @@ FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
 
     //=== Character & string literals
     //=== https://doc.rust-lang.org/nightly/reference.html#characters-and-strings
+    //=== with little exception: \0 \' and \" are valid escapes in rustc lexer
+    //    (they are covered by BYTE_ESCAPE macro)
     // TODO Highlight escapes in char & byte literals
     {BYTE_LIT} { return BYTE_LIT; }
     {CHAR_LIT} { return CHAR_LIT; }
@@ -357,8 +359,8 @@ FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
 
 
 <IN_STR_LIT> {
-    "\\" ("\"" | {BYTE_ESCAPE} | {UNICODE_ESCAPE} | {EOL}) { return STR_LIT_ESCAPE; }
-    [^\"]                                                  { return STR_LIT_TOKEN; }
+    "\\" ( {BYTE_ESCAPE} | {UNICODE_ESCAPE} | {EOL} ) { return STR_LIT_ESCAPE; }
+    [^\"]                                             { return STR_LIT_TOKEN; }
 
     "\""    { yybegin(YYINITIAL); return STR_LIT_END; }
     <<EOF>> { yybegin(YYINITIAL); return BAD_CHARACTER; }
@@ -367,7 +369,7 @@ FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
 
 
 <IN_BYTE_STR_LIT> {
-    "\\" ("\"" | {BYTE_ESCAPE} | {EOL})   { return BYTE_STR_LIT_ESCAPE; }
+    "\\" ( {BYTE_ESCAPE} | {EOL} )        { return BYTE_STR_LIT_ESCAPE; }
     // ASCII excluding \t \n \r "
     [\x00-\x08\x0B\x0C\x0E-\x21\x23-\x7F] { return BYTE_STR_LIT_TOKEN; }
 
