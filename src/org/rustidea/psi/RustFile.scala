@@ -14,10 +14,8 @@
  * limitations under the License.
  */
 
-package org.rustidea.parser
+package org.rustidea.psi
 
-import com.intellij.lang.parser.GeneratedParserUtilBase
+import com.intellij.psi.PsiFile
 
-class RustParserUtil extends GeneratedParserUtilBase
-
-object RustParserUtil
+trait RustFile extends PsiFile

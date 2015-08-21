@@ -14,10 +14,18 @@
  * limitations under the License.
  */
 
-package org.rustidea.parser
+package org.rustidea.psi.impl
 
-import com.intellij.lang.parser.GeneratedParserUtilBase
+import com.intellij.extapi.psi.PsiFileBase
+import com.intellij.openapi.fileTypes.FileType
+import com.intellij.psi.FileViewProvider
+import org.rustidea.psi.RustFile
+import org.rustidea.{RustFileType, RustLanguage}
 
-class RustParserUtil extends GeneratedParserUtilBase
+class RustFileImpl(fileViewProvider: FileViewProvider)
+  extends PsiFileBase(fileViewProvider, RustLanguage)
+  with RustFile {
+  override def getFileType: FileType = RustFileType
 
-object RustParserUtil
+  override def toString: String = "Rust File"
+}
