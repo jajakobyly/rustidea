@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Grammar-Kit (for Unix platforms)" type="JarApplication" factoryName="JAR Application" singleton="true">
+    <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+    <option name="JAR_PATH" value="$PROJECT_DIR$/lib/grammar-kit.jar" />
+    <option name="VM_PARAMETERS" value="-Xmx512m" />
+    <option name="PROGRAM_PARAMETERS" value="$PROJECT_DIR$/gen $PROJECT_DIR$/grammars/Rust.bnf" />
+    <envs />
+    <method />
+  </configuration>
+</component>
