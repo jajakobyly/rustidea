@@ -125,6 +125,13 @@ object RustSyntaxHighlighter {
     "RUST.LINE_PARENT_DOC",
     LINE_DOC)
 
+  final val MACRO_VARIABLE = createTextAttributesKey(
+    "RUST.MACRO_VARIABLE",
+    DefaultLanguageHighlighterColors.LOCAL_VARIABLE)
+  final val MACRO_CALL = createTextAttributesKey(
+    "RUST.MACRO_CALL",
+    DefaultLanguageHighlighterColors.FUNCTION_CALL)
+
   final val BAD_CHARACTER = createTextAttributesKey(
     "RUST.BAD_CHARACTER",
     HighlighterColors.BAD_CHARACTER)
@@ -260,6 +267,9 @@ object RustSyntaxHighlighter {
     RustTypes.LINE_DOC -> LINE_DOC,
     RustTypes.BLOCK_PARENT_DOC -> BLOCK_PARENT_DOC,
     RustTypes.LINE_PARENT_DOC -> LINE_PARENT_DOC,
+
+    RustTypes.MACRO_VARIABLE -> MACRO_VARIABLE,
+    RustTypes.MACRO_CALL -> MACRO_CALL,
 
     TokenType.BAD_CHARACTER -> BAD_CHARACTER
   )

@@ -172,6 +172,9 @@
         RAW_BYTE_STR_LIT_TOKEN = 'regexp:[\x00-\x7f]'
         INVALID_RAW_BYTE_STR_LIT_TOKEN = "Non-ascii raw byte string token."
 
+        MACRO_VARIABLE = 'regexp:\$[a-zA-Z_][a-zA-Z0-9_]*'
+        MACRO_CALL     = 'regexp:[a-zA-Z_][a-zA-Z0-9_]*!'
+
         IDENTIFIER = 'regexp:[a-zA-Z_][a-zA-Z0-9_]*'
 
         spaces__ = 'regexp:\s+'

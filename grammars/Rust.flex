@@ -322,6 +322,12 @@ FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
     {FLOAT_LIT}      { return FLOAT_LIT; }
 
 
+    //=== Macros
+    //=== https://doc.rust-lang.org/nightly/reference.html#macros
+    "$" {IDENTIFIER} { return MACRO_VARIABLE; }
+    {IDENTIFIER} "!" { return MACRO_CALL; }
+
+
     {IDENTIFIER} { return IDENTIFIER; }
 
 
