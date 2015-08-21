@@ -15,45 +15,47 @@
   -->
 
 <idea-plugin version="2">
-  <id>org.rustidea</id>
-  <name>Rustidea</name>
-  <version>1.0</version>
-  <vendor url="http://github.com/jajakobyly/rustidea">Marek Kaput</vendor>
+    <id>org.rustidea</id>
+    <name>Rustidea</name>
+    <version>1.0</version>
+    <vendor url="http://github.com/jajakobyly/rustidea">Marek Kaput</vendor>
 
-  <description><![CDATA[
+    <description><![CDATA[
         Language support for the <a href="http://www.rust-lang.org/">Rust
             Language</a>.
         ]]></description>
 
-  <change-notes><![CDATA[
+    <change-notes><![CDATA[
         <ul>
             <li><b>1.0</b>: Initial plugin</li>
         </ul>
         ]]></change-notes>
 
-  <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for description -->
-  <idea-version since-build="131"/>
+    <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for description -->
+    <idea-version since-build="131"/>
 
-  <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
-       on how to target different products -->
-  <!-- uncomment to enable plugin in all products
-  <depends>com.intellij.modules.lang</depends>
-  -->
+    <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
 
-  <extensions defaultExtensionNs="com.intellij">
-    <fileTypeFactory implementation="org.rustidea.RustFileTypeFactory"/>
-  </extensions>
+    <extensions defaultExtensionNs="com.intellij">
+        <fileTypeFactory implementation="org.rustidea.RustFileTypeFactory"/>
+        <lang.syntaxHighlighterFactory key="Rust"
+                                       implementationClass="org.rustidea.highlighting.RustSyntaxHighlighterFactory"/>
+    </extensions>
 
-  <application-components>
-    <!-- Add your application components here -->
-  </application-components>
+    <application-components>
+        <!-- Add your application components here -->
+    </application-components>
 
-  <project-components>
-    <!-- Add your project components here -->
-  </project-components>
+    <project-components>
+        <!-- Add your project components here -->
+    </project-components>
 
-  <actions>
-    <!-- Add your actions here -->
-  </actions>
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
 
 </idea-plugin>
