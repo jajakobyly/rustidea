@@ -112,18 +112,18 @@ object RustSyntaxHighlighter {
   final val LINE_COMMENT = createTextAttributesKey(
     "RUST.LINE_COMMENT",
     DefaultLanguageHighlighterColors.LINE_COMMENT)
-  final val DOC_BLOCK_COMMENT = createTextAttributesKey(
-    "RUST.DOC_BLOCK_COMMENT",
+  final val BLOCK_DOC = createTextAttributesKey(
+    "RUST.BLOCK_DOC",
     DefaultLanguageHighlighterColors.DOC_COMMENT)
-  final val DOC_LINE_COMMENT = createTextAttributesKey(
-    "RUST.DOC_LINE_COMMENT",
+  final val LINE_DOC = createTextAttributesKey(
+    "RUST.LINE_DOC",
     DefaultLanguageHighlighterColors.DOC_COMMENT)
-  final val PARENT_DOC_BLOCK_COMMENT = createTextAttributesKey(
-    "RUST.PARENT_DOC_BLOCK_COMMENT",
-    DOC_BLOCK_COMMENT)
-  final val PARENT_DOC_LINE_COMMENT = createTextAttributesKey(
-    "RUST.PARENT_DOC_LINE_COMMENT",
-    DOC_LINE_COMMENT)
+  final val BLOCK_PARENT_DOC = createTextAttributesKey(
+    "RUST.BLOCK_PARENT_DOC",
+    BLOCK_DOC)
+  final val LINE_PARENT_DOC = createTextAttributesKey(
+    "RUST.LINE_PARENT_DOC",
+    LINE_DOC)
 
   final val BAD_CHARACTER = createTextAttributesKey(
     "RUST.BAD_CHARACTER",
@@ -256,10 +256,10 @@ object RustSyntaxHighlighter {
 
     RustTypes.BLOCK_COMMENT -> BLOCK_COMMENT,
     RustTypes.LINE_COMMENT -> LINE_COMMENT,
-    RustTypes.DOC_BLOCK_COMMENT -> DOC_BLOCK_COMMENT,
-    RustTypes.DOC_LINE_COMMENT -> DOC_LINE_COMMENT,
-    RustTypes.PARENT_DOC_BLOCK_COMMENT -> PARENT_DOC_BLOCK_COMMENT,
-    RustTypes.PARENT_DOC_LINE_COMMENT -> PARENT_DOC_LINE_COMMENT,
+    RustTypes.BLOCK_DOC -> BLOCK_DOC,
+    RustTypes.LINE_DOC -> LINE_DOC,
+    RustTypes.BLOCK_PARENT_DOC -> BLOCK_PARENT_DOC,
+    RustTypes.LINE_PARENT_DOC -> LINE_PARENT_DOC,
 
     TokenType.BAD_CHARACTER -> BAD_CHARACTER
   )

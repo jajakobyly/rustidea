@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
+// https://doc.rust-lang.org/nightly/grammar.html
+// https://doc.rust-lang.org/nightly/reference.html
+// Based on Rust 1.4.0-nightly (3a407b6c4)
+
 {
     parserClass = "org.rustidea.parser.RustParser"
     parserUtilClass="org.rustidea.parser.RustParserUtil"
@@ -36,11 +40,11 @@
     // parser. They are required to generate corresponding token types.
     // Live Preview is unusable due to similarities of some tokens.
     tokens = [
-        PARENT_DOC_LINE_COMMENT = 'regexp://\!.*'
-        DOC_LINE_COMMENT = 'regexp:///.*'
+        LINE_PARENT_DOC = 'regexp://\!.*'
+        LINE_DOC = 'regexp:///.*'
         LINE_COMMENT = 'regexp://.*'
-        PARENT_DOC_BLOCK_COMMENT = 'regexp:/\*\!.*\*/'
-        DOC_BLOCK_COMMENT = 'regexp:/\*\*.*\*/'
+        BLOCK_PARENT_DOC = 'regexp:/\*\!.*\*/'
+        BLOCK_DOC = 'regexp:/\*\*.*\*/'
         BLOCK_COMMENT = 'regexp:/\*.*\*/'
 
         KW_ABSTRACT = 'abstract'

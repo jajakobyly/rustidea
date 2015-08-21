@@ -41,8 +41,8 @@ import static org.rustidea.psi.RustTypes.*;
         private IElementType elementType;
 
         static {
-            PARENT_DOC.elementType = PARENT_DOC_BLOCK_COMMENT;
-            DOC.elementType = DOC_BLOCK_COMMENT;
+            PARENT_DOC.elementType = BLOCK_PARENT_DOC;
+            DOC.elementType = BLOCK_DOC;
             NORMAL.elementType = BLOCK_COMMENT;
         }
 
@@ -267,8 +267,8 @@ FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
 
     //=== Comments
     //=== https://doc.rust-lang.org/nightly/reference.html#comments
-    ("//!" ~{EOL})+                     { return PARENT_DOC_LINE_COMMENT; }
-    ("///" ~{EOL})+                     { return DOC_LINE_COMMENT; }
+    ("//!" ~{EOL})+                     { return LINE_PARENT_DOC; }
+    ("///" ~{EOL})+                     { return LINE_DOC; }
     ("///" "/"+ ~{EOL} | "//" ~{EOL})+  { return LINE_COMMENT; }
 
     "/*!"      { beginBlockComment(CommentType.PARENT_DOC); }
