@@ -247,10 +247,10 @@ FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
     ">"    { return OP_GREATER_THAN; }
     ">="   { return OP_GREATER_THAN_EQ; }
     "#"    { return OP_HASH; }
-    "-"    { return OP_HYPHEN; }
     "<<"   { return OP_LEFT_SHIFT; }
     "<"    { return OP_LESS_THAN; }
     "<="   { return OP_LESS_THAN_EQ; }
+    "-"    { return OP_MINUS; }
     "!="   { return OP_NOT_EQUALS; }
     "{"    { return OP_OPEN_BRACE; }
     "["    { return OP_OPEN_BRACKET; }
