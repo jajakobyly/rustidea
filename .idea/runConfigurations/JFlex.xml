@@ -3,7 +3,7 @@
     <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
     <option name="JAR_PATH" value="$PROJECT_DIR$/lib/JFlex.jar" />
     <option name="VM_PARAMETERS" value="-Xmx512m" />
-    <option name="PROGRAM_PARAMETERS" value="--sliceandcharat -d $PROJECT_DIR$/gen/org/rustidea/parser -skel $PROJECT_DIR$/lib/idea-flex.skeleton $PROJECT_DIR$/grammars/Rust.flex" />
+    <option name="PROGRAM_PARAMETERS" value="--sliceandcharat -d $PROJECT_DIR$/gen/org/rustidea/parser -skel $PROJECT_DIR$/lib/idea-flex.skeleton $PROJECT_DIR$/src/org/rustidea/parser/Rust.flex" />
     <envs />
     <method />
   </configuration>
