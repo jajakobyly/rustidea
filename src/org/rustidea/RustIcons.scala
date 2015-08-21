@@ -19,5 +19,6 @@ package org.rustidea
 import com.intellij.openapi.util.IconLoader
 
 object RustIcons {
+  // TODO Add white version for Darcula theme.
   final val FILE = IconLoader.getIcon("/icons/rust-file.png")
 }
