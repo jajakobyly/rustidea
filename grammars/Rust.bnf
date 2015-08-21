@@ -97,7 +97,6 @@
         KW_YIELD    = 'yield'
 
         OP_AMPERSAND        = "&"
-        OP_AMPERSAND_MUT    = "&mut"
         OP_ARROW            = "->"
         OP_ASSIGN           = "="
         OP_ASTERISK         = "*"

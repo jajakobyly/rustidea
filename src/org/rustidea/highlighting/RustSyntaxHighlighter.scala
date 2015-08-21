@@ -120,7 +120,7 @@ object RustSyntaxHighlighter {
     "RUST.PARENT_DOC_LINE_COMMENT",
     DOC_LINE_COMMENT)
 
-  final val KEYS = HashMap(
+  private final val KEYS = HashMap(
     RT.IDENTIFIER -> IDENTIFIER,
 
     RT.KW_ABSTRACT -> KEYWORD,
@@ -177,7 +177,6 @@ object RustSyntaxHighlighter {
     RT.KW_YIELD -> KEYWORD,
 
     RT.OP_AMPERSAND -> OPERATION_SIGN,
-    RT.OP_AMPERSAND_MUT -> OPERATION_SIGN,
     RT.OP_ARROW -> OPERATION_SIGN,
     RT.OP_ASSIGN -> OPERATION_SIGN,
     RT.OP_ASTERISK -> OPERATION_SIGN,

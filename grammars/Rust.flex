@@ -225,7 +225,6 @@ FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
     //=== https://doc.rust-lang.org/nightly/grammar.html#symbols
     //=== https://doc.rust-lang.org/nightly/reference.html#expressions
     "&"    { return OP_AMPERSAND; }
-    "&mut" { return OP_AMPERSAND_MUT; }
     "->"   { return OP_ARROW; }
     "="    { return OP_ASSIGN; }
     "*"    { return OP_ASTERISK; }
