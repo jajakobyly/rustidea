@@ -27,8 +27,6 @@ import com.intellij.psi.tree.IElementType
 import org.rustidea.parser.RustLexer
 import org.rustidea.psi.RustTypes
 
-import scala.collection.immutable.HashMap
-
 // FIXME Syntax highlighting for raw (byte) string breaks sometimes, I don't know when exactly and why.
 // FIXME An assertion fails in com.intellij.openapi.editor.ex.util.SegmentArray.segmentNotFound(SegmentArray.java:129) when trying to delete last quote character form raw (byte) string at the end of the file (making this operation impossible). I don't know why.
 // FIXME To sum up: raw (byte) string handling in lexer is fucked up.
@@ -136,7 +134,7 @@ object RustSyntaxHighlighter {
     "RUST.BAD_CHARACTER",
     HighlighterColors.BAD_CHARACTER)
 
-  private final val KEYS = HashMap(
+  private final val KEYS = Map(
     RustTypes.IDENTIFIER -> IDENTIFIER,
 
     RustTypes.KW_ABSTRACT -> KEYWORD,
