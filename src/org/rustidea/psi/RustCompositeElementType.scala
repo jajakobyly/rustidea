@@ -17,6 +17,4 @@
 package org.rustidea.psi
 
 class RustCompositeElementType(debugName: String)
-  extends IRustElementType(debugName) {
-  override def toString: String = s"RustCompositeElementType.$debugName"
-}
+  extends IRustElementType(debugName)
