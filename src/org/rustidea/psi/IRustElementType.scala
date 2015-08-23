@@ -16,6 +16,8 @@
 
 package org.rustidea.psi
 
-class RustTokenType(debugName: String) extends IRustElementType(debugName) {
-  override def toString: String = s"RustTokenType{ $debugName }"
-}
+import com.intellij.psi.tree.IElementType
+import org.rustidea.RustLanguage
+
+abstract class IRustElementType(debugName: String)
+  extends IElementType(debugName, RustLanguage)

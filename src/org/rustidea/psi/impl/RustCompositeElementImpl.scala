@@ -14,8 +14,12 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi
+package org.rustidea.psi.impl
 
-class RustTokenType(debugName: String) extends IRustElementType(debugName) {
-  override def toString: String = s"RustTokenType{ $debugName }"
-}
+import com.intellij.extapi.psi.ASTWrapperPsiElement
+import com.intellij.lang.ASTNode
+import org.rustidea.psi.RustCompositeElement
+
+class RustCompositeElementImpl(node: ASTNode)
+  extends ASTWrapperPsiElement(node)
+  with RustCompositeElement

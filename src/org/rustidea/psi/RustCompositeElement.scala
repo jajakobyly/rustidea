@@ -16,8 +16,6 @@
 
 package org.rustidea.psi
 
-import com.intellij.psi.tree.IElementType
-import org.rustidea.RustLanguage
+import com.intellij.psi.PsiElement
 
-class RustElementType(debugName: String)
-  extends IElementType(debugName, RustLanguage)
+trait RustCompositeElement extends PsiElement
