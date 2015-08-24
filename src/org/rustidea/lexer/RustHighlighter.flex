@@ -318,7 +318,7 @@ FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
     {DEC_LIT}        |
     {BIN_LIT}        |
     {OCT_LIT}        |
-    {HEX_LIT}        |
+    {HEX_LIT}        { return SH_NUMBER; }
     // Prevent matching ranges as [float] [dot] [dec], e.g. 0..9 as 0. . 9
     {DEC_LIT} / ".." { return SH_NUMBER; }
     {FLOAT_LIT}      { return SH_NUMBER; }
