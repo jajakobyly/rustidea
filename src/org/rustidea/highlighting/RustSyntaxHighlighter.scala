@@ -24,7 +24,7 @@ import com.intellij.openapi.fileTypes.SyntaxHighlighterBase
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase.{EMPTY, pack}
 import com.intellij.psi.TokenType
 import com.intellij.psi.tree.IElementType
-import org.rustidea.parser.RustLexer
+import org.rustidea.lexer.RustHighlighterLexer
 import org.rustidea.psi.RustTypes
 
 // FIXME Syntax highlighting for raw (byte) string breaks sometimes, I don't know when exactly and why.
@@ -32,7 +32,7 @@ import org.rustidea.psi.RustTypes
 // FIXME To sum up: raw (byte) string handling in lexer is fucked up.
 
 class RustSyntaxHighlighter extends SyntaxHighlighterBase {
-  override def getHighlightingLexer: Lexer = new RustLexer()
+  override def getHighlightingLexer: Lexer = new RustHighlighterLexer()
 
   override def getTokenHighlights(et: IElementType): Array[TextAttributesKey] =
     pack(RustSyntaxHighlighter.KEYS.get(et).orNull, EMPTY)

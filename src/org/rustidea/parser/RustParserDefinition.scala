@@ -22,6 +22,7 @@ import com.intellij.lexer.Lexer
 import com.intellij.openapi.project.Project
 import com.intellij.psi.tree.{IFileElementType, TokenSet}
 import com.intellij.psi.{FileViewProvider, PsiElement, PsiFile, TokenType}
+import org.rustidea.lexer.RustLexer
 import org.rustidea.psi.RustTypes
 import org.rustidea.psi.impl.RustFileImpl
 import org.rustidea.stubs.types.RustStubFileElementType
