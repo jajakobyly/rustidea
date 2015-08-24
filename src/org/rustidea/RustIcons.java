@@ -14,8 +14,13 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi
+package org.rustidea;
 
-import com.intellij.psi.PsiFile
+import com.intellij.openapi.util.IconLoader;
 
-trait RustFile extends PsiFile
+import javax.swing.*;
+
+public interface RustIcons {
+    // TODO Add white version for Darcula theme.
+    Icon FILE = IconLoader.getIcon("/icons/rust-file.png");
+}

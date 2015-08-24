@@ -14,10 +14,13 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi
+package org.rustidea.stubs;
 
-import com.intellij.psi.tree.IElementType
-import org.rustidea.RustLanguage
+import com.intellij.psi.stubs.PsiFileStubImpl;
+import org.rustidea.psi.RustFile;
 
-abstract class IRustElementType(debugName: String)
-  extends IElementType(debugName, RustLanguage)
+public class RustFileStub extends PsiFileStubImpl<RustFile> {
+    public RustFileStub(RustFile file) {
+        super(file);
+    }
+}

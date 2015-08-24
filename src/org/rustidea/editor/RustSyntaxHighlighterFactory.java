@@ -14,8 +14,18 @@
  * limitations under the License.
  */
 
-package org.rustidea.lexer
+package org.rustidea.editor;
 
-import com.intellij.lexer.FlexAdapter
+import com.intellij.openapi.fileTypes.SyntaxHighlighter;
+import com.intellij.openapi.fileTypes.SyntaxHighlighterFactory;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.vfs.VirtualFile;
+import org.jetbrains.annotations.NotNull;
 
-class RustHighlighterLexer extends FlexAdapter(new _RustHighlighterLexer())
+public class RustSyntaxHighlighterFactory extends SyntaxHighlighterFactory {
+    @NotNull
+    @Override
+    public SyntaxHighlighter getSyntaxHighlighter(Project project, VirtualFile virtualFile) {
+        return new RustSyntaxHighlighter();
+    }
+}

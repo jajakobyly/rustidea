@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi
+package org.rustidea.parser;
 
-class RustCompositeElementType(debugName: String)
-  extends IRustElementType(debugName)
+import com.intellij.lang.parser.GeneratedParserUtilBase;
+
+public class RustParserUtil extends GeneratedParserUtilBase {
+}

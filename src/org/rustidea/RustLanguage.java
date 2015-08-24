@@ -14,18 +14,19 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi.impl
+package org.rustidea;
 
-import com.intellij.extapi.psi.PsiFileBase
-import com.intellij.openapi.fileTypes.FileType
-import com.intellij.psi.FileViewProvider
-import org.rustidea.psi.RustFile
-import org.rustidea.{RustFileType, RustLanguage}
+import com.intellij.lang.Language;
 
-class RustFileImpl(fileViewProvider: FileViewProvider)
-  extends PsiFileBase(fileViewProvider, RustLanguage)
-  with RustFile {
-  override def getFileType: FileType = RustFileType
+public class RustLanguage extends Language {
+    public static final RustLanguage INSTANCE = new RustLanguage();
 
-  override def toString: String = "Rust File"
+    protected RustLanguage() {
+        super("Rust", "text/rust", "text/x-rust", "application/x-rust");
+    }
+
+    @Override
+    public boolean isCaseSensitive() {
+        return true;
+    }
 }

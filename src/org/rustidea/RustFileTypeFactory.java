@@ -14,11 +14,15 @@
  * limitations under the License.
  */
 
-package org.rustidea
+package org.rustidea;
 
-import com.intellij.openapi.fileTypes.{FileTypeConsumer, FileTypeFactory}
+import com.intellij.openapi.fileTypes.FileTypeConsumer;
+import com.intellij.openapi.fileTypes.FileTypeFactory;
+import org.jetbrains.annotations.NotNull;
 
-class RustFileTypeFactory extends FileTypeFactory {
-  override def createFileTypes(consumer: FileTypeConsumer): Unit =
-    consumer.consume(RustFileType)
+public class RustFileTypeFactory extends FileTypeFactory {
+    @Override
+    public void createFileTypes(@NotNull FileTypeConsumer consumer) {
+        consumer.consume(RustFileType.INSTANCE);
+    }
 }

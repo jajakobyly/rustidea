@@ -40,10 +40,7 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <fileTypeFactory implementation="org.rustidea.RustFileTypeFactory"/>
-        <!-- FIXME WTF? -->
-        <!--suppress PluginXmlValidity -->
-        <lang.parserDefinition language="Rust"
-                               implementationClass="org.rustidea.parser.RustParserDefinition"/>
+        <lang.parserDefinition language="Rust" implementationClass="org.rustidea.parser.RustParserDefinition"/>
         <lang.syntaxHighlighterFactory key="Rust"
                                        implementationClass="org.rustidea.editor.RustSyntaxHighlighterFactory"/>
     </extensions>

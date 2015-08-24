@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi
+package org.rustidea.psi;
 
-class RustTokenType(debugName: String) extends IRustElementType(debugName)
+public class RustCompositeElementType extends IRustElementType {
+    public RustCompositeElementType(String debugName) {
+        super(debugName);
+    }
+}

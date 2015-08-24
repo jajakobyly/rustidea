@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi.impl
+package org.rustidea.psi.impl;
 
-import com.intellij.extapi.psi.ASTWrapperPsiElement
-import com.intellij.lang.ASTNode
-import org.rustidea.psi.RustCompositeElement
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import com.intellij.lang.ASTNode;
+import org.rustidea.psi.RustCompositeElement;
 
-class RustCompositeElementImpl(node: ASTNode)
-  extends ASTWrapperPsiElement(node)
-  with RustCompositeElement
+public class RustCompositeElementImpl extends ASTWrapperPsiElement implements RustCompositeElement {
+    public RustCompositeElementImpl(ASTNode node) {
+        super(node);
+    }
+}

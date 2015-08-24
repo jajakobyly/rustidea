@@ -14,8 +14,12 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi
+package org.rustidea.lexer;
 
-import com.intellij.psi.PsiElement
+import com.intellij.lexer.FlexAdapter;
 
-trait RustCompositeElement extends PsiElement
+public class RustLexer extends FlexAdapter {
+    public RustLexer() {
+        super(new _RustLexer());
+    }
+}

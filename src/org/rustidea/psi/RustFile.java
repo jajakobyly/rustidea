@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package org.rustidea.stubs
+package org.rustidea.psi;
 
-import com.intellij.psi.stubs.PsiFileStubImpl
-import org.rustidea.psi.RustFile
+import com.intellij.psi.PsiFile;
 
-class RustFileStub(file: RustFile) extends PsiFileStubImpl[RustFile](file)
+public interface RustFile extends PsiFile {
+}

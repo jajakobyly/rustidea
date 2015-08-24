@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package org.rustidea
+package org.rustidea.psi;
 
-import com.intellij.openapi.util.IconLoader
-
-object RustIcons {
-  // TODO Add white version for Darcula theme.
-  final val FILE = IconLoader.getIcon("/icons/rust-file.png")
+public class RustTokenType extends IRustElementType {
+    public RustTokenType(String debugName) {
+        super(debugName);
+    }
 }

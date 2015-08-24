@@ -14,18 +14,9 @@
  * limitations under the License.
  */
 
-package org.rustidea
+package org.rustidea.psi;
 
-import javax.swing.Icon
+import com.intellij.psi.PsiElement;
 
-import com.intellij.openapi.fileTypes.LanguageFileType
-
-object RustFileType extends LanguageFileType(RustLanguage) {
-  override def getName: String = "Rust"
-
-  override def getDescription: String = "Rust"
-
-  override def getDefaultExtension: String = "rs"
-
-  override def getIcon: Icon = RustIcons.FILE
+public interface RustCompositeElement extends PsiElement {
 }

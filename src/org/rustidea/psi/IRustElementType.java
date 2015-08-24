@@ -14,10 +14,13 @@
  * limitations under the License.
  */
 
-package org.rustidea.parser
+package org.rustidea.psi;
 
-import com.intellij.lang.parser.GeneratedParserUtilBase
+import com.intellij.psi.tree.IElementType;
+import org.rustidea.RustLanguage;
 
-class RustParserUtil extends GeneratedParserUtilBase
-
-object RustParserUtil
+public abstract class IRustElementType extends IElementType {
+    public IRustElementType(String debugName) {
+        super(debugName, RustLanguage.INSTANCE);
+    }
+}
