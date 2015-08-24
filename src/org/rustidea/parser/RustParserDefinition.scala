@@ -61,6 +61,7 @@ object RustParserDefinition {
     // Docs are not comments
     RustTypes.BLOCK_COMMENT,
     RustTypes.LINE_COMMENT)
+  // FIXME Find in literals does not work.
   final val STRING_LITERALS = TokenSet.create(
     RustTypes.STR_LIT_TOKEN,
     RustTypes.BYTE_STR_LIT_TOKEN,

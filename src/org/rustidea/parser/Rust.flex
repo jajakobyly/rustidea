@@ -265,8 +265,11 @@ FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
     "_"    { return OP_UNDERSCORE; }
 
 
-    //=== Comments
+    //=== Comments & Docs
     //=== https://doc.rust-lang.org/nightly/reference.html#comments
+    // FIXME Following fragment is tokenized as comment:
+    //     //! foo
+    //     /// foo
     ("//!" ~{EOL})+                     { return LINE_PARENT_DOC; }
     ("///" ~{EOL})+                     { return LINE_DOC; }
     ("///" "/"+ ~{EOL} | "//" ~{EOL})+  { return LINE_COMMENT; }
