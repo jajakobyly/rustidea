@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+// Version of Rust lexer tuned for syntax highlighting. It yields a very reduced
+// subset of Rust tokens, defined in `RustHighlighterTypes` object. The main
+// goal of this lexer is to have as few DFA states as possible (performance),
+// and generate tokens useful in highlighting (like valid/invalid escapes).
+//
 // https://doc.rust-lang.org/nightly/reference.html
 // Based on Rust 1.4.0-nightly (7e13faee1)
 
@@ -26,7 +31,7 @@ import com.intellij.util.containers.ContainerUtil;
 import static com.intellij.psi.TokenType.WHITE_SPACE;
 import static com.intellij.psi.TokenType.BAD_CHARACTER;
 
-import static org.rustidea.psi.RustTypes.*;
+import static org.rustidea.highlighting.RustHighlighterTypes.*;
 
 
 %%
@@ -41,9 +46,9 @@ import static org.rustidea.psi.RustTypes.*;
         private IElementType elementType;
 
         static {
-            PARENT_DOC.elementType = BLOCK_PARENT_DOC;
-            DOC.elementType = BLOCK_DOC;
-            NORMAL.elementType = BLOCK_COMMENT;
+            PARENT_DOC.elementType = SH_BLOCK_PARENT_DOC;
+            DOC.elementType        = SH_BLOCK_DOC;
+            NORMAL.elementType     = SH_BLOCK_COMMENT;
         }
 
         public IElementType getElementType() {
@@ -72,20 +77,19 @@ import static org.rustidea.psi.RustTypes.*;
         yybegin(stateStack.pop());
     }
 
-    // TODO Invent better names for `beginComplexToken` & `endComplexToken`.
-    private void beginComplexToken(int state) {
+    private void beginCompositeToken(int state) {
         yypushstate(state);
-         // FIXME Grrrr zzStartRead is JFlex internal.
+         // Grrrr zzStartRead is JFlex internal.
         tokenStartStack.push(zzStartRead);
     }
 
-    private void endComplexToken() {
+    private void endCompositeToken() {
         yypopstate();
         zzStartRead = tokenStartStack.pop();
     }
 
     private void beginBlockComment(CommentType ctype) {
-        beginComplexToken(IN_BLOCK_COMMENT);
+        beginCompositeToken(IN_BLOCK_COMMENT);
         commentType = ctype;
         commentDepth = 1;
     }
@@ -167,122 +171,115 @@ FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
 
     //=== Keywords
     //=== https://doc.rust-lang.org/nightly/grammar.html#keywords
-    "abstract"  { return KW_ABSTRACT; }
-    "alignof"   { return KW_ALIGNOF; }
-    "as"        { return KW_AS; }
-    "become"    { return KW_BECOME; }
-    "box"       { return KW_BOX; }
-    "break"     { return KW_BREAK; }
-    "const"     { return KW_CONST; }
-    "continue"  { return KW_CONTINUE; }
-    "crate"     { return KW_CRATE; }
-    "do"        { return KW_DO; }
-    "else"      { return KW_ELSE; }
-    "enum"      { return KW_ENUM; }
-    "extern"    { return KW_EXTERN; }
-    "false"     { return KW_FALSE; }
-    "final"     { return KW_FINAL; }
-    "fn"        { return KW_FN; }
-    "for"       { return KW_FOR; }
-    "if"        { return KW_IF; }
-    "impl"      { return KW_IMPL; }
-    "in"        { return KW_IN; }
-    "let"       { return KW_LET; }
-    "loop"      { return KW_LOOP; }
-    "macro"     { return KW_MACRO; }
-    "match"     { return KW_MATCH; }
-    "mod"       { return KW_MOD; }
-    "move"      { return KW_MOVE; }
-    "mut"       { return KW_MUT; }
-    "offsetof"  { return KW_OFFSETOF; }
-    "override"  { return KW_OVERRIDE; }
-    "priv"      { return KW_PRIV; }
-    "proc"      { return KW_PROC; }
-    "pub"       { return KW_PUB; }
-    "pure"      { return KW_PURE; }
-    "ref"       { return KW_REF; }
-    "return"    { return KW_RETURN; }
-    "Self"      { return KW_SELF_T; }
-    "self"      { return KW_SELF; }
-    "sizeof"    { return KW_SIZEOF; }
-    "static"    { return KW_STATIC; }
-    "struct"    { return KW_STRUCT; }
-    "super"     { return KW_SUPER; }
-    "trait"     { return KW_TRAIT; }
-    "true"      { return KW_TRUE; }
-    "type"      { return KW_TYPE; }
-    "typeof"    { return KW_TYPEOF; }
-    "unsafe"    { return KW_UNSAFE; }
-    "unsized"   { return KW_UNSIZED; }
-    "use"       { return KW_USE; }
-    "virtual"   { return KW_VIRTUAL; }
-    "where"     { return KW_WHERE; }
-    "while"     { return KW_WHILE; }
-    "yield"     { return KW_YIELD; }
+    "abstract"  |
+    "alignof"   |
+    "as"        |
+    "become"    |
+    "box"       |
+    "break"     |
+    "const"     |
+    "continue"  |
+    "crate"     |
+    "do"        |
+    "else"      |
+    "enum"      |
+    "extern"    |
+    "false"     |
+    "final"     |
+    "fn"        |
+    "for"       |
+    "if"        |
+    "impl"      |
+    "in"        |
+    "let"       |
+    "loop"      |
+    "macro"     |
+    "match"     |
+    "mod"       |
+    "move"      |
+    "mut"       |
+    "offsetof"  |
+    "override"  |
+    "priv"      |
+    "proc"      |
+    "pub"       |
+    "pure"      |
+    "ref"       |
+    "return"    |
+    "Self"      |
+    "self"      |
+    "sizeof"    |
+    "static"    |
+    "struct"    |
+    "super"     |
+    "trait"     |
+    "true"      |
+    "type"      |
+    "typeof"    |
+    "unsafe"    |
+    "unsized"   |
+    "use"       |
+    "virtual"   |
+    "where"     |
+    "while"     |
+    "yield"     { return SH_KEYWORD; }
 
 
     //=== Operators
     //=== https://doc.rust-lang.org/nightly/grammar.html#symbols
     //=== https://doc.rust-lang.org/nightly/reference.html#expressions
-    "&"    { return OP_AMPERSAND; }
-    "->"   { return OP_ARROW; }
-    "="    { return OP_ASSIGN; }
-    "*"    { return OP_ASTERISK; }
-    "@"    { return OP_AT; }
-    "^"    { return OP_CARET; }
-    "}"    { return OP_CLOSE_BRACE; }
-    "]"    { return OP_CLOSE_BRACKET; }
-    ")"    { return OP_CLOSE_PAREN; }
-    ":"    { return OP_COLON; }
-    ","    { return OP_COMMA; }
-    "$"    { return OP_DOLLAR; }
-    "."    { return OP_DOT; }
-    "&&"   { return OP_DOUBLE_AMPERSAND; }
-    "::"   { return OP_DOUBLE_COLON; }
-    ".."   { return OP_DOUBLE_DOT; }
-    "||"   { return OP_DOUBLE_PIPE; }
-    "=="   { return OP_EQUALS; }
-    "!"    { return OP_EXCLAMATION_MARK; }
-    "=>"   { return OP_FAT_ARROW; }
-    ">"    { return OP_GREATER_THAN; }
-    ">="   { return OP_GREATER_THAN_EQ; }
-    "#"    { return OP_HASH; }
-    "<<"   { return OP_LEFT_SHIFT; }
-    "<"    { return OP_LESS_THAN; }
-    "<="   { return OP_LESS_THAN_EQ; }
-    "-"    { return OP_MINUS; }
-    "!="   { return OP_NOT_EQUALS; }
-    "{"    { return OP_OPEN_BRACE; }
-    "["    { return OP_OPEN_BRACKET; }
-    "("    { return OP_OPEN_PAREN; }
-    "%"    { return OP_PERCENT; }
-    "|"    { return OP_PIPE; }
-    "+"    { return OP_PLUS; }
-    ">>"   { return OP_RIGHT_SHIFT; }
-    ";"    { return OP_SEMICOLON; }
-    "/"    { return OP_SLASH; }
-    "..."  { return OP_TRIPLE_DOT; }
-    "_"    { return OP_UNDERSCORE; }
+    "&"       |
+    "->"      |
+    "="       |
+    "*"       |
+    "@"       |
+    "^"       |
+    ":"       |
+    "$"       |
+    "&&"      |
+    "::"      |
+    ".."      |
+    "||"      |
+    "=="      |
+    "!"       |
+    "=>"      |
+    ">"       |
+    ">="      |
+    "#"       |
+    "<<"      |
+    "<"       |
+    "<="      |
+    "-"       |
+    "!="      |
+    "%"       |
+    "|"       |
+    "+"       |
+    ">>"      |
+    "/"       |
+    "..."     |
+    "_"       { return SH_OPERATOR; }
+    "."       { return SH_DOT; }
+    ","       { return SH_COMMA; }
+    ";"       { return SH_SEMICOLON; }
+    "(" | ")" { return SH_PARENTHESES; }
+    "[" | "]" { return SH_BRACKETS; }
+    "{" | "}" { return SH_BRACES; }
 
 
     //=== Comments & Docs
     //=== https://doc.rust-lang.org/nightly/reference.html#comments
-    // FIXME Following fragment is tokenized as comment:
-    //     //! foo
-    //     /// foo
-    ("//!" ~{EOL})+                     { return LINE_PARENT_DOC; }
-    ("///" ~{EOL})+                     { return LINE_DOC; }
-    ("///" "/"+ ~{EOL} | "//" ~{EOL})+  { return LINE_COMMENT; }
+    "//!" ~{EOL}                     { return SH_LINE_PARENT_DOC; }
+    "///" ~{EOL}                     { return SH_LINE_DOC; }
+    "///" "/"+ ~{EOL} | "//" ~{EOL}  { return SH_LINE_COMMENT; }
 
     "/*!"      { beginBlockComment(CommentType.PARENT_DOC); }
-    // FIXME This rule consumes first character of comment contents
     "/**"[^*/] { beginBlockComment(CommentType.DOC); }
     "/*"       { beginBlockComment(CommentType.NORMAL); }
 
 
     //=== Lifetimes
     //=== I couldn't find docs for them in both Rust Reference and Grammar
-    "'" {IDENTIFIER} { return LIFETIME; }
+    "'" {IDENTIFIER} { return SH_LIFETIME; }
 
 
     //=== Character & string literals
@@ -290,50 +287,50 @@ FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
     //=== with little exception: \0 \' and \" are valid escapes in rustc lexer
     //    (they are covered by BYTE_ESCAPE macro)
     // TODO Highlight escapes in char & byte literals
-    {BYTE_LIT} { return BYTE_LIT; }
-    {CHAR_LIT} { return CHAR_LIT; }
+    {BYTE_LIT} |
+    {CHAR_LIT} { return SH_SINGLE_CHAR; }
 
-    "b'" [^] "'" { return INVALID_BYTE_LIT; }
+    "b'" [^] "'" { return SH_INVALID_ESCAPE; }
 
     "br" "#"* "\"" {
         yybegin(IN_RAW_BYTE_STR_LIT);
         rawStringHashes = yylength() - 2;
-        return RAW_BYTE_STR_LIT_BEGIN;
+        return SH_RAW_STRING;
     }
 
     "r" "#"* "\"" {
         yybegin(IN_RAW_STR_LIT);
         rawStringHashes = yylength() - 1;
-        return RAW_STR_LIT_BEGIN;
+        return SH_RAW_STRING;
     }
 
     "b\"" {
         yybegin(IN_BYTE_STR_LIT);
-        return BYTE_STR_LIT_BEGIN;
+        return SH_STRING;
     }
 
     "\"" {
         yybegin(IN_STR_LIT);
-        return STR_LIT_BEGIN;
+        return SH_STRING;
     }
 
 
-    {DEC_LIT}        { return DEC_LIT; }
-    {BIN_LIT}        { return BIN_LIT; }
-    {OCT_LIT}        { return OCT_LIT; }
-    {HEX_LIT}        { return HEX_LIT; }
+    {DEC_LIT}        |
+    {BIN_LIT}        |
+    {OCT_LIT}        |
+    {HEX_LIT}        |
     // Prevent matching ranges as [float] [dot] [dec], e.g. 0..9 as 0. . 9
-    {DEC_LIT} / ".." { return DEC_LIT; }
-    {FLOAT_LIT}      { return FLOAT_LIT; }
+    {DEC_LIT} / ".." { return SH_NUMBER; }
+    {FLOAT_LIT}      { return SH_NUMBER; }
 
 
     //=== Macros
     //=== https://doc.rust-lang.org/nightly/reference.html#macros
-    "$" {IDENTIFIER} { return MACRO_VARIABLE; }
-    {IDENTIFIER} "!" { return MACRO_CALL; }
+    "$" {IDENTIFIER} { return SH_MACRO_VAR; }
+    {IDENTIFIER} "!" { return SH_MACRO_CALL; }
 
 
-    {IDENTIFIER} { return IDENTIFIER; }
+    {IDENTIFIER} { return SH_IDENTIFIER; }
 
 
     [^] { return BAD_CHARACTER; }
@@ -344,7 +341,7 @@ FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
     "*/" {
         commentDepth--;
         if (commentDepth == 0) {
-            endComplexToken();
+            endCompositeToken();
             return commentType.getElementType();
         }
     }
@@ -352,7 +349,7 @@ FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
     "/*" { commentDepth++; }
 
     <<EOF>> {
-        endComplexToken();
+        endCompositeToken();
         // TODO Maybe return BAD_CHARACTER?
         return commentType.getElementType();
     }
@@ -362,36 +359,36 @@ FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
 
 
 <IN_STR_LIT> {
-    "\\" ( {BYTE_ESCAPE} | {UNICODE_ESCAPE} | {EOL} ) { return STR_LIT_ESCAPE; }
-    [^\"]                                             { return STR_LIT_TOKEN; }
+    "\\" ( {BYTE_ESCAPE} | {UNICODE_ESCAPE} | {EOL} ) { return SH_VALID_ESCAPE; }
+    [^\"]                                             { return SH_STRING; }
 
-    "\""    { yybegin(YYINITIAL); return STR_LIT_END; }
+    "\""    { yybegin(YYINITIAL); return SH_STRING; }
     <<EOF>> { yybegin(YYINITIAL); return BAD_CHARACTER; }
-    [^]     { return BAD_CHARACTER; }
+//    [^]     { return BAD_CHARACTER; }
 }
 
 
 <IN_BYTE_STR_LIT> {
-    "\\" ( {BYTE_ESCAPE} | {EOL} )        { return BYTE_STR_LIT_ESCAPE; }
+    "\\" ( {BYTE_ESCAPE} | {EOL} )        { return SH_VALID_ESCAPE; }
     // ASCII excluding \t \n \r "
-    [\x00-\x08\x0B\x0C\x0E-\x21\x23-\x7F] { return BYTE_STR_LIT_TOKEN; }
+    [\x00-\x08\x0B\x0C\x0E-\x21\x23-\x7F] { return SH_STRING; }
 
-    "\""    { yybegin(YYINITIAL); return BYTE_STR_LIT_END; }
+    "\""    { yybegin(YYINITIAL); return SH_STRING; }
     <<EOF>> { yybegin(YYINITIAL); return BAD_CHARACTER; }
-    [^]     { return INVALID_BYTE_STR_LIT_TOKEN; }
+    [^]     { return SH_INVALID_ESCAPE; }
 }
 
 
 <IN_RAW_STR_LIT> {
-    "\"" "#"* { if (endRawString()) return RAW_STR_LIT_END; }
+    "\"" "#"* { if (endRawString()) return SH_RAW_STRING; }
     <<EOF>>   { yybegin(YYINITIAL); return BAD_CHARACTER; }
-    [^]       { return RAW_STR_LIT_TOKEN; }
+    [^]       { return SH_RAW_STRING; }
 }
 
 
 <IN_RAW_BYTE_STR_LIT> {
-    "\"" "#"*   { if (endRawString()) return RAW_BYTE_STR_LIT_END; }
-    [\x00-\x7F] { return RAW_BYTE_STR_LIT_TOKEN; }
+    "\"" "#"*   { if (endRawString()) return SH_RAW_STRING; }
+    [\x00-\x7F] { return SH_RAW_STRING; }
     <<EOF>>     { yybegin(YYINITIAL); return BAD_CHARACTER; }
-    [^]         { return INVALID_RAW_BYTE_STR_LIT_TOKEN; }
+    [^]         { return SH_INVALID_ESCAPE; }
 }
