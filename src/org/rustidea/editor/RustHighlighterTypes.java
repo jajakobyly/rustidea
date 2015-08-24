@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.rustidea.highlighting;
+package org.rustidea.editor;
 
 import com.intellij.psi.tree.IElementType;
 import org.rustidea.psi.RustTokenType;

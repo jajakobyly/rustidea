@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.rustidea.highlighting
+package org.rustidea.editor
 
 import com.intellij.openapi.fileTypes.{SyntaxHighlighter, SyntaxHighlighterFactory}
 import com.intellij.openapi.project.Project

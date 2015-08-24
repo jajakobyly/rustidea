@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.rustidea.highlighting
+package org.rustidea.editor
 
 import com.intellij.lexer.Lexer
 import com.intellij.openapi.editor.colors.TextAttributesKey

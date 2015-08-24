@@ -45,7 +45,7 @@
         <lang.parserDefinition language="Rust"
                                implementationClass="org.rustidea.parser.RustParserDefinition"/>
         <lang.syntaxHighlighterFactory key="Rust"
-                                       implementationClass="org.rustidea.highlighting.RustSyntaxHighlighterFactory"/>
+                                       implementationClass="org.rustidea.editor.RustSyntaxHighlighterFactory"/>
     </extensions>
 
     <application-components>
