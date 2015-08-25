@@ -5,7 +5,7 @@
 1. You need [Intellij IDEA Community or Ultimate](https://www.jetbrains.com/idea/) to be installed in your system.
 1. Set up plugin development environment, see [IntelliJ Platform SDK DevGuide / Setting Up Development Environment](http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/setting_up_environment.html).
 1. Install and enable additional plugins:
-  - **PsiViewer*
+  - **PsiViewer**
   - **Grammar Kit**
   - **UI Designer**
 
