@@ -16,7 +16,11 @@
 
 package org.rustidea.editor;
 
+import com.intellij.lexer.LayeredLexer;
 import org.rustidea.parser.RustLexer;
 
-public class RustHighlighterLexer extends RustLexer {
+public class RustHighlightingLexer extends LayeredLexer {
+    public RustHighlightingLexer() {
+        super(new RustLexer());
+    }
 }

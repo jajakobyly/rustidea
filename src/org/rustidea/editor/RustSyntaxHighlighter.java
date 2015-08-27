@@ -149,7 +149,7 @@ public class RustSyntaxHighlighter extends SyntaxHighlighterBase {
     @NotNull
     @Override
     public Lexer getHighlightingLexer() {
-        return new RustHighlighterLexer();
+        return new RustHighlightingLexer();
     }
 
     @NotNull
