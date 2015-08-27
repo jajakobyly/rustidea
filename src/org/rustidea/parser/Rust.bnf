@@ -37,7 +37,6 @@
     generateTokens = true
     generateTokenAccessors = true
 
-    extends(".*_literal") = literal
 
     // Matching rules of these tokens do not have any meaning in generated
     // parser. They are required to generate corresponding token types.
@@ -183,9 +182,31 @@
 
         spaces__ = 'regexp:\s+'
     ]
+
+
+    extends("parent_doc") = parent_attribute
+    extends("doc") = attribute
+    extends(".*_literal") = literal
 }
 
-file ::= (func | literal)+
+file ::= parent_attribute* item*
+
+
+//=== Attributes
+//=== https://doc.rust-lang.org/nightly/grammar.html#attributes
+parent_attribute ::= parent_attribute_impl | parent_doc
+attribute ::= attribute_impl | doc
+parent_doc ::= LINE_PARENT_DOC | BLOCK_PARENT_DOC
+doc ::= LINE_DOC | BLOCK_DOC
+private parent_attribute_impl ::= '#' '!' '[' attribute_item ']' {pin=3 recoverWhile=attribute_recover}
+private attribute_impl ::= '#' '[' attribute_item ']' {pin=2 recoverWhile=attribute_recover}
+attribute_item ::= IDENTIFIER ( '=' literal | '(' attribute_item_seq ')' )?
+private attribute_item_seq ::= attribute_item ( ',' attribute_item )*
+private attribute_recover ::= !( parent_attribute | item )
+
+
+item ::= attribute* 'fn' IDENTIFIER
+
 
 literal ::= number_literal
           | char_literal
@@ -204,4 +225,3 @@ raw_string_literal ::= RAW_STR_LIT_BEGIN RAW_STR_LIT_TOKEN* RAW_STR_LIT_END
 raw_byte_string_literal ::= RAW_BYTE_STR_LIT_BEGIN (RAW_BYTE_STR_LIT_TOKEN | INVALID_RAW_BYTE_STR_LIT_TOKEN)* RAW_BYTE_STR_LIT_END
 bool_literal ::= 'true' | 'false'
 
-func ::= 'fn' IDENTIFIER
