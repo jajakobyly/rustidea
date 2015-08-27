@@ -32,7 +32,7 @@ import java.util.Map;
 
 import static com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey;
 
-// FIXME Syntax highlighting for raw (byte) string breaks when they are written in the editor.
+// FIXME Syntax highlighting for raw (byte) string breaks during writing in the editor.
 
 public class RustSyntaxHighlighter extends SyntaxHighlighterBase {
     public static final TextAttributesKey IDENTIFIER = createTextAttributesKey(
