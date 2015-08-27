@@ -14,12 +14,9 @@
  * limitations under the License.
  */
 
-package org.rustidea.lexer;
+package org.rustidea.editor;
 
-import com.intellij.lexer.FlexAdapter;
+import org.rustidea.parser.RustLexer;
 
-public class RustLexer extends FlexAdapter {
-    public RustLexer() {
-        super(new _RustLexer());
-    }
+public class RustHighlighterLexer extends RustLexer {
 }

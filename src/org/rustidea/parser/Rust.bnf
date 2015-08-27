@@ -16,7 +16,6 @@
 
 // https://doc.rust-lang.org/nightly/grammar.html
 // https://doc.rust-lang.org/nightly/reference.html
-// Based on Rust 1.4.0-nightly (3a407b6c4)
 
 {
     parserClass = "org.rustidea.parser.RustParser"
@@ -30,7 +29,7 @@
     psiPackage = "org.rustidea.psi"
     psiImplPackage = "org.rustidea.psi.impl"
 
-    elementTypeHolderClass = "org.rustidea.psi.RustTypes"
+    elementTypeHolderClass = "org.rustidea.psi._RustTypes"
     elementTypeClass = "org.rustidea.psi.RustCompositeElementType"
     tokenTypeClass = "org.rustidea.psi.RustTokenType"
 
@@ -153,27 +152,10 @@
 
         CHAR_LIT  = "regexp:'([^\t\n\r']|\\('|([nrt\\]|x[a-fA-F0-9]{1,2})|u\{[a-fA-F0-9]{1,6}\})')"
         BYTE_LIT  = "regexp:b'([\x00-\x08\x0B\x0C\x0E-\x26\x28-\x7F]|\\('|([nrt\\]|x[a-fA-F0-9]{1,2})))'"
-        INVALID_BYTE_LIT = 'INVALID_BYTE_LIT'
-
-        STR_LIT_BEGIN  = 'regexp:"'
-        STR_LIT_END    = 'regexp:"'
-        STR_LIT_TOKEN  = 'regexp:[^"]'
-        STR_LIT_ESCAPE = 'regexp:\\("|([nrt\\]|x[a-fA-F0-9]{1,2})|u\{[a-fA-F0-9]{1,6}\})'
-
-        BYTE_STR_LIT_BEGIN  = 'regexp:b"'
-        BYTE_STR_LIT_END    = 'regexp:"'
-        BYTE_STR_LIT_TOKEN  = 'regexp:[\x00-\x08\x0B\x0C\x0E-\x21\x23-\x7F]'
-        BYTE_STR_LIT_ESCAPE = 'regexp:\\("|([nrt\\]|x[a-fA-F0-9]{1,2}))'
-        INVALID_BYTE_STR_LIT_TOKEN = 'INVALID_BYTE_STR_LIT_TOKEN'
-
-        RAW_STR_LIT_BEGIN = 'regexp:r#*"'
-        RAW_STR_LIT_END   = 'regexp:"#*'
-        RAW_STR_LIT_TOKEN = 'regexp:.'
-
-        RAW_BYTE_STR_LIT_BEGIN = 'regexp:br#*"'
-        RAW_BYTE_STR_LIT_END   = 'regexp:"#*'
-        RAW_BYTE_STR_LIT_TOKEN = 'regexp:[\x00-\x7f]'
-        INVALID_RAW_BYTE_STR_LIT_TOKEN = 'INVALID_RAW_BYTE_STR_LIT_TOKEN'
+        STRING_LIT = "STRING_LITERAL"
+        BYTE_STRING_LIT = "BYTE_STRING_LITERAL"
+        RAW_STRING_LIT = "RAW_STRING_LITERAL"
+        RAW_BYTE_STRING_LIT = "RAW_BYTE_STRING_LITERAL"
 
         MACRO_VARIABLE = 'regexp:\$[a-zA-Z_][a-zA-Z0-9_]*'
         MACRO_CALL     = 'regexp:[a-zA-Z_][a-zA-Z0-9_]*!'
@@ -216,12 +198,12 @@ literal ::= number_literal
           | raw_string_literal
           | raw_byte_string_literal
           | bool_literal
-number_literal ::= DEC_LIT | BIN_LIT | HEX_LIT | FLOAT_LIT
-char_literal ::= CHAR_LIT
-byte_literal ::= BYTE_LIT | INVALID_BYTE_LIT
-string_literal ::= STR_LIT_BEGIN (STR_LIT_TOKEN | STR_LIT_ESCAPE)* STR_LIT_END
-byte_string_literal ::= BYTE_STR_LIT_BEGIN (BYTE_STR_LIT_TOKEN | BYTE_STR_LIT_ESCAPE | INVALID_BYTE_STR_LIT_TOKEN)* BYTE_STR_LIT_END
-raw_string_literal ::= RAW_STR_LIT_BEGIN RAW_STR_LIT_TOKEN* RAW_STR_LIT_END
-raw_byte_string_literal ::= RAW_BYTE_STR_LIT_BEGIN (RAW_BYTE_STR_LIT_TOKEN | INVALID_RAW_BYTE_STR_LIT_TOKEN)* RAW_BYTE_STR_LIT_END
-bool_literal ::= 'true' | 'false'
+private number_literal ::= DEC_LIT | BIN_LIT | HEX_LIT | FLOAT_LIT
+private char_literal ::= CHAR_LIT
+private byte_literal ::= BYTE_LIT
+private string_literal ::= STRING_LIT
+private byte_string_literal ::= BYTE_STRING_LIT
+private raw_string_literal ::= RAW_STRING_LIT
+private raw_byte_string_literal ::= RAW_BYTE_STRING_LIT
+private bool_literal ::= 'true' | 'false'
 

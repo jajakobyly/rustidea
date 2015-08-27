@@ -15,9 +15,8 @@
  */
 
 // https://doc.rust-lang.org/nightly/reference.html
-// Based on Rust 1.4.0-nightly (7e13faee1)
 
-package org.rustidea.lexer;
+package org.rustidea.parser;
 
 import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
@@ -42,8 +41,8 @@ import static org.rustidea.psi.RustTypes.*;
 
         static {
             PARENT_DOC.elementType = BLOCK_PARENT_DOC;
-            DOC.elementType = BLOCK_DOC;
-            NORMAL.elementType = BLOCK_COMMENT;
+            DOC.elementType        = BLOCK_DOC;
+            NORMAL.elementType     = BLOCK_COMMENT;
         }
 
         public IElementType getElementType() {
@@ -57,6 +56,7 @@ import static org.rustidea.psi.RustTypes.*;
     private int commentDepth = 0;
     private CommentType commentType = CommentType.NORMAL;
 
+    private boolean rawStringIsByte = false;
     private int rawStringHashes = 0;
 
     public _RustLexer() {
@@ -72,22 +72,31 @@ import static org.rustidea.psi.RustTypes.*;
         yybegin(stateStack.pop());
     }
 
-    // TODO Invent better names for `beginComplexToken` & `endComplexToken`.
-    private void beginComplexToken(int state) {
+    private void beginCompositeToken(int state) {
         yypushstate(state);
-         // FIXME Grrrr zzStartRead is JFlex internal.
         tokenStartStack.push(zzStartRead);
     }
 
-    private void endComplexToken() {
+    private void endCompositeToken() {
         yypopstate();
         zzStartRead = tokenStartStack.pop();
     }
 
     private void beginBlockComment(CommentType ctype) {
-        beginComplexToken(IN_BLOCK_COMMENT);
+        beginCompositeToken(IN_BLOCK_COMMENT);
         commentType = ctype;
         commentDepth = 1;
+    }
+
+    private IElementType endBlockComment() {
+        endCompositeToken();
+        return commentType.getElementType();
+    }
+
+    private void beginRawString(boolean isByte, int hashes) {
+        beginCompositeToken(IN_RAW_STRING);
+        rawStringIsByte = isByte;
+        rawStringHashes = hashes;
     }
 
     private boolean endRawString() {
@@ -99,7 +108,7 @@ import static org.rustidea.psi.RustTypes.*;
             if (yylength() > rawStringHashes) {
                 yypushback(yylength() - rawStringHashes);
             }
-            yybegin(YYINITIAL);
+            endCompositeToken();
             return true;
         }
         return false;
@@ -118,7 +127,7 @@ import static org.rustidea.psi.RustTypes.*;
 EOL              = \n | \r | \r\n
 LINE_WS          = [\ \t]
 WHITE_SPACE_CHAR = {EOL} | {LINE_WS}
-WHITE_SPACE      = ({WHITE_SPACE_CHAR})+
+WHITE_SPACE      = {WHITE_SPACE_CHAR}+
 
 
 //=== Identifiers
@@ -136,8 +145,11 @@ IDENTIFIER   = {XID_START} {XID_CONTINUE}*
 BYTE_ESCAPE    = [nrt\\0'\"] | "x" [a-fA-F0-9]{2} // \" \' \0 are undocumented
 UNICODE_ESCAPE = "u{" [a-fA-F0-9]{1,6} "}"
 
-CHAR_LIT = "'" ( [^\t\r\n'] | ( "\\" ( {BYTE_ESCAPE} | {UNICODE_ESCAPE} ) ) ) "'"
-BYTE_LIT = "b'" ( [\x00-\x08\x0B\x0C\x0E-\x21\x23-\x7F] | ( "\\" {BYTE_ESCAPE} ) ) "'"
+CHAR_LIT   = "'" ( [^\t\r\n'] | ( "\\" ( {BYTE_ESCAPE} | {UNICODE_ESCAPE} ) ) ) "'"
+STRING_LIT = "\"" ( [^\"\\] | ( "\\" ( {EOL} | {BYTE_ESCAPE} | {UNICODE_ESCAPE} ) ) )* "\""
+
+RAW_STRING_BEGIN = "r" "#"* "\""
+RAW_STRING_END   = "\"" "#"*
 
 INT_SUFFIX   = [ui]("8"|"16"|"32"|"64"|"size")
 FLOAT_SUFFIX = "f"("32"|"64")
@@ -154,8 +166,7 @@ _FLOAT_LIT3 = [0-9] [0-9_]* "."
 FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
 
 
-%state IN_BLOCK_COMMENT
-%state IN_STR_LIT, IN_BYTE_STR_LIT, IN_RAW_STR_LIT, IN_RAW_BYTE_STR_LIT
+%state IN_BLOCK_COMMENT, IN_RAW_STRING
 
 
 %%
@@ -267,15 +278,11 @@ FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
 
     //=== Comments & Docs
     //=== https://doc.rust-lang.org/nightly/reference.html#comments
-    // FIXME Following fragment is tokenized as comment:
-    //     //! foo
-    //     /// foo
-    ("//!" ~{EOL})+                     { return LINE_PARENT_DOC; }
-    ("///" ~{EOL})+                     { return LINE_DOC; }
-    ("///" "/"+ ~{EOL} | "//" ~{EOL})+  { return LINE_COMMENT; }
+    "//!" ~{EOL}                     { return LINE_PARENT_DOC; }
+    "///" ~{EOL}                     { return LINE_DOC; }
+    "///" "/"+ ~{EOL} | "//" ~{EOL}  { return LINE_COMMENT; }
 
     "/*!"      { beginBlockComment(CommentType.PARENT_DOC); }
-    // FIXME This rule consumes first character of comment contents
     "/**"[^*/] { beginBlockComment(CommentType.DOC); }
     "/*"       { beginBlockComment(CommentType.NORMAL); }
 
@@ -289,33 +296,14 @@ FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
     //=== https://doc.rust-lang.org/nightly/reference.html#characters-and-strings
     //=== with little exception: \0 \' and \" are valid escapes in rustc lexer
     //    (they are covered by BYTE_ESCAPE macro)
-    // TODO Highlight escapes in char & byte literals
-    {BYTE_LIT} { return BYTE_LIT; }
-    {CHAR_LIT} { return CHAR_LIT; }
+    "b" {CHAR_LIT} { return BYTE_LIT; }
+    {CHAR_LIT}     { return CHAR_LIT; }
 
-    "b'" [^] "'" { return INVALID_BYTE_LIT; }
+    "b" {STRING_LIT} { return BYTE_STRING_LIT; }
+    {STRING_LIT}     { return STRING_LIT; }
 
-    "br" "#"* "\"" {
-        yybegin(IN_RAW_BYTE_STR_LIT);
-        rawStringHashes = yylength() - 2;
-        return RAW_BYTE_STR_LIT_BEGIN;
-    }
-
-    "r" "#"* "\"" {
-        yybegin(IN_RAW_STR_LIT);
-        rawStringHashes = yylength() - 1;
-        return RAW_STR_LIT_BEGIN;
-    }
-
-    "b\"" {
-        yybegin(IN_BYTE_STR_LIT);
-        return BYTE_STR_LIT_BEGIN;
-    }
-
-    "\"" {
-        yybegin(IN_STR_LIT);
-        return STR_LIT_BEGIN;
-    }
+    "b" {RAW_STRING_BEGIN} { beginRawString(true,  yylength() - 2); }
+    {RAW_STRING_BEGIN}     { beginRawString(false, yylength() - 1); }
 
 
     {DEC_LIT}        { return DEC_LIT; }
@@ -341,57 +329,15 @@ FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
 
 
 <IN_BLOCK_COMMENT> {
-    "*/" {
-        commentDepth--;
-        if (commentDepth == 0) {
-            endComplexToken();
-            return commentType.getElementType();
-        }
-    }
-
-    "/*" { commentDepth++; }
-
-    <<EOF>> {
-        endComplexToken();
-        // TODO Maybe return BAD_CHARACTER?
-        return commentType.getElementType();
-    }
-
-    [^] { /* do nothing */ }
+    "*/"     { if (--commentDepth == 0) return endBlockComment(); }
+    "/*"     { commentDepth++; }
+    <<EOF>>  { return endBlockComment(); }
+    [^]      { /* do nothing */ }
 }
 
 
-<IN_STR_LIT> {
-    "\\" ( {BYTE_ESCAPE} | {UNICODE_ESCAPE} | {EOL} ) { return STR_LIT_ESCAPE; }
-    [^\"]                                             { return STR_LIT_TOKEN; }
-
-    "\""    { yybegin(YYINITIAL); return STR_LIT_END; }
-    <<EOF>> { yybegin(YYINITIAL); return BAD_CHARACTER; }
-    [^]     { return BAD_CHARACTER; }
-}
-
-
-<IN_BYTE_STR_LIT> {
-    "\\" ( {BYTE_ESCAPE} | {EOL} )        { return BYTE_STR_LIT_ESCAPE; }
-    // ASCII excluding \t \n \r "
-    [\x00-\x08\x0B\x0C\x0E-\x21\x23-\x7F] { return BYTE_STR_LIT_TOKEN; }
-
-    "\""    { yybegin(YYINITIAL); return BYTE_STR_LIT_END; }
-    <<EOF>> { yybegin(YYINITIAL); return BAD_CHARACTER; }
-    [^]     { return INVALID_BYTE_STR_LIT_TOKEN; }
-}
-
-
-<IN_RAW_STR_LIT> {
-    "\"" "#"* { if (endRawString()) return RAW_STR_LIT_END; }
-    <<EOF>>   { yybegin(YYINITIAL); return BAD_CHARACTER; }
-    [^]       { return RAW_STR_LIT_TOKEN; }
-}
-
-
-<IN_RAW_BYTE_STR_LIT> {
-    "\"" "#"*   { if (endRawString()) return RAW_BYTE_STR_LIT_END; }
-    [\x00-\x7F] { return RAW_BYTE_STR_LIT_TOKEN; }
-    <<EOF>>     { yybegin(YYINITIAL); return BAD_CHARACTER; }
-    [^]         { return INVALID_RAW_BYTE_STR_LIT_TOKEN; }
+<IN_RAW_STRING> {
+    {RAW_STRING_END} { if (endRawString())  return (rawStringIsByte ? RAW_BYTE_STRING_LIT : RAW_STRING_LIT); }
+    <<EOF>>          { endCompositeToken(); return (rawStringIsByte ? RAW_BYTE_STRING_LIT : RAW_STRING_LIT); }
+    [^]              { /* continue */ }
 }

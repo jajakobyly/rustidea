@@ -16,25 +16,23 @@
 
 package org.rustidea.editor;
 
-import com.google.common.collect.ImmutableMap;
 import com.intellij.lexer.Lexer;
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors;
 import com.intellij.openapi.editor.HighlighterColors;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase;
+import com.intellij.psi.StringEscapesTokenTypes;
 import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
-import org.rustidea.lexer.RustHighlighterLexer;
+import org.rustidea.psi.RustTypes;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey;
-import static org.rustidea.editor.RustHighlighterTypes.*;
 
-// FIXME Syntax highlighting for raw (byte) string breaks sometimes, I don't know when exactly and why.
-// FIXME An assertion fails in com.intellij.openapi.editor.ex.util.SegmentArray.segmentNotFound(SegmentArray.java:129) when trying to delete last quote character form raw (byte) string at the end of the file (making this operation impossible). I don't know why.
-// FIXME To sum up: raw (byte) string handling in lexer is fucked up.
+// FIXME Syntax highlighting for raw (byte) string breaks when they are written in the editor.
 
 public class RustSyntaxHighlighter extends SyntaxHighlighterBase {
     public static final TextAttributesKey IDENTIFIER = createTextAttributesKey(
@@ -47,7 +45,7 @@ public class RustSyntaxHighlighter extends SyntaxHighlighterBase {
         "RUST.OPERATION_SIGN",
         DefaultLanguageHighlighterColors.OPERATION_SIGN);
     public static final TextAttributesKey BRACES = createTextAttributesKey(
-        "RUST.BRACES",
+        "RUST.BRACE_TOKEN_SET",
         DefaultLanguageHighlighterColors.BRACES);
     public static final TextAttributesKey DOT = createTextAttributesKey(
         "RUST.DOT",
@@ -59,10 +57,10 @@ public class RustSyntaxHighlighter extends SyntaxHighlighterBase {
         "RUST.COMMA",
         DefaultLanguageHighlighterColors.COMMA);
     public static final TextAttributesKey PARENTHESES = createTextAttributesKey(
-        "RUST.PARENTHESES",
+        "RUST.PAREN_TOKEN_SET",
         DefaultLanguageHighlighterColors.PARENTHESES);
     public static final TextAttributesKey BRACKETS = createTextAttributesKey(
-        "RUST.BRACKETS",
+        "RUST.BRACKET_TOKEN_SET",
         DefaultLanguageHighlighterColors.BRACKETS);
     public static final TextAttributesKey LIFETIME = createTextAttributesKey(
         "RUST.LIFETIME",
@@ -117,36 +115,35 @@ public class RustSyntaxHighlighter extends SyntaxHighlighterBase {
         "RUST.BAD_CHARACTER",
         HighlighterColors.BAD_CHARACTER);
 
-    public static final Map<IElementType, TextAttributesKey> KEYS;
+    public static final Map<IElementType, TextAttributesKey> KEYS = new HashMap<IElementType, TextAttributesKey>();
 
     static {
-        KEYS = ImmutableMap.<IElementType, TextAttributesKey>builder()
-            .put(SH_IDENTIFIER, IDENTIFIER)
-            .put(SH_KEYWORD, KEYWORD)
-            .put(SH_OPERATOR, OPERATION_SIGN)
-            .put(SH_BRACES, BRACES)
-            .put(SH_DOT, DOT)
-            .put(SH_SEMICOLON, SEMICOLON)
-            .put(SH_COMMA, COMMA)
-            .put(SH_PARENTHESES, PARENTHESES)
-            .put(SH_BRACKETS, BRACKETS)
-            .put(SH_LIFETIME, LIFETIME)
-            .put(SH_NUMBER, NUMBER)
-            .put(SH_SINGLE_CHAR, CHAR)
-            .put(SH_STRING, STRING)
-            .put(SH_RAW_STRING, RAW_STRING)
-            .put(SH_VALID_ESCAPE, VALID_ESCAPE)
-            .put(SH_INVALID_ESCAPE, INVALID_ESCAPE)
-            .put(SH_BLOCK_COMMENT, BLOCK_COMMENT)
-            .put(SH_LINE_COMMENT, LINE_COMMENT)
-            .put(SH_BLOCK_DOC, BLOCK_DOC)
-            .put(SH_LINE_DOC, LINE_DOC)
-            .put(SH_BLOCK_PARENT_DOC, BLOCK_PARENT_DOC)
-            .put(SH_LINE_PARENT_DOC, LINE_PARENT_DOC)
-            .put(SH_MACRO_VAR, MACRO_VARIABLE)
-            .put(SH_MACRO_CALL, MACRO_CALL)
-            .put(TokenType.BAD_CHARACTER, BAD_CHARACTER)
-            .build();
+        fillMap(KEYS, RustTypes.KEYWORD_TOKEN_SET, KEYWORD);
+        fillMap(KEYS, RustTypes.OPERATION_TOKEN_SET, OPERATION_SIGN);
+        fillMap(KEYS, RustTypes.BRACE_TOKEN_SET, BRACES);
+        fillMap(KEYS, RustTypes.BRACKET_TOKEN_SET, BRACKETS);
+        fillMap(KEYS, RustTypes.PAREN_TOKEN_SET, PARENTHESES);
+        fillMap(KEYS, RustTypes.NUMBER_TOKEN_SET, NUMBER);
+        fillMap(KEYS, RustTypes.CHAR_TOKEN_SET, CHAR);
+        fillMap(KEYS, RustTypes.STRING_TOKEN_SET, STRING);
+        fillMap(KEYS, RustTypes.RAW_STRING_TOKEN_SET, RAW_STRING);
+
+        KEYS.put(RustTypes.IDENTIFIER, IDENTIFIER);
+        KEYS.put(RustTypes.OP_DOT, DOT);
+        KEYS.put(RustTypes.OP_SEMICOLON, SEMICOLON);
+        KEYS.put(RustTypes.OP_COMMA, COMMA);
+        KEYS.put(RustTypes.LIFETIME, LIFETIME);
+        KEYS.put(StringEscapesTokenTypes.VALID_STRING_ESCAPE_TOKEN, VALID_ESCAPE);
+        KEYS.put(StringEscapesTokenTypes.INVALID_CHARACTER_ESCAPE_TOKEN, INVALID_ESCAPE);
+        KEYS.put(RustTypes.BLOCK_COMMENT, BLOCK_COMMENT);
+        KEYS.put(RustTypes.LINE_COMMENT, LINE_COMMENT);
+        KEYS.put(RustTypes.BLOCK_DOC, BLOCK_DOC);
+        KEYS.put(RustTypes.LINE_DOC, LINE_DOC);
+        KEYS.put(RustTypes.BLOCK_PARENT_DOC, BLOCK_PARENT_DOC);
+        KEYS.put(RustTypes.LINE_PARENT_DOC, LINE_PARENT_DOC);
+        KEYS.put(RustTypes.MACRO_VARIABLE, MACRO_VARIABLE);
+        KEYS.put(RustTypes.MACRO_CALL, MACRO_CALL);
+        KEYS.put(TokenType.BAD_CHARACTER, BAD_CHARACTER);
     }
 
     @NotNull

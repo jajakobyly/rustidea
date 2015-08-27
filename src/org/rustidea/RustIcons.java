@@ -21,6 +21,5 @@ import com.intellij.openapi.util.IconLoader;
 import javax.swing.*;
 
 public interface RustIcons {
-    // TODO Add white version for Darcula theme.
     Icon FILE = IconLoader.getIcon("/icons/rust-file.png");
 }

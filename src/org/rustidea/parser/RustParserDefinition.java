@@ -25,27 +25,14 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.FileViewProvider;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
-import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
-import org.rustidea.lexer.RustLexer;
 import org.rustidea.psi.RustTypes;
 import org.rustidea.psi.impl.RustFileImpl;
 import org.rustidea.stubs.types.RustStubFileElementType;
 
 public class RustParserDefinition implements ParserDefinition {
-    public static final TokenSet WHITE_SPACE = TokenSet.create(TokenType.WHITE_SPACE);
-    public static final TokenSet COMMENTS = TokenSet.create(RustTypes.BLOCK_COMMENT, RustTypes.LINE_COMMENT);
-    // FIXME Find in literals does not work.
-    public static final TokenSet STRING_LITERALS = TokenSet.create(
-        RustTypes.STR_LIT_TOKEN,
-        RustTypes.BYTE_STR_LIT_TOKEN,
-        RustTypes.RAW_STR_LIT_TOKEN,
-        RustTypes.RAW_BYTE_STR_LIT_TOKEN,
-        RustTypes.INVALID_BYTE_STR_LIT_TOKEN,
-        RustTypes.INVALID_RAW_BYTE_STR_LIT_TOKEN);
-
     @NotNull
     @Override
     public Lexer createLexer(Project project) {
@@ -65,19 +52,19 @@ public class RustParserDefinition implements ParserDefinition {
     @NotNull
     @Override
     public TokenSet getWhitespaceTokens() {
-        return WHITE_SPACE;
+        return RustTypes.WHITE_SPACE;
     }
 
     @NotNull
     @Override
     public TokenSet getCommentTokens() {
-        return COMMENTS;
+        return RustTypes.COMMENTS;
     }
 
     @NotNull
     @Override
     public TokenSet getStringLiteralElements() {
-        return STRING_LITERALS;
+        return RustTypes.STRING_LITERALS;
     }
 
     @Override
