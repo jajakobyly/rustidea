@@ -278,9 +278,9 @@ FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
 
     //=== Comments & Docs
     //=== https://doc.rust-lang.org/nightly/reference.html#comments
-    "//!" ~{EOL}                     { return LINE_PARENT_DOC; }
-    "///" ~{EOL}                     { return LINE_DOC; }
-    "///" "/"+ ~{EOL} | "//" ~{EOL}  { return LINE_COMMENT; }
+    ("//!" ~{EOL})+                     { return LINE_PARENT_DOC; }
+    ("///" ~{EOL})+                     { return LINE_DOC; }
+    "///" "/"+ ~{EOL} | "//" ~{EOL}     { return LINE_COMMENT; }
 
     "/*!"      { beginBlockComment(CommentType.PARENT_DOC); }
     "/**"[^*/] { beginBlockComment(CommentType.DOC); }
