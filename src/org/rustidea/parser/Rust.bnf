@@ -150,9 +150,9 @@
         // Regexps <3
         FLOAT_LIT = 'regexp:([0-9][0-9_]*\.[0-9][0-9_]*([eE][-+]?[0-9_]+)?(f(32|64))?)|([0-9][0-9_]*\.)|([0-9][0-9_]*([eE][-+]?[0-9_]+)(f(32|64))?)'
 
-        CHAR_LIT  = "regexp:'([^\t\n\r']|\\('|([nrt\\]|x[a-fA-F0-9]{1,2})|u\{[a-fA-F0-9]{1,6}\})')"
-        BYTE_LIT  = "regexp:b'([\x00-\x08\x0B\x0C\x0E-\x26\x28-\x7F]|\\('|([nrt\\]|x[a-fA-F0-9]{1,2})))'"
-        STRING_LIT = "STRING_LITERAL"
+        CHAR_LIT  = "regexp:'([^'] | \\')'"
+        BYTE_LIT  = "regexp:b'([^'] | \\')'"
+        STRING_LIT = "regexp:\"([^\"] | \\\")*\""
         BYTE_STRING_LIT = "BYTE_STRING_LITERAL"
         RAW_STRING_LIT = "RAW_STRING_LITERAL"
         RAW_BYTE_STRING_LIT = "RAW_BYTE_STRING_LITERAL"
@@ -166,38 +166,43 @@
     ]
 
 
-    extends("parent_doc") = parent_attribute
-    extends("doc") = attribute
-    extends(".*_literal") = literal
+    extends("fn_attribute_item|assign_attribute_item|flag_attribute_item") = attribute_item
+    extends("parent_attribute|parent_doc|mod_item|fn_item") = item
+    extends("number_literal|char_literal|byte_literal|string_literal|byte_string_literal|raw_string_literal|raw_byte_string_literal|bool_literal") = literal
 }
 
-file ::= parent_attribute* item*
+
+mod ::= mod_contents
 
 
 //=== Attributes
 //=== https://doc.rust-lang.org/nightly/grammar.html#attributes
-parent_attribute ::= parent_attribute_impl | parent_doc
-attribute ::= attribute_impl | doc
 parent_doc ::= LINE_PARENT_DOC | BLOCK_PARENT_DOC
 doc ::= LINE_DOC | BLOCK_DOC
-private parent_attribute_impl ::= '#' '!' '[' attribute_item ']' {pin=3 recoverWhile=attribute_recover}
-private attribute_impl ::= '#' '[' attribute_item ']' {pin=2 recoverWhile=attribute_recover}
-attribute_item ::= IDENTIFIER ( '=' literal | '(' attribute_item_seq ')' )?
-private attribute_item_seq ::= attribute_item ( ',' attribute_item )*
-private attribute_recover ::= !( parent_attribute | item )
+parent_attribute ::= '#' '!' '[' attribute_item ']' {pin=3 recoverWhile=not_item}
+attribute ::= '#' '[' attribute_item ']' {pin=2 recoverWhile=not_item}
+attribute_item ::= fn_attribute_item | assign_attribute_item | flag_attribute_item {recoverWhile=not_close_bracket}
+fn_attribute_item ::= IDENTIFIER '(' fn_attribute_item_params ')' {pin=2}
+private fn_attribute_item_params ::= attribute_item ( ',' attribute_item )* {pin('.*')=1 recoverWhile=not_close_paren}
+assign_attribute_item ::= IDENTIFIER '=' literal {pin=2}
+flag_attribute_item ::= IDENTIFIER
 
 
-item ::= attribute* 'fn' IDENTIFIER
+//=== Items
+//=== https://doc.rust-lang.org/nightly/reference.html#items
+item ::= parent_attribute | parent_doc | mod_item | fn_item
+item_attrs ::= ( doc | attribute )* visibility?
+
+mod_item ::= item_attrs 'mod' IDENTIFIER ( ';' | '{' mod_contents '}' ) {pin=2 recoverWhile=not_item}
+private mod_contents ::= item* {recoverWhile=not_close_brace}
+
+fn_item ::= item_attrs 'fn' IDENTIFIER {pin=2 recoverWhile=not_item}
+
+visibility ::= 'pub'
 
 
-literal ::= number_literal
-          | char_literal
-          | byte_literal
-          | string_literal
-          | byte_string_literal
-          | raw_string_literal
-          | raw_byte_string_literal
-          | bool_literal
+//=== Literals
+literal ::= number_literal | char_literal | byte_literal | string_literal | byte_string_literal | raw_string_literal | raw_byte_string_literal | bool_literal
 private number_literal ::= DEC_LIT | BIN_LIT | HEX_LIT | FLOAT_LIT
 private char_literal ::= CHAR_LIT
 private byte_literal ::= BYTE_LIT
@@ -207,3 +212,9 @@ private raw_string_literal ::= RAW_STRING_LIT
 private raw_byte_string_literal ::= RAW_BYTE_STRING_LIT
 private bool_literal ::= 'true' | 'false'
 
+
+//=== Common recovers
+private not_item ::= !item
+private not_close_brace ::= !'}'
+private not_close_bracket ::= !']'
+private not_close_paren ::= !')'
