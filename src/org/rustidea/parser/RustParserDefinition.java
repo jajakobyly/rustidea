@@ -28,6 +28,7 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
+import org.rustidea.psi.RustCompositeElementFactory;
 import org.rustidea.psi.RustTypes;
 import org.rustidea.psi.impl.RustFileImpl;
 import org.rustidea.stubs.types.RustStubFileElementType;
@@ -75,7 +76,7 @@ public class RustParserDefinition implements ParserDefinition {
     @NotNull
     @Override
     public PsiElement createElement(ASTNode node) {
-        return RustTypes.Factory.createElement(node);
+        return RustCompositeElementFactory.create(node);
     }
 
     @Override

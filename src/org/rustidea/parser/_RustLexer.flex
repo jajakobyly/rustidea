@@ -25,7 +25,7 @@ import com.intellij.util.containers.ContainerUtil;
 import static com.intellij.psi.TokenType.WHITE_SPACE;
 import static com.intellij.psi.TokenType.BAD_CHARACTER;
 
-import static org.rustidea.psi.RustTypes.*;
+import static org.rustidea.psi.RustTokenTypes.*;
 
 
 %%
