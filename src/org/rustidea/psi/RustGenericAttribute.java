@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package org.rustidea.stubs;
+package org.rustidea.psi;
 
-import com.intellij.psi.stubs.PsiFileStub;
-import org.rustidea.psi.RustFile;
+import com.intellij.psi.PsiElement;
 
-public interface RustFileStub extends PsiFileStub<RustFile> {
+public interface RustGenericAttribute extends PsiElement {
 }

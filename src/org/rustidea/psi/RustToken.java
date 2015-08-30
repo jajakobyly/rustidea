@@ -14,10 +14,13 @@
  * limitations under the License.
  */
 
-package org.rustidea.stubs;
+package org.rustidea.psi;
 
-import com.intellij.psi.stubs.PsiFileStub;
-import org.rustidea.psi.RustFile;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.tree.IElementType;
+import org.jetbrains.annotations.NotNull;
 
-public interface RustFileStub extends PsiFileStub<RustFile> {
+public interface RustToken extends PsiElement {
+    @NotNull
+    IElementType getTokenType();
 }

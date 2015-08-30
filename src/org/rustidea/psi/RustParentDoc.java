@@ -16,8 +16,5 @@
 
 package org.rustidea.psi;
 
-public class RustCompositeElementType extends IRustElementType {
-    public RustCompositeElementType(String debugName) {
-        super(debugName);
-    }
+public interface RustParentDoc extends RustDoc, RustGenericParentAttribute {
 }

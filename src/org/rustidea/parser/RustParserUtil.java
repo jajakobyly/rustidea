@@ -72,7 +72,6 @@ public class RustParserUtil {
         });
     }
 
-
     @Nullable
     public static Marker tryParseToken(@NotNull final PsiBuilder builder, @NotNull final IElementType type, @NotNull final TokenSet tokenSet) {
         final Marker marker = builder.mark();

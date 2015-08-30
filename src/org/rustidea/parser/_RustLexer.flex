@@ -22,10 +22,8 @@ import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.util.containers.Stack;
 import com.intellij.util.containers.ContainerUtil;
-import static com.intellij.psi.TokenType.WHITE_SPACE;
-import static com.intellij.psi.TokenType.BAD_CHARACTER;
 
-import static org.rustidea.psi.RustTokenTypes.*;
+import static org.rustidea.psi.RustTokenType.*;
 
 
 %%

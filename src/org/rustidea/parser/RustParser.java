@@ -27,24 +27,24 @@ import org.jetbrains.annotations.Nullable;
 
 import static org.rustidea.parser.RustParserUtil.eatUnless;
 import static org.rustidea.parser.RustParserUtil.tryParseToken;
-import static org.rustidea.psi.RustCompositeTypes.PARENT_DOC;
-import static org.rustidea.psi.RustTypes.PARENT_DOC_TOKEN_SET;
+import static org.rustidea.psi.RustCompositeType.PARENT_DOC;
+import static org.rustidea.psi.RustType.PARENT_DOC_TOKEN_SET;
 
 public class RustParser implements PsiParser, LightPsiParser {
     public static void file(IElementType root, @NotNull PsiBuilder builder) {
-        Marker mroot = builder.mark();
+        Marker mRoot = builder.mark();
         while (!builder.eof()) {
             if (item(builder) == null) {
                 eatUnless(builder, PARENT_DOC_TOKEN_SET).error("expected item");
             }
         }
-        mroot.done(root);
+        mRoot.done(root);
     }
 
     @Nullable
     private static Marker item(@NotNull PsiBuilder builder) {
-        Marker marker = parentDoc(builder);
-        return marker;
+        Marker mItem = parentDoc(builder);
+        return mItem;
     }
 
     @Nullable

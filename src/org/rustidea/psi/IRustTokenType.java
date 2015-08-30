@@ -16,7 +16,8 @@
 
 package org.rustidea.psi;
 
-import com.intellij.psi.PsiElement;
-
-public interface RustCompositeElement extends PsiElement {
+public class IRustTokenType extends IRustElementType {
+    public IRustTokenType(String debugName) {
+        super(debugName);
+    }
 }

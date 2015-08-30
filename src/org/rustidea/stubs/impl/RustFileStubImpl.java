@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi.impl;
+package org.rustidea.stubs.impl;
 
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
-import com.intellij.lang.ASTNode;
-import org.rustidea.psi.RustCompositeElement;
+import com.intellij.psi.stubs.PsiFileStubImpl;
+import org.rustidea.psi.RustFile;
+import org.rustidea.stubs.RustFileStub;
 
-public class RustCompositeElementImpl extends ASTWrapperPsiElement implements RustCompositeElement {
-    public RustCompositeElementImpl(ASTNode node) {
-        super(node);
+public class RustFileStubImpl extends PsiFileStubImpl<RustFile> implements RustFileStub {
+    public RustFileStubImpl(RustFile file) {
+        super(file);
     }
 }

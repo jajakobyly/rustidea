@@ -28,10 +28,9 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
-import org.rustidea.psi.RustCompositeElementFactory;
-import org.rustidea.psi.RustTypes;
+import org.rustidea.psi.RustType;
 import org.rustidea.psi.impl.RustFileImpl;
-import org.rustidea.stubs.types.RustStubFileElementType;
+import org.rustidea.stubs.types.RustFileElementType;
 
 public class RustParserDefinition implements ParserDefinition {
     @NotNull
@@ -47,25 +46,25 @@ public class RustParserDefinition implements ParserDefinition {
 
     @Override
     public IFileElementType getFileNodeType() {
-        return RustStubFileElementType.INSTANCE;
+        return RustFileElementType.INSTANCE;
     }
 
     @NotNull
     @Override
     public TokenSet getWhitespaceTokens() {
-        return RustTypes.WHITE_SPACE;
+        return RustType.WHITE_SPACE_TOKEN_SET;
     }
 
     @NotNull
     @Override
     public TokenSet getCommentTokens() {
-        return RustTypes.COMMENTS;
+        return RustType.COMMENT_TOKEN_SET;
     }
 
     @NotNull
     @Override
     public TokenSet getStringLiteralElements() {
-        return RustTypes.STRING_LITERALS;
+        return RustType.STRING_LITERAL_TOKEN_SET;
     }
 
     @Override
@@ -76,7 +75,7 @@ public class RustParserDefinition implements ParserDefinition {
     @NotNull
     @Override
     public PsiElement createElement(ASTNode node) {
-        return RustCompositeElementFactory.create(node);
+        return null;
     }
 
     @Override

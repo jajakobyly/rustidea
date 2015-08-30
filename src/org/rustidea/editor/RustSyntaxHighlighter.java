@@ -22,10 +22,9 @@ import com.intellij.openapi.editor.HighlighterColors;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase;
 import com.intellij.psi.StringEscapesTokenTypes;
-import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
-import org.rustidea.psi.RustTypes;
+import org.rustidea.psi.RustType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -118,32 +117,32 @@ public class RustSyntaxHighlighter extends SyntaxHighlighterBase {
     public static final Map<IElementType, TextAttributesKey> KEYS = new HashMap<IElementType, TextAttributesKey>();
 
     static {
-        fillMap(KEYS, RustTypes.KEYWORD_TOKEN_SET, KEYWORD);
-        fillMap(KEYS, RustTypes.OPERATION_TOKEN_SET, OPERATION_SIGN);
-        fillMap(KEYS, RustTypes.BRACE_TOKEN_SET, BRACES);
-        fillMap(KEYS, RustTypes.BRACKET_TOKEN_SET, BRACKETS);
-        fillMap(KEYS, RustTypes.PAREN_TOKEN_SET, PARENTHESES);
-        fillMap(KEYS, RustTypes.NUMBER_TOKEN_SET, NUMBER);
-        fillMap(KEYS, RustTypes.CHAR_TOKEN_SET, CHAR);
-        fillMap(KEYS, RustTypes.STRING_TOKEN_SET, STRING);
-        fillMap(KEYS, RustTypes.RAW_STRING_TOKEN_SET, RAW_STRING);
+        fillMap(KEYS, RustType.KEYWORD_TOKEN_SET, KEYWORD);
+        fillMap(KEYS, RustType.OPERATION_TOKEN_SET, OPERATION_SIGN);
+        fillMap(KEYS, RustType.BRACE_TOKEN_SET, BRACES);
+        fillMap(KEYS, RustType.BRACKET_TOKEN_SET, BRACKETS);
+        fillMap(KEYS, RustType.PAREN_TOKEN_SET, PARENTHESES);
+        fillMap(KEYS, RustType.NUMBER_TOKEN_SET, NUMBER);
+        fillMap(KEYS, RustType.CHAR_TOKEN_SET, CHAR);
+        fillMap(KEYS, RustType.STRING_TOKEN_SET, STRING);
+        fillMap(KEYS, RustType.RAW_STRING_TOKEN_SET, RAW_STRING);
 
-        KEYS.put(RustTypes.IDENTIFIER, IDENTIFIER);
-        KEYS.put(RustTypes.OP_DOT, DOT);
-        KEYS.put(RustTypes.OP_SEMICOLON, SEMICOLON);
-        KEYS.put(RustTypes.OP_COMMA, COMMA);
-        KEYS.put(RustTypes.LIFETIME, LIFETIME);
+        KEYS.put(RustType.IDENTIFIER, IDENTIFIER);
+        KEYS.put(RustType.OP_DOT, DOT);
+        KEYS.put(RustType.OP_SEMICOLON, SEMICOLON);
+        KEYS.put(RustType.OP_COMMA, COMMA);
+        KEYS.put(RustType.LIFETIME, LIFETIME);
         KEYS.put(StringEscapesTokenTypes.VALID_STRING_ESCAPE_TOKEN, VALID_ESCAPE);
         KEYS.put(StringEscapesTokenTypes.INVALID_CHARACTER_ESCAPE_TOKEN, INVALID_ESCAPE);
-        KEYS.put(RustTypes.BLOCK_COMMENT, BLOCK_COMMENT);
-        KEYS.put(RustTypes.LINE_COMMENT, LINE_COMMENT);
-        KEYS.put(RustTypes.BLOCK_DOC, BLOCK_DOC);
-        KEYS.put(RustTypes.LINE_DOC, LINE_DOC);
-        KEYS.put(RustTypes.BLOCK_PARENT_DOC, BLOCK_PARENT_DOC);
-        KEYS.put(RustTypes.LINE_PARENT_DOC, LINE_PARENT_DOC);
-        KEYS.put(RustTypes.MACRO_VARIABLE, MACRO_VARIABLE);
-        KEYS.put(RustTypes.MACRO_CALL, MACRO_CALL);
-        KEYS.put(TokenType.BAD_CHARACTER, BAD_CHARACTER);
+        KEYS.put(RustType.BLOCK_COMMENT, BLOCK_COMMENT);
+        KEYS.put(RustType.LINE_COMMENT, LINE_COMMENT);
+        KEYS.put(RustType.BLOCK_DOC, BLOCK_DOC);
+        KEYS.put(RustType.LINE_DOC, LINE_DOC);
+        KEYS.put(RustType.BLOCK_PARENT_DOC, BLOCK_PARENT_DOC);
+        KEYS.put(RustType.LINE_PARENT_DOC, LINE_PARENT_DOC);
+        KEYS.put(RustType.MACRO_VARIABLE, MACRO_VARIABLE);
+        KEYS.put(RustType.MACRO_CALL, MACRO_CALL);
+        KEYS.put(RustType.BAD_CHARACTER, BAD_CHARACTER);
     }
 
     @NotNull

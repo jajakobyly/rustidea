@@ -27,16 +27,17 @@ import org.jetbrains.annotations.NotNull;
 import org.rustidea.RustLanguage;
 import org.rustidea.psi.RustFile;
 import org.rustidea.stubs.RustFileStub;
+import org.rustidea.stubs.impl.RustFileStubImpl;
 
 import java.io.IOException;
 
-public class RustStubFileElementType extends IStubFileElementType<RustFileStub> {
-    public static final RustStubFileElementType INSTANCE = new RustStubFileElementType();
+public class RustFileElementType extends IStubFileElementType<RustFileStub> {
+    public static final RustFileElementType INSTANCE = new RustFileElementType();
 
     public static final int VERSION = 0;
 
-    public RustStubFileElementType() {
-        super("FILE", RustLanguage.INSTANCE);
+    private RustFileElementType() {
+        super("rust.FILE", RustLanguage.INSTANCE);
     }
 
     @Override
@@ -50,24 +51,19 @@ public class RustStubFileElementType extends IStubFileElementType<RustFileStub> 
             @NotNull
             @Override
             protected StubElement createStubForFile(@NotNull PsiFile file) {
-                if (file instanceof RustFile) {
-                    return new RustFileStub((RustFile) file);
-                }
-
-                return super.createStubForFile(file);
+                return file instanceof RustFile ? new RustFileStubImpl((RustFile) file) : super.createStubForFile(file);
             }
         };
     }
 
     @Override
     public void serialize(@NotNull RustFileStub stub, @NotNull StubOutputStream dataStream) throws IOException {
-        // Nothing to do here
     }
 
     @NotNull
     @Override
     public RustFileStub deserialize(@NotNull StubInputStream dataStream, StubElement parentStub) throws IOException {
-        return new RustFileStub(null);
+        return new RustFileStubImpl(null);
     }
 
     @NotNull
