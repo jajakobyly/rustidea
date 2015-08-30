@@ -16,10 +16,12 @@
 
 package org.rustidea.psi.impl;
 
+import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.impl.source.tree.CompositePsiElement;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.RustCompositeType;
+import org.rustidea.psi.RustElementVisitor;
 import org.rustidea.psi.RustParentDoc;
 import org.rustidea.psi.RustTokenType;
 
@@ -28,12 +30,20 @@ public class RustParentDocImpl extends CompositePsiElement implements RustParent
         super(RustCompositeType.PARENT_DOC);
     }
 
-
     @NotNull
     @Override
     public IElementType getTokenType() {
         IElementType type = getNode().getElementType();
         assert type == RustTokenType.LINE_PARENT_DOC || type == RustTokenType.BLOCK_PARENT_DOC;
         return type;
+    }
+
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof RustElementVisitor) {
+            ((RustElementVisitor) visitor).visitParentDoc(this);
+        } else {
+            visitor.visitElement(this);
+        }
     }
 }

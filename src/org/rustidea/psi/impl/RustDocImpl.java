@@ -16,11 +16,13 @@
 
 package org.rustidea.psi.impl;
 
+import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.impl.source.tree.CompositePsiElement;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.RustCompositeType;
 import org.rustidea.psi.RustDoc;
+import org.rustidea.psi.RustElementVisitor;
 import org.rustidea.psi.RustTokenType;
 
 public class RustDocImpl extends CompositePsiElement implements RustDoc {
@@ -34,5 +36,14 @@ public class RustDocImpl extends CompositePsiElement implements RustDoc {
         IElementType type = getNode().getElementType();
         assert type == RustTokenType.LINE_DOC || type == RustTokenType.BLOCK_DOC;
         return type;
+    }
+
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof RustElementVisitor) {
+            ((RustElementVisitor) visitor).visitDoc(this);
+        } else {
+            visitor.visitElement(this);
+        }
     }
 }
