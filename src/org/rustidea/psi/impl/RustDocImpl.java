@@ -16,14 +16,17 @@
 
 package org.rustidea.psi.impl;
 
+import com.intellij.lang.ASTNode;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.impl.source.tree.CompositePsiElement;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
-import org.rustidea.psi.RustCompositeType;
 import org.rustidea.psi.RustDoc;
 import org.rustidea.psi.RustElementVisitor;
-import org.rustidea.psi.RustTokenType;
+import org.rustidea.psi.types.RustCompositeType;
+
+import static org.rustidea.psi.types.RustType.DOC_TOKEN_SET;
 
 public class RustDocImpl extends CompositePsiElement implements RustDoc {
     public RustDocImpl() {
@@ -32,10 +35,18 @@ public class RustDocImpl extends CompositePsiElement implements RustDoc {
 
     @NotNull
     @Override
+    public PsiElement getToken() {
+        PsiElement token = findPsiChildByType(DOC_TOKEN_SET);
+        assert token != null;
+        return token;
+    }
+
+    @NotNull
+    @Override
     public IElementType getTokenType() {
-        IElementType type = getNode().getElementType();
-        assert type == RustTokenType.LINE_DOC || type == RustTokenType.BLOCK_DOC;
-        return type;
+        ASTNode token = findChildByType(DOC_TOKEN_SET);
+        assert token != null;
+        return token.getElementType();
     }
 
     @Override

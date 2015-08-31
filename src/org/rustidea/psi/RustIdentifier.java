@@ -16,10 +16,9 @@
 
 package org.rustidea.psi;
 
-import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 
-public interface RustDoc extends RustGenericAttribute, RustToken {
+public interface RustIdentifier extends RustToken {
     @NotNull
-    PsiElement getToken();
+    String removeDecoration();
 }

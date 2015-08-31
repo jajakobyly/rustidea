@@ -41,6 +41,7 @@
     <extensions defaultExtensionNs="com.intellij">
         <fileTypeFactory implementation="org.rustidea.RustFileTypeFactory"/>
         <lang.parserDefinition language="Rust" implementationClass="org.rustidea.parser.RustParserDefinition"/>
+        <lang.ast.factory language="Rust" implementationClass="org.rustidea.psi.impl.RustASTFactory"/>
         <lang.syntaxHighlighterFactory key="Rust"
                                        implementationClass="org.rustidea.editor.RustSyntaxHighlighterFactory"/>
     </extensions>

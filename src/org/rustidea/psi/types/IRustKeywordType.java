@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi;
+package org.rustidea.psi.types;
 
-public class IRustTokenType extends IRustElementType {
-    public IRustTokenType(String debugName) {
+public class IRustKeywordType extends IRustTokenType {
+    public IRustKeywordType(String debugName) {
         super(debugName);
     }
 }

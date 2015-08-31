@@ -23,7 +23,23 @@ public abstract class RustElementVisitor extends PsiElementVisitor {
         visitElement(doc);
     }
 
+    public void visitIdentifier(RustIdentifier identifier) {
+        visitRustToken(identifier);
+    }
+
+    public void visitKeyword(RustKeyword keyword) {
+        visitRustToken(keyword);
+    }
+
+    public void visitLifetime(RustLifetime lifetime) {
+        visitIdentifier(lifetime);
+    }
+
     public void visitParentDoc(RustParentDoc parentDoc) {
         visitDoc(parentDoc);
+    }
+
+    public void visitRustToken(RustToken token) {
+        visitElement(token);
     }
 }

@@ -20,7 +20,7 @@ import com.intellij.lexer.LayeredLexer;
 import com.intellij.psi.tree.IElementType;
 import org.rustidea.parser.RustLexer;
 import org.rustidea.parser.RustStringLiteralLexer;
-import org.rustidea.psi.RustType;
+import org.rustidea.psi.types.RustType;
 
 import java.util.EnumSet;
 import java.util.HashMap;

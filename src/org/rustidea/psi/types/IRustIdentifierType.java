@@ -14,13 +14,10 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi;
+package org.rustidea.psi.types;
 
-import com.intellij.psi.tree.IElementType;
-import org.rustidea.RustLanguage;
-
-public abstract class IRustElementType extends IElementType {
-    public IRustElementType(String debugName) {
-        super(debugName, RustLanguage.INSTANCE);
+public class IRustIdentifierType extends IRustTokenType {
+    public IRustIdentifierType(String debugName) {
+        super(debugName);
     }
 }

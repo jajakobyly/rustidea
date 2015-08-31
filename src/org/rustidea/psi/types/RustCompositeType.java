@@ -1,4 +1,4 @@
-package org.rustidea.psi;
+package org.rustidea.psi.types;
 
 import com.intellij.psi.tree.IElementType;
 import org.rustidea.psi.impl.RustDocImpl;

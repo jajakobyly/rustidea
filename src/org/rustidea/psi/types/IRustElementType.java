@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi;
+package org.rustidea.psi.types;
 
-import com.intellij.psi.PsiElement;
-import org.jetbrains.annotations.NotNull;
+import com.intellij.psi.tree.IElementType;
+import org.rustidea.RustLanguage;
 
-public interface RustDoc extends RustGenericAttribute, RustToken {
-    @NotNull
-    PsiElement getToken();
+public abstract class IRustElementType extends IElementType {
+    public IRustElementType(String debugName) {
+        super(debugName, RustLanguage.INSTANCE);
+    }
 }

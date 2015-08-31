@@ -23,7 +23,7 @@ import com.intellij.psi.tree.IElementType;
 import com.intellij.util.containers.Stack;
 import com.intellij.util.containers.ContainerUtil;
 
-import static org.rustidea.psi.RustTokenType.*;
+import static org.rustidea.psi.types.RustTokenType.*;
 
 
 %%
@@ -276,9 +276,9 @@ FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
 
     //=== Comments & Docs
     //=== https://doc.rust-lang.org/nightly/reference.html#comments
-    ("//!" ~{EOL})+                     { return LINE_PARENT_DOC; }
-    ("///" ~{EOL})+                     { return LINE_DOC; }
-    "///" "/"+ ~{EOL} | "//" ~{EOL}     { return LINE_COMMENT; }
+    "//!" ~{EOL}                    { return LINE_PARENT_DOC; }
+    "///" ~{EOL}                    { return LINE_DOC; }
+    "///" "/"+ ~{EOL} | "//" ~{EOL} { return LINE_COMMENT; }
 
     "/*!"      { beginBlockComment(CommentType.PARENT_DOC); }
     "/**"[^*/] { beginBlockComment(CommentType.DOC); }
@@ -311,12 +311,6 @@ FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
     // Prevent matching ranges as [float] [dot] [dec], e.g. 0..9 as 0. . 9
     {DEC_LIT} / ".." { return DEC_LIT; }
     {FLOAT_LIT}      { return FLOAT_LIT; }
-
-
-    //=== Macros
-    //=== https://doc.rust-lang.org/nightly/reference.html#macros
-    "$" {IDENTIFIER} { return MACRO_VARIABLE; }
-    {IDENTIFIER} "!" { return MACRO_CALL; }
 
 
     {IDENTIFIER} { return IDENTIFIER; }

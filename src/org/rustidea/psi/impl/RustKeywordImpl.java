@@ -16,45 +16,28 @@
 
 package org.rustidea.psi.impl;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.impl.source.tree.CompositePsiElement;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.RustElementVisitor;
-import org.rustidea.psi.RustParentDoc;
-import org.rustidea.psi.types.RustCompositeType;
+import org.rustidea.psi.RustKeyword;
 
-import static org.rustidea.psi.types.RustType.PARENT_DOC_TOKEN_SET;
-
-public class RustParentDocImpl extends CompositePsiElement implements RustParentDoc {
-    public RustParentDocImpl() {
-        super(RustCompositeType.PARENT_DOC);
-    }
-
-    @NotNull
-    @Override
-    public PsiElement getToken() {
-        PsiElement token = findPsiChildByType(PARENT_DOC_TOKEN_SET);
-        assert token != null;
-        return token;
-    }
-
-    @NotNull
-    @Override
-    public IElementType getTokenType() {
-        ASTNode token = findChildByType(PARENT_DOC_TOKEN_SET);
-        assert token != null;
-        return token.getElementType();
+public class RustKeywordImpl extends RustTokenImpl implements RustKeyword {
+    public RustKeywordImpl(@NotNull IElementType type, CharSequence text) {
+        super(type, text);
     }
 
     @Override
     public void accept(@NotNull PsiElementVisitor visitor) {
         if (visitor instanceof RustElementVisitor) {
-            ((RustElementVisitor) visitor).visitParentDoc(this);
+            ((RustElementVisitor) visitor).visitKeyword(this);
         } else {
             visitor.visitElement(this);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "RustKeyword:" + getText();
     }
 }

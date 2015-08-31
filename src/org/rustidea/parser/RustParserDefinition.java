@@ -28,8 +28,8 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
-import org.rustidea.psi.RustType;
 import org.rustidea.psi.impl.RustFileImpl;
+import org.rustidea.psi.types.RustType;
 import org.rustidea.stubs.types.RustFileElementType;
 
 public class RustParserDefinition implements ParserDefinition {

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi;
+package org.rustidea.psi.types;
 
 import com.intellij.psi.tree.TokenSet;
 
