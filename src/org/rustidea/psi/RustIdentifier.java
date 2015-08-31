@@ -16,9 +16,5 @@
 
 package org.rustidea.psi;
 
-import org.jetbrains.annotations.NotNull;
-
 public interface RustIdentifier extends RustToken {
-    @NotNull
-    String removeDecoration();
 }

@@ -16,5 +16,7 @@
 
 package org.rustidea.psi;
 
-public interface RustLifetime extends RustIdentifier {
+import com.intellij.psi.PsiNamedElement;
+
+public interface RustLifetime extends RustIdentifier, PsiNamedElement {
 }

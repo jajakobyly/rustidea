@@ -28,6 +28,11 @@ public class RustIdentifierImpl extends RustTokenImpl implements RustIdentifier 
     }
 
     @Override
+    public String getName() {
+        return getText();
+    }
+
+    @Override
     public void accept(@NotNull PsiElementVisitor visitor) {
         if (visitor instanceof RustElementVisitor) {
             ((RustElementVisitor) visitor).visitIdentifier(this);
@@ -38,12 +43,6 @@ public class RustIdentifierImpl extends RustTokenImpl implements RustIdentifier 
 
     @Override
     public String toString() {
-        return "RustIdentifier:" + removeDecoration();
-    }
-
-    @NotNull
-    @Override
-    public String removeDecoration() {
-        return getText();
+        return "RustIdentifier:" + getName();
     }
 }
