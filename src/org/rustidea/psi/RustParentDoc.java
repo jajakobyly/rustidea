@@ -16,5 +16,5 @@
 
 package org.rustidea.psi;
 
-public interface RustParentDoc extends RustDoc, RustGenericParentAttribute {
+public interface RustParentDoc extends RustDoc, RustParentAttributeBase {
 }

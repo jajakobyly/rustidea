@@ -18,5 +18,5 @@ package org.rustidea.psi;
 
 import com.intellij.psi.PsiElement;
 
-public interface RustGenericAttribute extends PsiElement {
+public interface RustAttributeBase extends PsiElement {
 }

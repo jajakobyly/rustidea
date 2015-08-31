@@ -19,7 +19,7 @@ package org.rustidea.psi;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 
-public interface RustDoc extends RustGenericAttribute, RustToken {
+public interface RustDoc extends RustAttributeBase, RustToken {
     @NotNull
     PsiElement getToken();
 }

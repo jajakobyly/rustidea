@@ -16,5 +16,5 @@
 
 package org.rustidea.psi;
 
-public interface RustGenericParentAttribute extends RustGenericAttribute {
+public interface RustParentAttributeBase extends RustAttributeBase {
 }
