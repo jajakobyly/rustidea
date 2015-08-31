@@ -16,34 +16,40 @@
 
 package org.rustidea.psi.impl;
 
-import com.intellij.lang.DefaultASTFactoryImpl;
+import com.intellij.lang.ASTFactory;
+import com.intellij.lang.DefaultASTFactory;
 import com.intellij.lang.LanguageParserDefinitions;
 import com.intellij.lang.ParserDefinition;
+import com.intellij.openapi.components.ServiceManager;
 import com.intellij.psi.impl.source.tree.LeafElement;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.rustidea.RustLanguage;
 import org.rustidea.psi.types.IRustIdentifierType;
 import org.rustidea.psi.types.IRustKeywordType;
 import org.rustidea.psi.types.IRustTokenType;
 import org.rustidea.psi.types.RustType;
 
-public class RustASTFactory extends DefaultASTFactoryImpl {
-    @NotNull
-    @Override
-    public LeafElement createLeaf(@NotNull IElementType type, CharSequence text) {
-        final ParserDefinition pd = LanguageParserDefinitions.INSTANCE.forLanguage(RustLanguage.INSTANCE);
+public class RustASTFactory extends ASTFactory {
+    private static final ParserDefinition rustParserDef = LanguageParserDefinitions.INSTANCE.forLanguage(RustLanguage.INSTANCE);
+    private static final DefaultASTFactory defaultASTFactory = ServiceManager.getService(DefaultASTFactory.class);
 
-        if (pd.getCommentTokens().contains(type)) return createComment(type, text);
+    @Nullable
+    @Override
+    public LeafElement createLeaf(@NotNull final IElementType type, final CharSequence text) {
+        if (rustParserDef.getCommentTokens().contains(type)) {
+            return defaultASTFactory.createComment(type, text);
+        }
         if (type instanceof IRustIdentifierType) return createIdentifier(type, text);
         if (type instanceof IRustKeywordType) return new RustKeywordImpl(type, text);
         if (type instanceof IRustTokenType) return new RustTokenImpl(type, text);
 
-        return super.createLeaf(type, text);
+        return null;
     }
 
     @NotNull
-    public LeafElement createIdentifier(@NotNull IElementType type, CharSequence text) {
+    public LeafElement createIdentifier(@NotNull final IElementType type, final CharSequence text) {
         if (type == RustType.LIFETIME) return new RustLifetimeImpl(type, text);
         return new RustIdentifierImpl(type, text);
     }
