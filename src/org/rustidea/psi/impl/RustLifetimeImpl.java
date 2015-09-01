@@ -26,7 +26,7 @@ import org.rustidea.psi.RustElementVisitor;
 import org.rustidea.psi.RustIdentifier;
 import org.rustidea.psi.RustLifetime;
 import org.rustidea.psi.types.RustStubElementTypes;
-import org.rustidea.psi.types.RustType;
+import org.rustidea.psi.types.RustTypes;
 import org.rustidea.stubs.RustLifetimeStub;
 import org.rustidea.stubs.impl.IRustStubPsiElement;
 
@@ -42,7 +42,7 @@ public class RustLifetimeImpl extends IRustStubPsiElement<RustLifetimeStub> impl
     @Nullable
     @Override
     public RustIdentifier getNameIdentifier() {
-        return findChildByType(RustType.LIFETIME_TOKEN);
+        return findChildByType(RustTypes.LIFETIME_TOKEN);
     }
 
     @Nullable

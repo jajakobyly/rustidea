@@ -19,7 +19,7 @@ package org.rustidea.psi.types;
 import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
 
-public interface RustTokenType extends TokenType {
+public interface RustTokenTypes extends TokenType {
     IElementType IDENTIFIER = new IRustIdentifierType("IDENTIFIER");
     IElementType LIFETIME_TOKEN = new IRustIdentifierType("LIFETIME_TOKEN");
 

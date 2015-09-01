@@ -30,7 +30,7 @@ import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.RustLifetime;
 import org.rustidea.psi.impl.RustLifetimeImpl;
 import org.rustidea.psi.types.RustStubElementTypes;
-import org.rustidea.psi.types.RustType;
+import org.rustidea.psi.types.RustTypes;
 import org.rustidea.stubs.RustLifetimeStub;
 import org.rustidea.stubs.impl.RustLifetimeStubImpl;
 
@@ -60,7 +60,7 @@ public class RustLifetimeElementType extends IRustStubElementType<RustLifetimeSt
 
     @Override
     public RustLifetimeStub createStub(LighterAST tree, LighterASTNode node, StubElement parentStub) {
-        LighterASTTokenNode nameNode = (LighterASTTokenNode) LightTreeUtil.requiredChildOfType(tree, node, RustType.LIFETIME_TOKEN);
+        LighterASTTokenNode nameNode = (LighterASTTokenNode) LightTreeUtil.requiredChildOfType(tree, node, RustTypes.LIFETIME_TOKEN);
         String name = nameNode.getText().toString().substring(1);
         return new RustLifetimeStubImpl(parentStub, name);
     }

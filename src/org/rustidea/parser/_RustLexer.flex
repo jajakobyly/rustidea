@@ -23,7 +23,7 @@ import com.intellij.psi.tree.IElementType;
 import com.intellij.util.containers.Stack;
 import com.intellij.util.containers.ContainerUtil;
 
-import static org.rustidea.psi.types.RustTokenType.*;
+import static org.rustidea.psi.types.RustTokenTypes.*;
 
 
 %%

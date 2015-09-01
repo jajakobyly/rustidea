@@ -24,13 +24,13 @@ import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.RustDoc;
 import org.rustidea.psi.RustElementVisitor;
-import org.rustidea.psi.types.RustCompositeType;
+import org.rustidea.psi.types.RustCompositeTypes;
 
-import static org.rustidea.psi.types.RustType.DOC_TOKEN_SET;
+import static org.rustidea.psi.types.RustTypes.DOC_TOKEN_SET;
 
 public class RustDocImpl extends CompositePsiElement implements RustDoc {
     public RustDocImpl() {
-        super(RustCompositeType.DOC);
+        super(RustCompositeTypes.DOC);
     }
 
     @NotNull

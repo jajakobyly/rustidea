@@ -27,8 +27,8 @@ import org.jetbrains.annotations.Nullable;
 
 import static org.rustidea.parser.RustParserUtil.eatUnless;
 import static org.rustidea.parser.RustParserUtil.tryParseToken;
-import static org.rustidea.psi.types.RustCompositeType.PARENT_DOC;
-import static org.rustidea.psi.types.RustType.PARENT_DOC_TOKEN_SET;
+import static org.rustidea.psi.types.RustCompositeTypes.PARENT_DOC;
+import static org.rustidea.psi.types.RustTypes.PARENT_DOC_TOKEN_SET;
 
 public class RustParser implements PsiParser, LightPsiParser {
     public static void file(IElementType root, @NotNull PsiBuilder builder) {

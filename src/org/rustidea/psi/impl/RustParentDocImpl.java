@@ -24,13 +24,13 @@ import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.RustElementVisitor;
 import org.rustidea.psi.RustParentDoc;
-import org.rustidea.psi.types.RustCompositeType;
+import org.rustidea.psi.types.RustCompositeTypes;
 
-import static org.rustidea.psi.types.RustType.PARENT_DOC_TOKEN_SET;
+import static org.rustidea.psi.types.RustTypes.PARENT_DOC_TOKEN_SET;
 
 public class RustParentDocImpl extends CompositePsiElement implements RustParentDoc {
     public RustParentDocImpl() {
-        super(RustCompositeType.PARENT_DOC);
+        super(RustCompositeTypes.PARENT_DOC);
     }
 
     @NotNull

@@ -30,7 +30,7 @@ import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.impl.RustFileImpl;
-import org.rustidea.psi.types.RustType;
+import org.rustidea.psi.types.RustTypes;
 import org.rustidea.stubs.types.IRustStubElementType;
 import org.rustidea.stubs.types.RustFileElementType;
 
@@ -56,19 +56,19 @@ public class RustParserDefinition implements ParserDefinition {
     @NotNull
     @Override
     public TokenSet getWhitespaceTokens() {
-        return RustType.WHITE_SPACE_TOKEN_SET;
+        return RustTypes.WHITE_SPACE_TOKEN_SET;
     }
 
     @NotNull
     @Override
     public TokenSet getCommentTokens() {
-        return RustType.COMMENT_TOKEN_SET;
+        return RustTypes.COMMENT_TOKEN_SET;
     }
 
     @NotNull
     @Override
     public TokenSet getStringLiteralElements() {
-        return RustType.STRING_LITERAL_TOKEN_SET;
+        return RustTypes.STRING_LITERAL_TOKEN_SET;
     }
 
     @NotNull
