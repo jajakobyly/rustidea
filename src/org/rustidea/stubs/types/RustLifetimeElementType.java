@@ -25,6 +25,7 @@ import com.intellij.psi.impl.source.tree.LightTreeUtil;
 import com.intellij.psi.stubs.StubElement;
 import com.intellij.psi.stubs.StubInputStream;
 import com.intellij.psi.stubs.StubOutputStream;
+import com.intellij.util.io.StringRef;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.RustLifetime;
 import org.rustidea.psi.impl.RustLifetimeImpl;
@@ -54,14 +55,14 @@ public class RustLifetimeElementType extends IRustStubElementType<RustLifetimeSt
 
     @Override
     public RustLifetimeStub createStub(@NotNull final RustLifetime psi, final StubElement parentStub) {
-        return new RustLifetimeStubImpl(parentStub, psi.getName());
+        return new RustLifetimeStubImpl(parentStub, StringRef.fromString(psi.getName()));
     }
 
     @Override
     public RustLifetimeStub createStub(LighterAST tree, LighterASTNode node, StubElement parentStub) {
         LighterASTTokenNode nameNode = (LighterASTTokenNode) LightTreeUtil.requiredChildOfType(tree, node, RustTypes.LIFETIME_TOKEN);
         String name = nameNode.getText().toString().substring(1);
-        return new RustLifetimeStubImpl(parentStub, name);
+        return new RustLifetimeStubImpl(parentStub, StringRef.fromString(name));
     }
 
     @Override
@@ -72,7 +73,7 @@ public class RustLifetimeElementType extends IRustStubElementType<RustLifetimeSt
     @NotNull
     @Override
     public RustLifetimeStub deserialize(@NotNull StubInputStream dataStream, StubElement parentStub) throws IOException {
-        return new RustLifetimeStubImpl(parentStub, dataStream.readName().getString());
+        return new RustLifetimeStubImpl(parentStub, dataStream.readName());
     }
 
     @NotNull

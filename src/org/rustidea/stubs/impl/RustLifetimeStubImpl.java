@@ -18,15 +18,16 @@ package org.rustidea.stubs.impl;
 
 import com.intellij.psi.stubs.StubBase;
 import com.intellij.psi.stubs.StubElement;
+import com.intellij.util.io.StringRef;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RustLifetime;
 import org.rustidea.psi.types.RustStubElementTypes;
 import org.rustidea.stubs.RustLifetimeStub;
 
 public class RustLifetimeStubImpl extends StubBase<RustLifetime> implements RustLifetimeStub {
-    private final String name;
+    private final StringRef name;
 
-    public RustLifetimeStubImpl(final StubElement parent, final String name) {
+    public RustLifetimeStubImpl(final StubElement parent, final StringRef name) {
         super(parent, RustStubElementTypes.LIFETIME);
         this.name = name;
     }
@@ -34,6 +35,6 @@ public class RustLifetimeStubImpl extends StubBase<RustLifetime> implements Rust
     @Nullable
     @Override
     public String getName() {
-        return name;
+        return StringRef.toString(name);
     }
 }
