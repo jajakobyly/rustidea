@@ -25,11 +25,13 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.FileViewProvider;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
+import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.impl.RustFileImpl;
 import org.rustidea.psi.types.RustType;
+import org.rustidea.stubs.types.IRustStubElementType;
 import org.rustidea.stubs.types.RustFileElementType;
 
 public class RustParserDefinition implements ParserDefinition {
@@ -39,11 +41,13 @@ public class RustParserDefinition implements ParserDefinition {
         return new RustLexer();
     }
 
+    @NotNull
     @Override
     public PsiParser createParser(Project project) {
         return new RustParser();
     }
 
+    @NotNull
     @Override
     public IFileElementType getFileNodeType() {
         return RustFileElementType.INSTANCE;
@@ -67,6 +71,7 @@ public class RustParserDefinition implements ParserDefinition {
         return RustType.STRING_LITERAL_TOKEN_SET;
     }
 
+    @NotNull
     @Override
     public PsiFile createFile(FileViewProvider viewProvider) {
         return new RustFileImpl(viewProvider);
@@ -74,10 +79,16 @@ public class RustParserDefinition implements ParserDefinition {
 
     @NotNull
     @Override
-    public PsiElement createElement(ASTNode node) {
-        return null;
+    public PsiElement createElement(final ASTNode node) {
+        final IElementType type = node.getElementType();
+        if (type instanceof IRustStubElementType) {
+            return ((IRustStubElementType) type).createPsi(node);
+        }
+
+        throw new IllegalStateException("Incorrect node for RustParserDefinition: " + node + " (" + type + ")");
     }
 
+    @NotNull
     @Override
     public SpaceRequirements spaceExistanceTypeBetweenTokens(ASTNode left, ASTNode right) {
         return LanguageUtil.canStickTokensTogetherByLexer(left, right, new RustLexer());

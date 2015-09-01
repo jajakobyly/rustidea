@@ -287,7 +287,7 @@ FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
 
     //=== Lifetimes
     //=== I couldn't find docs for them in both Rust Reference and Grammar
-    "'" {IDENTIFIER} { return LIFETIME; }
+    "'" {IDENTIFIER} { return LIFETIME_TOKEN; }
 
 
     //=== Character & string literals

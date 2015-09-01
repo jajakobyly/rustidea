@@ -32,7 +32,7 @@ public abstract class RustElementVisitor extends PsiElementVisitor {
     }
 
     public void visitLifetime(RustLifetime lifetime) {
-        visitIdentifier(lifetime);
+        visitElement(lifetime);
     }
 
     public void visitParentDoc(RustParentDoc parentDoc) {

@@ -21,7 +21,7 @@ import com.intellij.psi.tree.IElementType;
 
 public interface RustTokenType extends TokenType {
     IElementType IDENTIFIER = new IRustIdentifierType("IDENTIFIER");
-    IElementType LIFETIME = new IRustIdentifierType("LIFETIME");
+    IElementType LIFETIME_TOKEN = new IRustIdentifierType("LIFETIME_TOKEN");
 
     IElementType KW_ABSTRACT = new IRustKeywordType("abstract");
     IElementType KW_ALIGNOF = new IRustKeywordType("alignof");

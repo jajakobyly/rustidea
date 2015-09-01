@@ -16,23 +16,49 @@
 
 package org.rustidea.psi.impl;
 
+import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.tree.IElementType;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RustElementVisitor;
+import org.rustidea.psi.RustIdentifier;
 import org.rustidea.psi.RustLifetime;
+import org.rustidea.psi.types.RustStubElementTypes;
+import org.rustidea.psi.types.RustType;
+import org.rustidea.stubs.RustLifetimeStub;
+import org.rustidea.stubs.impl.IRustStubPsiElement;
 
-public class RustLifetimeImpl extends RustIdentifierImpl implements RustLifetime {
-    public RustLifetimeImpl(@NotNull IElementType type, CharSequence text) {
-        super(type, text);
+public class RustLifetimeImpl extends IRustStubPsiElement<RustLifetimeStub> implements RustLifetime {
+    public RustLifetimeImpl(@NotNull RustLifetimeStub stub) {
+        super(stub, RustStubElementTypes.LIFETIME);
     }
 
-    @NotNull
+    public RustLifetimeImpl(@NotNull ASTNode node) {
+        super(node);
+    }
+
+    @Nullable
+    @Override
+    public RustIdentifier getNameIdentifier() {
+        return findChildByType(RustType.LIFETIME_TOKEN);
+    }
+
+    @Nullable
     @Override
     public String getName() {
-        return getText().substring(1);
+        final RustLifetimeStub stub = getStub();
+        if (stub != null) {
+            return stub.getName();
+        }
+
+        final RustIdentifier node = getNameIdentifier();
+        if (node != null) {
+            return node.getText().substring(1); // Trim initial '
+        }
+
+        return null;
     }
 
     @NotNull

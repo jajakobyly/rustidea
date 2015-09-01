@@ -14,11 +14,26 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi;
+package org.rustidea.stubs.impl;
 
-import com.intellij.psi.PsiNameIdentifierOwner;
-import com.intellij.psi.StubBasedPsiElement;
+import com.intellij.psi.stubs.StubBase;
+import com.intellij.psi.stubs.StubElement;
+import org.jetbrains.annotations.Nullable;
+import org.rustidea.psi.RustLifetime;
+import org.rustidea.psi.types.RustStubElementTypes;
 import org.rustidea.stubs.RustLifetimeStub;
 
-public interface RustLifetime extends StubBasedPsiElement<RustLifetimeStub>, PsiNameIdentifierOwner {
+public class RustLifetimeStubImpl extends StubBase<RustLifetime> implements RustLifetimeStub {
+    private final String name;
+
+    public RustLifetimeStubImpl(final StubElement parent, final String name) {
+        super(parent, RustStubElementTypes.LIFETIME);
+        this.name = name;
+    }
+
+    @Nullable
+    @Override
+    public String getName() {
+        return name;
+    }
 }

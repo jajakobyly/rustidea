@@ -78,7 +78,7 @@ public class RustSyntaxHighlighter extends SyntaxHighlighterBase {
         KEYS.put(RustType.OP_DOT, DOT);
         KEYS.put(RustType.OP_SEMICOLON, SEMICOLON);
         KEYS.put(RustType.OP_COMMA, COMMA);
-        KEYS.put(RustType.LIFETIME, LIFETIME);
+        KEYS.put(RustType.LIFETIME_TOKEN, LIFETIME);
         KEYS.put(StringEscapesTokenTypes.VALID_STRING_ESCAPE_TOKEN, VALID_ESCAPE);
         KEYS.put(StringEscapesTokenTypes.INVALID_CHARACTER_ESCAPE_TOKEN, INVALID_ESCAPE);
         KEYS.put(RustType.BLOCK_COMMENT, BLOCK_COMMENT);

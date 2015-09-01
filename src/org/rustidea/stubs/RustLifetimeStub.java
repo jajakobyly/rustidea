@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi;
+package org.rustidea.stubs;
 
-import com.intellij.psi.PsiNameIdentifierOwner;
-import com.intellij.psi.StubBasedPsiElement;
-import org.rustidea.stubs.RustLifetimeStub;
+import com.intellij.psi.stubs.NamedStub;
+import org.rustidea.psi.RustLifetime;
 
-public interface RustLifetime extends StubBasedPsiElement<RustLifetimeStub>, PsiNameIdentifierOwner {
+public interface RustLifetimeStub extends NamedStub<RustLifetime> {
 }
