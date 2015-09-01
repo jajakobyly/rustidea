@@ -19,4 +19,5 @@ package org.rustidea.psi;
 import com.intellij.psi.PsiNameIdentifierOwner;
 
 public interface RustType extends PsiNameIdentifierOwner, RustTypeParameterListOwner {
+    // TODO
 }

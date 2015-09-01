@@ -19,6 +19,7 @@ package org.rustidea.psi;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 
+// TODO This won't be a token
 public interface RustDoc extends RustAttributeBase, RustToken {
     @NotNull
     PsiElement getToken();
