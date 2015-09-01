@@ -19,6 +19,7 @@ package org.rustidea.stubs.types;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.stubs.ILightStubElementType;
+import com.intellij.psi.stubs.IndexSink;
 import com.intellij.psi.stubs.StubElement;
 import com.intellij.psi.tree.ICompositeElementType;
 import org.jetbrains.annotations.NonNls;
@@ -33,6 +34,10 @@ public abstract class IRustStubElementType<StubT extends StubElement, PsiT exten
     }
 
     public abstract PsiT createPsi(ASTNode node);
+
+    @Override
+    public void indexStub(@NotNull StubT stub, @NotNull IndexSink sink) {
+    }
 
     @NotNull
     @Override

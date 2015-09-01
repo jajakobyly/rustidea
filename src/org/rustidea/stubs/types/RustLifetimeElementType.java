@@ -22,7 +22,6 @@ import com.intellij.lang.LighterASTNode;
 import com.intellij.lang.LighterASTTokenNode;
 import com.intellij.psi.impl.source.tree.CompositeElement;
 import com.intellij.psi.impl.source.tree.LightTreeUtil;
-import com.intellij.psi.stubs.IndexSink;
 import com.intellij.psi.stubs.StubElement;
 import com.intellij.psi.stubs.StubInputStream;
 import com.intellij.psi.stubs.StubOutputStream;
@@ -74,10 +73,6 @@ public class RustLifetimeElementType extends IRustStubElementType<RustLifetimeSt
     @Override
     public RustLifetimeStub deserialize(@NotNull StubInputStream dataStream, StubElement parentStub) throws IOException {
         return new RustLifetimeStubImpl(parentStub, dataStream.readName().getString());
-    }
-
-    @Override
-    public void indexStub(@NotNull RustLifetimeStub stub, @NotNull IndexSink sink) {
     }
 
     @NotNull
