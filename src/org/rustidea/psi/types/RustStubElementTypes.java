@@ -16,9 +16,12 @@
 
 package org.rustidea.psi.types;
 
-import com.intellij.psi.stubs.IStubElementType;
-import org.rustidea.stubs.types.RustLifetimeElementType;
+import org.rustidea.stubs.types.*;
 
 public interface RustStubElementTypes {
-    IStubElementType LIFETIME = RustLifetimeElementType.INSTANCE;
+    RustLifetimeElementType LIFETIME = RustLifetimeElementType.INSTANCE;
+    RustTypeParameterElementType TYPE_PARAMETER = RustTypeParameterElementType.INSTANCE;
+    RustLifetimeTypeParameterElementType LIFETIME_TYPE_PARAMETER = RustLifetimeTypeParameterElementType.INSTANCE;
+    RustTypeParameterListElementType TYPE_PARAMETER_LIST = RustTypeParameterListElementType.INSTANCE;
+    RustWhereClauseElementType WHERE_CLAUSE = RustWhereClauseElementType.INSTANCE;
 }

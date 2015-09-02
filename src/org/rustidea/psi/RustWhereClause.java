@@ -16,17 +16,15 @@
 
 package org.rustidea.psi;
 
-import com.intellij.psi.PsiNameIdentifierOwner;
 import com.intellij.psi.StubBasedPsiElement;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.rustidea.stubs.RustTypeParameterStub;
+import org.rustidea.stubs.RustWhereClauseStub;
 
-public interface RustTypeParameter extends StubBasedPsiElement<RustTypeParameterStub>, PsiNameIdentifierOwner {
+public interface RustWhereClause extends StubBasedPsiElement<RustWhereClauseStub> {
+    @NotNull
+    RustPath[] getBounds();
+
     @Nullable
-    RustWhereClause getWhereClause();
-
-    @Nullable
-    RustTypeParameterListOwner getOwner();
-
-    int getIndex();
+    RustTypeParameter getOwner();
 }

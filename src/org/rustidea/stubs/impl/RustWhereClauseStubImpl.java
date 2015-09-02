@@ -14,19 +14,16 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi;
+package org.rustidea.stubs.impl;
 
-import com.intellij.psi.PsiNameIdentifierOwner;
-import com.intellij.psi.StubBasedPsiElement;
-import org.jetbrains.annotations.Nullable;
-import org.rustidea.stubs.RustTypeParameterStub;
+import com.intellij.psi.stubs.StubBase;
+import com.intellij.psi.stubs.StubElement;
+import org.rustidea.psi.RustWhereClause;
+import org.rustidea.psi.types.RustTypes;
+import org.rustidea.stubs.RustWhereClauseStub;
 
-public interface RustTypeParameter extends StubBasedPsiElement<RustTypeParameterStub>, PsiNameIdentifierOwner {
-    @Nullable
-    RustWhereClause getWhereClause();
-
-    @Nullable
-    RustTypeParameterListOwner getOwner();
-
-    int getIndex();
+public class RustWhereClauseStubImpl extends StubBase<RustWhereClause> implements RustWhereClauseStub {
+    public RustWhereClauseStubImpl(StubElement parent) {
+        super(parent, RustTypes.WHERE_CLAUSE);
+    }
 }

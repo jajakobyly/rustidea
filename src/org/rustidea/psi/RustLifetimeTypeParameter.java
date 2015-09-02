@@ -17,10 +17,12 @@
 package org.rustidea.psi;
 
 import com.intellij.psi.PsiNameIdentifierOwner;
+import com.intellij.psi.StubBasedPsiElement;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.rustidea.stubs.RustLifetimeTypeParameterStub;
 
-public interface RustLifetimeTypeParameter extends PsiNameIdentifierOwner {
+public interface RustLifetimeTypeParameter extends StubBasedPsiElement<RustLifetimeTypeParameterStub>, PsiNameIdentifierOwner {
     @NotNull
     RustLifetime getLifetime();
 

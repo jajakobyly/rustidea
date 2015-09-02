@@ -16,10 +16,11 @@
 
 package org.rustidea.psi;
 
-import com.intellij.psi.PsiElement;
+import com.intellij.psi.StubBasedPsiElement;
 import org.jetbrains.annotations.NotNull;
+import org.rustidea.stubs.RustTypeParameterListStub;
 
-public interface RustTypeParameterList extends PsiElement {
+public interface RustTypeParameterList extends StubBasedPsiElement<RustTypeParameterListStub> {
     @NotNull
     RustLifetimeTypeParameter[] getLifetimes();
 

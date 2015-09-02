@@ -14,19 +14,11 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi;
+package org.rustidea.psi.impl.source.tree;
 
-import com.intellij.psi.PsiNameIdentifierOwner;
-import com.intellij.psi.StubBasedPsiElement;
-import org.jetbrains.annotations.Nullable;
-import org.rustidea.stubs.RustTypeParameterStub;
+import com.intellij.psi.tree.ChildRoleBase;
 
-public interface RustTypeParameter extends StubBasedPsiElement<RustTypeParameterStub>, PsiNameIdentifierOwner {
-    @Nullable
-    RustWhereClause getWhereClause();
-
-    @Nullable
-    RustTypeParameterListOwner getOwner();
-
-    int getIndex();
+public interface RustChildRole extends ChildRoleBase {
+    int NAME = 1;
+    int WHERE_CLAUSE = 100;
 }

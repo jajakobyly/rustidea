@@ -35,11 +35,27 @@ public abstract class RustElementVisitor extends PsiElementVisitor {
         visitElement(lifetime);
     }
 
+    public void visitLifetimeTypeParameter(RustLifetimeTypeParameter lifetimeTypeParameter) {
+        visitElement(lifetimeTypeParameter);
+    }
+
     public void visitParentDoc(RustParentDoc parentDoc) {
         visitDoc(parentDoc);
     }
 
     public void visitRustToken(RustToken token) {
         visitElement(token);
+    }
+
+    public void visitTypeParameter(RustTypeParameter typeParameter) {
+        visitElement(typeParameter);
+    }
+
+    public void visitTypeParameterList(RustTypeParameterList typeParameterList) {
+        visitElement(typeParameterList);
+    }
+
+    public void visitWhereClause(RustWhereClause whereClause) {
+        visitElement(whereClause);
     }
 }

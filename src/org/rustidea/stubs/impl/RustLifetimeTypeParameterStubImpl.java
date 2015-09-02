@@ -14,15 +14,16 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi;
+package org.rustidea.stubs.impl;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import com.intellij.psi.stubs.StubBase;
+import com.intellij.psi.stubs.StubElement;
+import org.rustidea.psi.RustLifetimeTypeParameter;
+import org.rustidea.psi.types.RustTypes;
+import org.rustidea.stubs.RustLifetimeTypeParameterStub;
 
-public interface RustTypeParameterWhereClause extends RustTypeParameterList {
-    @NotNull
-    RustTypeParameter[] getBounds();
-
-    @Nullable
-    RustTypeParameter getTypeParameter();
+public class RustLifetimeTypeParameterStubImpl extends StubBase<RustLifetimeTypeParameter> implements RustLifetimeTypeParameterStub {
+    public RustLifetimeTypeParameterStubImpl(final StubElement parent) {
+        super(parent, RustTypes.LIFETIME_TYPE_PARAMETER);
+    }
 }
