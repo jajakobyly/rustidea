@@ -19,6 +19,7 @@ package org.rustidea.psi.impl;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
+import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -26,7 +27,6 @@ import org.rustidea.psi.RustElementVisitor;
 import org.rustidea.psi.RustIdentifier;
 import org.rustidea.psi.RustLifetime;
 import org.rustidea.psi.types.RustStubElementTypes;
-import org.rustidea.psi.types.RustTypes;
 import org.rustidea.stubs.RustLifetimeStub;
 import org.rustidea.stubs.impl.IRustStubPsiElement;
 
@@ -39,10 +39,10 @@ public class RustLifetimeImpl extends IRustStubPsiElement<RustLifetimeStub> impl
         super(node);
     }
 
-    @Nullable
+    @NotNull
     @Override
     public RustIdentifier getNameIdentifier() {
-        return findChildByType(RustTypes.LIFETIME_TOKEN);
+        return PsiTreeUtil.getRequiredChildOfType(this, RustIdentifier.class);
     }
 
     @Nullable
@@ -53,12 +53,7 @@ public class RustLifetimeImpl extends IRustStubPsiElement<RustLifetimeStub> impl
             return stub.getName();
         }
 
-        final RustIdentifier node = getNameIdentifier();
-        if (node != null) {
-            return node.getText().substring(1); // Trim initial '
-        }
-
-        return null;
+        return getNameIdentifier().getText().substring(1); // Trim initial '
     }
 
     @NotNull
