@@ -16,7 +16,7 @@
 
 // https://doc.rust-lang.org/nightly/reference.html
 
-package org.rustidea.parser;
+package org.rustidea.lexer;
 
 import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;

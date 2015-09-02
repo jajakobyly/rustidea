@@ -16,14 +16,14 @@
 
 // https://doc.rust-lang.org/nightly/reference.html#literals
 
-package org.rustidea.parser;
+package org.rustidea.lexer;
 
 import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
 
 import java.util.EnumSet;
 
-import static org.rustidea.parser.RustStringLiteralLexer.ESCAPE;
+import static org.rustidea.lexer.RustStringLiteralLexer.ESCAPE;
 import static com.intellij.psi.StringEscapesTokenTypes.VALID_STRING_ESCAPE_TOKEN;
 import static com.intellij.psi.StringEscapesTokenTypes.INVALID_CHARACTER_ESCAPE_TOKEN;
 

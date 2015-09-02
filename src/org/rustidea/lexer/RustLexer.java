@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.rustidea.parser;
+package org.rustidea.lexer;
 
 import com.intellij.lexer.FlexAdapter;
 

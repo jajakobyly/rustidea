@@ -18,15 +18,15 @@ package org.rustidea.editor;
 
 import com.intellij.lexer.LayeredLexer;
 import com.intellij.psi.tree.IElementType;
-import org.rustidea.parser.RustLexer;
-import org.rustidea.parser.RustStringLiteralLexer;
+import org.rustidea.lexer.RustLexer;
+import org.rustidea.lexer.RustStringLiteralLexer;
 import org.rustidea.psi.types.RustTypes;
 
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.rustidea.parser.RustStringLiteralLexer.ESCAPE.*;
+import static org.rustidea.lexer.RustStringLiteralLexer.ESCAPE.*;
 
 public class RustHighlightingLexer extends LayeredLexer {
     private static final Map<IElementType, EnumSet<RustStringLiteralLexer.ESCAPE>> STRING_LAYERS = new HashMap<IElementType, EnumSet<RustStringLiteralLexer.ESCAPE>>();

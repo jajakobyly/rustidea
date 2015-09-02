@@ -14,19 +14,12 @@
  * limitations under the License.
  */
 
-package org.rustidea.parser;
+package org.rustidea.ui;
 
-import com.intellij.lexer.FlexAdapter;
-import com.intellij.psi.tree.IElementType;
+import com.intellij.openapi.util.IconLoader;
 
-import java.util.EnumSet;
+import javax.swing.*;
 
-public class RustStringLiteralLexer extends FlexAdapter {
-    public RustStringLiteralLexer(IElementType defaultToken, EnumSet<ESCAPE> escapes) {
-        super(new _RustStringLiteralLexer(defaultToken, escapes));
-    }
-
-    public enum ESCAPE {
-        BYTE_ESCAPE, UNICODE_ESCAPE, EOL_ESCAPE
-    }
+public interface Icons {
+    Icon FILE = IconLoader.getIcon("/icons/rust-file.png");
 }

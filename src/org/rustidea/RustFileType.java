@@ -19,6 +19,7 @@ package org.rustidea;
 import com.intellij.openapi.fileTypes.LanguageFileType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.rustidea.ui.Icons;
 
 import javax.swing.*;
 
@@ -50,6 +51,6 @@ public class RustFileType extends LanguageFileType {
     @Nullable
     @Override
     public Icon getIcon() {
-        return RustIcons.FILE;
+        return Icons.FILE;
     }
 }

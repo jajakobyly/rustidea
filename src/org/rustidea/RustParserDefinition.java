@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.rustidea.parser;
+package org.rustidea;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.LanguageUtil;
@@ -29,6 +29,8 @@ import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
+import org.rustidea.lexer.RustLexer;
+import org.rustidea.parser.RustParser;
 import org.rustidea.psi.impl.RustFileImpl;
 import org.rustidea.psi.types.RustTypes;
 import org.rustidea.stubs.types.IRustStubElementType;
