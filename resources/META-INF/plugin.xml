@@ -40,9 +40,9 @@
     <extensions defaultExtensionNs="com.intellij">
         <fileTypeFactory implementation="org.rustidea.RustFileTypeFactory"/>
         <lang.parserDefinition language="Rust" implementationClass="org.rustidea.RustParserDefinition"/>
-        <lang.ast.factory language="Rust" implementationClass="org.rustidea.psi.impl.RustASTFactory"/>
-        <stubElementTypeHolder class="org.rustidea.psi.types.RustStubElementTypes"/>
-        <lang.syntaxHighlighterFactory key="Rust" implementationClass="org.rustidea.editor.RustSyntaxHighlighterFactory"/>
+        <lang.ast.factory language="Rust" implementationClass="org.rustidea.psi.impl.RsASTFactory"/>
+        <stubElementTypeHolder class="org.rustidea.psi.types.RsStubElementTypes"/>
+        <lang.syntaxHighlighterFactory key="Rust" implementationClass="org.rustidea.editor.RsSyntaxHighlighterFactory"/>
     </extensions>
 
     <application-components>

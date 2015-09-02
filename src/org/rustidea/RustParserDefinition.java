@@ -29,62 +29,62 @@ import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
-import org.rustidea.lexer.RustLexer;
-import org.rustidea.parser.RustParser;
-import org.rustidea.psi.impl.RustFileImpl;
-import org.rustidea.psi.types.RustTypes;
-import org.rustidea.stubs.types.IRustStubElementType;
-import org.rustidea.stubs.types.RustFileElementType;
+import org.rustidea.lexer.RsLexer;
+import org.rustidea.parser.RsParser;
+import org.rustidea.psi.impl.RsFileImpl;
+import org.rustidea.psi.types.RsTypes;
+import org.rustidea.stubs.types.IRsStubElementType;
+import org.rustidea.stubs.types.RsFileElementType;
 
 public class RustParserDefinition implements ParserDefinition {
     @NotNull
     @Override
     public Lexer createLexer(Project project) {
-        return new RustLexer();
+        return new RsLexer();
     }
 
     @NotNull
     @Override
     public PsiParser createParser(Project project) {
-        return new RustParser();
+        return new RsParser();
     }
 
     @NotNull
     @Override
     public IFileElementType getFileNodeType() {
-        return RustFileElementType.INSTANCE;
+        return RsFileElementType.INSTANCE;
     }
 
     @NotNull
     @Override
     public TokenSet getWhitespaceTokens() {
-        return RustTypes.WHITE_SPACE_TOKEN_SET;
+        return RsTypes.WHITE_SPACE_TOKEN_SET;
     }
 
     @NotNull
     @Override
     public TokenSet getCommentTokens() {
-        return RustTypes.COMMENT_TOKEN_SET;
+        return RsTypes.COMMENT_TOKEN_SET;
     }
 
     @NotNull
     @Override
     public TokenSet getStringLiteralElements() {
-        return RustTypes.STRING_LITERAL_TOKEN_SET;
+        return RsTypes.STRING_LITERAL_TOKEN_SET;
     }
 
     @NotNull
     @Override
     public PsiFile createFile(FileViewProvider viewProvider) {
-        return new RustFileImpl(viewProvider);
+        return new RsFileImpl(viewProvider);
     }
 
     @NotNull
     @Override
     public PsiElement createElement(final ASTNode node) {
         final IElementType type = node.getElementType();
-        if (type instanceof IRustStubElementType) {
-            return ((IRustStubElementType) type).createPsi(node);
+        if (type instanceof IRsStubElementType) {
+            return ((IRsStubElementType) type).createPsi(node);
         }
 
         throw new IllegalStateException("Incorrect node for RustParserDefinition: " + node + " (" + type + ")");
@@ -93,6 +93,6 @@ public class RustParserDefinition implements ParserDefinition {
     @NotNull
     @Override
     public SpaceRequirements spaceExistanceTypeBetweenTokens(ASTNode left, ASTNode right) {
-        return LanguageUtil.canStickTokensTogetherByLexer(left, right, new RustLexer());
+        return LanguageUtil.canStickTokensTogetherByLexer(left, right, new RsLexer());
     }
 }
