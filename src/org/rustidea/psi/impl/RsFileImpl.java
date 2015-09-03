@@ -35,6 +35,7 @@ public class RsFileImpl extends PsiFileBase implements RsFile {
         return RustFileType.INSTANCE;
     }
 
+    @NotNull
     @Override
     public String toString() {
         return "Rust File";

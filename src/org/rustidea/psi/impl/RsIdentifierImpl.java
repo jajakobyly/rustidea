@@ -19,6 +19,7 @@ package org.rustidea.psi.impl;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsIdentifier;
 
@@ -41,6 +42,7 @@ public class RsIdentifierImpl extends RsTokenImpl implements RsIdentifier {
         }
     }
 
+    @Nullable
     @Override
     public String toString() {
         return "RsIdentifier:" + getName();

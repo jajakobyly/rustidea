@@ -32,6 +32,7 @@ public interface RsPath extends StubBasedPsiElement<RsPathStub> {
     enum Relation {
         UNSPECIFIED, SELF, SUPER, GLOBAL;
 
+        @NotNull
         public static Relation fromInt(int i) {
             return i == 1 ? SELF
                 : i == 2 ? SUPER

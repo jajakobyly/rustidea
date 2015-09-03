@@ -45,7 +45,7 @@ public class RsLifetimeTypeParameterElementType extends IRsStubElementType<RsLif
 
     @NotNull
     @Override
-    public RsLifetimeTypeParameter createPsi(ASTNode node) {
+    public RsLifetimeTypeParameter createPsi(@NotNull ASTNode node) {
         return new RsLifetimeTypeParameterImpl(node);
     }
 

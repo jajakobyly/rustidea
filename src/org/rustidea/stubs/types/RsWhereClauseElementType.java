@@ -37,16 +37,19 @@ public class RsWhereClauseElementType extends IRsStubElementType<RsWhereClauseSt
         super("WHERE_CLAUSE");
     }
 
+    @NotNull
     @Override
     public RsWhereClause createPsi(@NotNull RsWhereClauseStub stub) {
         return new RsWhereClauseImpl(stub);
     }
 
+    @NotNull
     @Override
-    public RsWhereClause createPsi(ASTNode node) {
+    public RsWhereClause createPsi(@NotNull ASTNode node) {
         return new RsWhereClauseImpl(node);
     }
 
+    @NotNull
     @Override
     public RsWhereClauseStub createStub(@NotNull RsWhereClause psi, StubElement parentStub) {
         return new RsWhereClauseStubImpl(parentStub);

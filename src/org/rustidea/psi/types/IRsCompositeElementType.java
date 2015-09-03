@@ -25,9 +25,10 @@ import sun.reflect.ConstructorAccessor;
 import java.lang.reflect.Constructor;
 
 public class IRsCompositeElementType extends IRsElementType implements ICompositeElementType {
+    @NotNull
     private final ConstructorAccessor constructor;
 
-    public IRsCompositeElementType(final String debugName, @NotNull final Class<? extends ASTNode> psiImplCls) {
+    public IRsCompositeElementType(@NotNull final String debugName, @NotNull final Class<? extends ASTNode> psiImplCls) {
         super(debugName);
         Constructor<? extends ASTNode> constructor = ReflectionUtil.getDefaultConstructor(psiImplCls);
         this.constructor = ReflectionUtil.getConstructorAccessor(constructor);

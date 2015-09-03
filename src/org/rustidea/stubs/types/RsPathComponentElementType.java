@@ -23,6 +23,7 @@ import com.intellij.psi.stubs.StubInputStream;
 import com.intellij.psi.stubs.StubOutputStream;
 import com.intellij.util.io.StringRef;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsPathComponent;
 import org.rustidea.psi.impl.RsPathComponentImpl;
 import org.rustidea.psi.types.RsTypes;
@@ -38,16 +39,19 @@ public class RsPathComponentElementType extends IRsStubElementType<RsPathCompone
         super("PATH_COMPONENT");
     }
 
+    @NotNull
     @Override
     public RsPathComponent createPsi(@NotNull final RsPathComponentStub stub) {
         return new RsPathComponentImpl(stub);
     }
 
+    @NotNull
     @Override
-    public RsPathComponent createPsi(ASTNode node) {
+    public RsPathComponent createPsi(@NotNull ASTNode node) {
         return new RsPathComponentImpl(node);
     }
 
+    @Nullable
     @Override
     public RsPathComponentStub createStub(@NotNull final RsPathComponent psi, final StubElement parentStub) {
         return new RsPathComponentStubImpl(parentStub, StringRef.fromString(psi.getName()));

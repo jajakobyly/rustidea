@@ -36,6 +36,7 @@ public class RsKeywordImpl extends RsTokenImpl implements RsKeyword {
         }
     }
 
+    @NotNull
     @Override
     public String toString() {
         return "RsKeyword:" + getText();

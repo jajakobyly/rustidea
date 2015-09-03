@@ -59,7 +59,7 @@ public class RsParser implements PsiParser, LightPsiParser {
     }
 
     @Override
-    public void parseLight(IElementType root, PsiBuilder builder) {
+    public void parseLight(IElementType root, @NotNull PsiBuilder builder) {
         file(root, builder);
     }
 }

@@ -37,16 +37,19 @@ public class RsPathElementType extends IRsStubElementType<RsPathStub, RsPath> {
         super("PATH");
     }
 
+    @NotNull
     @Override
     public RsPath createPsi(@NotNull RsPathStub stub) {
         return new RsPathImpl(stub);
     }
 
+    @NotNull
     @Override
-    public RsPath createPsi(ASTNode node) {
+    public RsPath createPsi(@NotNull ASTNode node) {
         return new RsPathImpl(node);
     }
 
+    @NotNull
     @Override
     public RsPathStub createStub(@NotNull RsPath psi, StubElement parentStub) {
         return new RsPathStubImpl(parentStub, psi.getRelation());

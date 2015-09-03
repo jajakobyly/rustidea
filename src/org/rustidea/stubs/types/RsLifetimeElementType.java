@@ -23,6 +23,7 @@ import com.intellij.psi.stubs.StubInputStream;
 import com.intellij.psi.stubs.StubOutputStream;
 import com.intellij.util.io.StringRef;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsLifetime;
 import org.rustidea.psi.impl.RsLifetimeImpl;
 import org.rustidea.psi.types.RsStubElementTypes;
@@ -38,16 +39,19 @@ public class RsLifetimeElementType extends IRsStubElementType<RsLifetimeStub, Rs
         super("TYPE_PARAMETER_LIST");
     }
 
+    @NotNull
     @Override
     public RsLifetime createPsi(@NotNull final RsLifetimeStub stub) {
         return new RsLifetimeImpl(stub);
     }
 
+    @NotNull
     @Override
-    public RsLifetime createPsi(ASTNode node) {
+    public RsLifetime createPsi(@NotNull ASTNode node) {
         return new RsLifetimeImpl(node);
     }
 
+    @Nullable
     @Override
     public RsLifetimeStub createStub(@NotNull final RsLifetime psi, final StubElement parentStub) {
         return new RsLifetimeStubImpl(parentStub, StringRef.fromString(psi.getName()));

@@ -75,13 +75,13 @@ public class RustParserDefinition implements ParserDefinition {
 
     @NotNull
     @Override
-    public PsiFile createFile(FileViewProvider viewProvider) {
+    public PsiFile createFile(@NotNull FileViewProvider viewProvider) {
         return new RsFileImpl(viewProvider);
     }
 
     @NotNull
     @Override
-    public PsiElement createElement(final ASTNode node) {
+    public PsiElement createElement(@NotNull final ASTNode node) {
         final IElementType type = node.getElementType();
         if (type instanceof IRsStubElementType) {
             return ((IRsStubElementType) type).createPsi(node);
@@ -92,7 +92,7 @@ public class RustParserDefinition implements ParserDefinition {
 
     @NotNull
     @Override
-    public SpaceRequirements spaceExistanceTypeBetweenTokens(ASTNode left, ASTNode right) {
+    public SpaceRequirements spaceExistanceTypeBetweenTokens(@NotNull ASTNode left, @NotNull ASTNode right) {
         return LanguageUtil.canStickTokensTogetherByLexer(left, right, new RsLexer());
     }
 }

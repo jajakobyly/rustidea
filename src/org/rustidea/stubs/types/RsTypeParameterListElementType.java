@@ -45,7 +45,7 @@ public class RsTypeParameterListElementType extends IRsStubElementType<RsTypePar
 
     @NotNull
     @Override
-    public RsTypeParameterList createPsi(ASTNode node) {
+    public RsTypeParameterList createPsi(@NotNull ASTNode node) {
         return new RsTypeParameterListImpl(node);
     }
 

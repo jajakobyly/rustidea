@@ -17,10 +17,11 @@
 package org.rustidea.psi.types;
 
 import com.intellij.psi.tree.IElementType;
+import org.jetbrains.annotations.NotNull;
 import org.rustidea.RustLanguage;
 
 public abstract class IRsElementType extends IElementType {
-    public IRsElementType(String debugName) {
+    public IRsElementType(@NotNull String debugName) {
         super(debugName, RustLanguage.INSTANCE);
     }
 }

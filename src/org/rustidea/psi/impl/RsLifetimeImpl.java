@@ -72,6 +72,7 @@ public class RsLifetimeImpl extends IRsStubPsiElement<RsLifetimeStub> implements
         }
     }
 
+    @Nullable
     @Override
     public String toString() {
         return "RsLifetime:" + getName();

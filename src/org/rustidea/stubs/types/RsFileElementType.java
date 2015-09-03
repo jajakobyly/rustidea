@@ -45,6 +45,7 @@ public class RsFileElementType extends IStubFileElementType<RsFileStub> {
         return VERSION;
     }
 
+    @NotNull
     @Override
     public StubBuilder getBuilder() {
         return new DefaultStubBuilder() {

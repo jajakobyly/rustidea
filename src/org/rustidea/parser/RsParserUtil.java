@@ -56,7 +56,7 @@ public final class RsParserUtil {
     public static Marker eatWhile(@NotNull final PsiBuilder builder, @NotNull final TokenSet expectedTypes) {
         return eat(builder, new Condition<PsiBuilder>() {
             @Override
-            public boolean value(PsiBuilder builder) {
+            public boolean value(@NotNull PsiBuilder builder) {
                 return expectedTypes.contains(builder.getTokenType());
             }
         });
@@ -66,7 +66,7 @@ public final class RsParserUtil {
     public static Marker eatUnless(@NotNull final PsiBuilder builder, @NotNull final TokenSet unexpectedTypes) {
         return eat(builder, new Condition<PsiBuilder>() {
             @Override
-            public boolean value(PsiBuilder builder) {
+            public boolean value(@NotNull PsiBuilder builder) {
                 return !unexpectedTypes.contains(builder.getTokenType());
             }
         });

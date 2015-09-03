@@ -94,6 +94,7 @@ public class RsLifetimeTypeParameterImpl extends IRsStubPsiElement<RsLifetimeTyp
         }
     }
 
+    @Nullable
     @Override
     public String toString() {
         return "RsLifetimeTypeParameter:" + getName();

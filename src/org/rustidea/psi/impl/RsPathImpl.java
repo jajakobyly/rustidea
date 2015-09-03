@@ -68,7 +68,7 @@ public class RsPathImpl extends IRsStubPsiElement<RsPathStub> implements RsPath 
     }
 
     @Override
-    public int getComponentIndex(RsPathComponent component) {
+    public int getComponentIndex(@NotNull RsPathComponent component) {
         assert component.getParent() == this;
         return component.getIndex();
     }

@@ -23,6 +23,7 @@ import com.intellij.psi.stubs.StubInputStream;
 import com.intellij.psi.stubs.StubOutputStream;
 import com.intellij.util.io.StringRef;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsTypeParameter;
 import org.rustidea.psi.impl.RsTypeParameterImpl;
 import org.rustidea.psi.types.RsTypes;
@@ -38,16 +39,19 @@ public class RsTypeParameterElementType extends IRsStubElementType<RsTypeParamet
         super("TYPE_PARAMETER");
     }
 
+    @NotNull
     @Override
     public RsTypeParameter createPsi(@NotNull RsTypeParameterStub stub) {
         return new RsTypeParameterImpl(stub);
     }
 
+    @NotNull
     @Override
-    public RsTypeParameter createPsi(ASTNode node) {
+    public RsTypeParameter createPsi(@NotNull ASTNode node) {
         return new RsTypeParameterImpl(node);
     }
 
+    @Nullable
     @Override
     public RsTypeParameterStub createStub(@NotNull RsTypeParameter psi, StubElement parentStub) {
         return new RsTypeParameterStubImpl(parentStub, StringRef.fromString(psi.getName()));
