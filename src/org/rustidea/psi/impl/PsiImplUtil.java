@@ -16,8 +16,12 @@
 
 package org.rustidea.psi.impl;
 
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.StubBasedPsiElement;
+import com.intellij.psi.stubs.StubElement;
 import com.intellij.psi.util.PsiUtilBase;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsTypeParameter;
 import org.rustidea.psi.RsTypeParameterList;
 import org.rustidea.psi.RsTypeParameterListOwner;
@@ -39,5 +43,22 @@ public final class PsiImplUtil extends PsiUtilBase {
             return list.getTypeParameters();
         }
         return SimpleArrayFactory.empty(RsTypeParameter.class);
+    }
+
+    public static <ElemT extends PsiElement> int getElementIndex(@NotNull final ElemT element, @NotNull final Class<ElemT> cls) {
+        int result = 0;
+        for (PsiElement e = element.getPrevSibling(); e != null; e = e.getPrevSibling()) {
+            if (cls.isInstance(e)) {
+                result++;
+            }
+        }
+        return result;
+    }
+
+    public static <ElemT extends PsiElement & StubBasedPsiElement> int getStubElementIndex(
+        @NotNull final ElemT element, @Nullable final StubElement stub, @NotNull final Class<ElemT> elemCls) {
+        return stub != null
+            ? stub.getParentStub().getChildrenStubs().indexOf(stub)
+            : getElementIndex(element, elemCls);
     }
 }

@@ -26,7 +26,6 @@ import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.*;
 import org.rustidea.psi.types.RsStubElementTypes;
 import org.rustidea.psi.types.RsTypes;
-import org.rustidea.stubs.RsTypeParameterListStub;
 import org.rustidea.stubs.RsTypeParameterStub;
 import org.rustidea.stubs.impl.IRsStubPsiElement;
 
@@ -76,19 +75,7 @@ public class RsTypeParameterImpl extends IRsStubPsiElement<RsTypeParameterStub> 
 
     @Override
     public int getIndex() {
-        final RsTypeParameterStub stub = getStub();
-        if (stub != null) {
-            final RsTypeParameterListStub parentStub = (RsTypeParameterListStub) stub.getParentStub();
-            return parentStub.getChildrenStubs().indexOf(stub);
-        }
-
-        int result = 0;
-        for (PsiElement elem = getPrevSibling(); elem != null; elem = elem.getPrevSibling()) {
-            if (elem instanceof RsTypeParameter) {
-                result++;
-            }
-        }
-        return result;
+        return PsiImplUtil.getStubElementIndex(this, getStub(), RsTypeParameter.class);
     }
 
     @Override

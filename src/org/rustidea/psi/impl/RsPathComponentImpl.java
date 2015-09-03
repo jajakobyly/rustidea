@@ -68,19 +68,7 @@ public class RsPathComponentImpl extends IRsStubPsiElement<RsPathComponentStub> 
 
     @Override
     public int getIndex() {
-        final RsPathComponentStub stub = getStub();
-        if (stub != null) {
-            final RsPathComponentStub parentStub = (RsPathComponentStub) stub.getParentStub();
-            return parentStub.getChildrenStubs().indexOf(stub);
-        }
-
-        int result = 0;
-        for (PsiElement elem = getPrevSibling(); elem != null; elem = elem.getPrevSibling()) {
-            if (elem instanceof RsPathComponent) {
-                result++;
-            }
-        }
-        return result;
+        return PsiImplUtil.getStubElementIndex(this, getStub(), RsPathComponent.class);
     }
 
     @Override

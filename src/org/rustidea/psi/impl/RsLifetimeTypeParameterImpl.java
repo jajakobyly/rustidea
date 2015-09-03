@@ -70,19 +70,7 @@ public class RsLifetimeTypeParameterImpl extends IRsStubPsiElement<RsLifetimeTyp
 
     @Override
     public int getIndex() {
-        final RsLifetimeTypeParameterStub stub = getStub();
-        if (stub != null) {
-            final RsLifetimeTypeParameterStub parentStub = (RsLifetimeTypeParameterStub) stub.getParentStub();
-            return parentStub.getChildrenStubs().indexOf(stub);
-        }
-
-        int result = 0;
-        for (PsiElement elem = getPrevSibling(); elem != null; elem = elem.getPrevSibling()) {
-            if (elem instanceof RsLifetimeTypeParameter) {
-                result++;
-            }
-        }
-        return result;
+        return PsiImplUtil.getStubElementIndex(this, getStub(), RsLifetimeTypeParameter.class);
     }
 
     @Override
