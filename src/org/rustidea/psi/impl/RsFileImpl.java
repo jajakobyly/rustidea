@@ -22,6 +22,7 @@ import com.intellij.psi.FileViewProvider;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.RustFileType;
 import org.rustidea.RustLanguage;
+import org.rustidea.psi.RsAttributeBase;
 import org.rustidea.psi.RsFile;
 
 public class RsFileImpl extends PsiFileBase implements RsFile {
@@ -33,6 +34,13 @@ public class RsFileImpl extends PsiFileBase implements RsFile {
     @Override
     public FileType getFileType() {
         return RustFileType.INSTANCE;
+    }
+
+    @NotNull
+    @Override
+    public RsAttributeBase[] getAttributes() {
+        // FIXME Does this method operate on stubs wherever possible?
+        return findChildrenByClass(RsAttributeBase.class);
     }
 
     @NotNull
