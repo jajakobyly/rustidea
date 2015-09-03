@@ -45,7 +45,8 @@ public final class PsiImplUtil extends PsiUtilBase {
         return SimpleArrayFactory.empty(RsTypeParameter.class);
     }
 
-    public static <ElemT extends PsiElement> int getElementIndex(@NotNull final ElemT element, @NotNull final Class<ElemT> cls) {
+    public static <ElemT extends PsiElement> int getElementIndex(
+        @NotNull final ElemT element, @NotNull final Class<ElemT> cls) {
         int result = 0;
         for (PsiElement e = element.getPrevSibling(); e != null; e = e.getPrevSibling()) {
             if (cls.isInstance(e)) {
@@ -55,7 +56,7 @@ public final class PsiImplUtil extends PsiUtilBase {
         return result;
     }
 
-    public static <ElemT extends PsiElement & StubBasedPsiElement> int getStubElementIndex(
+    public static <ElemT extends StubBasedPsiElement> int getStubElementIndex(
         @NotNull final ElemT element, @Nullable final StubElement stub, @NotNull final Class<ElemT> elemCls) {
         return stub != null
             ? stub.getParentStub().getChildrenStubs().indexOf(stub)
