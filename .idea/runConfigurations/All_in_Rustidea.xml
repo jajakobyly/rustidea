@@ -25,9 +25,6 @@
     <envs />
     <properties />
     <listeners />
-    <method>
-      <option name="RunConfigurationTask" enabled="true" run_configuration_name="JFlex" run_configuration_type="JarApplication" />
-      <option name="Make" enabled="true" />
-    </method>
+    <method />
   </configuration>
 </component>
