@@ -24,14 +24,13 @@ import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.*;
-import org.rustidea.psi.types.RsStubElementTypes;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.stubs.RsTypeParameterStub;
 import org.rustidea.stubs.impl.IRsStubPsiElement;
 
 public class RsTypeParameterImpl extends IRsStubPsiElement<RsTypeParameterStub> implements RsTypeParameter {
     public RsTypeParameterImpl(@NotNull RsTypeParameterStub stub) {
-        super(stub, RsStubElementTypes.TYPE_PARAMETER);
+        super(stub, RsTypes.TYPE_PARAMETER);
     }
 
     public RsTypeParameterImpl(@NotNull ASTNode node) {

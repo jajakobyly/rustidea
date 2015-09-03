@@ -26,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsLifetime;
 import org.rustidea.psi.impl.RsLifetimeImpl;
-import org.rustidea.psi.types.RsStubElementTypes;
+import org.rustidea.psi.types.RsTypes;
 import org.rustidea.stubs.RsLifetimeStub;
 import org.rustidea.stubs.impl.RsLifetimeStubImpl;
 
@@ -71,6 +71,6 @@ public class RsLifetimeElementType extends IRsStubElementType<RsLifetimeStub, Rs
     @NotNull
     @Override
     public ASTNode createCompositeNode() {
-        return new CompositeElement(RsStubElementTypes.LIFETIME);
+        return new CompositeElement(RsTypes.LIFETIME);
     }
 }

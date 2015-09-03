@@ -21,14 +21,14 @@ import com.intellij.psi.stubs.StubElement;
 import com.intellij.util.io.StringRef;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsTypeParameter;
-import org.rustidea.psi.types.RsStubElementTypes;
+import org.rustidea.psi.types.RsTypes;
 import org.rustidea.stubs.RsTypeParameterStub;
 
 public class RsTypeParameterStubImpl extends StubBase<RsTypeParameter> implements RsTypeParameterStub {
     private final StringRef name;
 
     public RsTypeParameterStubImpl(StubElement parent, StringRef name) {
-        super(parent, RsStubElementTypes.TYPE_PARAMETER);
+        super(parent, RsTypes.TYPE_PARAMETER);
         this.name = name;
     }
 

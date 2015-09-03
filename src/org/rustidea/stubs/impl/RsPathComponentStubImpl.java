@@ -21,14 +21,14 @@ import com.intellij.psi.stubs.StubElement;
 import com.intellij.util.io.StringRef;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsPathComponent;
-import org.rustidea.psi.types.RsStubElementTypes;
+import org.rustidea.psi.types.RsTypes;
 import org.rustidea.stubs.RsPathComponentStub;
 
 public class RsPathComponentStubImpl extends StubBase<RsPathComponent> implements RsPathComponentStub {
     private final StringRef name;
 
     public RsPathComponentStubImpl(final StubElement parent, final StringRef name) {
-        super(parent, RsStubElementTypes.PATH_COMPONENT);
+        super(parent, RsTypes.PATH_COMPONENT);
         this.name = name;
     }
 

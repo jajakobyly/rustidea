@@ -21,14 +21,14 @@ import com.intellij.psi.stubs.StubElement;
 import com.intellij.util.io.StringRef;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsLifetime;
-import org.rustidea.psi.types.RsStubElementTypes;
+import org.rustidea.psi.types.RsTypes;
 import org.rustidea.stubs.RsLifetimeStub;
 
 public class RsLifetimeStubImpl extends StubBase<RsLifetime> implements RsLifetimeStub {
     private final StringRef name;
 
     public RsLifetimeStubImpl(final StubElement parent, final StringRef name) {
-        super(parent, RsStubElementTypes.LIFETIME);
+        super(parent, RsTypes.LIFETIME);
         this.name = name;
     }
 

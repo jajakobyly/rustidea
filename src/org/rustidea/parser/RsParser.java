@@ -27,7 +27,7 @@ import org.jetbrains.annotations.Nullable;
 
 import static org.rustidea.parser.RsParserUtil.eatUnless;
 import static org.rustidea.parser.RsParserUtil.tryParseToken;
-import static org.rustidea.psi.types.RsCompositeTypes.PARENT_DOC;
+import static org.rustidea.psi.types.RsTypes.PARENT_DOC;
 import static org.rustidea.psi.types.RsTypes.PARENT_DOC_TOKEN_SET;
 
 public class RsParser implements PsiParser, LightPsiParser {
