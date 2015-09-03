@@ -18,10 +18,12 @@ package org.rustidea.psi.impl;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
+import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsPath;
 import org.rustidea.psi.RsPathComponent;
+import org.rustidea.psi.RsPathRelation;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.stubs.RsPathStub;
 import org.rustidea.stubs.impl.IRsStubPsiElement;
@@ -38,27 +40,19 @@ public class RsPathImpl extends IRsStubPsiElement<RsPathStub> implements RsPath 
 
     @NotNull
     @Override
-    public RelationType getRelationType() {
+    public RsPathRelation getRelation() {
+        return PsiTreeUtil.getRequiredChildOfType(this, RsPathRelation.class);
+    }
+
+    @NotNull
+    @Override
+    public RsPathRelation.Type getRelationType() {
         final RsPathStub stub = getStub();
         if (stub != null) {
             return stub.getRelationType();
         }
 
-        final RsPathComponent firstComponent = findChildByType(RsTypes.PATH_COMPONENT);
-        // ::foo::bar (parser should yield null as first path component)
-        // TODO Investigate if such scenario is possible
-        if (firstComponent == null) return RelationType.GLOBAL;
-
-        // TODO `self` & `super` should be treated as both identifiers & keywords
-        final String name = firstComponent.getName();
-        if (name != null) {
-            // self::foo::bar
-            if (name.equals("self")) return RelationType.SELF;
-            // super::foo::bar
-            if (name.equals("super")) return RelationType.SUPER;
-        }
-        // foo::bar or error
-        return RelationType.UNSPECIFIED;
+        return getRelation().getType();
     }
 
     @NotNull

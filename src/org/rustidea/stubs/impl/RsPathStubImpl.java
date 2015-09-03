@@ -20,20 +20,21 @@ import com.intellij.psi.stubs.StubBase;
 import com.intellij.psi.stubs.StubElement;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.RsPath;
+import org.rustidea.psi.RsPathRelation;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.stubs.RsPathStub;
 
 public class RsPathStubImpl extends StubBase<RsPath> implements RsPathStub {
-    private final RsPath.RelationType relationType;
+    private final RsPathRelation.Type relationType;
 
-    public RsPathStubImpl(StubElement parent, RsPath.RelationType relationType) {
+    public RsPathStubImpl(StubElement parent, RsPathRelation.Type relationType) {
         super(parent, RsTypes.PATH);
         this.relationType = relationType;
     }
 
     @NotNull
     @Override
-    public RsPath.RelationType getRelationType() {
+    public RsPathRelation.Type getRelationType() {
         return relationType;
     }
 }

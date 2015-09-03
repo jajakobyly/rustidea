@@ -19,8 +19,9 @@ package org.rustidea.stubs;
 import com.intellij.psi.stubs.StubElement;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.RsPath;
+import org.rustidea.psi.RsPathRelation;
 
 public interface RsPathStub extends StubElement<RsPath> {
     @NotNull
-    RsPath.RelationType getRelationType();
+    RsPathRelation.Type getRelationType();
 }

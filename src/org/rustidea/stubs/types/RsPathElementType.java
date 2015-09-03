@@ -23,6 +23,7 @@ import com.intellij.psi.stubs.StubInputStream;
 import com.intellij.psi.stubs.StubOutputStream;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.RsPath;
+import org.rustidea.psi.RsPathRelation;
 import org.rustidea.psi.impl.RsPathImpl;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.stubs.RsPathStub;
@@ -63,7 +64,7 @@ public class RsPathElementType extends IRsStubElementType<RsPathStub, RsPath> {
     @NotNull
     @Override
     public RsPathStub deserialize(@NotNull StubInputStream dataStream, StubElement parentStub) throws IOException {
-        return new RsPathStubImpl(parentStub, RsPath.RelationType.fromInt(dataStream.readVarInt()));
+        return new RsPathStubImpl(parentStub, RsPathRelation.Type.fromInt(dataStream.readVarInt()));
     }
 
     @NotNull

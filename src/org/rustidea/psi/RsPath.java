@@ -18,33 +18,18 @@ package org.rustidea.psi;
 
 import com.intellij.psi.StubBasedPsiElement;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.rustidea.stubs.RsPathStub;
 
 public interface RsPath extends StubBasedPsiElement<RsPathStub> {
+    @Nullable
+    RsPathRelation getRelation();
+
     @NotNull
-    RelationType getRelationType();
+    RsPathRelation.Type getRelationType();
 
     @NotNull
     RsPathComponent[] getComponents();
 
     int getComponentIndex(RsPathComponent component);
-
-    enum RelationType {
-        UNSPECIFIED, SELF, SUPER, GLOBAL;
-
-        @NotNull
-        public static RelationType fromInt(int i) {
-            return i == 1 ? SELF
-                : i == 2 ? SUPER
-                : i == 3 ? GLOBAL
-                : UNSPECIFIED;
-        }
-
-        public int toInt() {
-            return this == SELF ? 1
-                : this == SUPER ? 2
-                : this == GLOBAL ? 3
-                : 0;
-        }
-    }
 }
