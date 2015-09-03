@@ -22,5 +22,5 @@ import org.rustidea.psi.RsPath;
 
 public interface RsPathStub extends StubElement<RsPath> {
     @NotNull
-    RsPath.Relation getRelation();
+    RsPath.RelationType getRelationType();
 }

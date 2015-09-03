@@ -38,27 +38,27 @@ public class RsPathImpl extends IRsStubPsiElement<RsPathStub> implements RsPath 
 
     @NotNull
     @Override
-    public Relation getRelation() {
+    public RelationType getRelationType() {
         final RsPathStub stub = getStub();
         if (stub != null) {
-            return stub.getRelation();
+            return stub.getRelationType();
         }
 
         final RsPathComponent firstComponent = findChildByType(RsTypes.PATH_COMPONENT);
         // ::foo::bar (parser should yield null as first path component)
         // TODO Investigate if such scenario is possible
-        if (firstComponent == null) return Relation.GLOBAL;
+        if (firstComponent == null) return RelationType.GLOBAL;
 
         // TODO `self` & `super` should be treated as both identifiers & keywords
         final String name = firstComponent.getName();
         if (name != null) {
             // self::foo::bar
-            if (name.equals("self")) return Relation.SELF;
+            if (name.equals("self")) return RelationType.SELF;
             // super::foo::bar
-            if (name.equals("super")) return Relation.SUPER;
+            if (name.equals("super")) return RelationType.SUPER;
         }
         // foo::bar or error
-        return Relation.UNSPECIFIED;
+        return RelationType.UNSPECIFIED;
     }
 
     @NotNull

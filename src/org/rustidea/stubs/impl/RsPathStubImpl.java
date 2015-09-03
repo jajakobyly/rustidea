@@ -24,16 +24,16 @@ import org.rustidea.psi.types.RsTypes;
 import org.rustidea.stubs.RsPathStub;
 
 public class RsPathStubImpl extends StubBase<RsPath> implements RsPathStub {
-    private final RsPath.Relation relation;
+    private final RsPath.RelationType relationType;
 
-    public RsPathStubImpl(StubElement parent, RsPath.Relation relation) {
+    public RsPathStubImpl(StubElement parent, RsPath.RelationType relationType) {
         super(parent, RsTypes.PATH);
-        this.relation = relation;
+        this.relationType = relationType;
     }
 
     @NotNull
     @Override
-    public RsPath.Relation getRelation() {
-        return relation;
+    public RsPath.RelationType getRelationType() {
+        return relationType;
     }
 }

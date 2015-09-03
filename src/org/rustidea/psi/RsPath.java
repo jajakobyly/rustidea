@@ -22,18 +22,18 @@ import org.rustidea.stubs.RsPathStub;
 
 public interface RsPath extends StubBasedPsiElement<RsPathStub> {
     @NotNull
-    Relation getRelation();
+    RelationType getRelationType();
 
     @NotNull
     RsPathComponent[] getComponents();
 
     int getComponentIndex(RsPathComponent component);
 
-    enum Relation {
+    enum RelationType {
         UNSPECIFIED, SELF, SUPER, GLOBAL;
 
         @NotNull
-        public static Relation fromInt(int i) {
+        public static RelationType fromInt(int i) {
             return i == 1 ? SELF
                 : i == 2 ? SUPER
                 : i == 3 ? GLOBAL

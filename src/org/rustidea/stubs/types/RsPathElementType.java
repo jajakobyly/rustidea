@@ -52,18 +52,18 @@ public class RsPathElementType extends IRsStubElementType<RsPathStub, RsPath> {
     @NotNull
     @Override
     public RsPathStub createStub(@NotNull RsPath psi, StubElement parentStub) {
-        return new RsPathStubImpl(parentStub, psi.getRelation());
+        return new RsPathStubImpl(parentStub, psi.getRelationType());
     }
 
     @Override
     public void serialize(@NotNull RsPathStub stub, @NotNull StubOutputStream dataStream) throws IOException {
-        dataStream.writeVarInt(stub.getRelation().toInt());
+        dataStream.writeVarInt(stub.getRelationType().toInt());
     }
 
     @NotNull
     @Override
     public RsPathStub deserialize(@NotNull StubInputStream dataStream, StubElement parentStub) throws IOException {
-        return new RsPathStubImpl(parentStub, RsPath.Relation.fromInt(dataStream.readVarInt()));
+        return new RsPathStubImpl(parentStub, RsPath.RelationType.fromInt(dataStream.readVarInt()));
     }
 
     @NotNull
