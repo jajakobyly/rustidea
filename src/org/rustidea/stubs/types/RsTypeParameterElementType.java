@@ -17,10 +17,7 @@
 package org.rustidea.stubs.types;
 
 import com.intellij.lang.ASTNode;
-import com.intellij.lang.LighterAST;
-import com.intellij.lang.LighterASTNode;
-import com.intellij.lang.LighterASTTokenNode;
-import com.intellij.psi.impl.source.tree.LightTreeUtil;
+import com.intellij.psi.impl.source.tree.CompositeElement;
 import com.intellij.psi.stubs.StubElement;
 import com.intellij.psi.stubs.StubInputStream;
 import com.intellij.psi.stubs.StubOutputStream;
@@ -28,7 +25,6 @@ import com.intellij.util.io.StringRef;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.RsTypeParameter;
 import org.rustidea.psi.impl.RsTypeParameterImpl;
-import org.rustidea.psi.impl.source.tree.TypeParameterElement;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.stubs.RsTypeParameterStub;
 import org.rustidea.stubs.impl.RsTypeParameterStubImpl;
@@ -58,13 +54,6 @@ public class RsTypeParameterElementType extends IRsStubElementType<RsTypeParamet
     }
 
     @Override
-    public RsTypeParameterStub createStub(LighterAST tree, LighterASTNode node, StubElement parentStub) {
-        LighterASTTokenNode nameNode = (LighterASTTokenNode) LightTreeUtil.requiredChildOfType(tree, node, RsTypes.IDENTIFIER);
-        String name = nameNode.getText().toString();
-        return new RsTypeParameterStubImpl(parentStub, StringRef.fromString(name));
-    }
-
-    @Override
     public void serialize(@NotNull RsTypeParameterStub stub, @NotNull StubOutputStream dataStream) throws IOException {
         dataStream.writeName(stub.getName());
     }
@@ -78,6 +67,6 @@ public class RsTypeParameterElementType extends IRsStubElementType<RsTypeParamet
     @NotNull
     @Override
     public ASTNode createCompositeNode() {
-        return new TypeParameterElement();
+        return new CompositeElement(RsTypes.TYPE_PARAMETER);
     }
 }

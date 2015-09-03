@@ -24,4 +24,6 @@ public interface RsStubElementTypes {
     RsLifetimeTypeParameterElementType LIFETIME_TYPE_PARAMETER = RsLifetimeTypeParameterElementType.INSTANCE;
     RsTypeParameterListElementType TYPE_PARAMETER_LIST = RsTypeParameterListElementType.INSTANCE;
     RsWhereClauseElementType WHERE_CLAUSE = RsWhereClauseElementType.INSTANCE;
+    RsPathElementType PATH = RsPathElementType.INSTANCE;
+    RsPathComponentElementType PATH_COMPONENT = RsPathComponentElementType.INSTANCE;
 }

@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi.impl;
+package org.rustidea.stubs;
 
-import com.intellij.psi.util.PsiUtilBase;
+import com.intellij.psi.stubs.StubElement;
+import org.jetbrains.annotations.NotNull;
+import org.rustidea.psi.RsPath;
 
-public final class PsiUtil extends PsiUtilBase {
-    private PsiUtil() {
-    }
+public interface RsPathStub extends StubElement<RsPath> {
+    @NotNull
+    RsPath.Relation getRelation();
 }

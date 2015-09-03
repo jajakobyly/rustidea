@@ -14,36 +14,26 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi;
+package org.rustidea.stubs.impl;
 
-import com.intellij.psi.StubBasedPsiElement;
+import com.intellij.psi.stubs.StubBase;
+import com.intellij.psi.stubs.StubElement;
 import org.jetbrains.annotations.NotNull;
+import org.rustidea.psi.RsPath;
+import org.rustidea.psi.types.RsTypes;
 import org.rustidea.stubs.RsPathStub;
 
-public interface RsPath extends StubBasedPsiElement<RsPathStub> {
-    @NotNull
-    Relation getRelation();
+public class RsPathStubImpl extends StubBase<RsPath> implements RsPathStub {
+    private final RsPath.Relation relation;
+
+    public RsPathStubImpl(StubElement parent, RsPath.Relation relation) {
+        super(parent, RsTypes.PATH);
+        this.relation = relation;
+    }
 
     @NotNull
-    RsPathComponent[] getComponents();
-
-    int getComponentIndex(RsPathComponent component);
-
-    enum Relation {
-        UNSPECIFIED, SELF, SUPER, GLOBAL;
-
-        public static Relation fromInt(int i) {
-            return i == 1 ? SELF
-                : i == 2 ? SUPER
-                : i == 3 ? GLOBAL
-                : UNSPECIFIED;
-        }
-
-        public int toInt() {
-            return this == SELF ? 1
-                : this == SUPER ? 2
-                : this == GLOBAL ? 3
-                : 0;
-        }
+    @Override
+    public RsPath.Relation getRelation() {
+        return relation;
     }
 }

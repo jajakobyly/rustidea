@@ -43,6 +43,14 @@ public abstract class RsElementVisitor extends PsiElementVisitor {
         visitDoc(parentDoc);
     }
 
+    public void visitPath(RsPath path) {
+        visitElement(path);
+    }
+
+    public void visitPathComponent(RsPathComponent pathComponent) {
+        visitElement(pathComponent);
+    }
+
     public void visitRustToken(RsToken token) {
         visitElement(token);
     }

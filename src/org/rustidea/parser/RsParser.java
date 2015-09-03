@@ -43,8 +43,7 @@ public class RsParser implements PsiParser, LightPsiParser {
 
     @Nullable
     private static Marker item(@NotNull PsiBuilder builder) {
-        Marker mItem = parentDoc(builder);
-        return mItem;
+        return parentDoc(builder);
     }
 
     @Nullable

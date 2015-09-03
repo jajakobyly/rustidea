@@ -28,6 +28,7 @@ import org.rustidea.psi.RsTypeParameter;
 import org.rustidea.psi.RsWhereClause;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.stubs.RsWhereClauseStub;
+import org.rustidea.util.SimpleArrayFactory;
 
 public class RsWhereClauseImpl extends StubBasedPsiElementBase<RsWhereClauseStub> implements RsWhereClause {
     public RsWhereClauseImpl(@NotNull RsWhereClauseStub stub) {
@@ -41,8 +42,7 @@ public class RsWhereClauseImpl extends StubBasedPsiElementBase<RsWhereClauseStub
     @NotNull
     @Override
     public RsPath[] getBounds() {
-//        return getStubOrPsiChildren(RsTypes.PATH, SimpleArrayFactory.get(RsPath.class));
-        throw new UnsupportedOperationException("not implemented yet");
+        return getStubOrPsiChildren(RsTypes.PATH, SimpleArrayFactory.get(RsPath.class));
     }
 
     @Nullable

@@ -22,49 +22,50 @@ import com.intellij.psi.stubs.StubElement;
 import com.intellij.psi.stubs.StubInputStream;
 import com.intellij.psi.stubs.StubOutputStream;
 import org.jetbrains.annotations.NotNull;
-import org.rustidea.psi.RsWhereClause;
-import org.rustidea.psi.impl.RsWhereClauseImpl;
+import org.rustidea.psi.RsPath;
+import org.rustidea.psi.impl.RsPathImpl;
 import org.rustidea.psi.types.RsTypes;
-import org.rustidea.stubs.RsWhereClauseStub;
-import org.rustidea.stubs.impl.RsWhereClauseStubImpl;
+import org.rustidea.stubs.RsPathStub;
+import org.rustidea.stubs.impl.RsPathStubImpl;
 
 import java.io.IOException;
 
-public class RsWhereClauseElementType extends IRsStubElementType<RsWhereClauseStub, RsWhereClause> {
-    public static final RsWhereClauseElementType INSTANCE = new RsWhereClauseElementType();
+public class RsPathElementType extends IRsStubElementType<RsPathStub, RsPath> {
+    public static final RsPathElementType INSTANCE = new RsPathElementType();
 
-    protected RsWhereClauseElementType() {
-        super("WHERE_CLAUSE");
+    private RsPathElementType() {
+        super("PATH");
     }
 
     @Override
-    public RsWhereClause createPsi(@NotNull RsWhereClauseStub stub) {
-        return new RsWhereClauseImpl(stub);
+    public RsPath createPsi(@NotNull RsPathStub stub) {
+        return new RsPathImpl(stub);
     }
 
     @Override
-    public RsWhereClause createPsi(ASTNode node) {
-        return new RsWhereClauseImpl(node);
+    public RsPath createPsi(ASTNode node) {
+        return new RsPathImpl(node);
     }
 
     @Override
-    public RsWhereClauseStub createStub(@NotNull RsWhereClause psi, StubElement parentStub) {
-        return new RsWhereClauseStubImpl(parentStub);
+    public RsPathStub createStub(@NotNull RsPath psi, StubElement parentStub) {
+        return new RsPathStubImpl(parentStub, psi.getRelation());
     }
 
     @Override
-    public void serialize(@NotNull RsWhereClauseStub stub, @NotNull StubOutputStream dataStream) throws IOException {
+    public void serialize(@NotNull RsPathStub stub, @NotNull StubOutputStream dataStream) throws IOException {
+        dataStream.writeVarInt(stub.getRelation().toInt());
     }
 
     @NotNull
     @Override
-    public RsWhereClauseStub deserialize(@NotNull StubInputStream dataStream, StubElement parentStub) throws IOException {
-        return new RsWhereClauseStubImpl(parentStub);
+    public RsPathStub deserialize(@NotNull StubInputStream dataStream, StubElement parentStub) throws IOException {
+        return new RsPathStubImpl(parentStub, RsPath.Relation.fromInt(dataStream.readVarInt()));
     }
 
     @NotNull
     @Override
     public ASTNode createCompositeNode() {
-        return new CompositeElement(RsTypes.WHERE_CLAUSE);
+        return new CompositeElement(RsTypes.PATH);
     }
 }

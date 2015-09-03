@@ -17,11 +17,7 @@
 package org.rustidea.stubs.types;
 
 import com.intellij.lang.ASTNode;
-import com.intellij.lang.LighterAST;
-import com.intellij.lang.LighterASTNode;
-import com.intellij.lang.LighterASTTokenNode;
 import com.intellij.psi.impl.source.tree.CompositeElement;
-import com.intellij.psi.impl.source.tree.LightTreeUtil;
 import com.intellij.psi.stubs.StubElement;
 import com.intellij.psi.stubs.StubInputStream;
 import com.intellij.psi.stubs.StubOutputStream;
@@ -30,7 +26,6 @@ import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.RsLifetime;
 import org.rustidea.psi.impl.RsLifetimeImpl;
 import org.rustidea.psi.types.RsStubElementTypes;
-import org.rustidea.psi.types.RsTypes;
 import org.rustidea.stubs.RsLifetimeStub;
 import org.rustidea.stubs.impl.RsLifetimeStubImpl;
 
@@ -56,13 +51,6 @@ public class RsLifetimeElementType extends IRsStubElementType<RsLifetimeStub, Rs
     @Override
     public RsLifetimeStub createStub(@NotNull final RsLifetime psi, final StubElement parentStub) {
         return new RsLifetimeStubImpl(parentStub, StringRef.fromString(psi.getName()));
-    }
-
-    @Override
-    public RsLifetimeStub createStub(LighterAST tree, LighterASTNode node, StubElement parentStub) {
-        LighterASTTokenNode nameNode = (LighterASTTokenNode) LightTreeUtil.requiredChildOfType(tree, node, RsTypes.LIFETIME_TOKEN);
-        String name = nameNode.getText().toString().substring(1);
-        return new RsLifetimeStubImpl(parentStub, StringRef.fromString(name));
     }
 
     @Override

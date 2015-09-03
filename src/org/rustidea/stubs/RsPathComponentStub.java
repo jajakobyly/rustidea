@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi.impl.source.tree;
+package org.rustidea.stubs;
 
-import com.intellij.psi.tree.ChildRoleBase;
+import com.intellij.psi.stubs.NamedStub;
+import org.rustidea.psi.RsPathComponent;
 
-public interface ChildRole extends ChildRoleBase {
-    int NAME = 1;
-    int WHERE_CLAUSE = 100;
+public interface RsPathComponentStub extends NamedStub<RsPathComponent> {
 }

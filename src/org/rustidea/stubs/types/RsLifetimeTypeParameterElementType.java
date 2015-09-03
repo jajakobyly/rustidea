@@ -17,8 +17,6 @@
 package org.rustidea.stubs.types;
 
 import com.intellij.lang.ASTNode;
-import com.intellij.lang.LighterAST;
-import com.intellij.lang.LighterASTNode;
 import com.intellij.psi.impl.source.tree.CompositeElement;
 import com.intellij.psi.stubs.StubElement;
 import com.intellij.psi.stubs.StubInputStream;
@@ -54,12 +52,6 @@ public class RsLifetimeTypeParameterElementType extends IRsStubElementType<RsLif
     @NotNull
     @Override
     public RsLifetimeTypeParameterStub createStub(@NotNull RsLifetimeTypeParameter psi, StubElement parentStub) {
-        return new RsLifetimeTypeParameterStubImpl(parentStub);
-    }
-
-    @NotNull
-    @Override
-    public RsLifetimeTypeParameterStub createStub(LighterAST tree, LighterASTNode node, StubElement parentStub) {
         return new RsLifetimeTypeParameterStubImpl(parentStub);
     }
 
