@@ -20,6 +20,7 @@ import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.impl.source.tree.LeafPsiElement;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsToken;
 
@@ -43,6 +44,7 @@ public class RsTokenImpl extends LeafPsiElement implements RsToken {
         }
     }
 
+    @Nullable
     @Override
     public String toString() {
         return "RsToken:" + getTokenType().toString();

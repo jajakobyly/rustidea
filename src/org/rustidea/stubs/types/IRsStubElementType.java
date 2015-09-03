@@ -33,6 +33,7 @@ public abstract class IRsStubElementType<StubT extends StubElement, PsiT extends
         super(debugName, RustLanguage.INSTANCE);
     }
 
+    @NotNull
     public abstract PsiT createPsi(ASTNode node);
 
     @Override

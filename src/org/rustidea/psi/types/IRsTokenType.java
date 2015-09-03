@@ -16,8 +16,10 @@
 
 package org.rustidea.psi.types;
 
+import org.jetbrains.annotations.NotNull;
+
 public class IRsTokenType extends IRsElementType {
-    public IRsTokenType(String debugName) {
+    public IRsTokenType(@NotNull String debugName) {
         super(debugName);
     }
 }
