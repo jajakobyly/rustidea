@@ -23,32 +23,14 @@ import com.intellij.lang.PsiBuilder.Marker;
 import com.intellij.lang.PsiParser;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import static org.rustidea.parser.RsParserUtil.eatUnless;
-import static org.rustidea.parser.RsParserUtil.tryParseToken;
-import static org.rustidea.psi.types.RsTypes.PARENT_DOC;
-import static org.rustidea.psi.types.RsTypes.PARENT_DOC_TOKEN_SET;
 
 public class RsParser implements PsiParser, LightPsiParser {
     public static void file(IElementType root, @NotNull PsiBuilder builder) {
         Marker mRoot = builder.mark();
         while (!builder.eof()) {
-            if (item(builder) == null) {
-                eatUnless(builder, PARENT_DOC_TOKEN_SET).error("expected item");
-            }
+            builder.advanceLexer();
         }
         mRoot.done(root);
-    }
-
-    @Nullable
-    private static Marker item(@NotNull PsiBuilder builder) {
-        return parentDoc(builder);
-    }
-
-    @Nullable
-    private static Marker parentDoc(@NotNull PsiBuilder builder) {
-        return tryParseToken(builder, PARENT_DOC, PARENT_DOC_TOKEN_SET);
     }
 
     @Override
