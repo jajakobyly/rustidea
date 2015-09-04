@@ -22,22 +22,22 @@ import com.intellij.psi.stubs.StubElement;
 import com.intellij.psi.util.PsiUtilBase;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.rustidea.psi.IRsTypeParameterListOwner;
 import org.rustidea.psi.RsTypeParameter;
 import org.rustidea.psi.RsTypeParameterList;
-import org.rustidea.psi.RsTypeParameterListOwner;
 import org.rustidea.util.SimpleArrayFactory;
 
 public final class PsiImplUtil extends PsiUtilBase {
     private PsiImplUtil() {
     }
 
-    public static boolean hasTypeParameters(@NotNull RsTypeParameterListOwner owner) {
+    public static boolean hasTypeParameters(@NotNull IRsTypeParameterListOwner owner) {
         final RsTypeParameterList list = owner.getTypeParameterList();
         return list != null && list.getTypeParameters().length > 0;
     }
 
     @NotNull
-    public static RsTypeParameter[] getTypeParameters(@NotNull RsTypeParameterListOwner owner) {
+    public static RsTypeParameter[] getTypeParameters(@NotNull IRsTypeParameterListOwner owner) {
         final RsTypeParameterList list = owner.getTypeParameterList();
         if (list != null) {
             return list.getTypeParameters();

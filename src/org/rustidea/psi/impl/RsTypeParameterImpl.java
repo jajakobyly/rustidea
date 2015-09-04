@@ -68,8 +68,8 @@ public class RsTypeParameterImpl extends IRsStubPsiElement<RsTypeParameterStub> 
 
     @Nullable
     @Override
-    public RsTypeParameterListOwner getOwner() {
-        return PsiTreeUtil.getStubOrPsiParentOfType(this, RsTypeParameterListOwner.class);
+    public IRsTypeParameterListOwner getOwner() {
+        return PsiTreeUtil.getStubOrPsiParentOfType(this, IRsTypeParameterListOwner.class);
     }
 
     @Override

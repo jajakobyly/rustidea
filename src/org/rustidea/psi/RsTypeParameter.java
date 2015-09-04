@@ -26,7 +26,7 @@ public interface RsTypeParameter extends StubBasedPsiElement<RsTypeParameterStub
     RsWhereClause getWhereClause();
 
     @Nullable
-    RsTypeParameterListOwner getOwner();
+    IRsTypeParameterListOwner getOwner();
 
     int getIndex();
 }

@@ -21,7 +21,7 @@ import com.intellij.psi.StubBasedPsiElement;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.stubs.RsPathComponentStub;
 
-public interface RsPathComponent extends StubBasedPsiElement<RsPathComponentStub>, PsiNameIdentifierOwner, RsTypeParameterListOwner {
+public interface RsPathComponent extends StubBasedPsiElement<RsPathComponentStub>, PsiNameIdentifierOwner, IRsTypeParameterListOwner {
     @Nullable
     RsPath getOwner();
 

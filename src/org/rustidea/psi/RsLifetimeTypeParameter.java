@@ -27,7 +27,7 @@ public interface RsLifetimeTypeParameter extends StubBasedPsiElement<RsLifetimeT
     RsLifetime getLifetime();
 
     @Nullable
-    RsTypeParameterListOwner getOwner();
+    IRsTypeParameterListOwner getOwner();
 
     int getIndex();
 }

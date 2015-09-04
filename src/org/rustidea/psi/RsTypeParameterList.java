@@ -27,7 +27,7 @@ public interface RsTypeParameterList extends StubBasedPsiElement<RsTypeParameter
     @NotNull
     RsTypeParameter[] getTypeParameters();
 
-    int getLifetimeIndex(RsLifetimeTypeParameter lifetime);
+    int getLifetimeIndex(@NotNull RsLifetimeTypeParameter lifetime);
 
-    int getTypeParameterIndex(RsTypeParameter param);
+    int getTypeParameterIndex(@NotNull RsTypeParameter param);
 }

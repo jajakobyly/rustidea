@@ -20,7 +20,7 @@ import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public interface RsTypeParameterListOwner extends PsiElement {
+public interface IRsTypeParameterListOwner extends PsiElement {
     boolean hasTypeParameters();
 
     @Nullable

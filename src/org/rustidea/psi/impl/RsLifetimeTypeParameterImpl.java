@@ -23,10 +23,10 @@ import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.rustidea.psi.IRsTypeParameterListOwner;
 import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsLifetime;
 import org.rustidea.psi.RsLifetimeTypeParameter;
-import org.rustidea.psi.RsTypeParameterListOwner;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.stubs.RsLifetimeTypeParameterStub;
 import org.rustidea.stubs.impl.IRsStubPsiElement;
@@ -64,8 +64,8 @@ public class RsLifetimeTypeParameterImpl extends IRsStubPsiElement<RsLifetimeTyp
 
     @Nullable
     @Override
-    public RsTypeParameterListOwner getOwner() {
-        return PsiTreeUtil.getStubOrPsiParentOfType(this, RsTypeParameterListOwner.class);
+    public IRsTypeParameterListOwner getOwner() {
+        return PsiTreeUtil.getStubOrPsiParentOfType(this, IRsTypeParameterListOwner.class);
     }
 
     @Override
