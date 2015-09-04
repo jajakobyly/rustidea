@@ -32,11 +32,11 @@ public class SimpleArrayFactory {
     }
 
     @NotNull
-    @SuppressWarnings("unchecked")
     public static <T> ArrayFactory<T> get(@NotNull final Class<T> cls) {
         return new ArrayFactory<T>() {
             @NotNull
             @Override
+            @SuppressWarnings("unchecked")
             public T[] create(int count) {
                 return (T[]) Array.newInstance(cls, count);
             }
