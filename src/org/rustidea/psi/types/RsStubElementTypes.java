@@ -19,15 +19,15 @@ package org.rustidea.psi.types;
 import org.rustidea.stubs.types.*;
 
 public interface RsStubElementTypes {
-    RsLifetimeElementType LIFETIME = RsLifetimeElementType.INSTANCE;
-    RsTypeParameterElementType TYPE_PARAMETER = RsTypeParameterElementType.INSTANCE;
-    RsLifetimeTypeParameterElementType LIFETIME_TYPE_PARAMETER = RsLifetimeTypeParameterElementType.INSTANCE;
-    RsTypeParameterListElementType TYPE_PARAMETER_LIST = RsTypeParameterListElementType.INSTANCE;
-    RsWhereClauseElementType WHERE_CLAUSE = RsWhereClauseElementType.INSTANCE;
-    RsPathElementType PATH = RsPathElementType.INSTANCE;
-    RsPathComponentElementType PATH_COMPONENT = RsPathComponentElementType.INSTANCE;
-    RsDocElementType DOC = RsDocElementType.INSTANCE;
     RsAttributeElementType ATTRIBUTE = RsAttributeElementType.INSTANCE;
     RsAttributeItemElementType ATTRIBUTE_ITEM = RsAttributeItemElementType.INSTANCE;
     RsAttributeItemListElementType ATTRIBUTE_ITEM_LIST = RsAttributeItemListElementType.INSTANCE;
+    RsDocElementType DOC = RsDocElementType.INSTANCE;
+    RsLifetimeElementType LIFETIME = RsLifetimeElementType.INSTANCE;
+    RsLifetimeTypeParameterElementType LIFETIME_TYPE_PARAMETER = RsLifetimeTypeParameterElementType.INSTANCE;
+    RsPathComponentElementType PATH_COMPONENT = RsPathComponentElementType.INSTANCE;
+    RsPathElementType PATH = RsPathElementType.INSTANCE;
+    RsTypeParameterElementType TYPE_PARAMETER = RsTypeParameterElementType.INSTANCE;
+    RsTypeParameterListElementType TYPE_PARAMETER_LIST = RsTypeParameterListElementType.INSTANCE;
+    RsWhereClauseElementType WHERE_CLAUSE = RsWhereClauseElementType.INSTANCE;
 }
