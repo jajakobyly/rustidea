@@ -26,4 +26,8 @@ public interface RsStubElementTypes {
     RsWhereClauseElementType WHERE_CLAUSE = RsWhereClauseElementType.INSTANCE;
     RsPathElementType PATH = RsPathElementType.INSTANCE;
     RsPathComponentElementType PATH_COMPONENT = RsPathComponentElementType.INSTANCE;
+    RsDocElementType DOC = RsDocElementType.INSTANCE;
+    RsAttributeElementType ATTRIBUTE = RsAttributeElementType.INSTANCE;
+    RsAttributeItemElementType ATTRIBUTE_ITEM = RsAttributeItemElementType.INSTANCE;
+    RsAttributeItemListElementType ATTRIBUTE_ITEM_LIST = RsAttributeItemListElementType.INSTANCE;
 }

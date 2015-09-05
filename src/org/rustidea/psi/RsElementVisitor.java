@@ -19,8 +19,20 @@ package org.rustidea.psi;
 import com.intellij.psi.PsiElementVisitor;
 
 public abstract class RsElementVisitor extends PsiElementVisitor {
+    public void visitAttribute(RsAttribute attribute) {
+        visitAttributeOrDoc(attribute);
+    }
+
+    public void visitAttributeItemList(RsAttributeItemList attributeItemList) {
+        visitElement(attributeItemList);
+    }
+
+    public void visitAttributeOrDoc(IRsAttribute attributeOrDoc) {
+        visitElement(attributeOrDoc);
+    }
+
     public void visitDoc(RsDoc doc) {
-        visitElement(doc);
+        visitAttributeOrDoc(doc);
     }
 
     public void visitIdentifier(RsIdentifier identifier) {
@@ -37,10 +49,6 @@ public abstract class RsElementVisitor extends PsiElementVisitor {
 
     public void visitLifetimeTypeParameter(RsLifetimeTypeParameter lifetimeTypeParameter) {
         visitElement(lifetimeTypeParameter);
-    }
-
-    public void visitParentDoc(RsParentDoc parentDoc) {
-        visitDoc(parentDoc);
     }
 
     public void visitPath(RsPath path) {

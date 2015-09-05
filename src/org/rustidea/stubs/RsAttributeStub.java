@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi;
+package org.rustidea.stubs;
 
-public interface RsParentDoc extends RsDoc, RsParentAttributeBase {
+import org.rustidea.psi.RsAttribute;
+
+public interface RsAttributeStub extends IRsAttributeStub<RsAttribute> {
 }

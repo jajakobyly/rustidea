@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi;
+package org.rustidea.stubs;
 
-import com.intellij.psi.PsiElement;
+import com.intellij.psi.stubs.NamedStub;
+import org.rustidea.psi.RsAttributeItem;
 
-public interface RsAttributeBase extends PsiElement {
+public interface RsAttributeItemStub extends NamedStub<RsAttributeItem> {
 }

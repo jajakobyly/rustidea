@@ -14,22 +14,24 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi;
+package org.rustidea.stubs.impl;
 
-import com.intellij.psi.PsiDocCommentBase;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import com.intellij.psi.stubs.StubBase;
+import com.intellij.psi.stubs.StubElement;
+import org.rustidea.psi.RsDoc;
+import org.rustidea.psi.types.RsTypes;
 import org.rustidea.stubs.RsDocStub;
 
-// TODO Investigate if extending PsiDocCommentBase is a good idea (it extends PsiComment).
-public interface RsDoc extends IRsAttribute<RsDocStub>, PsiDocCommentBase {
-    @NotNull
-    RsToken[] getDoc();
+public class RsDocStubImpl extends StubBase<RsDoc> implements RsDocStub {
+    private final boolean isParent;
 
-    @Nullable
-    Type getType();
+    public RsDocStubImpl(final StubElement parent, final boolean isParent) {
+        super(parent, RsTypes.DOC);
+        this.isParent = isParent;
+    }
 
-    enum Type {
-        LINE, BLOCK
+    @Override
+    public boolean isParentAttribute() {
+        return isParent;
     }
 }

@@ -17,44 +17,49 @@
 package org.rustidea.psi.impl;
 
 import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.impl.source.tree.CompositePsiElement;
-import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
+import org.rustidea.psi.RsAttributeItem;
+import org.rustidea.psi.RsAttributeItemList;
 import org.rustidea.psi.RsElementVisitor;
-import org.rustidea.psi.RsParentDoc;
 import org.rustidea.psi.types.RsTypes;
+import org.rustidea.stubs.RsAttributeItemListStub;
+import org.rustidea.stubs.impl.IRsStubPsiElement;
+import org.rustidea.util.SimpleArrayFactory;
 
-import static org.rustidea.psi.types.RsTypes.PARENT_DOC_TOKEN_SET;
+public class RsAttributeItemListImpl extends IRsStubPsiElement<RsAttributeItemListStub> implements RsAttributeItemList {
+    public RsAttributeItemListImpl(@NotNull final RsAttributeItemListStub stub) {
+        super(stub, RsTypes.ATTRIBUTE_ITEM_LIST);
+    }
 
-public class RsParentDocImpl extends CompositePsiElement implements RsParentDoc {
-    public RsParentDocImpl() {
-        super(RsTypes.PARENT_DOC);
+    public RsAttributeItemListImpl(@NotNull final ASTNode node) {
+        super(node);
     }
 
     @NotNull
     @Override
-    public PsiElement getToken() {
-        PsiElement token = findPsiChildByType(PARENT_DOC_TOKEN_SET);
-        assert token != null;
-        return token;
+    public RsAttributeItem[] getItems() {
+        return getStubOrPsiChildren(RsTypes.ATTRIBUTE_ITEM, SimpleArrayFactory.get(RsAttributeItem.class));
     }
 
-    @NotNull
     @Override
-    public IElementType getTokenType() {
-        ASTNode token = findChildByType(PARENT_DOC_TOKEN_SET);
-        assert token != null;
-        return token.getElementType();
+    public int getItemIndex(@NotNull RsAttributeItem item) {
+        assert item.getParent() == this;
+        return item.getIndex();
     }
 
     @Override
     public void accept(@NotNull PsiElementVisitor visitor) {
         if (visitor instanceof RsElementVisitor) {
-            ((RsElementVisitor) visitor).visitParentDoc(this);
+            ((RsElementVisitor) visitor).visitAttributeItemList(this);
         } else {
             visitor.visitElement(this);
         }
+    }
+
+    @NotNull
+    @Override
+    public String toString() {
+        return "RsAttributeItemList";
     }
 }

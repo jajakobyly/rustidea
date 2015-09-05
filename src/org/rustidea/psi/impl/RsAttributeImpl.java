@@ -17,46 +17,36 @@
 package org.rustidea.psi.impl;
 
 import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.IRsAttributeOwner;
-import org.rustidea.psi.RsDoc;
+import org.rustidea.psi.RsAttribute;
+import org.rustidea.psi.RsAttributeItem;
 import org.rustidea.psi.RsElementVisitor;
-import org.rustidea.psi.RsToken;
 import org.rustidea.psi.types.RsTypes;
-import org.rustidea.stubs.RsDocStub;
+import org.rustidea.stubs.RsAttributeStub;
 import org.rustidea.stubs.impl.IRsStubPsiElement;
 
-public class RsDocImpl extends IRsStubPsiElement<RsDocStub> implements RsDoc {
-    public RsDocImpl(@NotNull final RsDocStub stub) {
-        super(stub, RsTypes.DOC);
+public class RsAttributeImpl extends IRsStubPsiElement<RsAttributeStub> implements RsAttribute {
+    public RsAttributeImpl(@NotNull final RsAttributeStub stub) {
+        super(stub, RsTypes.ATTRIBUTE);
     }
 
-    public RsDocImpl(@NotNull final ASTNode node) {
+    public RsAttributeImpl(@NotNull final ASTNode node) {
         super(node);
-    }
-
-    @NotNull
-    @Override
-    public RsToken[] getDoc() {
-        return findChildrenByType(RsTypes.DOC_TOKEN_SET, RsToken.class);
     }
 
     @Nullable
     @Override
-    public Type getType() {
-        IElementType type = getTokenType();
-        return type == RsTypes.LINE_DOC || type == RsTypes.LINE_PARENT_DOC ? Type.LINE : Type.BLOCK;
+    public RsAttributeItem getItem() {
+        return getStubOrPsiChild(RsTypes.ATTRIBUTE_ITEM);
     }
 
     @Override
     public boolean isParentAttribute() {
-        IElementType type = getTokenType();
-        return type == RsTypes.LINE_PARENT_DOC || type == RsTypes.BLOCK_PARENT_DOC;
+        return findChildByType(RsTypes.OP_EXCLAMATION_MARK) != null;
     }
 
     @Nullable
@@ -65,20 +55,10 @@ public class RsDocImpl extends IRsStubPsiElement<RsDocStub> implements RsDoc {
         return PsiTreeUtil.getStubOrPsiParentOfType(this, IRsAttributeOwner.class);
     }
 
-    @Nullable
-    @Override
-    public IElementType getTokenType() {
-        PsiElement child = findChildByType(RsTypes.DOC_TOKEN_SET);
-        if (child != null) {
-            return child.getNode().getElementType();
-        }
-        return null;
-    }
-
     @Override
     public void accept(@NotNull PsiElementVisitor visitor) {
         if (visitor instanceof RsElementVisitor) {
-            ((RsElementVisitor) visitor).visitDoc(this);
+            ((RsElementVisitor) visitor).visitAttribute(this);
         } else {
             visitor.visitElement(this);
         }
@@ -87,6 +67,6 @@ public class RsDocImpl extends IRsStubPsiElement<RsDocStub> implements RsDoc {
     @Nullable
     @Override
     public String toString() {
-        return "RsDoc";
+        return "RsAttribute";
     }
 }

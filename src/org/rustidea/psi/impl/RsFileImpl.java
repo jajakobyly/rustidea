@@ -22,7 +22,7 @@ import com.intellij.psi.FileViewProvider;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.RustFileType;
 import org.rustidea.RustLanguage;
-import org.rustidea.psi.RsAttributeBase;
+import org.rustidea.psi.IRsAttribute;
 import org.rustidea.psi.RsFile;
 
 public class RsFileImpl extends PsiFileBase implements RsFile {
@@ -38,9 +38,9 @@ public class RsFileImpl extends PsiFileBase implements RsFile {
 
     @NotNull
     @Override
-    public RsAttributeBase[] getAttributes() {
+    public IRsAttribute[] getAttributes() {
         // FIXME Does this method operate on stubs wherever possible?
-        return findChildrenByClass(RsAttributeBase.class);
+        return findChildrenByClass(IRsAttribute.class);
     }
 
     @NotNull

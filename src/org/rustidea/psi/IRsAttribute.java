@@ -16,20 +16,13 @@
 
 package org.rustidea.psi;
 
-import com.intellij.psi.PsiDocCommentBase;
-import org.jetbrains.annotations.NotNull;
+import com.intellij.psi.StubBasedPsiElement;
 import org.jetbrains.annotations.Nullable;
-import org.rustidea.stubs.RsDocStub;
+import org.rustidea.stubs.IRsAttributeStub;
 
-// TODO Investigate if extending PsiDocCommentBase is a good idea (it extends PsiComment).
-public interface RsDoc extends IRsAttribute<RsDocStub>, PsiDocCommentBase {
-    @NotNull
-    RsToken[] getDoc();
+public interface IRsAttribute<StubT extends IRsAttributeStub> extends StubBasedPsiElement<StubT> {
+    boolean isParentAttribute();
 
     @Nullable
-    Type getType();
-
-    enum Type {
-        LINE, BLOCK
-    }
+    IRsAttributeOwner getOwner();
 }

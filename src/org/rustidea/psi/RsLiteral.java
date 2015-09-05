@@ -17,9 +17,7 @@
 package org.rustidea.psi;
 
 import com.intellij.psi.PsiElement;
-import org.jetbrains.annotations.NotNull;
 
-public interface RsAttributeOwner extends PsiElement {
-    @NotNull
-    RsAttributeBase[] getAttributes();
+public interface RsLiteral extends PsiElement {
+    // TODO
 }

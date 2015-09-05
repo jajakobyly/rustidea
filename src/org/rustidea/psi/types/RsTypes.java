@@ -36,6 +36,5 @@ public interface RsTypes extends RsStubElementTypes, RsCompositeTypes, RsTokenTy
     TokenSet COMMENT_TOKEN_SET = TokenSet.create(BLOCK_COMMENT, LINE_COMMENT);
     TokenSet STRING_LITERAL_TOKEN_SET = TokenSet.orSet(STRING_TOKEN_SET, RAW_STRING_TOKEN_SET);
 
-    TokenSet DOC_TOKEN_SET = TokenSet.create(BLOCK_DOC, LINE_DOC);
-    TokenSet PARENT_DOC_TOKEN_SET = TokenSet.create(BLOCK_PARENT_DOC, LINE_PARENT_DOC);
+    TokenSet DOC_TOKEN_SET = TokenSet.create(BLOCK_DOC, LINE_DOC, BLOCK_PARENT_DOC, LINE_PARENT_DOC);
 }
