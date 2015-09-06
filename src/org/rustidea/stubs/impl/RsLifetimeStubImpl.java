@@ -16,25 +16,15 @@
 
 package org.rustidea.stubs.impl;
 
-import com.intellij.psi.stubs.StubBase;
+import com.intellij.psi.stubs.NamedStubBase;
 import com.intellij.psi.stubs.StubElement;
 import com.intellij.util.io.StringRef;
-import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsLifetime;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.stubs.RsLifetimeStub;
 
-public class RsLifetimeStubImpl extends StubBase<RsLifetime> implements RsLifetimeStub {
-    private final StringRef name;
-
+public class RsLifetimeStubImpl extends NamedStubBase<RsLifetime> implements RsLifetimeStub {
     public RsLifetimeStubImpl(final StubElement parent, final StringRef name) {
-        super(parent, RsTypes.LIFETIME);
-        this.name = name;
-    }
-
-    @Nullable
-    @Override
-    public String getName() {
-        return StringRef.toString(name);
+        super(parent, RsTypes.LIFETIME, name);
     }
 }

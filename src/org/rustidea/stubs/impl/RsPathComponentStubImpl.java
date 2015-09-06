@@ -16,25 +16,15 @@
 
 package org.rustidea.stubs.impl;
 
-import com.intellij.psi.stubs.StubBase;
+import com.intellij.psi.stubs.NamedStubBase;
 import com.intellij.psi.stubs.StubElement;
 import com.intellij.util.io.StringRef;
-import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsPathComponent;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.stubs.RsPathComponentStub;
 
-public class RsPathComponentStubImpl extends StubBase<RsPathComponent> implements RsPathComponentStub {
-    private final StringRef name;
-
+public class RsPathComponentStubImpl extends NamedStubBase<RsPathComponent> implements RsPathComponentStub {
     public RsPathComponentStubImpl(final StubElement parent, final StringRef name) {
-        super(parent, RsTypes.PATH_COMPONENT);
-        this.name = name;
-    }
-
-    @Nullable
-    @Override
-    public String getName() {
-        return StringRef.toString(name);
+        super(parent, RsTypes.PATH_COMPONENT, name);
     }
 }
