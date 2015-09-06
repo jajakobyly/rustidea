@@ -16,9 +16,7 @@
 
 package org.rustidea.psi.types;
 
-import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.impl.source.tree.CompositeElement;
 import com.intellij.psi.stubs.EmptyStub;
 import com.intellij.psi.stubs.StubElement;
 import com.intellij.psi.stubs.StubInputStream;
@@ -55,11 +53,5 @@ public abstract class IRsEmptyStubElementType<T extends PsiElement> extends IRsS
     @Override
     public EmptyStub deserialize(@NotNull StubInputStream dataStream, @NotNull StubElement parentStub) throws IOException {
         return createStub(parentStub);
-    }
-
-    @NotNull
-    @Override
-    public ASTNode createCompositeNode() {
-        return new CompositeElement(this);
     }
 }

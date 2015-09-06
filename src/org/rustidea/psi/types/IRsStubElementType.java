@@ -18,6 +18,7 @@ package org.rustidea.psi.types;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.impl.source.tree.CompositeElement;
 import com.intellij.psi.stubs.IStubElementType;
 import com.intellij.psi.stubs.IndexSink;
 import com.intellij.psi.stubs.StubElement;
@@ -43,5 +44,11 @@ public abstract class IRsStubElementType<StubT extends StubElement, PsiT extends
     @Override
     public String getExternalId() {
         return "rust." + toString();
+    }
+
+    @NotNull
+    @Override
+    public ASTNode createCompositeNode() {
+        return new CompositeElement(this);
     }
 }

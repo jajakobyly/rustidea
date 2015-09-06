@@ -17,7 +17,6 @@
 package org.rustidea.psi.types;
 
 import com.intellij.lang.ASTNode;
-import com.intellij.psi.impl.source.tree.CompositeElement;
 import com.intellij.psi.stubs.StubElement;
 import com.intellij.psi.stubs.StubInputStream;
 import com.intellij.psi.stubs.StubOutputStream;
@@ -64,11 +63,5 @@ public class RsAttributeItemElementType extends IRsStubElementType<RsAttributeIt
     @Override
     public RsAttributeItemStub deserialize(@NotNull StubInputStream dataStream, StubElement parentStub) throws IOException {
         return new RsAttributeItemStubImpl(parentStub, dataStream.readName());
-    }
-
-    @NotNull
-    @Override
-    public ASTNode createCompositeNode() {
-        return new CompositeElement(RsTypes.ATTRIBUTE_ITEM);
     }
 }
