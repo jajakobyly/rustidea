@@ -17,10 +17,10 @@
 package org.rustidea.psi;
 
 import com.intellij.psi.StubBasedPsiElement;
+import com.intellij.psi.stubs.EmptyStub;
 import org.jetbrains.annotations.NotNull;
-import org.rustidea.stubs.RsTypeParameterListStub;
 
-public interface RsTypeParameterList extends StubBasedPsiElement<RsTypeParameterListStub>, IRsPsiElement {
+public interface RsTypeParameterList extends StubBasedPsiElement<EmptyStub>, IRsPsiElement {
     @NotNull
     RsLifetimeTypeParameter[] getLifetimes();
 

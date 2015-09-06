@@ -17,17 +17,17 @@
 package org.rustidea.psi.impl;
 
 import com.intellij.lang.ASTNode;
+import com.intellij.psi.stubs.EmptyStub;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsLifetimeTypeParameter;
 import org.rustidea.psi.RsTypeParameter;
 import org.rustidea.psi.RsTypeParameterList;
 import org.rustidea.psi.types.RsTypes;
-import org.rustidea.stubs.RsTypeParameterListStub;
 import org.rustidea.util.SimpleArrayFactory;
 
-public class RsTypeParameterListImpl extends IRsStubPsiElement<RsTypeParameterListStub> implements RsTypeParameterList {
-    public RsTypeParameterListImpl(@NotNull RsTypeParameterListStub stub) {
+public class RsTypeParameterListImpl extends IRsStubPsiElement<EmptyStub> implements RsTypeParameterList {
+    public RsTypeParameterListImpl(@NotNull EmptyStub stub) {
         super(stub, RsTypes.TYPE_PARAMETER_LIST);
     }
 

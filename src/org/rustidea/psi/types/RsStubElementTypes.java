@@ -16,16 +16,68 @@
 
 package org.rustidea.psi.types;
 
+import com.intellij.lang.ASTNode;
+import com.intellij.psi.stubs.EmptyStub;
+import org.jetbrains.annotations.NotNull;
+import org.rustidea.psi.RsLifetimeTypeParameter;
+import org.rustidea.psi.RsTypeParameterList;
+import org.rustidea.psi.RsWhereClause;
+import org.rustidea.psi.impl.RsLifetimeTypeParameterImpl;
+import org.rustidea.psi.impl.RsTypeParameterListImpl;
+import org.rustidea.psi.impl.RsWhereClauseImpl;
+
 public interface RsStubElementTypes {
     RsAttributeElementType ATTRIBUTE = RsAttributeElementType.INSTANCE;
     RsAttributeItemElementType ATTRIBUTE_ITEM = RsAttributeItemElementType.INSTANCE;
     RsAttributeItemListElementType ATTRIBUTE_ITEM_LIST = RsAttributeItemListElementType.INSTANCE;
     RsDocElementType DOC = RsDocElementType.INSTANCE;
     RsLifetimeElementType LIFETIME = RsLifetimeElementType.INSTANCE;
-    RsLifetimeTypeParameterElementType LIFETIME_TYPE_PARAMETER = RsLifetimeTypeParameterElementType.INSTANCE;
-    RsPathComponentElementType PATH_COMPONENT = RsPathComponentElementType.INSTANCE;
     RsPathElementType PATH = RsPathElementType.INSTANCE;
+    RsPathComponentElementType PATH_COMPONENT = RsPathComponentElementType.INSTANCE;
     RsTypeParameterElementType TYPE_PARAMETER = RsTypeParameterElementType.INSTANCE;
-    RsTypeParameterListElementType TYPE_PARAMETER_LIST = RsTypeParameterListElementType.INSTANCE;
-    RsWhereClauseElementType WHERE_CLAUSE = RsWhereClauseElementType.INSTANCE;
+
+    IRsEmptyStubElementType<RsLifetimeTypeParameter> LIFETIME_TYPE_PARAMETER =
+        new IRsEmptyStubElementType<RsLifetimeTypeParameter>("LIFETIME_TYPE_PARAMETER") {
+            @NotNull
+            @Override
+            public RsLifetimeTypeParameter createPsi(@NotNull EmptyStub stub) {
+                return new RsLifetimeTypeParameterImpl(stub);
+            }
+
+            @NotNull
+            @Override
+            public RsLifetimeTypeParameter createPsi(@NotNull ASTNode node) {
+                return new RsLifetimeTypeParameterImpl(node);
+            }
+        };
+
+    IRsEmptyStubElementType<RsTypeParameterList> TYPE_PARAMETER_LIST =
+        new IRsEmptyStubElementType<RsTypeParameterList>("TYPE_PARAMETER_LIST") {
+            @NotNull
+            @Override
+            public RsTypeParameterList createPsi(@NotNull EmptyStub stub) {
+                return new RsTypeParameterListImpl(stub);
+            }
+
+            @NotNull
+            @Override
+            public RsTypeParameterList createPsi(@NotNull ASTNode node) {
+                return new RsTypeParameterListImpl(node);
+            }
+        };
+
+    IRsEmptyStubElementType<RsWhereClause> WHERE_CLAUSE =
+        new IRsEmptyStubElementType<RsWhereClause>("TYPE_PARAMETER_LIST") {
+            @NotNull
+            @Override
+            public RsWhereClause createPsi(@NotNull EmptyStub stub) {
+                return new RsWhereClauseImpl(stub);
+            }
+
+            @NotNull
+            @Override
+            public RsWhereClause createPsi(@NotNull ASTNode node) {
+                return new RsWhereClauseImpl(node);
+            }
+        };
 }

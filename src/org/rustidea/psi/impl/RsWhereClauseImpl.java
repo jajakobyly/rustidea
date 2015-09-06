@@ -17,6 +17,7 @@
 package org.rustidea.psi.impl;
 
 import com.intellij.lang.ASTNode;
+import com.intellij.psi.stubs.EmptyStub;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -25,11 +26,10 @@ import org.rustidea.psi.RsPath;
 import org.rustidea.psi.RsTypeParameter;
 import org.rustidea.psi.RsWhereClause;
 import org.rustidea.psi.types.RsTypes;
-import org.rustidea.stubs.RsWhereClauseStub;
 import org.rustidea.util.SimpleArrayFactory;
 
-public class RsWhereClauseImpl extends IRsStubPsiElement<RsWhereClauseStub> implements RsWhereClause {
-    public RsWhereClauseImpl(@NotNull RsWhereClauseStub stub) {
+public class RsWhereClauseImpl extends IRsStubPsiElement<EmptyStub> implements RsWhereClause {
+    public RsWhereClauseImpl(@NotNull EmptyStub stub) {
         super(stub, RsTypes.WHERE_CLAUSE);
     }
 

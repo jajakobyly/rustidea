@@ -18,6 +18,7 @@ package org.rustidea.psi.impl;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.stubs.EmptyStub;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
@@ -27,10 +28,9 @@ import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsLifetime;
 import org.rustidea.psi.RsLifetimeTypeParameter;
 import org.rustidea.psi.types.RsTypes;
-import org.rustidea.stubs.RsLifetimeTypeParameterStub;
 
-public class RsLifetimeTypeParameterImpl extends IRsStubPsiElement<RsLifetimeTypeParameterStub> implements RsLifetimeTypeParameter {
-    public RsLifetimeTypeParameterImpl(@NotNull RsLifetimeTypeParameterStub stub) {
+public class RsLifetimeTypeParameterImpl extends IRsStubPsiElement<EmptyStub> implements RsLifetimeTypeParameter {
+    public RsLifetimeTypeParameterImpl(@NotNull EmptyStub stub) {
         super(stub, RsTypes.LIFETIME_TYPE_PARAMETER);
     }
 
