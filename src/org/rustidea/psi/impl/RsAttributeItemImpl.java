@@ -87,6 +87,7 @@ public class RsAttributeItemImpl extends IRsStubPsiElement<RsAttributeItemStub> 
         return getNameIdentifier().getText();
     }
 
+    @NotNull
     @Override
     public PsiElement setName(@NotNull String name) throws IncorrectOperationException {
         // TODO Implement this.
