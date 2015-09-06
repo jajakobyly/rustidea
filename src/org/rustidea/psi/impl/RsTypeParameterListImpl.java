@@ -17,7 +17,6 @@
 package org.rustidea.psi.impl;
 
 import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElementVisitor;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsLifetimeTypeParameter;
@@ -62,17 +61,7 @@ public class RsTypeParameterListImpl extends IRsStubPsiElement<RsTypeParameterLi
     }
 
     @Override
-    public void accept(@NotNull PsiElementVisitor visitor) {
-        if (visitor instanceof RsElementVisitor) {
-            ((RsElementVisitor) visitor).visitTypeParameterList(this);
-        } else {
-            visitor.visitElement(this);
-        }
-    }
-
-    @NotNull
-    @Override
-    public String toString() {
-        return "RsTypeParameterList";
+    public void accept(@NotNull RsElementVisitor visitor) {
+        visitor.visitTypeParameterList(this);
     }
 }

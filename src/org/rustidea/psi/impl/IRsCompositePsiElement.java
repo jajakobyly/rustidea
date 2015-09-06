@@ -16,24 +16,30 @@
 
 package org.rustidea.psi.impl;
 
+import com.intellij.psi.PsiElementVisitor;
+import com.intellij.psi.impl.source.tree.CompositePsiElement;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
+import org.rustidea.psi.IRsPsiElement;
 import org.rustidea.psi.RsElementVisitor;
-import org.rustidea.psi.RsToken;
 
-public class RsTokenImpl extends IRsLeafPsiElement implements RsToken {
-    public RsTokenImpl(@NotNull IElementType type, CharSequence text) {
-        super(type, text);
+public abstract class IRsCompositePsiElement extends CompositePsiElement implements IRsPsiElement {
+    protected IRsCompositePsiElement(@NotNull final IElementType type) {
+        super(type);
     }
 
     @Override
-    public void accept(@NotNull RsElementVisitor visitor) {
-        visitor.visitRustToken(this);
+    public void accept(@NotNull final PsiElementVisitor visitor) {
+        if (visitor instanceof RsElementVisitor) {
+            this.accept((RsElementVisitor) visitor);
+        } else {
+            visitor.visitElement(this);
+        }
     }
 
     @NotNull
     @Override
-    protected String getDebugName() {
-        return getElementType().toString();
+    public String toString() {
+        return PsiImplUtil.psiElementToString(this);
     }
 }

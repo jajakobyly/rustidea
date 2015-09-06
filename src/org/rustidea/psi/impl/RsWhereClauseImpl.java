@@ -16,9 +16,7 @@
 
 package org.rustidea.psi.impl;
 
-import com.intellij.extapi.psi.StubBasedPsiElementBase;
 import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -28,9 +26,10 @@ import org.rustidea.psi.RsTypeParameter;
 import org.rustidea.psi.RsWhereClause;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.stubs.RsWhereClauseStub;
+import org.rustidea.stubs.impl.IRsStubPsiElement;
 import org.rustidea.util.SimpleArrayFactory;
 
-public class RsWhereClauseImpl extends StubBasedPsiElementBase<RsWhereClauseStub> implements RsWhereClause {
+public class RsWhereClauseImpl extends IRsStubPsiElement<RsWhereClauseStub> implements RsWhereClause {
     public RsWhereClauseImpl(@NotNull RsWhereClauseStub stub) {
         super(stub, RsTypes.WHERE_CLAUSE);
     }
@@ -52,17 +51,7 @@ public class RsWhereClauseImpl extends StubBasedPsiElementBase<RsWhereClauseStub
     }
 
     @Override
-    public void accept(@NotNull PsiElementVisitor visitor) {
-        if (visitor instanceof RsElementVisitor) {
-            ((RsElementVisitor) visitor).visitWhereClause(this);
-        } else {
-            visitor.visitElement(this);
-        }
-    }
-
-    @NotNull
-    @Override
-    public String toString() {
-        return "RsWhereClause";
+    public void accept(@NotNull RsElementVisitor visitor) {
+        visitor.visitWhereClause(this);
     }
 }

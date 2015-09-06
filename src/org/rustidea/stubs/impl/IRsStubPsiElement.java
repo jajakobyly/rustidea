@@ -18,31 +18,48 @@ package org.rustidea.stubs.impl;
 
 import com.intellij.extapi.psi.StubBasedPsiElementBase;
 import com.intellij.lang.ASTNode;
-import com.intellij.lang.Language;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.StubBasedPsiElement;
 import com.intellij.psi.stubs.IStubElementType;
 import com.intellij.psi.stubs.StubElement;
 import org.jetbrains.annotations.NotNull;
-import org.rustidea.RustLanguage;
+import org.rustidea.psi.IRsPsiElement;
+import org.rustidea.psi.RsElementVisitor;
+import org.rustidea.psi.impl.PsiImplUtil;
 
-public abstract class IRsStubPsiElement<T extends StubElement> extends StubBasedPsiElementBase<T> implements StubBasedPsiElement<T> {
-    public IRsStubPsiElement(@NotNull T stub, @NotNull IStubElementType nodeType) {
+public abstract class IRsStubPsiElement<T extends StubElement>
+    extends StubBasedPsiElementBase<T> implements StubBasedPsiElement<T>, IRsPsiElement {
+    public IRsStubPsiElement(@NotNull final T stub, @NotNull final IStubElementType nodeType) {
         super(stub, nodeType);
     }
 
-    public IRsStubPsiElement(@NotNull ASTNode node) {
+    public IRsStubPsiElement(@NotNull final ASTNode node) {
         super(node);
-    }
-
-    @NotNull
-    @Override
-    public Language getLanguage() {
-        return RustLanguage.INSTANCE;
     }
 
     @Override
     public PsiElement getParent() {
+        // TODO This is copy-pasted from Java-psi-impl; is this ok?
         return getParentByStub();
+    }
+
+    @Override
+    public void accept(@NotNull final PsiElementVisitor visitor) {
+        if (visitor instanceof RsElementVisitor) {
+            this.accept((RsElementVisitor) visitor);
+        } else {
+            visitor.visitElement(this);
+        }
+    }
+
+    @Override
+    public String toString() {
+        String clsName = PsiImplUtil.psiElementToString(this);
+        String psiName = getName();
+        if (psiName != null) {
+            return clsName + ":" + psiName;
+        }
+        return clsName;
     }
 }

@@ -63,4 +63,13 @@ public final class PsiImplUtil extends PsiUtilBase {
         }
         return getElementIndex(element, elemCls);
     }
+
+    @NotNull
+    public static String psiElementToString(@NotNull final Object element) {
+        String clsName = element.getClass().getSimpleName();
+        if (clsName.endsWith("Impl")) {
+            return clsName.substring(0, clsName.length() - 4);
+        }
+        return clsName;
+    }
 }

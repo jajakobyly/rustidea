@@ -16,29 +16,24 @@
 
 package org.rustidea.psi.impl;
 
-import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsKeyword;
 
-public class RsKeywordImpl extends RsTokenImpl implements RsKeyword {
+public class RsKeywordImpl extends IRsLeafPsiElement implements RsKeyword {
     public RsKeywordImpl(@NotNull IElementType type, CharSequence text) {
         super(type, text);
     }
 
     @Override
-    public void accept(@NotNull PsiElementVisitor visitor) {
-        if (visitor instanceof RsElementVisitor) {
-            ((RsElementVisitor) visitor).visitKeyword(this);
-        } else {
-            visitor.visitElement(this);
-        }
+    public void accept(@NotNull RsElementVisitor visitor) {
+        visitor.visitKeyword(this);
     }
 
     @NotNull
     @Override
-    public String toString() {
-        return "RsKeyword:" + getText();
+    protected String getDebugName() {
+        return getText();
     }
 }

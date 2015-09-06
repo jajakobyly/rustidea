@@ -21,7 +21,7 @@ import com.intellij.psi.StubBasedPsiElement;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.stubs.RsTypeParameterStub;
 
-public interface RsTypeParameter extends StubBasedPsiElement<RsTypeParameterStub>, PsiNameIdentifierOwner {
+public interface RsTypeParameter extends StubBasedPsiElement<RsTypeParameterStub>, PsiNameIdentifierOwner, IRsPsiElement {
     @Nullable
     RsWhereClause getWhereClause();
 

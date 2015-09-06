@@ -18,6 +18,6 @@ package org.rustidea.psi;
 
 import com.intellij.psi.PsiNameIdentifierOwner;
 
-public interface RsType extends PsiNameIdentifierOwner, IRsTypeParameterListOwner {
+public interface RsType extends PsiNameIdentifierOwner, IRsTypeParameterListOwner, IRsPsiElement {
     // TODO
 }

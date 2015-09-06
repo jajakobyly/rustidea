@@ -23,6 +23,10 @@ public abstract class RsElementVisitor extends PsiElementVisitor {
         visitAttributeOrDoc(attribute);
     }
 
+    public void visitAttributeItem(RsAttributeItem attributeItem) {
+        visitElement(attributeItem);
+    }
+
     public void visitAttributeItemList(RsAttributeItemList attributeItemList) {
         visitElement(attributeItemList);
     }
@@ -57,6 +61,10 @@ public abstract class RsElementVisitor extends PsiElementVisitor {
 
     public void visitPathComponent(RsPathComponent pathComponent) {
         visitElement(pathComponent);
+    }
+
+    public void visitPathRelation(RsPathRelation pathRelation) {
+        visitElement(pathRelation);
     }
 
     public void visitRustToken(RsToken token) {

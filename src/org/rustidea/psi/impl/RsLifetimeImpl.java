@@ -18,7 +18,6 @@ package org.rustidea.psi.impl;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
@@ -64,17 +63,7 @@ public class RsLifetimeImpl extends IRsStubPsiElement<RsLifetimeStub> implements
     }
 
     @Override
-    public void accept(@NotNull PsiElementVisitor visitor) {
-        if (visitor instanceof RsElementVisitor) {
-            ((RsElementVisitor) visitor).visitLifetime(this);
-        } else {
-            visitor.visitElement(this);
-        }
-    }
-
-    @Nullable
-    @Override
-    public String toString() {
-        return "RsLifetime:" + getName();
+    public void accept(@NotNull RsElementVisitor visitor) {
+        visitor.visitLifetime(this);
     }
 }

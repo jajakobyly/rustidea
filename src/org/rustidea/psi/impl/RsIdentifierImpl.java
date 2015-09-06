@@ -16,35 +16,30 @@
 
 package org.rustidea.psi.impl;
 
-import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsIdentifier;
 
-public class RsIdentifierImpl extends RsTokenImpl implements RsIdentifier {
+public class RsIdentifierImpl extends IRsLeafPsiElement implements RsIdentifier {
     public RsIdentifierImpl(@NotNull IElementType type, CharSequence text) {
         super(type, text);
     }
 
+    @NotNull
     @Override
     public String getName() {
         return getText();
     }
 
     @Override
-    public void accept(@NotNull PsiElementVisitor visitor) {
-        if (visitor instanceof RsElementVisitor) {
-            ((RsElementVisitor) visitor).visitIdentifier(this);
-        } else {
-            visitor.visitElement(this);
-        }
+    public void accept(@NotNull RsElementVisitor visitor) {
+        visitor.visitIdentifier(this);
     }
 
-    @Nullable
+    @NotNull
     @Override
-    public String toString() {
-        return "RsIdentifier:" + getName();
+    protected String getDebugName() {
+        return getName();
     }
 }

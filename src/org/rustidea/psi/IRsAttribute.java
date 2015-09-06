@@ -20,7 +20,7 @@ import com.intellij.psi.StubBasedPsiElement;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.stubs.IRsAttributeStub;
 
-public interface IRsAttribute<StubT extends IRsAttributeStub> extends StubBasedPsiElement<StubT> {
+public interface IRsAttribute<StubT extends IRsAttributeStub> extends StubBasedPsiElement<StubT>, IRsPsiElement {
     boolean isParentAttribute();
 
     @Nullable

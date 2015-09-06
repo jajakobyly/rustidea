@@ -17,7 +17,6 @@
 package org.rustidea.psi.impl;
 
 import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.RsElementVisitor;
@@ -68,17 +67,7 @@ public class RsPathImpl extends IRsStubPsiElement<RsPathStub> implements RsPath 
     }
 
     @Override
-    public void accept(@NotNull PsiElementVisitor visitor) {
-        if (visitor instanceof RsElementVisitor) {
-            ((RsElementVisitor) visitor).visitPath(this);
-        } else {
-            visitor.visitElement(this);
-        }
-    }
-
-    @NotNull
-    @Override
-    public String toString() {
-        return "RsPath";
+    public void accept(@NotNull RsElementVisitor visitor) {
+        visitor.visitPath(this);
     }
 }

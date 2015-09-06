@@ -22,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.stubs.RsLifetimeTypeParameterStub;
 
-public interface RsLifetimeTypeParameter extends StubBasedPsiElement<RsLifetimeTypeParameterStub>, PsiNameIdentifierOwner {
+public interface RsLifetimeTypeParameter extends StubBasedPsiElement<RsLifetimeTypeParameterStub>, PsiNameIdentifierOwner, IRsPsiElement {
     @NotNull
     RsLifetime getLifetime();
 

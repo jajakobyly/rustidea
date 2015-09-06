@@ -16,5 +16,9 @@
 
 package org.rustidea.psi;
 
-public interface RsToken extends IRsPsiElement {
+import com.intellij.psi.PsiElement;
+import org.jetbrains.annotations.NotNull;
+
+public interface IRsPsiElement extends PsiElement {
+    void accept(@NotNull RsElementVisitor visitor);
 }

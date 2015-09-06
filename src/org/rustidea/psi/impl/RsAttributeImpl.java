@@ -17,7 +17,6 @@
 package org.rustidea.psi.impl;
 
 import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -56,17 +55,7 @@ public class RsAttributeImpl extends IRsStubPsiElement<RsAttributeStub> implemen
     }
 
     @Override
-    public void accept(@NotNull PsiElementVisitor visitor) {
-        if (visitor instanceof RsElementVisitor) {
-            ((RsElementVisitor) visitor).visitAttribute(this);
-        } else {
-            visitor.visitElement(this);
-        }
-    }
-
-    @Nullable
-    @Override
-    public String toString() {
-        return "RsAttribute";
+    public void accept(@NotNull RsElementVisitor visitor) {
+        visitor.visitAttribute(this);
     }
 }

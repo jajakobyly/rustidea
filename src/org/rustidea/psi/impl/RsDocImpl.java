@@ -18,7 +18,6 @@ package org.rustidea.psi.impl;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
@@ -76,17 +75,7 @@ public class RsDocImpl extends IRsStubPsiElement<RsDocStub> implements RsDoc {
     }
 
     @Override
-    public void accept(@NotNull PsiElementVisitor visitor) {
-        if (visitor instanceof RsElementVisitor) {
-            ((RsElementVisitor) visitor).visitDoc(this);
-        } else {
-            visitor.visitElement(this);
-        }
-    }
-
-    @Nullable
-    @Override
-    public String toString() {
-        return "RsDoc";
+    public void accept(@NotNull RsElementVisitor visitor) {
+        visitor.visitDoc(this);
     }
 }

@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.stubs.RsPathStub;
 
-public interface RsPath extends StubBasedPsiElement<RsPathStub> {
+public interface RsPath extends StubBasedPsiElement<RsPathStub>, IRsPsiElement {
     @Nullable
     RsPathRelation getRelation();
 

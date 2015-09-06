@@ -93,4 +93,9 @@ public class RsAttributeItemImpl extends IRsStubPsiElement<RsAttributeItemStub> 
         // TODO Implement this.
         throw new IncorrectOperationException("not implemented yet");
     }
+
+    @Override
+    public void accept(@NotNull RsElementVisitor visitor) {
+        visitor.visitAttributeItem(this);
+    }
 }

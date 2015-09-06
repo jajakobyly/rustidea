@@ -14,7 +14,24 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi;
+package org.rustidea.psi.impl;
 
-public interface RsToken extends IRsPsiElement {
+import org.testng.annotations.Test;
+
+import static org.testng.Assert.assertEquals;
+
+public class PsiImplUtilTest {
+    @Test
+    public void testPsiElementToString() throws Exception {
+        Foo foo = new Foo();
+        FooImpl fooImpl = new FooImpl();
+        assertEquals(PsiImplUtil.psiElementToString(foo), "Foo");
+        assertEquals(PsiImplUtil.psiElementToString(fooImpl), "Foo");
+    }
+
+    class Foo {
+    }
+
+    class FooImpl {
+    }
 }

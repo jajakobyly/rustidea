@@ -16,15 +16,15 @@
 
 package org.rustidea.psi.impl;
 
-import com.intellij.psi.impl.source.tree.CompositePsiElement;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsKeyword;
 import org.rustidea.psi.RsPathRelation;
 import org.rustidea.psi.RsToken;
 import org.rustidea.psi.types.RsTypes;
 
-public class RsPathRelationImpl extends CompositePsiElement implements RsPathRelation {
+public class RsPathRelationImpl extends IRsCompositePsiElement implements RsPathRelation {
     public RsPathRelationImpl() {
         super(RsTypes.PATH_RELATION);
     }
@@ -54,5 +54,10 @@ public class RsPathRelationImpl extends CompositePsiElement implements RsPathRel
         if (getKwSuper() != null) return Type.SUPER;
         if (getDoubleColon() != null) return Type.GLOBAL;
         return Type.UNSPECIFIED;
+    }
+
+    @Override
+    public void accept(@NotNull RsElementVisitor visitor) {
+        visitor.visitPathRelation(this);
     }
 }

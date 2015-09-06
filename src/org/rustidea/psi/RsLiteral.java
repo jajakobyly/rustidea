@@ -16,11 +16,10 @@
 
 package org.rustidea.psi;
 
-import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public interface RsLiteral extends PsiElement {
+public interface RsLiteral extends IRsPsiElement {
     /**
      * Get literal value without any prefixes & quotes, possibly unescaped.
      */

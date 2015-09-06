@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.stubs.RsWhereClauseStub;
 
-public interface RsWhereClause extends StubBasedPsiElement<RsWhereClauseStub> {
+public interface RsWhereClause extends StubBasedPsiElement<RsWhereClauseStub>, IRsPsiElement {
     @NotNull
     RsPath[] getBounds();
 
