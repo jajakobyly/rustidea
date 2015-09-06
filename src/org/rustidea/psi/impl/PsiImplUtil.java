@@ -16,6 +16,7 @@
 
 package org.rustidea.psi.impl;
 
+import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.StubBasedPsiElement;
 import com.intellij.psi.stubs.StubElement;
@@ -65,11 +66,8 @@ public final class PsiImplUtil extends PsiUtilBase {
     }
 
     @NotNull
-    public static String psiElementToString(@NotNull final Object element) {
-        String clsName = element.getClass().getSimpleName();
-        if (clsName.endsWith("Impl")) {
-            return clsName.substring(0, clsName.length() - 4);
-        }
-        return clsName;
+    public static String getPsiClassName(@NotNull final Object element) {
+        return StringUtil.trimEnd(element.getClass().getSimpleName(), "Impl");
     }
 }
+

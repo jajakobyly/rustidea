@@ -43,6 +43,6 @@ public abstract class IRsLeafPsiElement extends LeafPsiElement implements IRsPsi
     @NotNull
     @Override
     public String toString() {
-        return PsiImplUtil.psiElementToString(this) + ":" + getDebugName();
+        return PsiImplUtil.getPsiClassName(this) + ":" + getDebugName();
     }
 }

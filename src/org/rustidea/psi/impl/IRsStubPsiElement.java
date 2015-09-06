@@ -55,7 +55,7 @@ public abstract class IRsStubPsiElement<T extends StubElement>
     @NotNull
     @Override
     public String toString() {
-        String clsName = PsiImplUtil.psiElementToString(this);
+        String clsName = PsiImplUtil.getPsiClassName(this);
         String psiName = getName();
         if (psiName != null) {
             return clsName + ":" + psiName;

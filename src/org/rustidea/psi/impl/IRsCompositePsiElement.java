@@ -40,6 +40,6 @@ public abstract class IRsCompositePsiElement extends CompositePsiElement impleme
     @NotNull
     @Override
     public String toString() {
-        return PsiImplUtil.psiElementToString(this);
+        return PsiImplUtil.getPsiClassName(this);
     }
 }
