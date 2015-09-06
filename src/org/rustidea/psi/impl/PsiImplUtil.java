@@ -31,13 +31,13 @@ public final class PsiImplUtil extends PsiUtilBase {
     private PsiImplUtil() {
     }
 
-    public static boolean hasTypeParameters(@NotNull IRsTypeParameterListOwner owner) {
+    public static boolean hasTypeParameters(@NotNull final IRsTypeParameterListOwner owner) {
         final RsTypeParameterList list = owner.getTypeParameterList();
         return list != null && list.getTypeParameters().length > 0;
     }
 
     @NotNull
-    public static RsTypeParameter[] getTypeParameters(@NotNull IRsTypeParameterListOwner owner) {
+    public static RsTypeParameter[] getTypeParameters(@NotNull final IRsTypeParameterListOwner owner) {
         final RsTypeParameterList list = owner.getTypeParameterList();
         if (list != null) {
             return list.getTypeParameters();
@@ -58,8 +58,9 @@ public final class PsiImplUtil extends PsiUtilBase {
 
     public static <ElemT extends StubBasedPsiElement> int getStubElementIndex(
         @NotNull final ElemT element, @Nullable final StubElement stub, @NotNull final Class<ElemT> elemCls) {
-        return stub != null
-            ? stub.getParentStub().getChildrenStubs().indexOf(stub)
-            : getElementIndex(element, elemCls);
+        if (stub != null) {
+            return stub.getParentStub().getChildrenStubs().indexOf(stub);
+        }
+        return getElementIndex(element, elemCls);
     }
 }

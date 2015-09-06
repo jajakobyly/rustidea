@@ -43,7 +43,7 @@ public interface RsAttributeItem extends StubBasedPsiElement<RsAttributeItemStub
     RsAttributeItemList getParams();
 
     /**
-     * @return -1 if the item is attribute root
+     * @return 0 if the item is attribute root
      */
     int getIndex();
 

@@ -76,7 +76,9 @@ public class RsAttributeItemImpl extends IRsStubPsiElement<RsAttributeItemStub> 
 
     @Override
     public int getIndex() {
-        if (getParentItem() == null) return -1;
+        if (getParentItem() == null) {
+            return 0;
+        }
         return PsiImplUtil.getStubElementIndex(this, getStub(), RsAttributeItem.class);
     }
 
