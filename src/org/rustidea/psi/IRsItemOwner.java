@@ -16,7 +16,10 @@
 
 package org.rustidea.psi;
 
-import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiElement;
+import org.jetbrains.annotations.NotNull;
 
-public interface RsFile extends PsiFile, IRsAttributeOwner, IRsItemOwner {
+public interface IRsItemOwner extends PsiElement {
+    @NotNull
+    IRsItem[] getItems();
 }

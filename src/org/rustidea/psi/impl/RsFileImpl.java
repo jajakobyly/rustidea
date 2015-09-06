@@ -23,6 +23,7 @@ import org.jetbrains.annotations.NotNull;
 import org.rustidea.RustFileType;
 import org.rustidea.RustLanguage;
 import org.rustidea.psi.IRsAttribute;
+import org.rustidea.psi.IRsItem;
 import org.rustidea.psi.RsFile;
 
 public class RsFileImpl extends PsiFileBase implements RsFile {
@@ -34,6 +35,12 @@ public class RsFileImpl extends PsiFileBase implements RsFile {
     @Override
     public FileType getFileType() {
         return RustFileType.INSTANCE;
+    }
+
+    @NotNull
+    @Override
+    public IRsItem[] getItems() {
+        return findChildrenByClass(IRsItem.class);
     }
 
     @NotNull

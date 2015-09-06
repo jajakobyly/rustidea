@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi;
+package org.rustidea.stubs;
 
-import com.intellij.psi.PsiFile;
+import com.intellij.psi.stubs.NamedStub;
+import org.rustidea.psi.IRsItem;
 
-public interface RsFile extends PsiFile, IRsAttributeOwner, IRsItemOwner {
+public interface IRsItemStub<PsiT extends IRsItem> extends NamedStub<PsiT> {
 }
