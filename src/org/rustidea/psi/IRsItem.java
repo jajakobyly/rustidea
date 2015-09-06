@@ -25,4 +25,6 @@ public interface IRsItem<StubT extends IRsItemStub>
     extends StubBasedPsiElement<StubT>, PsiNameIdentifierOwner, IRsAttributeOwner, IRsPsiElement {
     @Nullable
     IRsItemOwner getOwner();
+
+    boolean isPublic();
 }

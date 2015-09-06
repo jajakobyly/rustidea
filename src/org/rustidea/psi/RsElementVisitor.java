@@ -39,8 +39,16 @@ public abstract class RsElementVisitor extends PsiElementVisitor {
         visitAttributeOrDoc(doc);
     }
 
+    public void visitExternCrateDecl(RsExternCrateDecl externCrateDecl) {
+        visitItem(externCrateDecl);
+    }
+
     public void visitIdentifier(RsIdentifier identifier) {
         visitRustToken(identifier);
+    }
+
+    private void visitItem(IRsItem item) {
+        visitElement(item);
     }
 
     public void visitKeyword(RsKeyword keyword) {

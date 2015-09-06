@@ -16,9 +16,12 @@
 
 package org.rustidea.stubs;
 
-import com.intellij.psi.stubs.NamedStub;
-import org.rustidea.psi.IRsItem;
+import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.Nullable;
+import org.rustidea.psi.RsExternCrateDecl;
 
-public interface IRsItemStub<PsiT extends IRsItem> extends NamedStub<PsiT> {
-    boolean isPublic();
+public interface RsExternCrateDeclStub extends IRsItemStub<RsExternCrateDecl> {
+    @Nullable
+    @NonNls
+    String getCrateName();
 }

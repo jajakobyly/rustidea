@@ -14,11 +14,19 @@
  * limitations under the License.
  */
 
-package org.rustidea.stubs;
+package org.rustidea.psi;
 
-import com.intellij.psi.stubs.NamedStub;
-import org.rustidea.psi.IRsItem;
+import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.Nullable;
+import org.rustidea.stubs.RsExternCrateDeclStub;
 
-public interface IRsItemStub<PsiT extends IRsItem> extends NamedStub<PsiT> {
-    boolean isPublic();
+public interface RsExternCrateDecl extends IRsItem<RsExternCrateDeclStub> {
+    @Nullable
+    RsIdentifier getCrateNameIdentifier();
+
+    @Nullable
+    @NonNls
+    String getCrateName();
+
+    boolean isRenamed();
 }
