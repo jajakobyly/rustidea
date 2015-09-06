@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.rustidea.stubs.impl;
+package org.rustidea.psi.impl;
 
 import com.intellij.extapi.psi.StubBasedPsiElementBase;
 import com.intellij.lang.ASTNode;
@@ -26,7 +26,6 @@ import com.intellij.psi.stubs.StubElement;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.IRsPsiElement;
 import org.rustidea.psi.RsElementVisitor;
-import org.rustidea.psi.impl.PsiImplUtil;
 
 public abstract class IRsStubPsiElement<T extends StubElement>
     extends StubBasedPsiElementBase<T> implements StubBasedPsiElement<T>, IRsPsiElement {

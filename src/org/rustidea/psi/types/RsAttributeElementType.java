@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.rustidea.stubs.types;
+package org.rustidea.psi.types;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.impl.source.tree.CompositeElement;
@@ -24,7 +24,6 @@ import com.intellij.psi.stubs.StubOutputStream;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.RsAttribute;
 import org.rustidea.psi.impl.RsAttributeImpl;
-import org.rustidea.psi.types.RsTypes;
 import org.rustidea.stubs.RsAttributeStub;
 import org.rustidea.stubs.impl.RsAttributeStubImpl;
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.rustidea.stubs.types;
+package org.rustidea.psi.types;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;

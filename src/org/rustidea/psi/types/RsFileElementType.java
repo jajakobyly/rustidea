@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.rustidea.stubs.types;
+package org.rustidea.psi.types;
 
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.StubBuilder;

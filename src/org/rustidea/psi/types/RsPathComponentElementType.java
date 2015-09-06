@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.rustidea.stubs.types;
+package org.rustidea.psi.types;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.impl.source.tree.CompositeElement;
@@ -26,7 +26,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsPathComponent;
 import org.rustidea.psi.impl.RsPathComponentImpl;
-import org.rustidea.psi.types.RsTypes;
 import org.rustidea.stubs.RsPathComponentStub;
 import org.rustidea.stubs.impl.RsPathComponentStubImpl;
 

@@ -26,7 +26,6 @@ import org.rustidea.psi.RsTypeParameter;
 import org.rustidea.psi.RsWhereClause;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.stubs.RsWhereClauseStub;
-import org.rustidea.stubs.impl.IRsStubPsiElement;
 import org.rustidea.util.SimpleArrayFactory;
 
 public class RsWhereClauseImpl extends IRsStubPsiElement<RsWhereClauseStub> implements RsWhereClause {

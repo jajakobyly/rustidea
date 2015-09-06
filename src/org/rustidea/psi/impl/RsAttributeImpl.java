@@ -26,7 +26,6 @@ import org.rustidea.psi.RsAttributeItem;
 import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.stubs.RsAttributeStub;
-import org.rustidea.stubs.impl.IRsStubPsiElement;
 
 public class RsAttributeImpl extends IRsStubPsiElement<RsAttributeStub> implements RsAttribute {
     public RsAttributeImpl(@NotNull final RsAttributeStub stub) {

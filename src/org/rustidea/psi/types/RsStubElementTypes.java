@@ -16,8 +16,6 @@
 
 package org.rustidea.psi.types;
 
-import org.rustidea.stubs.types.*;
-
 public interface RsStubElementTypes {
     RsAttributeElementType ATTRIBUTE = RsAttributeElementType.INSTANCE;
     RsAttributeItemElementType ATTRIBUTE_ITEM = RsAttributeItemElementType.INSTANCE;

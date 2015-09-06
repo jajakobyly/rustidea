@@ -32,9 +32,9 @@ import org.jetbrains.annotations.NotNull;
 import org.rustidea.lexer.RsLexer;
 import org.rustidea.parser.RsParser;
 import org.rustidea.psi.impl.RsFileImpl;
+import org.rustidea.psi.types.IRsStubElementType;
+import org.rustidea.psi.types.RsFileElementType;
 import org.rustidea.psi.types.RsTypes;
-import org.rustidea.stubs.types.IRsStubElementType;
-import org.rustidea.stubs.types.RsFileElementType;
 
 public class RustParserDefinition implements ParserDefinition {
     @NotNull

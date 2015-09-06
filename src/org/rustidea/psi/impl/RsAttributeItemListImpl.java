@@ -23,7 +23,6 @@ import org.rustidea.psi.RsAttributeItemList;
 import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.stubs.RsAttributeItemListStub;
-import org.rustidea.stubs.impl.IRsStubPsiElement;
 import org.rustidea.util.SimpleArrayFactory;
 
 public class RsAttributeItemListImpl extends IRsStubPsiElement<RsAttributeItemListStub> implements RsAttributeItemList {

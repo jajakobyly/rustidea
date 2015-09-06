@@ -24,7 +24,6 @@ import org.rustidea.psi.RsTypeParameter;
 import org.rustidea.psi.RsTypeParameterList;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.stubs.RsTypeParameterListStub;
-import org.rustidea.stubs.impl.IRsStubPsiElement;
 import org.rustidea.util.SimpleArrayFactory;
 
 public class RsTypeParameterListImpl extends IRsStubPsiElement<RsTypeParameterListStub> implements RsTypeParameterList {

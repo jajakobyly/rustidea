@@ -25,7 +25,6 @@ import org.rustidea.psi.RsPathComponent;
 import org.rustidea.psi.RsPathRelation;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.stubs.RsPathStub;
-import org.rustidea.stubs.impl.IRsStubPsiElement;
 import org.rustidea.util.SimpleArrayFactory;
 
 public class RsPathImpl extends IRsStubPsiElement<RsPathStub> implements RsPath {

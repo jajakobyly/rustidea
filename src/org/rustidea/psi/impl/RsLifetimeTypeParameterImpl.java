@@ -28,7 +28,6 @@ import org.rustidea.psi.RsLifetime;
 import org.rustidea.psi.RsLifetimeTypeParameter;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.stubs.RsLifetimeTypeParameterStub;
-import org.rustidea.stubs.impl.IRsStubPsiElement;
 
 public class RsLifetimeTypeParameterImpl extends IRsStubPsiElement<RsLifetimeTypeParameterStub> implements RsLifetimeTypeParameter {
     public RsLifetimeTypeParameterImpl(@NotNull RsLifetimeTypeParameterStub stub) {

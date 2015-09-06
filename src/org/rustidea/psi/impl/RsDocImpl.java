@@ -28,7 +28,6 @@ import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsToken;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.stubs.RsDocStub;
-import org.rustidea.stubs.impl.IRsStubPsiElement;
 
 public class RsDocImpl extends IRsStubPsiElement<RsDocStub> implements RsDoc {
     public RsDocImpl(@NotNull final RsDocStub stub) {

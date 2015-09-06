@@ -25,7 +25,6 @@ import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.*;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.stubs.RsPathComponentStub;
-import org.rustidea.stubs.impl.IRsStubPsiElement;
 
 public class RsPathComponentImpl extends IRsStubPsiElement<RsPathComponentStub> implements RsPathComponent {
     public RsPathComponentImpl(@NotNull RsPathComponentStub stub) {
