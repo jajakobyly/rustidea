@@ -22,7 +22,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.stubs.RsAttributeItemStub;
 
-public interface RsAttributeItem extends StubBasedPsiElement<RsAttributeItemStub>, PsiNameIdentifierOwner {
+public interface RsAttributeItem
+    extends StubBasedPsiElement<RsAttributeItemStub>, PsiNameIdentifierOwner, IRsPsiElement {
     @NotNull
     @Override
     RsIdentifier getNameIdentifier();

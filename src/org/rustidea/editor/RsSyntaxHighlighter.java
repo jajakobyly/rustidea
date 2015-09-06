@@ -23,10 +23,10 @@ import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase;
 import com.intellij.psi.StringEscapesTokenTypes;
 import com.intellij.psi.tree.IElementType;
+import com.intellij.util.containers.ContainerUtil;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.types.RsTypes;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import static com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey;
@@ -61,7 +61,7 @@ public class RsSyntaxHighlighter extends SyntaxHighlighterBase {
 
     public static final TextAttributesKey BAD_CHARACTER = createTextAttributesKey("RUST.BAD_CHARACTER", HighlighterColors.BAD_CHARACTER);
 
-    public static final Map<IElementType, TextAttributesKey> KEYS = new HashMap<IElementType, TextAttributesKey>();
+    public static final Map<IElementType, TextAttributesKey> KEYS = ContainerUtil.newHashMap();
 
     static {
         fillMap(KEYS, RsTypes.KEYWORD_TOKEN_SET, KEYWORD);
