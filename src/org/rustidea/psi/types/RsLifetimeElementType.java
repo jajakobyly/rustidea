@@ -35,7 +35,7 @@ public class RsLifetimeElementType extends IRsStubElementType<RsLifetimeStub, Rs
     public static final RsLifetimeElementType INSTANCE = new RsLifetimeElementType();
 
     private RsLifetimeElementType() {
-        super("TYPE_PARAMETER_LIST");
+        super("LIFETIME");
     }
 
     @NotNull

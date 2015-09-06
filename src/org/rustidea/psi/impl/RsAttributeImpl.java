@@ -44,7 +44,7 @@ public class RsAttributeImpl extends IRsStubPsiElement<RsAttributeStub> implemen
 
     @Override
     public boolean isParentAttribute() {
-        return findChildByType(RsTypes.OP_EXCLAMATION_MARK) != null;
+        return findChildByType(RsTypes.OP_BANG) != null;
     }
 
     @Nullable

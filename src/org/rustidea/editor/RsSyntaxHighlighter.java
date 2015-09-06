@@ -65,7 +65,8 @@ public class RsSyntaxHighlighter extends SyntaxHighlighterBase {
 
     static {
         fillMap(KEYS, RsTypes.KEYWORD_TOKEN_SET, KEYWORD);
-        fillMap(KEYS, RsTypes.OPERATION_TOKEN_SET, OPERATION_SIGN);
+        // Braces, brackets, parentheses & other ops will be replaced further.
+        fillMap(KEYS, RsTypes.OPERATOR_TOKEN_SET, OPERATION_SIGN);
         fillMap(KEYS, RsTypes.BRACE_TOKEN_SET, BRACES);
         fillMap(KEYS, RsTypes.BRACKET_TOKEN_SET, BRACKETS);
         fillMap(KEYS, RsTypes.PAREN_TOKEN_SET, PARENTHESES);
