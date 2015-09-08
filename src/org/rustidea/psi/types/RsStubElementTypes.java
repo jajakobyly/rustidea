@@ -68,7 +68,7 @@ public interface RsStubElementTypes {
         };
 
     IRsEmptyStubElementType<RsWhereClause> WHERE_CLAUSE =
-        new IRsEmptyStubElementType<RsWhereClause>("TYPE_PARAMETER_LIST") {
+        new IRsEmptyStubElementType<RsWhereClause>("WHERE_CLAUSE") {
             @NotNull
             @Override
             public RsWhereClause createPsi(@NotNull EmptyStub stub) {
