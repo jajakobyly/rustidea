@@ -17,6 +17,7 @@
 2. Open *Project Structure* window and in *Project* screen:
     - set **Project SDK** to recently configured IntelliJ Plugin SDK
     - set **Project compiler output** path to somewhere, for example: `[project directory]/out`
+3. Copy file `build.properties.skeleton` as `build.properties` and adjust it to your environment.
 
 ## Building the plugin
 
