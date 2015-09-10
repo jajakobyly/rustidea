@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Clean" type="AntRunConfiguration" factoryName="Ant Target" singleton="true">
+    <antsettings antfile="file://$PROJECT_DIR$/build.xml" target="clean" />
+    <method>
+      <option name="Make" enabled="false" />
+    </method>
+  </configuration>
+</component>

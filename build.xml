@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright 2015 Marek Kaput
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~   http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<project name="rustidea">
+    <property file="build.properties"/>
+
+    <!--
+      ~ Output dirs
+      -->
+    <property name="output.dir" value="${basedir}/out"/>
+    <property name="production.output.dir" value="${output.dir}/production/Rustidea"/>
+    <property name="test.output.dir" value="${output.dir}/test/Rustidea"/>
+    <property name="generate.dir" value="${basedir}/gen"/>
+    <property name="jflex.output.dir" value="${generate.dir}/org/rustidea/lexer"/>
+
+    <!--
+      ~ Compiler options
+      -->
+
+    <!--
+      ~ JDK definitions
+      -->
+    <!-- Set jdk.home if not specified in build.properties. -->
+    <condition property="jdk.home" value="${java.home}/..">
+        <not>
+            <isset property="jdk.home"/>
+        </not>
+    </condition>
+    <property name="jdk.bin" value="${jdk.home}/bin"/>
+    <path id="jdk.classpath">
+        <fileset dir="${jdk.home}">
+            <include name="lib/*.jar"/>
+            <include name="jre/lib/*.jar"/>
+            <include name="jre/lib/ext/*.jar"/>
+        </fileset>
+        <fileset dir="${idea.home}">
+            <include name="lib/**/*.jar"/>
+            <exclude name="lib/ant/lib/**"/>
+        </fileset>
+    </path>
+
+    <!--
+      ~ Project Libraries
+      -->
+    <property name="jflex.jar" value="${basedir}/lib/JFlex.jar"/>
+    <property name="jflex.skeleton" value="${basedir}/lib/idea-flex.skeleton"/>
+    <path id="kotlin.runtime.classpath">
+        <pathelement location="${basedir}/lib/kotlin-reflect.jar"/>
+        <pathelement location="${basedir}/lib/kotlin-runtime.jar"/>
+    </path>
+
+    <!--
+      ~ Custom compilers
+      -->
+    <taskdef resource="org/jetbrains/kotlin/ant/antlib.xml"
+             classpath="${kotlinc.home}/lib/kotlin-ant.jar"/>
+    <taskdef name="javac2"
+             classname="com.intellij.ant.Javac2"
+             classpathref="jdk.classpath"/>
+    <taskdef name="instrumentIdeaExtensions"
+             classname="com.intellij.ant.InstrumentIdeaExtensions"
+             classpathref="jdk.classpath"/>
+
+    <!--
+      ~ Sourcepaths
+      -->
+    <path id="production.sourcepath">
+        <dirset dir="${basedir}">
+            <include name="src"/>
+            <include name="gen"/>
+        </dirset>
+    </path>
+    <path id="production.resourcepath">
+        <dirset dir="${basedir}">
+            <include name="resource"/>
+        </dirset>
+    </path>
+    <path id="test.sourcepath">
+        <dirset dir="${basedir}">
+            <include name="tests"/>
+        </dirset>
+    </path>
+    <property name="jflex.rsLexer.input.file"
+              value="${basedir}/src/org/rustidea/lexer/_RsLexer.flex"/>
+    <property name="jflex.rsStringLiteralLexer.input.file"
+              value="${basedir}/src/org/rustidea/lexer/_RsStringLiteralLexer.flex"/>
+
+    <!--
+      ~ Classpaths
+      -->
+    <path id="production.classpath">
+        <path refid="jdk.classpath"/>
+        <path refid="kotlin.runtime.classpath"/>
+    </path>
+    <path id="test.classpath">
+        <path refid="production.classpath"/>
+        <pathelement location="${production.output.dir}"/>
+    </path>
+
+    <!--
+      ~ Targets
+      -->
+    <target name="init" description="Initialize build">
+        <echo message="Using IDEA home: ${idea.home}"/>
+        <echo message="Using JDK home: ${jdk.home}"/>
+        <echo message="Using Kotlinc home: ${kotlinc.home}"/>
+    </target>
+
+    <target name="generate.jflex.rsLexer"
+            depends="init, generate.clean"
+            description="Generate _RsLexer">
+        <java jar="${jflex.jar}" fork="true">
+            <arg value="--sliceandcharat"/>
+            <arg value="-d"/>
+            <arg value="${jflex.output.dir}"/>
+            <arg value="--skel"/>
+            <arg value="${jflex.skeleton}"/>
+            <arg value="${jflex.rsLexer.input.file}"/>
+        </java>
+    </target>
+
+    <target name="generate.jflex.rsStringLiteralLexer"
+            depends="init, generate.clean"
+            description="Generate _RsStringLiteralLexer">
+        <java jar="${jflex.jar}" fork="true">
+            <arg value="--sliceandcharat"/>
+            <arg value="-d"/>
+            <arg value="${jflex.output.dir}"/>
+            <arg value="--skel"/>
+            <arg value="${jflex.skeleton}"/>
+            <arg value="${jflex.rsStringLiteralLexer.input.file}"/>
+        </java>
+    </target>
+
+    <target name="generate.jflex"
+            depends="init, generate.jflex.rsLexer, generate.jflex.rsStringLiteralLexer"
+            description="Generate lexers"/>
+
+    <target name="build.production"
+            depends="init, generate.jflex"
+            description="Build plugin source">
+        <mkdir dir="${production.output.dir}"/>
+
+        <javac2 source="1.6" target="1.6"
+                destdir="${production.output.dir}"
+                fork="true"
+                executable="${jdk.bin}/javac"
+                includeantruntime="false">
+            <withKotlin/>
+            <classpath refid="production.classpath"/>
+            <src refid="production.sourcepath"/>
+        </javac2>
+
+        <copy todir="${production.output.dir}">
+            <path refid="production.resourcepath"/>
+        </copy>
+    </target>
+
+    <target name="build.test"
+            depends="init, build.production"
+            description="Build tests">
+        <mkdir dir="${test.output.dir}"/>
+
+        <javac2 source="1.6" target="1.6"
+                destdir="${test.output.dir}"
+                fork="true"
+                executable="${jdk.bin}/javac"
+                includeantruntime="false">
+            <classpath refid="test.classpath"/>
+            <src refid="test.sourcepath"/>
+        </javac2>
+    </target>
+
+    <target name="build"
+            depends="init, build.production, build.test"
+            description="Build all"/>
+
+    <target name="test.do"
+            depends="init, build.test"
+            description="Run tests">
+        <junit printsummary="yes"
+               haltonfailure="false"
+               failureproperty="failureFound"
+               showoutput="yes"
+               fork="yes"
+               forkmode="once">
+            <jvmarg value="-Didea.home.path=${idea.home}"/>
+            <jvmarg value="-Xbootclasspath/a:${idea.home}/lib/boot.jar"/>
+            <jvmarg value="-Dfile.encoding=UTF-8"/>
+            <jvmarg value="-ea"/>
+            <jvmarg value="-Didea.plugins.path=${idea.home}/plugins"/>
+            <jvmarg value="-Didea.launcher.bin.path=${idea.home}/bin"/>
+            <classpath>
+                <path refid="test.classpath"/>
+                <pathelement location="${test.output.dir}"/>
+            </classpath>
+            <formatter type="brief" usefile="false"/>
+            <batchtest>
+                <fileset dir="${basedir}/tests">
+                    <include name="**/*.java"/>
+                </fileset>
+            </batchtest>
+        </junit>
+    </target>
+
+    <target name="test" if="failureFound" depends="init, test.do">
+        <fail message="Test failure."/>
+    </target>
+
+    <target name="generate.clean" depends="init" description="Delete generated files">
+        <delete dir="${generate.dir}"/>
+    </target>
+
+    <target name="clean"
+            depends="init, generate.clean"
+            description="Clean build output">
+        <delete dir="${output.dir}"/>
+    </target>
+</project>
