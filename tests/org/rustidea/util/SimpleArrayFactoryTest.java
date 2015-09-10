@@ -17,27 +17,28 @@
 package org.rustidea.util;
 
 import com.intellij.util.ArrayFactory;
-import org.testng.annotations.Test;
+import org.junit.Test;
 
-import static org.testng.Assert.assertEquals;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
 public class SimpleArrayFactoryTest {
     @Test
     public void testEmpty() throws Exception {
         Object[] created = SimpleArrayFactory.empty(Object.class);
-        assertEquals(created.length, 0);
-        assertEquals(created, new Object[0]);
+        assertEquals(0, created.length);
+        assertArrayEquals(new Object[0], created);
     }
 
     @Test
     public void testGet() throws Exception {
         ArrayFactory<Object> factory = SimpleArrayFactory.get(Object.class);
         Object[] arr5 = factory.create(5);
-        assertEquals(arr5.length, 5);
-        assertEquals(arr5, new Object[5]);
+        assertEquals(5, arr5.length);
+        assertArrayEquals(new Object[5], arr5);
 
         Object[] arr10 = factory.create(10);
-        assertEquals(arr10.length, 10);
-        assertEquals(arr10, new Object[10]);
+        assertEquals(10, arr10.length);
+        assertArrayEquals(new Object[10], arr10);
     }
 }

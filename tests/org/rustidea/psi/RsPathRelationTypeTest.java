@@ -16,33 +16,33 @@
 
 package org.rustidea.psi;
 
+import org.junit.Test;
 import org.rustidea.psi.RsPathRelation.Type;
-import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 public class RsPathRelationTypeTest {
     @Test
     public void testFromInt() throws Exception {
-        assertEquals(Type.fromInt(0), Type.UNSPECIFIED);
-        assertEquals(Type.fromInt(1), Type.SELF);
-        assertEquals(Type.fromInt(2), Type.SUPER);
-        assertEquals(Type.fromInt(3), Type.GLOBAL);
-        assertEquals(Type.fromInt(4), Type.UNSPECIFIED);
+        assertEquals(Type.UNSPECIFIED, Type.fromInt(0));
+        assertEquals(Type.SELF, Type.fromInt(1));
+        assertEquals(Type.SUPER, Type.fromInt(2));
+        assertEquals(Type.GLOBAL, Type.fromInt(3));
+        assertEquals(Type.UNSPECIFIED, Type.fromInt(4));
     }
 
     @Test
     public void testToInt() throws Exception {
-        assertEquals(Type.UNSPECIFIED.toInt(), 0);
-        assertEquals(Type.SELF.toInt(), 1);
-        assertEquals(Type.SUPER.toInt(), 2);
-        assertEquals(Type.GLOBAL.toInt(), 3);
+        assertEquals(0, Type.UNSPECIFIED.toInt());
+        assertEquals(1, Type.SELF.toInt());
+        assertEquals(2, Type.SUPER.toInt());
+        assertEquals(3, Type.GLOBAL.toInt());
     }
 
     @Test
     public void testFromIntEqualsToInt() throws Exception {
         for (Type rel : Type.values()) {
-            assertEquals(Type.fromInt(rel.toInt()), rel);
+            assertEquals(rel, Type.fromInt(rel.toInt()));
         }
     }
 }
