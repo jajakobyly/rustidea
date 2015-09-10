@@ -11,6 +11,13 @@
 4. Additionally you can enable following plugins:
     - **PsiViewer** (very usable when debugging parsers)
 
+## Project configuration
+
+1. Open Rustidea project in IntelliJ Idea
+2. Open *Project Structure* window and in *Project* screen:
+    - set **Project SDK** to recently configured IntelliJ Plugin SDK
+    - set **Project compiler output** path to somewhere, for example: `[project directory]/out`
+
 ## Building the plugin
 
 1. Run `JFlex` run configuration to generate lexers
