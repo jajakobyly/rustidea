@@ -14,12 +14,10 @@
  * limitations under the License.
  */
 
-package org.rustidea.editor;
+package org.rustidea.lexer;
 
 import com.intellij.lexer.LayeredLexer;
 import com.intellij.psi.tree.IElementType;
-import org.rustidea.lexer.RsLexer;
-import org.rustidea.lexer.RsStringLiteralLexer;
 import org.rustidea.psi.types.RsTypes;
 
 import java.util.EnumSet;

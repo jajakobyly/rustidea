@@ -25,6 +25,7 @@ import com.intellij.psi.StringEscapesTokenTypes;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.util.containers.ContainerUtil;
 import org.jetbrains.annotations.NotNull;
+import org.rustidea.lexer.RsHighlightingLexer;
 import org.rustidea.psi.types.RsTypes;
 
 import java.util.Map;
