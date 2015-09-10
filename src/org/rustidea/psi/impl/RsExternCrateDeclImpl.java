@@ -18,6 +18,7 @@ package org.rustidea.psi.impl;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -34,10 +35,10 @@ public class RsExternCrateDeclImpl extends IRsStubPsiElement<RsExternCrateDeclSt
         super(node);
     }
 
-    @Nullable
+    @NotNull
     @Override
     public RsIdentifier getCrateNameIdentifier() {
-        return findChildByType(RsTypes.IDENTIFIER);
+        return PsiTreeUtil.getRequiredChildOfType(this, RsIdentifier.class);
     }
 
     @Nullable
@@ -46,7 +47,7 @@ public class RsExternCrateDeclImpl extends IRsStubPsiElement<RsExternCrateDeclSt
         return findLastChildByType(RsTypes.IDENTIFIER);
     }
 
-    @Nullable
+    @NotNull
     @Override
     public String getCrateName() {
         RsExternCrateDeclStub stub = getStub();
@@ -54,8 +55,7 @@ public class RsExternCrateDeclImpl extends IRsStubPsiElement<RsExternCrateDeclSt
             return stub.getCrateName();
         }
 
-        RsIdentifier node = getCrateNameIdentifier();
-        return node == null ? null : node.getText();
+        return getCrateNameIdentifier().getText();
     }
 
     @Override
@@ -80,7 +80,7 @@ public class RsExternCrateDeclImpl extends IRsStubPsiElement<RsExternCrateDeclSt
     public boolean isRenamed() {
         String name = getName();
         String crateName = getCrateName();
-        return name != null && crateName != null && !name.equals(crateName);
+        return name != null && !name.equals(crateName);
     }
 
     @Nullable

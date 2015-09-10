@@ -17,11 +17,11 @@
 package org.rustidea.stubs;
 
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.RsExternCrateDecl;
 
 public interface RsExternCrateDeclStub extends IRsItemStub<RsExternCrateDecl> {
-    @Nullable
+    @NotNull
     @NonNls
     String getCrateName();
 }

@@ -14,19 +14,14 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi;
+package org.rustidea.parser
 
-import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.rustidea.stubs.RsExternCrateDeclStub;
+import com.intellij.lang.PsiBuilder
+import org.rustidea.parser.framework.token
+import org.rustidea.parser.framework.warn
+import org.rustidea.psi.types.RsTokenTypes.OP_SEMICOLON
 
-public interface RsExternCrateDecl extends IRsItem<RsExternCrateDeclStub> {
-    @NotNull
-    RsIdentifier getCrateNameIdentifier();
-
-    @NotNull
-    @NonNls
-    String getCrateName();
-
-    boolean isRenamed();
-}
+/**
+ * `semicolon ::= ";"`
+ */
+public val semicolon: (PsiBuilder) -> Boolean = token(OP_SEMICOLON) warn "missing semicolon"

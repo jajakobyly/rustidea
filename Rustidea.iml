@@ -12,5 +12,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="TEST" name="org.testng:testng:6.8.21" level="project" />
+    <orderEntry type="library" name="KotlinJavaRuntime" level="project" />
   </component>
 </module>

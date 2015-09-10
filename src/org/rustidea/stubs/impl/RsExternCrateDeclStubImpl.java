@@ -19,7 +19,7 @@ package org.rustidea.stubs.impl;
 import com.intellij.psi.stubs.NamedStubBase;
 import com.intellij.psi.stubs.StubElement;
 import com.intellij.util.io.StringRef;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.RsExternCrateDecl;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.stubs.RsExternCrateDeclStub;
@@ -34,10 +34,10 @@ public class RsExternCrateDeclStubImpl extends NamedStubBase<RsExternCrateDecl> 
         this.isPublic = isPublic;
     }
 
-    @Nullable
+    @NotNull
     @Override
     public String getCrateName() {
-        return StringRef.toString(crateName);
+        return crateName.toString();
     }
 
     @Override
