@@ -20,23 +20,20 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.tree.ICompositeElementType;
 import com.intellij.util.ReflectionUtil;
 import org.jetbrains.annotations.NotNull;
-import sun.reflect.ConstructorAccessor;
-
-import java.lang.reflect.Constructor;
 
 public class IRsCompositeElementType extends IRsElementType implements ICompositeElementType {
     @NotNull
-    private final ConstructorAccessor constructor;
+    private final Class<? extends ASTNode> implClass;
 
-    public IRsCompositeElementType(@NotNull final String debugName, @NotNull final Class<? extends ASTNode> psiImplCls) {
+    public IRsCompositeElementType(@NotNull final String debugName,
+                                   @NotNull final Class<? extends ASTNode> implClass) {
         super(debugName);
-        Constructor<? extends ASTNode> constructor = ReflectionUtil.getDefaultConstructor(psiImplCls);
-        this.constructor = ReflectionUtil.getConstructorAccessor(constructor);
+        this.implClass = implClass;
     }
 
     @NotNull
     @Override
     public ASTNode createCompositeNode() {
-        return ReflectionUtil.createInstanceViaConstructorAccessor(constructor);
+        return ReflectionUtil.newInstance(implClass);
     }
 }

@@ -16,10 +16,18 @@
 
 package org.rustidea.psi.types;
 
+import com.intellij.lang.ASTNode;
 import org.jetbrains.annotations.NotNull;
+import org.rustidea.psi.impl.RsKeywordImpl;
 
 public class IRsKeywordType extends IRsTokenType {
     public IRsKeywordType(@NotNull String debugName) {
         super(debugName);
+    }
+
+    @NotNull
+    @Override
+    public ASTNode createLeafNode(CharSequence leafText) {
+        return new RsKeywordImpl(this, leafText);
     }
 }

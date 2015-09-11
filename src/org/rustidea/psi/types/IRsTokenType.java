@@ -16,10 +16,19 @@
 
 package org.rustidea.psi.types;
 
+import com.intellij.lang.ASTNode;
+import com.intellij.psi.tree.ILeafElementType;
 import org.jetbrains.annotations.NotNull;
+import org.rustidea.psi.impl.RsTokenImpl;
 
-public class IRsTokenType extends IRsElementType {
+public class IRsTokenType extends IRsElementType implements ILeafElementType {
     public IRsTokenType(@NotNull String debugName) {
         super(debugName);
+    }
+
+    @NotNull
+    @Override
+    public ASTNode createLeafNode(CharSequence leafText) {
+        return new RsTokenImpl(this, leafText);
     }
 }

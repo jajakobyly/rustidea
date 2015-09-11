@@ -141,8 +141,9 @@ public interface RsTokenTypes extends TokenType {
     IElementType RAW_BYTE_STRING_LIT = new IRsTokenType("RAW_BYTE_STRING_LITERAL");
     IElementType RAW_STRING_LIT = new IRsTokenType("RAW_STRING_LITERAL");
 
-    IElementType BLOCK_COMMENT = new IRsTokenType("BLOCK_COMMENT");
-    IElementType LINE_COMMENT = new IRsTokenType("LINE_COMMENT");
+    // Using IRsTokenType will break the code because of inappropriate leaf node creation
+    IElementType BLOCK_COMMENT = new IRsElementType("BLOCK_COMMENT");
+    IElementType LINE_COMMENT = new IRsElementType("LINE_COMMENT");
 
     IElementType BLOCK_DOC = new IRsTokenType("BLOCK_DOC");
     IElementType BLOCK_PARENT_DOC = new IRsTokenType("BLOCK_PARENT_DOC");

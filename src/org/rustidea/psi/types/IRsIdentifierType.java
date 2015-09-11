@@ -16,10 +16,18 @@
 
 package org.rustidea.psi.types;
 
+import com.intellij.lang.ASTNode;
 import org.jetbrains.annotations.NotNull;
+import org.rustidea.psi.impl.RsIdentifierImpl;
 
 public class IRsIdentifierType extends IRsTokenType {
     public IRsIdentifierType(@NotNull String debugName) {
         super(debugName);
+    }
+
+    @NotNull
+    @Override
+    public ASTNode createLeafNode(CharSequence leafText) {
+        return new RsIdentifierImpl(this, leafText);
     }
 }
