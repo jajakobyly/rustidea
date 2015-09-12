@@ -52,8 +52,8 @@ public fun PsiBuilder.unexpectedToken() {
 /**
  * Wrap parser logic with marker which produces given [type] or is rollbacked otherwise.
  */
-public inline fun PsiBuilder.section(type: IElementType? = null,
-                                     inlineOptions(ONLY_LOCAL_RETURN) fn: () -> Boolean): Boolean {
+public inline fun PsiBuilder.section(
+    type: IElementType? = null, inlineOptions(ONLY_LOCAL_RETURN) fn: () -> Boolean): Boolean {
     val marker = mark()
     val result = fn()
     if (result) {
@@ -71,8 +71,8 @@ public inline fun PsiBuilder.section(type: IElementType? = null,
 /**
  * Wrap parser logic with marker which produces given [type] or is dropped otherwise.
  */
-public inline fun PsiBuilder.sectionGreedy(type: IElementType? = null,
-                                           inlineOptions(ONLY_LOCAL_RETURN) fn: () -> Boolean): Boolean {
+public inline fun PsiBuilder.sectionGreedy(
+    type: IElementType? = null, inlineOptions(ONLY_LOCAL_RETURN) fn: () -> Boolean): Boolean {
     val marker = mark()
     val result = fn()
     if (result && type != null) {

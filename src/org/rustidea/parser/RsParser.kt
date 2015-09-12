@@ -22,6 +22,7 @@ import com.intellij.lang.PsiParser
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.psi.tree.IElementType
 import org.rustidea.parser.framework.many1Greedy
+import org.rustidea.parser.framework.or
 import org.rustidea.parser.framework.wrapMarker
 import kotlin.reflect.jvm.java
 import kotlin.util.measureTimeMillis
@@ -40,6 +41,6 @@ public class RsParser : PsiParser {
 
     companion object {
         final val LOG = Logger.getInstance(RsParser::class.java);
-        final val fileContents = many1Greedy(item)
+        final val fileContents = many1Greedy(parentAttr or item)
     }
 }

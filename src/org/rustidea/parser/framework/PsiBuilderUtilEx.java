@@ -17,6 +17,7 @@
 package org.rustidea.parser.framework;
 
 import com.intellij.lang.PsiBuilder;
+import com.intellij.lang.PsiBuilderUtil;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
@@ -39,5 +40,28 @@ public final class PsiBuilderUtilEx {
             return true;
         }
         return false;
+    }
+
+    public static boolean maybe(@NotNull final PsiBuilder builder, @NotNull final IElementType token) {
+        if (builder.getTokenType() == token) {
+            builder.advanceLexer();
+        }
+        return true;
+    }
+
+    public static boolean maybe(@NotNull final PsiBuilder builder, @NotNull final TokenSet tokens) {
+        if (tokens.contains(builder.getTokenType())) {
+            builder.advanceLexer();
+        }
+        return true;
+    }
+
+    public static boolean expectOrWarn(@NotNull final PsiBuilder builder,
+                                       @NotNull final IElementType token,
+                                       @NotNull final String errMsg) {
+        if(!PsiBuilderUtil.expect(builder, token)) {
+            builder.mark().error(errMsg);
+        }
+        return true;
     }
 }

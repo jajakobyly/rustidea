@@ -21,25 +21,53 @@ import com.intellij.lang.PsiBuilderUtil
 import com.intellij.psi.tree.IElementType
 import com.intellij.psi.tree.TokenSet
 
+/**
+ * `token{TOK} ::= TOK`
+ */
 public fun token(token: IElementType): (PsiBuilder) -> Boolean = { builder ->
     PsiBuilderUtil.expect(builder, token)
 }
 
+/**
+ * `token{TOK_SET} ::= TOK_SET{0} | TOK_SET{1} | ...`
+ */
 public fun token(tokens: TokenSet): (PsiBuilder) -> Boolean = { builder ->
     PsiBuilderUtil.expect(builder, tokens)
 }
 
-public fun token(vararg tokens: IElementType): (PsiBuilder) -> Boolean = { builder ->
+/**
+ * `seq{TOK...} ::= TOK{0} TOK{1} ...`
+ */
+public fun seq(vararg tokens: IElementType): (PsiBuilder) -> Boolean = { builder ->
     tokens.asSequence()
         .map { PsiBuilderUtil.expect(builder, it) }
         .all { it }
 }
 
-
-public fun notToken(token: IElementType): (PsiBuilder) -> Boolean = { builder ->
+/**
+ * `not{TOK} ::= !TOK`
+ */
+public fun not(token: IElementType): (PsiBuilder) -> Boolean = { builder ->
     PsiBuilderUtilEx.expectNot(builder, token)
 }
 
-public fun notToken(tokens: TokenSet): (PsiBuilder) -> Boolean = { builder ->
+/**
+ * `not{TOK_SET} ::= !( TOK_SET{0} | TOK_SET{1} | ... )`
+ */
+public fun not(tokens: TokenSet): (PsiBuilder) -> Boolean = { builder ->
     PsiBuilderUtilEx.expectNot(builder, tokens)
+}
+
+/**
+ * `maybe{TOK} ::= TOK?`
+ */
+public fun maybe(token: IElementType): (PsiBuilder) -> Boolean = { builder ->
+    PsiBuilderUtilEx.maybe(builder, token)
+}
+
+/**
+ * `maybe{TOK_SET} ::= ( TOK_SET{0} | TOK_SET{1} | ... )?`
+ */
+public fun maybe(tokens: TokenSet): (PsiBuilder) -> Boolean = { builder ->
+    PsiBuilderUtilEx.maybe(builder, tokens)
 }

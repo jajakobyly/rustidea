@@ -285,6 +285,7 @@ FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
 
     //=== Comments & Docs
     //=== https://doc.rust-lang.org/nightly/reference.html#comments
+    // FIXME Line comments are not lexed when they are at the very end of the file
     "//!" ~{EOL}                    { return RsTokenTypes.LINE_PARENT_DOC; }
     "///" ~{EOL}                    { return RsTokenTypes.LINE_DOC; }
     "///" "/"+ ~{EOL} | "//" ~{EOL} { return RsTokenTypes.LINE_COMMENT; }

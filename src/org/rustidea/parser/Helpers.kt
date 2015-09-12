@@ -17,11 +17,28 @@
 package org.rustidea.parser
 
 import com.intellij.lang.PsiBuilder
+import org.rustidea.parser.framework.fail
+import org.rustidea.parser.framework.sep
 import org.rustidea.parser.framework.token
 import org.rustidea.parser.framework.warn
+import org.rustidea.psi.types.RsTokenTypes.IDENTIFIER
+import org.rustidea.psi.types.RsTokenTypes.OP_COMMA
 import org.rustidea.psi.types.RsTokenTypes.OP_SEMICOLON
+
+/**
+ * `ident ::= IDENTIFIER`
+ */
+public val ident: (PsiBuilder) -> Boolean =
+    token(IDENTIFIER) fail "expected identifier"
 
 /**
  * `semicolon ::= ";"`
  */
-public val semicolon: (PsiBuilder) -> Boolean = token(OP_SEMICOLON) warn "missing semicolon"
+public val semicolon: (PsiBuilder) -> Boolean =
+    token(OP_SEMICOLON) warn "missing semicolon"
+
+/**
+ * `commaSep{p} ::= p ("," p)*`
+ */
+public fun commaSep(p: (PsiBuilder) -> Boolean): (PsiBuilder) -> Boolean =
+    sep(OP_COMMA, p)
