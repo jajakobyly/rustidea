@@ -18,10 +18,10 @@ package org.rustidea.parser;
 
 import org.rustidea.parser.framework.Parser;
 
-import static org.rustidea.parser.RsParserUtil.*;
+import static org.rustidea.parser.RsParserUtil.ident;
+import static org.rustidea.parser.RsParserUtil.semicolon;
 import static org.rustidea.parser.framework.Combinators.*;
-import static org.rustidea.parser.framework.Helpers.lazy;
-import static org.rustidea.parser.framework.Helpers.wrap;
+import static org.rustidea.parser.framework.Helpers.*;
 import static org.rustidea.parser.framework.Scanners.maybeToken;
 import static org.rustidea.parser.framework.Scanners.token;
 import static org.rustidea.psi.types.RsTypes.*;
@@ -40,7 +40,7 @@ public final class RsItemParser {
      */
     @SuppressWarnings("unused") // used as lazy parser
     public static final Parser attrItemList =
-        wrap(OP_LPAREN, OP_RPAREN, commaSep(attrItem)).mark(ATTRIBUTE_ITEM_LIST);
+        wrap(OP_LPAREN, OP_RPAREN, sep(OP_COMMA, attrItem)).mark(ATTRIBUTE_ITEM_LIST);
 
     /**
      * <pre>doc ::= BLOCK_DOC | LINE_DOC+</pre>

@@ -16,12 +16,9 @@
 
 package org.rustidea.parser;
 
-import org.jetbrains.annotations.NotNull;
 import org.rustidea.parser.framework.Parser;
 
-import static org.rustidea.parser.framework.Helpers.sep;
 import static org.rustidea.parser.framework.Scanners.token;
-import static org.rustidea.psi.types.RsTokenTypes.OP_COMMA;
 import static org.rustidea.psi.types.RsTokenTypes.OP_SEMICOLON;
 import static org.rustidea.psi.types.RsTypes.IDENTIFIER;
 
@@ -37,13 +34,5 @@ public final class RsParserUtil {
     public static final Parser semicolon = token(OP_SEMICOLON).warn("missing semicolon");
 
     private RsParserUtil() {
-    }
-
-    /**
-     * <pre>commaSep(p) ::= [ p ("," p)* ]</pre>
-     */
-    @NotNull
-    public static Parser commaSep(@NotNull final Parser p) {
-        return sep(OP_COMMA, p);
     }
 }

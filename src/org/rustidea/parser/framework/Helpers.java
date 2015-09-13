@@ -98,30 +98,54 @@ public final class Helpers {
      */
     @NotNull
     public static Parser sep(@NotNull final IElementType separator, @NotNull final Parser p) {
-        return new WrapperParser(p) {
-            @Override
-            public boolean parse(@NotNull PsiBuilder builder) {
-                Section section = Section.begin(builder);
+        return new SepParser(p, separator, false);
+    }
 
-                if (parser.parse(builder)) {
-                    while (!builder.eof()) {
-                        Section section1 = Section.begin(builder);
-                        PsiBuilderUtilEx.expectOrWarn(
-                            builder, separator, "missing " + separator.toString());
-                        section1.result = parser.parse(builder);
-                        if (!section1.end(true, null, null)) {
-                            break;
-                        }
-                    }
+    /**
+     * <pre>sep2(SEPARATOR, p) ::= [ p (SEPARATOR p)* SEPARATOR?]</pre>
+     */
+    @NotNull
+    public static Parser sep2(@NotNull final IElementType separator, @NotNull final Parser p) {
+        return new SepParser(p, separator, true);
+    }
 
-                    // Check for trailing separator
-                    if (!builder.eof() && builder.getTokenType() == separator) {
-                        PsiBuilderUtilEx.unexpected(builder);
+    private static class SepParser extends WrapperParser {
+        @NotNull
+        private final IElementType separator;
+        private final boolean trailing;
+
+        public SepParser(@NotNull final Parser parser, @NotNull final IElementType separator, final boolean trailing) {
+            super(parser);
+            this.separator = separator;
+            this.trailing = trailing;
+        }
+
+        @Override
+        public boolean parse(@NotNull PsiBuilder builder) {
+            Section section = Section.begin(builder);
+
+            if (parser.parse(builder)) {
+                while (!builder.eof()) {
+                    Section section1 = Section.begin(builder);
+                    PsiBuilderUtilEx.expectOrWarn(
+                        builder, separator, "missing " + separator.toString());
+                    section1.result = parser.parse(builder);
+                    if (!section1.end(true, null, null)) {
+                        break;
                     }
                 }
 
-                return section.end(true, true, null, null);
+                // Check for trailing separator
+                if (builder.getTokenType() == separator) {
+                    if (trailing) {
+                        builder.advanceLexer();
+                    } else {
+                        PsiBuilderUtilEx.unexpected(builder);
+                    }
+                }
             }
-        };
+
+            return section.end(true, true, null, null);
+        }
     }
 }
