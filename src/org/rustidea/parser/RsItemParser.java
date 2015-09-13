@@ -46,6 +46,26 @@ public final class RsItemParser {
         wrap(OP_LPAREN, OP_RPAREN, commaSep(attrItem)).mark(ATTRIBUTE_ITEM_LIST);
 
     /**
+     * <pre>doc ::= BLOCK_DOC | LINE_DOC+</pre>
+     * <p><b>Returns:</b> {@link org.rustidea.psi.RsDoc}</p>
+     */
+    public static final Parser doc =
+        token(BLOCK_DOC).or(many1(token(LINE_DOC))).mark(DOC);
+
+    /**
+     * <pre>attr ::= "#" "[" {@link #attrItem} "]"</pre>
+     * <p><b>Returns:</b> {@link org.rustidea.psi.RsAttribute}</p>
+     */
+    public static final Parser attr =
+        token(OP_HASH).then(wrap(OP_LBRACKET, OP_RBRACKET, attrItem)).mark(ATTRIBUTE);
+
+    /**
+     * <pre>attrOrDoc ::= {@link #doc} | {@link #attr}</pre>
+     */
+    public static final Parser attrOrDoc =
+        doc.or(attr);
+
+    /**
      * <pre>parentDoc ::= BLOCK_PARENT_DOC | LINE_PARENT_DOC+</pre>
      * <p><b>Returns:</b> {@link org.rustidea.psi.RsDoc}</p>
      */
@@ -69,7 +89,7 @@ public final class RsItemParser {
      * <pre>itemPrelude ::= {@link #attr}* "pub"?</pre>
      */
     public static final Parser itemPrelude =
-        many(token(OP_HASH)).then(maybe(KW_PUB));
+        many(attrOrDoc).then(maybe(KW_PUB));
 
     /**
      * <pre>externCrateDecl ::= "extern" "crate" {@link RsParserUtil#ident} [ "as" {@link RsParserUtil#ident} ] ";"</pre>
