@@ -16,12 +16,13 @@
 
 package org.rustidea.parser.framework;
 
-import com.google.common.base.Supplier;
-import com.google.common.base.Suppliers;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilderUtil;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.lang.reflect.Field;
 
 /**
  * Various common complex rules which could be made by combining primitives.
@@ -33,16 +34,40 @@ public final class Helpers {
     /**
      * Create parser which lazily loads other parser and calls it. Useful for dealing with circular dependencies.
      *
-     * @param supplier parser supplier
+     * @param container  class which contains given parser
+     * @param parserName name of container's field in which the parser is stored
      * @return parser which lazily loads specified parser and calls it
      */
     @NotNull
-    public static Parser lazy(@NotNull final Supplier<Parser> supplier) {
-        final Supplier<Parser> mem = Suppliers.memoize(supplier);
+    public static Parser lazy(@NotNull final Class<?> container, @NotNull final String parserName) {
         return new Parser() {
+            @Nullable
+            private Parser parser = null;
+
             @Override
             public boolean parse(@NotNull PsiBuilder builder) {
-                return mem.get().parse(builder);
+                if (parser == null) {
+                    parser = initParser();
+                }
+                return parser.parse(builder);
+            }
+
+            @NotNull
+            private Parser initParser() {
+                String fieldName = container.getCanonicalName() + "#" + parserName;
+                try {
+                    Field parserField = container.getDeclaredField(parserName);
+
+                    if (!Parser.class.isAssignableFrom(parserField.getType())) {
+                        throw new RuntimeException(fieldName + " is not a parser");
+                    }
+
+                    return (Parser) parserField.get(null);
+                } catch (NoSuchFieldException e) {
+                    throw new RuntimeException(fieldName + " does not exist", e);
+                } catch (IllegalAccessException e) {
+                    throw new RuntimeException(fieldName + " is inaccessible", e);
+                }
             }
         };
     }

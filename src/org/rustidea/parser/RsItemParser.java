@@ -16,8 +16,6 @@
 
 package org.rustidea.parser;
 
-import com.google.common.base.Supplier;
-import org.jetbrains.annotations.NotNull;
 import org.rustidea.parser.framework.Parser;
 
 import static org.rustidea.parser.RsParserUtil.*;
@@ -37,26 +35,15 @@ public final class RsItemParser {
      * <p><b>Returns:</b> {@link org.rustidea.psi.RsAttributeItem}</p>
      */
     public static final Parser attrItem =
-        ident.then(maybe(token(OP_EQ).or(lazy(new Supplier<Parser>() {
-            @NotNull
-            @Override
-            public Parser get() {
-                return RsItemParser.attrItemList;
-            }
-        })))).mark(ATTRIBUTE_ITEM);
+        ident.then(maybe(token(OP_EQ).or(lazy(RsItemParser.class, "attrItemList")))).mark(ATTRIBUTE_ITEM);
 
     /**
      * <pre>attrItemList ::= "(" [ attrItem ("," attrItem)* ] ")"</pre>
      * <p><b>Returns:</b> {@link org.rustidea.psi.RsAttributeItemList}</p>
      */
+    @SuppressWarnings("unused") // used as lazy parser
     public static final Parser attrItemList =
-        wrap(OP_LPAREN, OP_RPAREN, commaSep(lazy(new Supplier<Parser>() {
-            @NotNull
-            @Override
-            public Parser get() {
-                return RsItemParser.attrItem;
-            }
-        }))).mark(ATTRIBUTE_ITEM_LIST);
+        wrap(OP_LPAREN, OP_RPAREN, commaSep(attrItem)).mark(ATTRIBUTE_ITEM_LIST);
 
     /**
      * <pre>parentDoc ::= BLOCK_PARENT_DOC | LINE_PARENT_DOC+</pre>
