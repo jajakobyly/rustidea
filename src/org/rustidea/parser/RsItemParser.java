@@ -50,7 +50,13 @@ public final class RsItemParser {
      * <p><b>Returns:</b> {@link org.rustidea.psi.RsAttributeItemList}</p>
      */
     public static final Parser attrItemList =
-        wrap(OP_LPAREN, OP_RPAREN, commaSep(attrItem)).mark(ATTRIBUTE_ITEM_LIST);
+        wrap(OP_LPAREN, OP_RPAREN, commaSep(lazy(new Supplier<Parser>() {
+            @NotNull
+            @Override
+            public Parser get() {
+                return RsItemParser.attrItem;
+            }
+        }))).mark(ATTRIBUTE_ITEM_LIST);
 
     /**
      * <pre>parentDoc ::= BLOCK_PARENT_DOC | LINE_PARENT_DOC+</pre>
