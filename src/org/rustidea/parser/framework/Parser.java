@@ -37,7 +37,7 @@ public abstract class Parser {
 
     /**
      * <pre>p.then(q) ::= p q</pre>
-     * <p>This combinator should be used only if two parsers are combined, otherwise use {@link Combinators#seq(Parser...)}. For tokens use {@link Scanners#seq(IElementType...)}.</p>
+     * <p>This combinator should be used only if two parsers are combined, otherwise use {@link Combinators#seq(Parser...)}. For tokens use {@link Scanners#token(IElementType...)}.</p>
      */
     @NotNull
     public Parser then(@NotNull final Parser q) {

@@ -17,6 +17,8 @@
 package org.rustidea.parser.framework;
 
 import com.intellij.lang.PsiBuilder;
+import com.intellij.psi.tree.IElementType;
+import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -28,6 +30,7 @@ public final class Combinators {
 
     /**
      * <pre>maybe(p) ::= p?</pre>
+     * <p>For tokens use {@link Scanners#maybeToken}</p>
      */
     @NotNull
     public static Parser maybe(@NotNull final Parser p) {
@@ -43,6 +46,7 @@ public final class Combinators {
 
     /**
      * <pre>not(p) ::= !p</pre>
+     * <p>For tokens use {@link Scanners#notToken}</p>
      */
     @NotNull
     public static Parser not(@NotNull final Parser p) {
@@ -58,6 +62,8 @@ public final class Combinators {
 
     /**
      * <pre>seq(ps...) ::= ps[0] ps[1] ...</pre>
+     *
+     * <p>For tokens use {@link Scanners#token(IElementType...)}.</p>
      */
     @NotNull
     public static Parser seq(@NotNull final Parser... ps) {
@@ -66,6 +72,8 @@ public final class Combinators {
 
     /**
      * <pre>or(ps...) ::= ps[0] | ps[1] | ...</pre>
+     *
+     * <p>For tokens use {@link Scanners#token(TokenSet)}.</p>
      */
     @NotNull
     public static Parser or(@NotNull final Parser... ps) {

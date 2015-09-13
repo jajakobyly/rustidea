@@ -56,10 +56,10 @@ public final class Scanners {
     }
 
     /**
-     * <pre>seq(TOKENS...) ::= TOKENS[0] TOKENS[1] ...</pre>
+     * <pre>token(TOKENS...) ::= TOKENS[0] TOKENS[1] ...</pre>
      */
     @NotNull
-    public static Parser seq(@NotNull final IElementType... tokens) {
+    public static Parser token(@NotNull final IElementType... tokens) {
         return new Parser() {
             @Override
             public boolean parse(@NotNull PsiBuilder builder) {
@@ -76,10 +76,10 @@ public final class Scanners {
     }
 
     /**
-     * <pre>not(TOKEN) ::= !TOKEN</pre>
+     * <pre>notToken(TOKEN) ::= !TOKEN</pre>
      */
     @NotNull
-    public static Parser not(@NotNull final IElementType token) {
+    public static Parser notToken(@NotNull final IElementType token) {
         return new Parser() {
             @Override
             public boolean parse(@NotNull PsiBuilder builder) {
@@ -89,10 +89,10 @@ public final class Scanners {
     }
 
     /**
-     * <pre>not(TOKENS) ::= !( TOKENS[0] | TOKENS[1] | ... )</pre>
+     * <pre>notToken(TOKENS) ::= !( TOKENS[0] | TOKENS[1] | ... )</pre>
      */
     @NotNull
-    public static Parser not(@NotNull final TokenSet tokens) {
+    public static Parser notToken(@NotNull final TokenSet tokens) {
         return new Parser() {
             @Override
             public boolean parse(@NotNull PsiBuilder builder) {
@@ -102,10 +102,10 @@ public final class Scanners {
     }
 
     /**
-     * <pre>maybe(TOKEN) ::= TOKEN?</pre>
+     * <pre>maybeToken(TOKEN) ::= TOKEN?</pre>
      */
     @NotNull
-    public static Parser maybe(@NotNull final IElementType token) {
+    public static Parser maybeToken(@NotNull final IElementType token) {
         return new Parser() {
             @Override
             public boolean parse(@NotNull PsiBuilder builder) {
@@ -115,10 +115,10 @@ public final class Scanners {
     }
 
     /**
-     * <pre>maybe(TOKENS) ::= [ TOKENS[0] | TOKENS[1] | ... ]</pre>
+     * <pre>maybeToken(TOKENS) ::= [ TOKENS[0] | TOKENS[1] | ... ]</pre>
      */
     @NotNull
-    public static Parser maybe(@NotNull final TokenSet tokens) {
+    public static Parser maybeToken(@NotNull final TokenSet tokens) {
         return new Parser() {
             @Override
             public boolean parse(@NotNull PsiBuilder builder) {

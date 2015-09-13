@@ -20,13 +20,10 @@ import org.rustidea.parser.framework.Parser;
 
 import static org.rustidea.parser.RsParserUtil.*;
 import static org.rustidea.parser.framework.Combinators.*;
-import static org.rustidea.parser.framework.Combinators.maybe;
-import static org.rustidea.parser.framework.Combinators.seq;
 import static org.rustidea.parser.framework.Helpers.lazy;
 import static org.rustidea.parser.framework.Helpers.wrap;
-import static org.rustidea.parser.framework.Scanners.maybe;
-import static org.rustidea.parser.framework.Scanners.seq;
-import static org.rustidea.parser.framework.Scanners.*;
+import static org.rustidea.parser.framework.Scanners.maybeToken;
+import static org.rustidea.parser.framework.Scanners.token;
 import static org.rustidea.psi.types.RsTypes.*;
 
 public final class RsItemParser {
@@ -77,7 +74,7 @@ public final class RsItemParser {
      * <p><b>Returns:</b> {@link org.rustidea.psi.RsAttribute}</p>
      */
     public static final Parser parentAttr =
-        seq(OP_HASH, OP_BANG).then(wrap(OP_LBRACKET, OP_RBRACKET, attrItem)).mark(ATTRIBUTE);
+        token(OP_HASH, OP_BANG).then(wrap(OP_LBRACKET, OP_RBRACKET, attrItem)).mark(ATTRIBUTE);
 
     /**
      * <pre>parentAttrOrDoc ::= {@link #parentDoc} | {@link #parentAttr}</pre>
@@ -89,7 +86,7 @@ public final class RsItemParser {
      * <pre>itemPrelude ::= {@link #attr}* "pub"?</pre>
      */
     public static final Parser itemPrelude =
-        many(attrOrDoc).then(maybe(KW_PUB));
+        many(attrOrDoc).then(maybeToken(KW_PUB));
 
     /**
      * <pre>externCrateDecl ::= "extern" "crate" {@link RsParserUtil#ident} [ "as" {@link RsParserUtil#ident} ] ";"</pre>
@@ -97,7 +94,7 @@ public final class RsItemParser {
      */
     public static final Parser externCrateDecl =
         seq(
-            seq(KW_EXTERN, KW_CRATE),
+            token(KW_EXTERN, KW_CRATE),
             ident,
             maybe(token(KW_AS).then(ident)),
             semicolon
