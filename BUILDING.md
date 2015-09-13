@@ -5,7 +5,6 @@
 1. You need [Intellij IDEA Community or Ultimate](https://www.jetbrains.com/idea/) to be installed in your system
 2. Set up plugin development environment, see [IntelliJ Platform SDK DevGuide / Setting Up Development Environment](http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/setting_up_environment.html)
 3. Install and enable additional plugins:
-    - **Kotlin** (parsers are written in [Kotlin](http://kotlinlang.org/))
     - **Grammar-Kit** (only for syntax highlighting of `flex` files)
     - **UI Designer**
 4. Additionally you can enable following plugins:
@@ -21,7 +20,7 @@
 
 ## Building the plugin
 
-1. Run `JFlex` run configuration to generate lexers
+1. Run `JFlex` run configuration (`generate.jflex` Ant task) to generate lexers
 2. Make
 
 ## Running the plugin

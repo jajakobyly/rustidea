@@ -17,15 +17,13 @@
 package org.rustidea.parser.framework;
 
 import com.intellij.lang.PsiBuilder;
+import com.intellij.lang.PsiBuilder.Marker;
 import com.intellij.lang.PsiBuilderUtil;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 
-public final class PsiBuilderUtilEx {
-    private PsiBuilderUtilEx() {
-    }
-
+public class PsiBuilderUtilEx {
     public static boolean expectNot(@NotNull final PsiBuilder builder, @NotNull final IElementType token) {
         if (builder.getTokenType() != token) {
             builder.advanceLexer();
@@ -63,5 +61,12 @@ public final class PsiBuilderUtilEx {
             builder.mark().error(errMsg);
         }
         return true;
+    }
+
+    public static void unexpected(@NotNull final PsiBuilder builder) {
+        Marker marker = builder.mark();
+        String tokenText = builder.getTokenText();
+        builder.advanceLexer();
+        marker.error("unexpected " + tokenText);
     }
 }

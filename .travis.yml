@@ -7,9 +7,8 @@ cache:
   directories:
     - $HOME/idea
     - $HOME/.ant
-    - $HOME/kotlin
 env:
-  - IDEA_VERSION=14.1.4 KOTLIN_VERSION=0.12.613
+  - IDEA_VERSION=14.1.4
 install:
   - IDEA_TAR=ideaIC-${IDEA_VERSION}.tar.gz
   - IDEA_PARENT_DIR=$HOME/idea
@@ -28,24 +27,4 @@ install:
         tar xzvf $HOME/$IDEA_TAR -C $IDEA_PARENT_DIR
         mv $IDEA_PARENT_DIR/idea-IC-* $IDEA_DIR
     fi
-  - KOTLIN_ZIP=kotlin-compiler-${KOTLIN_VERSION}.zip
-  - KOTLIN_PARENT_DIR=$HOME/kotlin
-  - KOTLIN_DIR=$KOTLIN_PARENT_DIR/$KOTLIN_VERSION
-  - |
-    echo "Acquiring Kotlin"
-    if [ -d $KOTLIN_DIR ]; then
-        echo "Using existing Kotlin installation at $KOTLIN_DIR"
-    else
-        echo "Removing existing Kotlin installation"
-        rm -rf $KOTLIN_PARENT_DIR
-        mkdir -p $KOTLIN_PARENT_DIR
-        echo "Downloading Kotlin archive"
-        travis_retry wget https://github.com/JetBrains/kotlin/releases/download/build-${KOTLIN_VERSION}/$KOTLIN_ZIP -P $HOME
-        echo "Installing Kotlin to $KOTLIN_DIR"
-        unzip $HOME/$KOTLIN_ZIP -d $KOTLIN_PARENT_DIR
-        mv $KOTLIN_PARENT_DIR/kotlinc $KOTLIN_DIR
-    fi
-  - |
-    echo "Creating build.properties file for ant"
-    echo "idea.home=$IDEA_DIR" >> build.properties
-    echo "kotlinc.home=$KOTLIN_DIR" >> build.properties
+  - echo "idea.home=$IDEA_DIR" >> build.properties

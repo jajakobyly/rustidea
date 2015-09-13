@@ -59,16 +59,10 @@
       -->
     <property name="jflex.jar" value="${basedir}/lib/JFlex.jar"/>
     <property name="jflex.skeleton" value="${basedir}/lib/idea-flex.skeleton"/>
-    <path id="kotlin.runtime.classpath">
-        <pathelement location="${basedir}/lib/kotlin-reflect.jar"/>
-        <pathelement location="${basedir}/lib/kotlin-runtime.jar"/>
-    </path>
 
     <!--
       ~ Custom compilers
       -->
-    <taskdef resource="org/jetbrains/kotlin/ant/antlib.xml"
-             classpath="${kotlinc.home}/lib/kotlin-ant.jar"/>
     <taskdef name="javac2"
              classname="com.intellij.ant.Javac2"
              classpathref="jdk.classpath"/>
@@ -105,7 +99,6 @@
       -->
     <path id="production.classpath">
         <path refid="jdk.classpath"/>
-        <path refid="kotlin.runtime.classpath"/>
     </path>
     <path id="test.classpath">
         <path refid="production.classpath"/>
@@ -118,7 +111,6 @@
     <target name="init" description="Initialize build">
         <echo message="Using IDEA home: ${idea.home}"/>
         <echo message="Using JDK home: ${jdk.home}"/>
-        <echo message="Using Kotlinc home: ${kotlinc.home}"/>
     </target>
 
     <target name="generate.jflex.rsLexer"
@@ -161,7 +153,6 @@
                 fork="true"
                 executable="${jdk.bin}/javac"
                 includeantruntime="false">
-            <withKotlin/>
             <classpath refid="production.classpath"/>
             <src refid="production.sourcepath"/>
         </javac2>
