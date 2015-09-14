@@ -16,7 +16,15 @@
 
 package org.rustidea.parser;
 
+import com.intellij.lang.PsiBuilder;
+import com.intellij.openapi.util.Pair;
+import com.intellij.psi.tree.IElementType;
+import com.intellij.util.containers.ContainerUtil;
+import org.jetbrains.annotations.NotNull;
 import org.rustidea.parser.framework.Parser;
+import org.rustidea.parser.framework.Section;
+
+import java.util.List;
 
 import static org.rustidea.parser.RsExprParser.literal;
 import static org.rustidea.parser.RsParserUtil.*;
@@ -85,27 +93,45 @@ public final class RsItemParser {
     /**
      * <pre>itemPrelude ::= {@link #attr}* "pub"?</pre>
      */
-    public static final Parser itemPrelude =
+    static final Parser itemPrelude =
         many(attrOrDoc).then(maybeToken(KW_PUB));
 
     /**
      * <pre>externCrateDecl ::= "extern" "crate" {@link RsParserUtil#identRequired} [ "as" {@link RsParserUtil#ident} ] ";"</pre>
-     * <p><b>Returns:</b> {@link org.rustidea.psi.RsExternCrateDecl}</p>
      */
-    public static final Parser externCrateDecl =
-        seq(
-            token(KW_EXTERN, KW_CRATE),
+    static final Parser externCrateDecl =
+        seq(token(KW_EXTERN, KW_CRATE),
             identRequired,
             maybe(token(KW_AS).then(ident)),
-            semicolon
-        ).markGreedy(EXTERN_CRATE_DECL);
+            semicolon);
+
+    @SuppressWarnings("unchecked") // don't care about array type
+    private static final List<Pair<Parser, IElementType>> itemParsers = ContainerUtil.newArrayList(
+        Pair.create(externCrateDecl, (IElementType) EXTERN_CRATE_DECL)
+    );
 
     /**
-     * <pre>item ::= {@link #itemPrelude} {@link #externCrateDecl}</pre>
+     * <pre>item ::= {@link #itemPrelude} ( {@link #externCrateDecl} )</pre>
      * <p><b>Returns:</b> {@link org.rustidea.psi.IRsItem}</p>
      */
-    public static final Parser item =
-        itemPrelude.then(externCrateDecl);
+    public static final Parser item = new Parser() {
+        @Override
+        public boolean parse(@NotNull PsiBuilder builder) {
+            Section section = Section.begin(builder);
+            section.result = itemPrelude.parse(builder);
+            if (section.result) {
+                for (Pair<Parser, IElementType> p : itemParsers) {
+                    Section section1 = Section.begin(builder);
+                    section1.result = p.getFirst().parse(builder);
+                    section.result = section1.end(true, null, null);
+                    if (section.result) {
+                        return section.end(true, p.getSecond(), null);
+                    }
+                }
+            }
+            return section.end(true, null, null);
+        }
+    };
 
     private RsItemParser() {
     }
