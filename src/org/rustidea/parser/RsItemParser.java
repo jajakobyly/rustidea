@@ -19,8 +19,7 @@ package org.rustidea.parser;
 import org.rustidea.parser.framework.Parser;
 
 import static org.rustidea.parser.RsExprParser.literal;
-import static org.rustidea.parser.RsParserUtil.ident;
-import static org.rustidea.parser.RsParserUtil.semicolon;
+import static org.rustidea.parser.RsParserUtil.*;
 import static org.rustidea.parser.framework.Combinators.*;
 import static org.rustidea.parser.framework.Helpers.*;
 import static org.rustidea.parser.framework.Scanners.maybeToken;
@@ -29,11 +28,11 @@ import static org.rustidea.psi.types.RsTypes.*;
 
 public final class RsItemParser {
     /**
-     * <pre>attrItem ::= {@link RsParserUtil#ident} [ "=" {@link RsExprParser#literal} | {@link #attrItemList} ]</pre>
+     * <pre>attrItem ::= {@link RsParserUtil#identRequired} [ "=" {@link RsExprParser#literal} | {@link #attrItemList} ]</pre>
      * <p><b>Returns:</b> {@link org.rustidea.psi.RsAttributeItem}</p>
      */
     public static final Parser attrItem =
-        ident.then(maybe((token(OP_EQ).then(literal)).or(lazy(RsItemParser.class, "attrItemList")))).mark(ATTRIBUTE_ITEM);
+        identRequired.then(maybe((token(OP_EQ).then(literal)).or(lazy(RsItemParser.class, "attrItemList")))).mark(ATTRIBUTE_ITEM);
 
     /**
      * <pre>attrItemList ::= "(" [ attrItem ("," attrItem)* ] ")"</pre>
@@ -90,13 +89,13 @@ public final class RsItemParser {
         many(attrOrDoc).then(maybeToken(KW_PUB));
 
     /**
-     * <pre>externCrateDecl ::= "extern" "crate" {@link RsParserUtil#ident} [ "as" {@link RsParserUtil#ident} ] ";"</pre>
+     * <pre>externCrateDecl ::= "extern" "crate" {@link RsParserUtil#identRequired} [ "as" {@link RsParserUtil#ident} ] ";"</pre>
      * <p><b>Returns:</b> {@link org.rustidea.psi.RsExternCrateDecl}</p>
      */
     public static final Parser externCrateDecl =
         seq(
             token(KW_EXTERN, KW_CRATE),
-            ident,
+            identRequired,
             maybe(token(KW_AS).then(ident)),
             semicolon
         ).markGreedy(EXTERN_CRATE_DECL);
