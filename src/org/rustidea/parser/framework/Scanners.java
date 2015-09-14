@@ -66,11 +66,11 @@ public final class Scanners {
                 Section section = Section.begin(builder);
                 for (IElementType token : tokens) {
                     if (!PsiBuilderUtil.expect(builder, token)) {
-                        section.result = false;
+                        section.setState(false);
                         break;
                     }
                 }
-                return section.end(true, null, null);
+                return section.end();
             }
         };
     }

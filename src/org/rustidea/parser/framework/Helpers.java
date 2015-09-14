@@ -83,11 +83,10 @@ public final class Helpers {
             @Override
             public boolean parse(@NotNull PsiBuilder builder) {
                 Section section = Section.begin(builder);
-                section.result = PsiBuilderUtil.expect(builder, open);
-                section.result = section.result && parser.parse(builder);
-                PsiBuilderUtilEx.expectOrWarn(
-                    builder, close, "missing " + close);
-                return section.end(true, null, null);
+                section.setState(PsiBuilderUtil.expect(builder, open));
+                section.call(parser);
+                PsiBuilderUtilEx.expectOrWarn(builder, close, "missing " + close);
+                return section.end();
             }
         };
     }
@@ -127,10 +126,9 @@ public final class Helpers {
             if (parser.parse(builder)) {
                 while (!builder.eof()) {
                     Section section1 = Section.begin(builder);
-                    PsiBuilderUtilEx.expectOrWarn(
-                        builder, separator, "missing " + separator.toString());
-                    section1.result = parser.parse(builder);
-                    if (!section1.end(true, null, null)) {
+                    PsiBuilderUtilEx.expectOrWarn(builder, separator, "missing " + separator.toString());
+                    section1.forceCall(parser);
+                    if (!section1.end()) {
                         break;
                     }
                 }
@@ -145,7 +143,8 @@ public final class Helpers {
                 }
             }
 
-            return section.end(true, true, null, null);
+            section.end();
+            return true;
         }
     }
 }

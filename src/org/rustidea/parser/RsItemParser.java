@@ -46,7 +46,7 @@ public final class RsItemParser {
      * <pre>attrItemList ::= "(" [ attrItem ("," attrItem)* ] ")"</pre>
      * <p><b>Returns:</b> {@link org.rustidea.psi.RsAttributeItemList}</p>
      */
-    @SuppressWarnings("unused") // used as lazy parser
+    @SuppressWarnings("unused") // lazily loaded
     public static final Parser attrItemList =
         wrap(OP_LPAREN, OP_RPAREN, sep(OP_COMMA, attrItem)).mark(ATTRIBUTE_ITEM_LIST);
 
@@ -118,18 +118,14 @@ public final class RsItemParser {
         @Override
         public boolean parse(@NotNull PsiBuilder builder) {
             Section section = Section.begin(builder);
-            section.result = itemPrelude.parse(builder);
-            if (section.result) {
+            if (section.call(itemPrelude)) {
                 for (Pair<Parser, IElementType> p : itemParsers) {
-                    Section section1 = Section.begin(builder);
-                    section1.result = p.getFirst().parse(builder);
-                    section.result = section1.end(true, null, null);
-                    if (section.result) {
-                        return section.end(true, p.getSecond(), null);
+                    if (section.callWrapped(p.getFirst())) {
+                        return section.end(p.getSecond(), null);
                     }
                 }
             }
-            return section.end(true, null, null);
+            return section.end();
         }
     };
 

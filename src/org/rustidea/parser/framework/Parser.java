@@ -65,8 +65,8 @@ public abstract class Parser {
             @Override
             public boolean parse(@NotNull PsiBuilder builder) {
                 Section section = Section.begin(builder);
-                section.result = parser.parse(builder);
-                return section.end(true, type, null);
+                section.call(parser);
+                return section.end(type, null);
             }
         };
     }
@@ -83,8 +83,8 @@ public abstract class Parser {
             @Override
             public boolean parse(@NotNull PsiBuilder builder) {
                 Section section = Section.begin(builder);
-                section.result = parser.parse(builder);
-                return section.end(false, type, null);
+                section.call(parser);
+                return section.endGreedy(type, null);
             }
         };
     }
@@ -101,8 +101,8 @@ public abstract class Parser {
             @Override
             public boolean parse(@NotNull PsiBuilder builder) {
                 Section section = Section.begin(builder);
-                section.result = parser.parse(builder);
-                return section.end(false, null, errorMessage);
+                section.forceCall(parser);
+                return section.endGreedy(null, errorMessage);
             }
         };
     }
@@ -119,8 +119,9 @@ public abstract class Parser {
             @Override
             public boolean parse(@NotNull PsiBuilder builder) {
                 Section section = Section.begin(builder);
-                section.result = parser.parse(builder);
-                return section.end(true, false, null, errorMessage);
+                section.forceCall(parser);
+                section.endGreedy(null, errorMessage);
+                return true;
             }
         };
     }

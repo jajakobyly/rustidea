@@ -37,25 +37,8 @@ public final class Combinators {
         return new WrapperParser(p) {
             @Override
             public boolean parse(@NotNull PsiBuilder builder) {
-                Section section = Section.begin(builder);
-                section.result = parser.parse(builder);
-                return section.end(true, true, null, null);
-            }
-        };
-    }
-
-    /**
-     * <pre>not(p) ::= !p</pre>
-     * <p>For tokens use {@link Scanners#notToken}</p>
-     */
-    @NotNull
-    public static Parser not(@NotNull final Parser p) {
-        return new WrapperParser(p) {
-            @Override
-            public boolean parse(@NotNull PsiBuilder builder) {
-                Section section = Section.begin(builder);
-                section.result = parser.parse(builder);
-                return !section.end(true, null, null);
+                Section.wrap(builder, parser);
+                return true;
             }
         };
     }
@@ -90,13 +73,8 @@ public final class Combinators {
         return new WrapperParser(p) {
             @Override
             public boolean parse(@NotNull PsiBuilder builder) {
-                while (!builder.eof()) {
-                    Section section = Section.begin(builder);
-                    section.result = parser.parse(builder);
-                    if (!section.end(true, null, null)) {
-                        break;
-                    }
-                }
+                //noinspection StatementWithEmptyBody
+                while (!builder.eof() && Section.wrap(builder, parser)) ;
                 return true;
             }
         };
@@ -112,17 +90,11 @@ public final class Combinators {
             public boolean parse(@NotNull PsiBuilder builder) {
                 // p+ ::= p p*
                 Section section = Section.begin(builder);
-                section.result = parser.parse(builder);
-                if (section.result) {
-                    while (!builder.eof()) {
-                        Section section1 = Section.begin(builder);
-                        section1.result = parser.parse(builder);
-                        if (!section1.end(true, null, null)) {
-                            break;
-                        }
-                    }
+                if (section.call(parser)) {
+                    //noinspection StatementWithEmptyBody
+                    while (!builder.eof() && Section.wrap(builder, parser)) ;
                 }
-                return section.end(true, null, null);
+                return section.end();
             }
         };
     }
@@ -156,10 +128,9 @@ public final class Combinators {
         public boolean parse(@NotNull PsiBuilder builder) {
             Section section = Section.begin(builder);
             for (Parser parser : parsers) {
-                section.result = section.result && parser.parse(builder);
-                if (!section.result) break;
+                if (!section.call(parser)) break;
             }
-            return section.end(true, null, null);
+            return section.end();
         }
     }
 
@@ -171,11 +142,7 @@ public final class Combinators {
         @Override
         public boolean parse(@NotNull PsiBuilder builder) {
             for (Parser parser : parsers) {
-                Section section = Section.begin(builder);
-                section.result = parser.parse(builder);
-                if (section.end(true, null, null)) {
-                    return true;
-                }
+                if (Section.wrap(builder, parser)) return true;
             }
             return false;
         }

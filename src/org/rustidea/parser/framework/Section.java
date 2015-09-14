@@ -25,12 +25,24 @@ import org.jetbrains.annotations.Nullable;
 
 // TODO Write some JavaDoc
 public class Section {
+    @NotNull
+    private final PsiBuilder builder;
+    @NotNull
     private final Marker marker;
-    public boolean result;
+    private boolean state;
 
-    private Section(boolean result, Marker marker) {
-        this.result = result;
+    private Section(@NotNull final PsiBuilder builder,
+                    @NotNull final Marker marker,
+                    final boolean initialState) {
+        this.builder = builder;
         this.marker = marker;
+        this.setState(initialState);
+    }
+
+    public static boolean wrap(@NotNull final PsiBuilder builder, @NotNull final Parser parser) {
+        Section section = begin(builder);
+        section.forceCall(parser);
+        return section.end();
     }
 
     @NotNull
@@ -39,16 +51,34 @@ public class Section {
     }
 
     @NotNull
-    public static Section begin(@NotNull final PsiBuilder builder, boolean result) {
-        return new Section(result, builder.mark());
+    public static Section begin(@NotNull PsiBuilder builder, boolean initialResult) {
+        return new Section(builder, builder.mark(), initialResult);
     }
 
-    public boolean end(final boolean rollback, @Nullable final IElementType type, @Nullable final String errorMessage) {
-        return end(result, rollback, type, errorMessage);
+    public boolean getState() {
+        return state;
     }
 
-    public boolean end(final boolean result, final boolean rollback, @Nullable final IElementType type, @Nullable final String errorMessage) {
-        if (this.result) {
+    public void setState(boolean result) {
+        this.state = result;
+    }
+
+    public boolean end() {
+        return end(null, null);
+    }
+
+    public boolean end(@Nullable final IElementType type, @Nullable final String errorMessage) {
+        return doEnd(true, type, errorMessage);
+    }
+
+    public boolean endGreedy(@Nullable final IElementType type, @Nullable final String errorMessage) {
+        return doEnd(false, type, errorMessage);
+    }
+
+    private boolean doEnd(boolean rollback,
+                          @Nullable IElementType type,
+                          @Nullable String errorMessage) {
+        if (getState()) {
             if (type != null) {
                 marker.done(type);
             } else {
@@ -63,6 +93,25 @@ public class Section {
                 marker.drop();
             }
         }
-        return result;
+        return getState();
+    }
+
+    public boolean call(@NotNull final Parser parser) {
+        if (getState()) {
+            forceCall(parser);
+        }
+        return getState();
+    }
+
+    public boolean forceCall(@NotNull final Parser parser) {
+        setState(parser.parse(builder));
+        return getState();
+    }
+
+    public boolean callWrapped(@NotNull final Parser parser) {
+        if (getState()) {
+            setState(wrap(builder, parser));
+        }
+        return getState();
     }
 }
