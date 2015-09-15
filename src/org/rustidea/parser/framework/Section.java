@@ -71,6 +71,10 @@ public class Section {
         return doEnd(true, type, errorMessage);
     }
 
+    public boolean endGreedy() {
+        return endGreedy(null, null);
+    }
+
     public boolean endGreedy(@Nullable final IElementType type, @Nullable final String errorMessage) {
         return doEnd(false, type, errorMessage);
     }
