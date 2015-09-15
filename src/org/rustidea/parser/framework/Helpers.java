@@ -73,7 +73,7 @@ public final class Helpers {
     }
 
     /**
-     * <pre>wrap(OPEN, CLOSE, p) ::= OPEN p CLOSE</pre>
+     * {@code wrap(OPEN, CLOSE, p) ::= OPEN p CLOSE}
      */
     @NotNull
     public static Parser wrap(@NotNull final IElementType open,
@@ -92,7 +92,7 @@ public final class Helpers {
     }
 
     /**
-     * <pre>sep(SEPARATOR, p) ::= [ p (SEPARATOR p)* ]</pre>
+     * {@code sep(SEPARATOR, p) ::= [ p (SEPARATOR p)* ]}
      * <p>Marks trailing separator as unexpected token.</p>
      */
     @NotNull
@@ -101,7 +101,7 @@ public final class Helpers {
     }
 
     /**
-     * <pre>sep2(SEPARATOR, p) ::= [ p (SEPARATOR p)* SEPARATOR?]</pre>
+     * {@code sep2(SEPARATOR, p) ::= [ p (SEPARATOR p)* SEPARATOR?]}
      */
     @NotNull
     public static Parser sep2(@NotNull final IElementType separator, @NotNull final Parser p) {

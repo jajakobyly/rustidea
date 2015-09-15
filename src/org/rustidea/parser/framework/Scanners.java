@@ -23,14 +23,14 @@ import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * The most basic parsers which match tokens.
+ * The most basic parsers that match tokens.
  */
 public final class Scanners {
     private Scanners() {
     }
 
     /**
-     * <pre>token(TOKEN) ::= TOKEN</pre>
+     * {@code token(TOKEN) ::= TOKEN}
      */
     @NotNull
     public static Parser token(@NotNull final IElementType token) {
@@ -43,7 +43,7 @@ public final class Scanners {
     }
 
     /**
-     * <pre>token(TOKENS) ::= TOKENS[0] | TOKENS[1] | ...</pre>
+     * {@code token(TOKENS) ::= TOKENS[0] | TOKENS[1] | ...}
      */
     @NotNull
     public static Parser token(@NotNull final TokenSet tokens) {
@@ -56,7 +56,7 @@ public final class Scanners {
     }
 
     /**
-     * <pre>token(TOKENS...) ::= TOKENS[0] TOKENS[1] ...</pre>
+     * {@code token(TOKENS...) ::= TOKENS[0] TOKENS[1] ...}
      */
     @NotNull
     public static Parser token(@NotNull final IElementType... tokens) {
@@ -76,7 +76,7 @@ public final class Scanners {
     }
 
     /**
-     * <pre>notToken(TOKEN) ::= !TOKEN</pre>
+     * {@code notToken(TOKEN) ::= !TOKEN}
      */
     @NotNull
     public static Parser notToken(@NotNull final IElementType token) {
@@ -89,7 +89,7 @@ public final class Scanners {
     }
 
     /**
-     * <pre>notToken(TOKENS) ::= !( TOKENS[0] | TOKENS[1] | ... )</pre>
+     * {@code notToken(TOKENS) ::= !( TOKENS[0] | TOKENS[1] | ... )}
      */
     @NotNull
     public static Parser notToken(@NotNull final TokenSet tokens) {
@@ -102,7 +102,7 @@ public final class Scanners {
     }
 
     /**
-     * <pre>maybeToken(TOKEN) ::= TOKEN?</pre>
+     * {@code maybeToken(TOKEN) ::= TOKEN?}
      */
     @NotNull
     public static Parser maybeToken(@NotNull final IElementType token) {
@@ -115,7 +115,7 @@ public final class Scanners {
     }
 
     /**
-     * <pre>maybeToken(TOKENS) ::= [ TOKENS[0] | TOKENS[1] | ... ]</pre>
+     * {@code maybeToken(TOKENS) ::= [ TOKENS[0] | TOKENS[1] | ... ]}
      */
     @NotNull
     public static Parser maybeToken(@NotNull final TokenSet tokens) {

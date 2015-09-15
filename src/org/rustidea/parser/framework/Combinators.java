@@ -29,7 +29,8 @@ public final class Combinators {
     }
 
     /**
-     * <pre>maybe(p) ::= p?</pre>
+     * {@code maybe(p) ::= p?}
+     *
      * <p>For tokens use {@link Scanners#maybeToken}</p>
      */
     @NotNull
@@ -44,7 +45,7 @@ public final class Combinators {
     }
 
     /**
-     * <pre>seq(ps...) ::= ps[0] ps[1] ...</pre>
+     * {@code seq(ps...) ::= ps[0] ps[1] ...}
      *
      * <p>For tokens use {@link Scanners#token(IElementType...)}.</p>
      */
@@ -54,7 +55,7 @@ public final class Combinators {
     }
 
     /**
-     * <pre>or(ps...) ::= ps[0] | ps[1] | ...</pre>
+     * {@code or(ps...) ::= ps[0] | ps[1] | ...}
      *
      * <p>For tokens use {@link Scanners#token(TokenSet)}.</p>
      */
@@ -64,7 +65,7 @@ public final class Combinators {
     }
 
     /**
-     * <pre>many(p) ::= p*</pre>
+     * {@code many(p) ::= p*}
      *
      * @see #manyGreedy(Parser)
      */
@@ -81,7 +82,7 @@ public final class Combinators {
     }
 
     /**
-     * <pre>many1(p) ::= p+</pre>
+     * {@code many1(p) ::= p+}
      */
     @NotNull
     public static Parser many1(@NotNull final Parser p) {
@@ -100,7 +101,7 @@ public final class Combinators {
     }
 
     /**
-     * <pre>manyGreedy(p) ::= &lt;&lt;garbage&gt;&gt; (p &lt;&lt;garbage&gt;&gt;)*</pre>
+     * {@code manyGreedy(p) ::= <<garbage>> (p <<garbage>>)*}
      *
      * @see #many(Parser)
      */

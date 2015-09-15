@@ -31,12 +31,13 @@ public abstract class Parser {
      * Perform parsing.
      *
      * @param builder {@link PsiBuilder} for input text
-     * @return <code>true</code> if parsing succeeded; otherwise, <code>false</code>
+     * @return {@code true} if parsing succeeded; otherwise, {@code false}
      */
     public abstract boolean parse(@NotNull final PsiBuilder builder);
 
     /**
-     * <pre>p.then(q) ::= p q</pre>
+     * {@code p.then(q) ::= p q}
+     *
      * <p>This combinator should be used only if two parsers are combined, otherwise use {@link Combinators#seq(Parser...)}. For tokens use {@link Scanners#token(IElementType...)}.</p>
      */
     @NotNull
@@ -45,7 +46,8 @@ public abstract class Parser {
     }
 
     /**
-     * <pre>p.or(q) ::= p | q</pre>
+     * {@code p.or(q) ::= p | q}
+     *
      * <p>This combinator should be used only if two parsers are combined, otherwise use {@link Combinators#or(Parser...)}. For tokens use {@link Scanners#token(TokenSet)}.</p>
      */
     @NotNull

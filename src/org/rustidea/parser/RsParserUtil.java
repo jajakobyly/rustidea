@@ -24,14 +24,17 @@ import static org.rustidea.psi.types.RsTypes.IDENTIFIER;
 
 public final class RsParserUtil {
     /**
-     * <pre>identRequired ::= IDENTIFIER</pre>
+     * {@code identRequired ::= IDENTIFIER}
+     *
      * <p>Fails if parsing fails.</p>
+     *
      * @see #ident
      */
     public static final Parser identRequired = token(IDENTIFIER).fail("expected identifier");
 
     /**
-     * <pre>ident ::= IDENTIFIER</pre>
+     * {@code ident ::= IDENTIFIER}
+     *
      * <p>Warns if parsing fails.</p>
      *
      * @see #identRequired
@@ -39,7 +42,9 @@ public final class RsParserUtil {
     public static final Parser ident = token(IDENTIFIER).warn("expected identifier");
 
     /**
-     * <pre>semicolon ::= ";"</pre>
+     * {@code semicolon ::= ";"}
+     *
+     * <p>Warns if parsing fails.</p>
      */
     public static final Parser semicolon = token(OP_SEMICOLON).warn("missing semicolon");
 
