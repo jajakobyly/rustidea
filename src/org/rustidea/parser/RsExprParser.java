@@ -36,7 +36,7 @@ public final class RsExprParser {
      *
      * @see #literalRequired
      */
-    public static final Parser literal = token(RsTypes.LITERAL_TOKEN_SET).warn("missing literal");
+    public static final Parser literal = token(RsTypes.LITERAL_TOKEN_SET).warn("expected literal");
 
     private RsExprParser() {
     }

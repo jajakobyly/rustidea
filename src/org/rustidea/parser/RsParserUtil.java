@@ -36,7 +36,7 @@ public final class RsParserUtil {
      *
      * @see #identRequired
      */
-    public static final Parser ident = token(IDENTIFIER).warn("missing identifier");
+    public static final Parser ident = token(IDENTIFIER).warn("expected identifier");
 
     /**
      * <pre>semicolon ::= ";"</pre>
