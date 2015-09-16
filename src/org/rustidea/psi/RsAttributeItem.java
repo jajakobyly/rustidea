@@ -44,7 +44,7 @@ public interface RsAttributeItem
     RsAttributeItemList getParams();
 
     /**
-     * @return 0 if the itemGreedy is attribute root
+     * @return 0 if the item is attribute root
      */
     int getIndex();
 

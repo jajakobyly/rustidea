@@ -120,7 +120,7 @@ public final class RsItemParser extends Parser {
             // FIXME This commented code generates infinite loop
 //
 //            if (greedy) {
-//                builder.mark().error("expected itemGreedy");
+//                builder.mark().error("expected item");
 //                section.endGreedy();
 //                return true; // prevent rolling back
 //            }
