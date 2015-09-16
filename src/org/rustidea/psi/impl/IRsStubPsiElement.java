@@ -27,9 +27,9 @@ import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.IRsPsiElement;
 import org.rustidea.psi.RsElementVisitor;
 
-public abstract class IRsStubPsiElement<T extends StubElement>
-    extends StubBasedPsiElementBase<T> implements StubBasedPsiElement<T>, IRsPsiElement {
-    public IRsStubPsiElement(@NotNull final T stub, @NotNull final IStubElementType nodeType) {
+public abstract class IRsStubPsiElement<StubT extends StubElement>
+    extends StubBasedPsiElementBase<StubT> implements StubBasedPsiElement<StubT>, IRsPsiElement {
+    public IRsStubPsiElement(@NotNull final StubT stub, @NotNull final IStubElementType nodeType) {
         super(stub, nodeType);
     }
 
