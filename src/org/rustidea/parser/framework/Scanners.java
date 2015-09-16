@@ -23,7 +23,7 @@ import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * The most basic parsers that match tokens.
+ * The most basic parsers which match tokens.
  */
 public final class Scanners {
     private Scanners() {

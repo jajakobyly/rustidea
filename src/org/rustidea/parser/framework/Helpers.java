@@ -93,6 +93,7 @@ public final class Helpers {
 
     /**
      * {@code sep(SEPARATOR, p) ::= [ p (SEPARATOR p)* ]}
+     *
      * <p>Marks trailing separator as unexpected token.</p>
      */
     @NotNull

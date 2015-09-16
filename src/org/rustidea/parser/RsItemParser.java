@@ -36,13 +36,13 @@ import static org.rustidea.psi.types.RsTypes.*;
 
 public final class RsItemParser {
     /**
-     * {@code attrItem ::= {@link RsParserUtil#identRequired} [ "=" {@link RsExprParser#literal} | {@link #attrItemList} ]}
+     * <pre>attrItem ::= {@link RsParserUtil#identRequired} [ "=" {@link RsExprParser#literal} | {@link #attrItemList} ]</pre>
      */
     public static final Parser attrItem =
         identRequired.then(maybe((token(OP_EQ).then(literal)).or(lazy(RsItemParser.class, "attrItemList")))).mark(ATTRIBUTE_ITEM);
 
     /**
-     * {@code attrItemList ::= "(" [ attrItem ("," attrItem)* ] ")"}
+     * <pre>attrItemList ::= "(" [ {@link #attrItem } ("," {@link #attrItem})* ] ")"</pre>
      */
     @SuppressWarnings("unused") // lazily loaded
     public static final Parser attrItemList =
@@ -55,13 +55,13 @@ public final class RsItemParser {
         token(BLOCK_DOC).or(many1(token(LINE_DOC))).mark(DOC);
 
     /**
-     * {@code attr ::= "#" "[" {@link #attrItem} "]"}
+     * <pre>attr ::= "#" "[" {@link #attrItem} "]"</pre>
      */
     public static final Parser attr =
         token(OP_HASH).then(wrap(OP_LBRACKET, OP_RBRACKET, attrItem)).mark(ATTRIBUTE);
 
     /**
-     * {@code attrOrDoc ::= {@link #doc} | {@link #attr}}
+     * <pre>attrOrDoc ::= {@link #doc} | {@link #attr}</pre>
      */
     public static final Parser attrOrDoc =
         doc.or(attr);
@@ -73,25 +73,25 @@ public final class RsItemParser {
         token(BLOCK_PARENT_DOC).or(many1(token(LINE_PARENT_DOC))).mark(DOC);
 
     /**
-     * {@code parentAttr ::= "#" "!" "[" {@link #attrItem} "]"}
+     * <pre>parentAttr ::= "#" "!" "[" {@link #attrItem} "]"</pre>
      */
     public static final Parser parentAttr =
         token(OP_HASH, OP_BANG).then(wrap(OP_LBRACKET, OP_RBRACKET, attrItem)).mark(ATTRIBUTE);
 
     /**
-     * {@code parentAttrOrDoc ::= {@link #parentDoc} | {@link #parentAttr}}
+     * <pre>parentAttrOrDoc ::= {@link #parentDoc} | {@link #parentAttr}</pre>
      */
     public static final Parser parentAttrOrDoc =
         parentDoc.or(parentAttr);
 
     /**
-     * {@code itemPrelude ::= {@link #attr}* "pub"?}
+     * <pre>itemPrelude ::= {@link #attr}* "pub"?</pre>
      */
     public static final Parser itemPrelude =
         many(attrOrDoc).then(maybeToken(KW_PUB));
 
     /**
-     * {@code externCrateDecl ::= "extern" "crate" {@link RsParserUtil#identRequired} [ "as" {@link RsParserUtil#ident} ] ";"}
+     * <pre>externCrateDecl ::= "extern" "crate" {@link RsParserUtil#identRequired} [ "as" {@link RsParserUtil#ident} ] ";"</pre>
      */
     public static final Parser externCrateDecl =
         seq(token(KW_EXTERN, KW_CRATE),
@@ -105,7 +105,7 @@ public final class RsItemParser {
     );
 
     /**
-     * {@code item ::= {@link #itemPrelude} ( {@link #externCrateDecl} )}
+     * <pre>item ::= {@link #itemPrelude} ( {@link #externCrateDecl} )</pre>
      */
     public static final Parser item = new Parser() {
         @Override
