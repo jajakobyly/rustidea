@@ -20,5 +20,4 @@ import com.intellij.psi.stubs.NamedStub;
 import org.rustidea.psi.IRsItem;
 
 public interface IRsItemStub<PsiT extends IRsItem> extends NamedStub<PsiT> {
-    boolean isPublic();
 }

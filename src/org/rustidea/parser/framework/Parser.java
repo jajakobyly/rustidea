@@ -46,6 +46,29 @@ public abstract class Parser {
     }
 
     /**
+     * {@code p.evenThen(q) ::= p | q | p q}
+     */
+    // TODO Invent better name
+    @NotNull
+    public Parser evenThen(@NotNull final Parser q) {
+        final Parser p = this;
+        return new Parser() {
+            @Override
+            public boolean parse(@NotNull PsiBuilder builder) {
+                Section section = Section.begin(builder);
+                if (section.call(p)) { // match `p | p q`
+                    section.callWrapped(q); // match `p q`
+                    section.setState(true); // ignore result of matching q
+                    // here `p` is matched
+                } else {
+                    section.call(q); // match `q`
+                }
+                return section.end();
+            }
+        };
+    }
+
+    /**
      * {@code p.or(q) ::= p | q}
      *
      * <p>This combinator should be used only if two parsers are combined, otherwise use {@link Combinators#or(Parser...)}. For tokens use {@link Scanners#token(TokenSet)}.</p>

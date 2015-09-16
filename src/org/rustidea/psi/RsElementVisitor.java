@@ -63,6 +63,10 @@ public abstract class RsElementVisitor extends PsiElementVisitor {
         visitElement(lifetimeTypeParameter);
     }
 
+    public void visitModifierList(RsModifierList modifierList) {
+        visitElement(modifierList);
+    }
+
     public void visitPath(RsPath path) {
         visitElement(path);
     }

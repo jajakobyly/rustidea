@@ -25,12 +25,12 @@ import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.parser.framework.Parser;
 
-import static org.rustidea.parser.RsItemParser.item;
+import static org.rustidea.parser.RsItemParser.itemGreedy;
 import static org.rustidea.parser.RsItemParser.parentAttrOrDoc;
 import static org.rustidea.parser.framework.Combinators.manyGreedy;
 
 public class RsParser implements PsiParser {
-    public static final Parser fileContents = manyGreedy(parentAttrOrDoc.or(item));
+    public static final Parser fileContents = manyGreedy(parentAttrOrDoc.or(itemGreedy));
     private static final Logger LOG = Logger.getInstance(RsParser.class);
 
     @NotNull

@@ -33,6 +33,7 @@ public interface RsStubElementTypes {
     RsDocElementType DOC = RsDocElementType.INSTANCE;
     RsExternCrateDeclElementType EXTERN_CRATE_DECL = RsExternCrateDeclElementType.INSTANCE;
     RsLifetimeElementType LIFETIME = RsLifetimeElementType.INSTANCE;
+    RsModifierListElementType MODIFIER_LIST = RsModifierListElementType.INSTANCE;
     RsPathElementType PATH = RsPathElementType.INSTANCE;
     RsPathComponentElementType PATH_COMPONENT = RsPathComponentElementType.INSTANCE;
     RsTypeParameterElementType TYPE_PARAMETER = RsTypeParameterElementType.INSTANCE;

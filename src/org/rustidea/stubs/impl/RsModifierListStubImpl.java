@@ -16,25 +16,22 @@
 
 package org.rustidea.stubs.impl;
 
-import com.intellij.psi.stubs.NamedStubBase;
+import com.intellij.psi.stubs.StubBase;
 import com.intellij.psi.stubs.StubElement;
-import com.intellij.util.io.StringRef;
-import org.jetbrains.annotations.NotNull;
-import org.rustidea.psi.RsExternCrateDecl;
+import org.rustidea.psi.RsModifierList;
 import org.rustidea.psi.types.RsTypes;
-import org.rustidea.stubs.RsExternCrateDeclStub;
+import org.rustidea.stubs.RsModifierListStub;
 
-public class RsExternCrateDeclStubImpl extends NamedStubBase<RsExternCrateDecl> implements RsExternCrateDeclStub {
-    private final StringRef crateName;
+public class RsModifierListStubImpl extends StubBase<RsModifierList> implements RsModifierListStub {
+    private final boolean pub;
 
-    public RsExternCrateDeclStubImpl(StubElement parent, StringRef name, StringRef crateName) {
-        super(parent, RsTypes.EXTERN_CRATE_DECL, name);
-        this.crateName = crateName;
+    public RsModifierListStubImpl(final StubElement parent, final boolean pub) {
+        super(parent, RsTypes.MODIFIER_LIST);
+        this.pub = pub;
     }
 
-    @NotNull
     @Override
-    public String getCrateName() {
-        return crateName.toString();
+    public boolean hasPub() {
+        return pub;
     }
 }

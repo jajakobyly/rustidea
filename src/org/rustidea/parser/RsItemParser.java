@@ -34,94 +34,97 @@ import static org.rustidea.parser.framework.Scanners.maybeToken;
 import static org.rustidea.parser.framework.Scanners.token;
 import static org.rustidea.psi.types.RsTypes.*;
 
-public final class RsItemParser {
+public final class RsItemParser extends Parser {
     /**
-     * <pre>attrItem ::= {@link RsParserUtil#identRequired} [ "=" {@link RsExprParser#literal} | {@link #attrItemList} ]</pre>
+     * {@code item ::= <<rust item>>}
+     *
+     * <p>Singleton instance of {@link RsItemParser}.</p>
+     *
+     * @see #itemGreedy
      */
+    public static final Parser item = new RsItemParser(false);
+
+    /**
+     * {@code itemGreedy ::= <<rust item>>}
+     *
+     * <p>Singleton instance of {@link RsItemParser}. Performs greedy matching: leaves error marked if matching fails.</p>
+     *
+     * @see #item
+     */
+    public static final Parser itemGreedy = new RsItemParser(true);
+
+    /** <pre>attrItem ::= {@link RsParserUtil#identRequired} [ "=" {@link RsExprParser#literal} | {@link #attrItemList} ]</pre> */
     public static final Parser attrItem =
         identRequired.then(maybe((token(OP_EQ).then(literal)).or(lazy(RsItemParser.class, "attrItemList")))).mark(ATTRIBUTE_ITEM);
 
-    /**
-     * <pre>attrItemList ::= "(" [ {@link #attrItem } ("," {@link #attrItem})* ] ")"</pre>
-     */
-    @SuppressWarnings("unused") // lazily loaded
+    /** <pre>attrItemList ::= "(" [ {@link #attrItem } ("," {@link #attrItem})* ] ")"</pre> */
+    @SuppressWarnings("unused") // lazily loaded in #attrItem
     public static final Parser attrItemList =
         wrap(OP_LPAREN, OP_RPAREN, sep(OP_COMMA, attrItem)).mark(ATTRIBUTE_ITEM_LIST);
 
-    /**
-     * {@code doc ::= BLOCK_DOC | LINE_DOC+}
-     */
+    /** {@code doc ::= BLOCK_DOC | LINE_DOC+} */
     public static final Parser doc =
         token(BLOCK_DOC).or(many1(token(LINE_DOC))).mark(DOC);
 
-    /**
-     * <pre>attr ::= "#" "[" {@link #attrItem} "]"</pre>
-     */
+    /** <pre>attr ::= "#" "[" {@link #attrItem} "]"</pre> */
     public static final Parser attr =
         token(OP_HASH).then(wrap(OP_LBRACKET, OP_RBRACKET, attrItem)).mark(ATTRIBUTE);
 
-    /**
-     * <pre>attrOrDoc ::= {@link #doc} | {@link #attr}</pre>
-     */
+    /** <pre>attrOrDoc ::= {@link #doc} | {@link #attr}</pre> */
     public static final Parser attrOrDoc =
         doc.or(attr);
 
-    /**
-     * {@code parentDoc ::= BLOCK_PARENT_DOC | LINE_PARENT_DOC+}
-     */
+    /** {@code parentDoc ::= BLOCK_PARENT_DOC | LINE_PARENT_DOC+} */
     public static final Parser parentDoc =
         token(BLOCK_PARENT_DOC).or(many1(token(LINE_PARENT_DOC))).mark(DOC);
 
-    /**
-     * <pre>parentAttr ::= "#" "!" "[" {@link #attrItem} "]"</pre>
-     */
+    /** <pre>parentAttr ::= "#" "!" "[" {@link #attrItem} "]"</pre> */
     public static final Parser parentAttr =
         token(OP_HASH, OP_BANG).then(wrap(OP_LBRACKET, OP_RBRACKET, attrItem)).mark(ATTRIBUTE);
 
-    /**
-     * <pre>parentAttrOrDoc ::= {@link #parentDoc} | {@link #parentAttr}</pre>
-     */
+    /** <pre>parentAttrOrDoc ::= {@link #parentDoc} | {@link #parentAttr}</pre> */
     public static final Parser parentAttrOrDoc =
         parentDoc.or(parentAttr);
 
-    /**
-     * <pre>itemPrelude ::= {@link #attr}* "pub"?</pre>
-     */
-    public static final Parser itemPrelude =
-        many(attrOrDoc).then(maybeToken(KW_PUB));
+    /** <pre>modifierList ::= {@link #attr}* "pub"?</pre> */
+    private static final Parser modifierList =
+        many(attrOrDoc).evenThen(maybeToken(KW_PUB)).mark(MODIFIER_LIST);
 
-    /**
-     * <pre>externCrateDecl ::= "extern" "crate" {@link RsParserUtil#identRequired} [ "as" {@link RsParserUtil#ident} ] ";"</pre>
-     */
-    public static final Parser externCrateDecl =
+    /** <pre>externCrateDecl ::= "extern" "crate" {@link RsParserUtil#identRequired} [ "as" {@link RsParserUtil#ident} ] ";"</pre> */
+    private static final Parser externCrateDecl =
         seq(token(KW_EXTERN, KW_CRATE),
             identRequired,
             maybe(token(KW_AS).then(ident)),
             semicolon);
 
     @SuppressWarnings("unchecked") // don't care about array type
-    private static final List<Pair<Parser, IElementType>> itemParsers = ContainerUtil.newArrayList(
+    private static final List<Pair<Parser, IElementType>> itemParsers = ContainerUtil.immutableList(
         Pair.create(externCrateDecl, (IElementType) EXTERN_CRATE_DECL)
     );
 
-    /**
-     * <pre>item ::= {@link #itemPrelude} ( {@link #externCrateDecl} )</pre>
-     */
-    public static final Parser item = new Parser() {
-        @Override
-        public boolean parse(@NotNull PsiBuilder builder) {
-            Section section = Section.begin(builder);
-            if (section.call(itemPrelude)) {
-                for (Pair<Parser, IElementType> p : itemParsers) {
-                    if (section.callWrapped(p.getFirst())) {
-                        return section.end(p.getSecond(), null);
-                    }
+    private final boolean greedy;
+
+    private RsItemParser(boolean greedy) {
+        this.greedy = greedy;
+    }
+
+    @Override
+    public boolean parse(@NotNull PsiBuilder builder) {
+        Section section = Section.begin(builder);
+        if (section.call(modifierList)) {
+            for (Pair<Parser, IElementType> p : itemParsers) {
+                if (section.callWrapped(p.getFirst())) {
+                    return section.end(p.getSecond(), null);
                 }
             }
-            return section.end();
+            // FIXME This commented code generates infinite loop
+//
+//            if (greedy) {
+//                builder.mark().error("expected itemGreedy");
+//                section.endGreedy();
+//                return true; // prevent rolling back
+//            }
         }
-    };
-
-    private RsItemParser() {
+        return section.end();
     }
 }

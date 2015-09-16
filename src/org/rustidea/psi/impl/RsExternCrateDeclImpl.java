@@ -89,16 +89,10 @@ public class RsExternCrateDeclImpl extends IRsStubPsiElement<RsExternCrateDeclSt
         return getStubOrPsiParentOfType(IRsItemOwner.class);
     }
 
+    @Nullable
     @Override
-    public boolean isPublic() {
-        return findChildByType(RsTypes.KW_PUB) != null;
-    }
-
-    @NotNull
-    @Override
-    public IRsAttribute[] getAttributes() {
-        // FIXME Does this method operate on stubs wherever possible?
-        return findChildrenByClass(IRsAttribute.class);
+    public RsModifierList getModifierList() {
+        return getStubOrPsiChild(RsTypes.MODIFIER_LIST);
     }
 
     @Override

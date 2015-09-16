@@ -54,15 +54,13 @@ public class RsExternCrateDeclElementType extends IRsStubElementType<RsExternCra
         return new RsExternCrateDeclStubImpl(
             parentStub,
             StringRef.fromString(psi.getName()),
-            StringRef.fromString(psi.getCrateName()),
-            psi.isPublic());
+            StringRef.fromString(psi.getCrateName()));
     }
 
     @Override
     public void serialize(@NotNull RsExternCrateDeclStub stub, @NotNull StubOutputStream dataStream) throws IOException {
         dataStream.writeName(stub.getName());
         dataStream.writeName(stub.getCrateName());
-        dataStream.writeBoolean(stub.isPublic());
     }
 
     @NotNull
@@ -71,7 +69,6 @@ public class RsExternCrateDeclElementType extends IRsStubElementType<RsExternCra
         return new RsExternCrateDeclStubImpl(
             parentStub,
             dataStream.readName(),
-            dataStream.readName(),
-            dataStream.readBoolean());
+            dataStream.readName());
     }
 }

@@ -74,8 +74,9 @@ public final class Combinators {
         return new WrapperParser(p) {
             @Override
             public boolean parse(@NotNull PsiBuilder builder) {
-                //noinspection StatementWithEmptyBody
-                while (!builder.eof() && Section.wrap(builder, parser)) ;
+                while (!builder.eof()) {
+                    if (!Section.wrap(builder, parser)) break;
+                }
                 return true;
             }
         };
@@ -92,8 +93,9 @@ public final class Combinators {
                 // p+ ::= p p*
                 Section section = Section.begin(builder);
                 if (section.call(parser)) {
-                    //noinspection StatementWithEmptyBody
-                    while (!builder.eof() && Section.wrap(builder, parser)) ;
+                    while (!builder.eof()) {
+                        if (!Section.wrap(builder, parser)) break;
+                    }
                 }
                 return section.end();
             }
