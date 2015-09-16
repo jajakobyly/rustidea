@@ -57,7 +57,7 @@ public class PsiBuilderUtilEx {
     public static boolean expectOrWarn(@NotNull final PsiBuilder builder,
                                        @NotNull final IElementType token,
                                        @NotNull final String errMsg) {
-        if(!PsiBuilderUtil.expect(builder, token)) {
+        if (!PsiBuilderUtil.expect(builder, token)) {
             builder.mark().error(errMsg);
         }
         return true;

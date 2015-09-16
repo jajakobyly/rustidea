@@ -29,9 +29,7 @@ public final class Scanners {
     private Scanners() {
     }
 
-    /**
-     * {@code token(TOKEN) ::= TOKEN}
-     */
+    /** {@code token(TOKEN) ::= TOKEN} */
     @NotNull
     public static Parser token(@NotNull final IElementType token) {
         return new Parser() {
@@ -42,9 +40,7 @@ public final class Scanners {
         };
     }
 
-    /**
-     * {@code token(TOKENS) ::= TOKENS[0] | TOKENS[1] | ...}
-     */
+    /** {@code token(TOKENS) ::= TOKENS[0] | TOKENS[1] | ...} */
     @NotNull
     public static Parser token(@NotNull final TokenSet tokens) {
         return new Parser() {
@@ -55,9 +51,7 @@ public final class Scanners {
         };
     }
 
-    /**
-     * {@code token(TOKENS...) ::= TOKENS[0] TOKENS[1] ...}
-     */
+    /** {@code token(TOKENS...) ::= TOKENS[0] TOKENS[1] ...} */
     @NotNull
     public static Parser token(@NotNull final IElementType... tokens) {
         return new Parser() {
@@ -75,9 +69,7 @@ public final class Scanners {
         };
     }
 
-    /**
-     * {@code notToken(TOKEN) ::= !TOKEN}
-     */
+    /** {@code notToken(TOKEN) ::= !TOKEN} */
     @NotNull
     public static Parser notToken(@NotNull final IElementType token) {
         return new Parser() {
@@ -88,9 +80,7 @@ public final class Scanners {
         };
     }
 
-    /**
-     * {@code notToken(TOKENS) ::= !( TOKENS[0] | TOKENS[1] | ... )}
-     */
+    /** {@code notToken(TOKENS) ::= !( TOKENS[0] | TOKENS[1] | ... )} */
     @NotNull
     public static Parser notToken(@NotNull final TokenSet tokens) {
         return new Parser() {
@@ -101,9 +91,7 @@ public final class Scanners {
         };
     }
 
-    /**
-     * {@code maybeToken(TOKEN) ::= TOKEN?}
-     */
+    /** {@code maybeToken(TOKEN) ::= TOKEN?} */
     @NotNull
     public static Parser maybeToken(@NotNull final IElementType token) {
         return new Parser() {
@@ -114,9 +102,7 @@ public final class Scanners {
         };
     }
 
-    /**
-     * {@code maybeToken(TOKENS) ::= [ TOKENS[0] | TOKENS[1] | ... ]}
-     */
+    /** {@code maybeToken(TOKENS) ::= [ TOKENS[0] | TOKENS[1] | ... ]} */
     @NotNull
     public static Parser maybeToken(@NotNull final TokenSet tokens) {
         return new Parser() {
