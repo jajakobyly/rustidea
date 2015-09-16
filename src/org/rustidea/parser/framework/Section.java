@@ -27,8 +27,7 @@ import org.jetbrains.annotations.Nullable;
 public class Section {
     @NotNull
     private final PsiBuilder builder;
-    @NotNull
-    private final Marker marker;
+    private Marker marker;
     private boolean state;
 
     private Section(@NotNull final PsiBuilder builder,
@@ -79,9 +78,13 @@ public class Section {
         return doEnd(false, type, errorMessage);
     }
 
-    private boolean doEnd(boolean rollback,
-                          @Nullable IElementType type,
-                          @Nullable String errorMessage) {
+    private boolean doEnd(final boolean rollback,
+                          @Nullable final IElementType type,
+                          @Nullable final String errorMessage) {
+        if (marker == null) {
+            throw new UnsupportedOperationException("Trying to end section multiple times.");
+        }
+
         if (getState()) {
             if (type != null) {
                 marker.done(type);
@@ -97,6 +100,8 @@ public class Section {
                 marker.drop();
             }
         }
+
+        marker = null;
         return getState();
     }
 
