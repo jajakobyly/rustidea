@@ -38,7 +38,9 @@ public abstract class Parser {
     /**
      * {@code p.then(q) ::= p q}
      *
-     * <p>This combinator should be used only if two parsers are combined, otherwise use {@link Combinators#seq(Parser...)}. For tokens use {@link Scanners#token(IElementType...)}.</p>
+     * <p>This combinator should be used only if two parsers are combined,
+     * otherwise use {@link Combinators#seq(Parser...)}. For tokens
+     * use {@link Scanners#token(IElementType...)}.</p>
      */
     @NotNull
     public Parser then(@NotNull final Parser q) {
@@ -47,22 +49,33 @@ public abstract class Parser {
 
     /**
      * {@code p.evenThen(q) ::= p | q | p q}
+     *
+     * <p>Matches {@code p} or {@code q} or {@code p q} but does not match empty input.</p>
+     *
+     * <p><b>Beware of using parsers which can match empty input such as
+     * {@link Combinators#many(Parser)} or {@link Scanners#maybeToken(IElementType)}!</b>
+     * They will cause nothing to be matched successfully which may lead to infinite loops.</p>
      */
     // TODO Invent better name
     @NotNull
     public Parser evenThen(@NotNull final Parser q) {
-        final Parser p = this;
-        return new Parser() {
+        return new WrapperParser(this) {
             @Override
             public boolean parse(@NotNull PsiBuilder builder) {
                 Section section = Section.begin(builder);
-                if (section.call(p)) { // match `p | p q`
-                    section.callWrapped(q); // match `p q`
-                    section.setState(true); // ignore result of matching q
-                    // here `p` is matched
-                } else {
-                    section.call(q); // match `q`
+                if (section.callWrapped(parser)) {
+                    if (section.callWrapped(q)) {
+                        // matched `p q`
+                        return section.end();
+                    }
+
+                    // matched `p`
+                    section.endGreedy();
+                    return true;
                 }
+
+                // matched `q`
+                section.forceCall(q);
                 return section.end();
             }
         };

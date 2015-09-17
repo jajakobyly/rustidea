@@ -30,7 +30,6 @@ import static org.rustidea.parser.RsExprParser.literal;
 import static org.rustidea.parser.RsParserUtil.*;
 import static org.rustidea.parser.framework.Combinators.*;
 import static org.rustidea.parser.framework.Helpers.*;
-import static org.rustidea.parser.framework.Scanners.maybeToken;
 import static org.rustidea.parser.framework.Scanners.token;
 import static org.rustidea.psi.types.RsTypes.*;
 
@@ -86,9 +85,9 @@ public final class RsItemParser extends Parser {
     public static final Parser parentAttrOrDoc =
         parentDoc.or(parentAttr);
 
-    /** <pre>modifierList ::= {@link #attr}* "pub"?</pre> */
+    /** <pre>modifierList ::= {@link #attr}+ | "pub" | {@link #attr}+ "pub"</pre> */
     private static final Parser modifierList =
-        many(attrOrDoc).evenThen(maybeToken(KW_PUB)).mark(MODIFIER_LIST);
+        many1(attrOrDoc).evenThen(token(KW_PUB)).mark(MODIFIER_LIST);
 
     /** <pre>externCrateDecl ::= "extern" "crate" {@link RsParserUtil#identRequired} [ "as" {@link RsParserUtil#ident} ] ";"</pre> */
     private static final Parser externCrateDecl =
@@ -111,20 +110,22 @@ public final class RsItemParser extends Parser {
     @Override
     public boolean parse(@NotNull PsiBuilder builder) {
         Section section = Section.begin(builder);
-        if (section.call(modifierList)) {
-            for (Pair<Parser, IElementType> p : itemParsers) {
-                if (section.callWrapped(p.getFirst())) {
-                    return section.end(p.getSecond(), null);
-                }
+
+        boolean hasModifierList = section.callWrapped(modifierList);
+        section.setState(true); // ignore result of parsing modifierList
+
+        for (Pair<Parser, IElementType> p : itemParsers) {
+            if (section.callWrapped(p.getFirst())) {
+                return section.end(p.getSecond(), null);
             }
-            // FIXME This commented code generates infinite loop
-//
-//            if (greedy) {
-//                builder.mark().error("expected item");
-//                section.endGreedy();
-//                return true; // prevent rolling back
-//            }
         }
-        return section.end();
+
+        if (greedy && hasModifierList) {
+            builder.mark().error("expected item");
+            section.endGreedy();
+            return true; // prevent rolling back
+        }
+
+        return section.end(null, null);
     }
 }
