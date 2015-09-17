@@ -83,6 +83,7 @@ public class RsSyntaxHighlighter extends SyntaxHighlighterBase {
         KEYS.put(RsTypes.LIFETIME_TOKEN, LIFETIME);
         KEYS.put(StringEscapesTokenTypes.VALID_STRING_ESCAPE_TOKEN, VALID_ESCAPE);
         KEYS.put(StringEscapesTokenTypes.INVALID_CHARACTER_ESCAPE_TOKEN, INVALID_ESCAPE);
+        KEYS.put(StringEscapesTokenTypes.INVALID_UNICODE_ESCAPE_TOKEN, INVALID_ESCAPE);
         KEYS.put(RsTypes.BLOCK_COMMENT, BLOCK_COMMENT);
         KEYS.put(RsTypes.LINE_COMMENT, LINE_COMMENT);
         KEYS.put(RsTypes.BLOCK_DOC, BLOCK_DOC);
