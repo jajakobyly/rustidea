@@ -26,6 +26,7 @@ import java.util.EnumSet;
 import static org.rustidea.lexer.RsStringLiteralLexer.ESCAPE;
 import static com.intellij.psi.StringEscapesTokenTypes.VALID_STRING_ESCAPE_TOKEN;
 import static com.intellij.psi.StringEscapesTokenTypes.INVALID_CHARACTER_ESCAPE_TOKEN;
+import static com.intellij.psi.StringEscapesTokenTypes.INVALID_UNICODE_ESCAPE_TOKEN;
 
 
 %%
@@ -34,6 +35,9 @@ import static com.intellij.psi.StringEscapesTokenTypes.INVALID_CHARACTER_ESCAPE_
 %{
     private IElementType defaultToken = null;
     private EnumSet<ESCAPE> escapes = null;
+
+    private static final int MAX_BYTE = Integer.decode("0x7f");
+    private static final int MAX_UNICODE = Integer.decode("0x10ffff"); // found by divide & conquer
 
     public _RsStringLiteralLexer(IElementType defaultToken, EnumSet<ESCAPE> escapes) {
         this((java.io.Reader)null);
@@ -54,6 +58,7 @@ import static com.intellij.psi.StringEscapesTokenTypes.INVALID_CHARACTER_ESCAPE_
 
 
 EOL = \n | \r | \r\n
+HEX = [a-fA-F0-9]
 
 
 %%
@@ -61,11 +66,30 @@ EOL = \n | \r | \r\n
 
 <YYINITIAL> {
     // \" \' \0 are undocumented
-    "\\" [nrt\\0'\"]            |
-    "\\x" [a-fA-F0-9]{2}        { return esc(ESCAPE.BYTE_ESCAPE); }
-    "\\u{" [a-fA-F0-9]{1,6} "}" { return esc(ESCAPE.UNICODE_ESCAPE); }
-    "\\" {EOL}                  { return esc(ESCAPE.EOL_ESCAPE); }
+    "\\" [nrt\\0'\"] { return esc(ESCAPE.BYTE_ESCAPE); }
 
-    "\\" [^] { return INVALID_CHARACTER_ESCAPE_TOKEN; }
+    "\\x" {HEX}{2} {
+        if(Integer.decode("0x" + yytext().subSequence(2, yylength())) > MAX_BYTE) {
+            return INVALID_CHARACTER_ESCAPE_TOKEN;
+        }
+
+        return esc(ESCAPE.BYTE_ESCAPE);
+    }
+
+    "\\u{" {HEX}{1,6} "}" {
+        if(Integer.decode("0x" + yytext().subSequence(3, yylength() - 1)) > MAX_UNICODE) {
+            return INVALID_UNICODE_ESCAPE_TOKEN;
+        }
+
+        return esc(ESCAPE.UNICODE_ESCAPE);
+    }
+
+    "\\" {EOL} { return esc(ESCAPE.EOL_ESCAPE); }
+
+    "\\x" ([:letter:] | [:digit:])+ |
+    "\\" [^]                        { return INVALID_CHARACTER_ESCAPE_TOKEN; }
+
+    "\\u{" ([:letter:] | [:digit:])* "}" { return INVALID_UNICODE_ESCAPE_TOKEN; }
+
     [^]      { return defaultToken; }
 }

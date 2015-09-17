@@ -93,7 +93,7 @@ public class RsStringLiteralLexerTest extends LexerTestCase {
 
     public void testInvalidLongByteEscapes() {
         doTest(
-            "\\xaa\\x80\\\\xa\\x9\\xz\\xzz",
+            "\\xaa\\x80\\xa\\x9\\xz\\xzz",
             new LexerTestKeyBuilder()
                 .add(INVALID_CHARACTER_ESCAPE_TOKEN, "\\xaa")
                 .add(INVALID_CHARACTER_ESCAPE_TOKEN, "\\x80")
