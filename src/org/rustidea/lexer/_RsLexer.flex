@@ -283,6 +283,7 @@ FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
     "^"    { return RsTokenTypes.OP_XOR; }
     "^="   { return RsTokenTypes.OP_XOREQ; }
 
+
     //=== Comments & Docs
     //=== https://doc.rust-lang.org/nightly/reference.html#comments
     "//!" [^\r\n]*      { return RsTokenTypes.LINE_PARENT_DOC; }
