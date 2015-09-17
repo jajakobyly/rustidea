@@ -46,7 +46,8 @@ public final class RsItemParser extends Parser {
     /**
      * {@code itemGreedy ::= <<rust item>>}
      *
-     * <p>Singleton instance of {@link RsItemParser}. Performs greedy matching: leaves error marked if matching fails.</p>
+     * <p>Singleton instance of {@link RsItemParser}. Performs greedy matching:
+     * leaves error markers when matching fails.</p>
      *
      * @see #item
      */
