@@ -89,6 +89,11 @@
             <include name="tests"/>
         </dirset>
     </path>
+    <path id="test.resourcepath">
+        <dirset dir="${basedir}">
+            <include name="testData"/>
+        </dirset>
+    </path>
     <property name="jflex.rsLexer.input.file"
               value="${basedir}/src/org/rustidea/lexer/_RsLexer.flex"/>
     <property name="jflex.rsStringLiteralLexer.input.file"
@@ -175,6 +180,10 @@
             <classpath refid="test.classpath"/>
             <src refid="test.sourcepath"/>
         </javac2>
+
+        <copy todir="${test.output.dir}">
+            <path refid="test.resourcepath"/>
+        </copy>
     </target>
 
     <target name="build"
@@ -204,6 +213,7 @@
             <batchtest>
                 <fileset dir="${basedir}/tests">
                     <include name="**/*.java"/>
+                    <exclude name="org/rustidea/testUtils/**"/>
                 </fileset>
             </batchtest>
         </junit>
