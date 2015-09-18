@@ -213,6 +213,7 @@
             <batchtest>
                 <fileset dir="${basedir}/tests">
                     <include name="**/*.java"/>
+                    <exclude name="**/I*TestCase.java"/>
                 </fileset>
             </batchtest>
         </junit>
