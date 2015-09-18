@@ -36,8 +36,8 @@ import static com.intellij.psi.StringEscapesTokenTypes.INVALID_UNICODE_ESCAPE_TO
     private IElementType defaultToken = null;
     private EnumSet<ESCAPE> escapes = null;
 
-    private static final int MAX_BYTE = Integer.decode("0x7f");
-    private static final int MAX_UNICODE = Integer.decode("0x10ffff"); // found by divide & conquer
+    private static final int MAX_BYTE = 0x7f;
+    private static final int MAX_UNICODE = 0x10ffff; // found by divide & conquer
 
     public _RsStringLiteralLexer(IElementType defaultToken, EnumSet<ESCAPE> escapes) {
         this((java.io.Reader)null);
@@ -47,6 +47,10 @@ import static com.intellij.psi.StringEscapesTokenTypes.INVALID_UNICODE_ESCAPE_TO
 
     private IElementType esc(ESCAPE escape) {
         return (escapes.contains(escape) ? VALID_STRING_ESCAPE_TOKEN : INVALID_CHARACTER_ESCAPE_TOKEN);
+    }
+
+    private boolean testRange(int left, int right, int max) {
+        return Integer.decode("0x" + yytext().subSequence(left, yylength() - right)) > max;
     }
 %}
 
@@ -69,7 +73,7 @@ HEX = [a-fA-F0-9]
     "\\" [nrt\\0'\"] { return esc(ESCAPE.BYTE_ESCAPE); }
 
     "\\x" {HEX}{2} {
-        if(Integer.decode("0x" + yytext().subSequence(2, yylength())) > MAX_BYTE) {
+        if(testRange(2, 0, MAX_BYTE)) {
             return INVALID_CHARACTER_ESCAPE_TOKEN;
         }
 
@@ -77,7 +81,7 @@ HEX = [a-fA-F0-9]
     }
 
     "\\u{" {HEX}{1,6} "}" {
-        if(Integer.decode("0x" + yytext().subSequence(3, yylength() - 1)) > MAX_UNICODE) {
+        if(testRange(3, 1, MAX_UNICODE)) {
             return INVALID_UNICODE_ESCAPE_TOKEN;
         }
 
