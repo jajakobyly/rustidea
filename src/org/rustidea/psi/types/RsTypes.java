@@ -27,7 +27,7 @@ public interface RsTypes extends RsStubElementTypes, RsCompositeTypes, RsTokenTy
     TokenSet BRACKET_TOKEN_SET = TokenSet.create(OP_LBRACKET, OP_RBRACKET);
     TokenSet PAREN_TOKEN_SET = TokenSet.create(OP_LPAREN, OP_RPAREN);
 
-    TokenSet NUMBER_TOKEN_SET = TokenSet.create(DEC_LIT, BIN_LIT, OCT_LIT, HEX_LIT, FLOAT_LIT);
+    TokenSet NUMBER_TOKEN_SET = TokenSet.create(INT_LIT, FLOAT_LIT);
     TokenSet CHAR_TOKEN_SET = TokenSet.create(CHAR_LIT, BYTE_LIT);
     TokenSet STRING_TOKEN_SET = TokenSet.create(STRING_LIT, BYTE_STRING_LIT);
     TokenSet RAW_STRING_TOKEN_SET = TokenSet.create(RAW_STRING_LIT, RAW_BYTE_STRING_LIT);
@@ -38,6 +38,6 @@ public interface RsTypes extends RsStubElementTypes, RsCompositeTypes, RsTokenTy
 
     TokenSet DOC_TOKEN_SET = TokenSet.create(BLOCK_DOC, LINE_DOC, BLOCK_PARENT_DOC, LINE_PARENT_DOC);
 
-    TokenSet LITERAL_TOKEN_SET = TokenSet.create(BIN_LIT, DEC_LIT, FLOAT_LIT, HEX_LIT, OCT_LIT, BYTE_LIT, CHAR_LIT, BYTE_STRING_LIT, STRING_LIT, RAW_BYTE_STRING_LIT, RAW_STRING_LIT);
+    TokenSet LITERAL_TOKEN_SET = TokenSet.orSet(NUMBER_TOKEN_SET, CHAR_TOKEN_SET, STRING_LITERAL_TOKEN_SET);
     TokenSet ATTRIBUTE_OR_DOC_TOKEN_SET = TokenSet.create(ATTRIBUTE, DOC);
 }

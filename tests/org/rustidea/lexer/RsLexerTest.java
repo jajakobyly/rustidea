@@ -48,6 +48,53 @@ public class RsLexerTest extends IRsLexerTestCase {
         doTest(test);
     }
 
+    public void testRawStringWithTooManyHashes() {
+        CompositeTest test = new CompositeTest(
+            "r###\"foo\"####")
+            .test("r###\"foo\"###", RAW_STRING_LIT)
+            .test("#", OP_HASH);
+        doTest(test);
+    }
+
+    public void testRawStringWithTooManyHashes2() {
+        CompositeTest test = new CompositeTest(
+            "r###\"foo\"######")
+            .test("r###\"foo\"###", RAW_STRING_LIT)
+            .test("#", OP_HASH)
+            .test("#", OP_HASH)
+            .test("#", OP_HASH);
+        doTest(test);
+    }
+
+    public void testRawStringWithTooManyHashes3() {
+        CompositeTest test = new CompositeTest(
+            "r\"foo\"###")
+            .test("r\"foo\"", RAW_STRING_LIT)
+            .test("#", OP_HASH)
+            .test("#", OP_HASH)
+            .test("#", OP_HASH);
+        doTest(test);
+    }
+
+    public void testRawStringWithTooManyHashesAndSuffix() {
+        CompositeTest test = new CompositeTest(
+            "r\"foo\"###suffix")
+            .test("r\"foo\"", RAW_STRING_LIT)
+            .test("#", OP_HASH)
+            .test("#", OP_HASH)
+            .test("#", OP_HASH)
+            .test("suffix", IDENTIFIER);
+        doTest(test);
+    }
+
+    public void testRawStringWithTooFewHashesAtEOF() {
+        MultiTest test = new MultiTest()
+            .test("r###\"foo", RAW_STRING_LIT)
+            .test("r###\"foo\"", RAW_STRING_LIT)
+            .test("r###\"foo\"##", RAW_STRING_LIT);
+        doTest(test);
+    }
+
     // Following tests are based on Rust's test suite
     // https://github.com/rust-lang/rust/blob/405c616eaf4e58a8bed67924c364c8e9c83b2581/src/libsyntax/parse/lexer/mod.rs
 
@@ -100,12 +147,12 @@ public class RsLexerTest extends IRsLexerTestCase {
             .test("b'a'", BYTE_LIT)
             .test("\"a\"", STRING_LIT)
             .test("b\"a\"", BYTE_STRING_LIT)
-            .test("1234", DEC_LIT)
-            .test("0b101", BIN_LIT)
-            .test("0xABC", HEX_LIT)
+            .test("1234", INT_LIT)
+            .test("0b101", INT_LIT)
+            .test("0xABC", INT_LIT)
             .test("1.0", FLOAT_LIT)
             .test("1.0e10", FLOAT_LIT)
-            .test("2us", DEC_LIT)
+            .test("2us", INT_LIT)
             .test("r###\"raw\"###suffix", RAW_STRING_LIT)
             .test("br###\"raw\"###suffix", RAW_BYTE_STRING_LIT);
         doTest(test);

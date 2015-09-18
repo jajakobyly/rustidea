@@ -126,11 +126,8 @@ public interface RsTokenTypes extends TokenType {
     IElementType OP_XOR = new IRsTokenType("^");
     IElementType OP_XOREQ = new IRsTokenType("^=");
 
-    IElementType BIN_LIT = new IRsTokenType("BIN_LITERAL");
-    IElementType DEC_LIT = new IRsTokenType("DEC_LITERAL");
+    IElementType INT_LIT = new IRsTokenType("INTEGER_LITERAL");
     IElementType FLOAT_LIT = new IRsTokenType("FLOAT_LITERAL");
-    IElementType HEX_LIT = new IRsTokenType("HEX_LITERAL");
-    IElementType OCT_LIT = new IRsTokenType("OCT_LITERAL");
 
     IElementType BYTE_LIT = new IRsTokenType("BYTE_LITERAL");
     IElementType CHAR_LIT = new IRsTokenType("CHAR_LITERAL");

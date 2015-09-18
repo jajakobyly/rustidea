@@ -97,13 +97,18 @@ import org.rustidea.psi.types.RsTokenTypes;
     }
 
     private boolean endRawString() {
-        if (yylength() >= rawStringHashes) {
+        CharSequence text = yytext();
+        int index = 1;
+        while (index < text.length() && text.charAt(index) == '#') index++;
+        int hashes = index - 1;
+
+        if (hashes >= rawStringHashes) {
             // Handle this situation:
             //  r##"foo"########
             //           ^ here desired token ends
             //                 ^ but we are here
-            if (yylength() > rawStringHashes) {
-                yypushback(yylength() - rawStringHashes);
+            if (hashes > rawStringHashes) {
+                yypushback(yylength() - rawStringHashes - 1);
             }
             endCompositeToken();
             return true;
@@ -139,24 +144,23 @@ IDENTIFIER   = {XID_START} {XID_CONTINUE}*
 
 //=== Literals
 //=== https://doc.rust-lang.org/nightly/reference.html#literals
+SUFFIX = {IDENTIFIER}?
+
 // Character literals without ending single quote conflict with lifetimes
-CHAR_LIT   = \' ( [^\\\'\r\n] | \\[^\r\n] | "\\x" [a-zA-Z0-9]+ | "\\u{" [a-zA-Z0-9]* "}"? )? (\'|\\)?
-STRING_LIT = \" ( [^\\\"\r\n] | \\[^] )* (\"|\\)?
+CHAR_LIT   = \' ( [^\\\'\r\n] | \\[^\r\n] | "\\x" [a-zA-Z0-9]+ | "\\u{" [a-zA-Z0-9]* "}"? )? ( \' {SUFFIX} | \\ )?
+STRING_LIT = \" ( [^\\\"\r\n] | \\[^] )* ( \" {SUFFIX} | \\ )?
 
 RAW_STRING_BEGIN = r #* \"
-RAW_STRING_END   = \" #*
+RAW_STRING_END   = \" #* {SUFFIX}
 
-INT_SUFFIX   = [ui]("8"|"16"|"32"|"64"|"size")
-FLOAT_SUFFIX = f("32"|"64")
-
-DEC_LIT = [0-9] [0-9_]* {INT_SUFFIX}?
-BIN_LIT = "0b" [01_]+ {INT_SUFFIX}?
-OCT_LIT = "0o" [0-7_]+ {INT_SUFFIX}?
-HEX_LIT = "0x" [a-fA-F0-9_]+ {INT_SUFFIX}?
+DEC_LIT = [0-9] [0-9_]* {SUFFIX}
+BIN_LIT = "0b" [01_]+ {SUFFIX}
+OCT_LIT = "0o" [0-7_]+ {SUFFIX}
+HEX_LIT = "0x" [a-fA-F0-9_]+ {SUFFIX}
 
 EXPONENT    = [eE] [-+]? [0-9_]+
-_FLOAT_LIT1 = [0-9] [0-9_]* \. [0-9] [0-9_]* {EXPONENT}? {FLOAT_SUFFIX}?
-_FLOAT_LIT2 = [0-9] [0-9_]* {EXPONENT} {FLOAT_SUFFIX}?
+_FLOAT_LIT1 = [0-9] [0-9_]* \. [0-9] [0-9_]* {EXPONENT}? {SUFFIX}
+_FLOAT_LIT2 = [0-9] [0-9_]* {EXPONENT} {SUFFIX}
 _FLOAT_LIT3 = [0-9] [0-9_]* \.
 FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
 
@@ -306,17 +310,14 @@ FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
     b {STRING_LIT} { return RsTokenTypes.BYTE_STRING_LIT; }
     {STRING_LIT}   { return RsTokenTypes.STRING_LIT; }
 
-    b {RAW_STRING_BEGIN} { beginRawString(true,  yylength() - 2); }
-    {RAW_STRING_BEGIN}   { beginRawString(false, yylength() - 1); }
+    b {RAW_STRING_BEGIN} { beginRawString(true,  yylength() - 3); }
+    {RAW_STRING_BEGIN}   { beginRawString(false, yylength() - 2); }
 
 
-    {DEC_LIT}        { return RsTokenTypes.DEC_LIT; }
-    {BIN_LIT}        { return RsTokenTypes.BIN_LIT; }
-    {OCT_LIT}        { return RsTokenTypes.OCT_LIT; }
-    {HEX_LIT}        { return RsTokenTypes.HEX_LIT; }
+    {DEC_LIT} | {BIN_LIT} | {OCT_LIT} | {HEX_LIT} { return RsTokenTypes.INT_LIT; }
     // Prevent matching ranges as [float] [dot] [dec], e.g. 0..9 as 0. . 9
-    {DEC_LIT} / ".." { return RsTokenTypes.DEC_LIT; }
-    {FLOAT_LIT}      { return RsTokenTypes.FLOAT_LIT; }
+    {DEC_LIT} / ".."                              { return RsTokenTypes.INT_LIT; }
+    {FLOAT_LIT}                                   { return RsTokenTypes.FLOAT_LIT; }
 
 
     {IDENTIFIER} { return RsTokenTypes.IDENTIFIER; }
