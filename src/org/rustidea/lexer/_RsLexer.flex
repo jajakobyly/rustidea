@@ -139,6 +139,7 @@ IDENTIFIER   = {XID_START} {XID_CONTINUE}*
 //=== Literals
 //=== https://doc.rust-lang.org/nightly/reference.html#literals
 
+// FIXME Lex invalid escapes
 // Notice that there is no forward slash at the beginning
 BYTE_ESCAPE    = [nrt\\0'\"] | "x" [a-fA-F0-9]{2} // \" \' \0 are undocumented
 UNICODE_ESCAPE = "u{" [a-fA-F0-9]{1,6} "}"
