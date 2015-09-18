@@ -129,29 +129,25 @@ WHITE_SPACE      = {WHITE_SPACE_CHAR}+
 
 //=== Identifiers
 //=== https://doc.rust-lang.org/nightly/reference.html#identifiers
-// FIXME These macros define Java's identifier name, not Rust's one.
-// FIXME $foo is treated as valid identifier.
-XID_START    = [:jletter:]
-XID_CONTINUE = [:jletterdigit:]
+// XID_START ::= [[:L:][:Nl:][:Other_ID_Start:]--[:Pattern_Syntax:]--[:Pattern_White_Space:]]
+// XID_CONTINUE ::= [[:ID_Start:][:Mn:][:Mc:][:Nd:][:Pc:][:Other_ID_Continue:]--[:Pattern_Syntax:]--[:Pattern_White_Space:]]
+// FIXME These rules do not comply in 100% with spec
+XID_START    = [:letter:]
+XID_CONTINUE = {XID_START} | [:digit:] | _
 IDENTIFIER   = {XID_START} {XID_CONTINUE}*
 
 
 //=== Literals
 //=== https://doc.rust-lang.org/nightly/reference.html#literals
+// Character literals without ending single quote conflict with lifetimes
+CHAR_LIT   = \' ( [^\\\'\r\n] | \\[^\r\n] | "\\x" [a-zA-Z0-9]+ | "\\u{" [a-zA-Z0-9]* "}"? )? (\'|\\)?
+STRING_LIT = \" ( [^\\\"\r\n] | \\[^] )* (\"|\\)?
 
-// FIXME Lex invalid escapes
-// Notice that there is no forward slash at the beginning
-BYTE_ESCAPE    = [nrt\\0'\"] | "x" [a-fA-F0-9]{2} // \" \' \0 are undocumented
-UNICODE_ESCAPE = "u{" [a-fA-F0-9]{1,6} "}"
-
-CHAR_LIT   = "'" ( [^\t\r\n'] | ( "\\" ( {BYTE_ESCAPE} | {UNICODE_ESCAPE} ) ) ) "'"
-STRING_LIT = "\"" ( [^\"\\] | ( "\\" ( {EOL} | {BYTE_ESCAPE} | {UNICODE_ESCAPE} ) ) )* "\""
-
-RAW_STRING_BEGIN = "r" "#"* "\""
-RAW_STRING_END   = "\"" "#"*
+RAW_STRING_BEGIN = r #* \"
+RAW_STRING_END   = \" #*
 
 INT_SUFFIX   = [ui]("8"|"16"|"32"|"64"|"size")
-FLOAT_SUFFIX = "f"("32"|"64")
+FLOAT_SUFFIX = f("32"|"64")
 
 DEC_LIT = [0-9] [0-9_]* {INT_SUFFIX}?
 BIN_LIT = "0b" [01_]+ {INT_SUFFIX}?
@@ -159,9 +155,9 @@ OCT_LIT = "0o" [0-7_]+ {INT_SUFFIX}?
 HEX_LIT = "0x" [a-fA-F0-9_]+ {INT_SUFFIX}?
 
 EXPONENT    = [eE] [-+]? [0-9_]+
-_FLOAT_LIT1 = [0-9] [0-9_]* "." [0-9] [0-9_]* {EXPONENT}? {FLOAT_SUFFIX}?
+_FLOAT_LIT1 = [0-9] [0-9_]* \. [0-9] [0-9_]* {EXPONENT}? {FLOAT_SUFFIX}?
 _FLOAT_LIT2 = [0-9] [0-9_]* {EXPONENT} {FLOAT_SUFFIX}?
-_FLOAT_LIT3 = [0-9] [0-9_]* "."
+_FLOAT_LIT3 = [0-9] [0-9_]* \.
 FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
 
 
@@ -299,21 +295,19 @@ FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
 
     //=== Lifetimes
     //=== I couldn't find docs for them in both Rust Reference and Grammar
-    "'" {IDENTIFIER} { return RsTokenTypes.LIFETIME_TOKEN; }
+    \' {IDENTIFIER} { return RsTokenTypes.LIFETIME_TOKEN; }
 
 
     //=== Character & string literals
     //=== https://doc.rust-lang.org/nightly/reference.html#characters-and-strings
-    //=== with little exception: \0 \' and \" are valid escapes in rustc lexer
-    //    (they are covered by BYTE_ESCAPE macro)
-    "b" {CHAR_LIT} { return RsTokenTypes.BYTE_LIT; }
-    {CHAR_LIT}     { return RsTokenTypes.CHAR_LIT; }
+    b {CHAR_LIT} { return RsTokenTypes.BYTE_LIT; }
+    {CHAR_LIT}   { return RsTokenTypes.CHAR_LIT; }
 
-    "b" {STRING_LIT} { return RsTokenTypes.BYTE_STRING_LIT; }
-    {STRING_LIT}     { return RsTokenTypes.STRING_LIT; }
+    b {STRING_LIT} { return RsTokenTypes.BYTE_STRING_LIT; }
+    {STRING_LIT}   { return RsTokenTypes.STRING_LIT; }
 
-    "b" {RAW_STRING_BEGIN} { beginRawString(true,  yylength() - 2); }
-    {RAW_STRING_BEGIN}     { beginRawString(false, yylength() - 1); }
+    b {RAW_STRING_BEGIN} { beginRawString(true,  yylength() - 2); }
+    {RAW_STRING_BEGIN}   { beginRawString(false, yylength() - 1); }
 
 
     {DEC_LIT}        { return RsTokenTypes.DEC_LIT; }
