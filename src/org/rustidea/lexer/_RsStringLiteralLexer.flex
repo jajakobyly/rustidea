@@ -90,10 +90,10 @@ HEX = [a-fA-F0-9]
 
     "\\" {EOL} { return esc(ESCAPE.EOL_ESCAPE); }
 
-    "\\x" ([:letter:] | [:digit:])+ |
-    "\\" [^]                        { return INVALID_CHARACTER_ESCAPE_TOKEN; }
+    "\\x" ([:letter:] | [:digit:]){1,2} | // TODO match 3 or more
+    "\\" [^]                            { return INVALID_CHARACTER_ESCAPE_TOKEN; }
 
     "\\u{" ([:letter:] | [:digit:])* "}" { return INVALID_UNICODE_ESCAPE_TOKEN; }
 
-    [^]      { return defaultToken; }
+    [^\\]+ | [\\] { return defaultToken; }
 }

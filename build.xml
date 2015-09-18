@@ -213,7 +213,6 @@
             <batchtest>
                 <fileset dir="${basedir}/tests">
                     <include name="**/*.java"/>
-                    <exclude name="org/rustidea/testUtils/**"/>
                 </fileset>
             </batchtest>
         </junit>

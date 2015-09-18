@@ -17,113 +17,104 @@
 package org.rustidea.lexer;
 
 import com.intellij.lexer.Lexer;
-import com.intellij.testFramework.LexerTestCase;
 import org.rustidea.psi.types.RsTypes;
-import org.rustidea.testUtils.LexerTestKeyBuilder;
 
 import java.util.EnumSet;
 
 import static com.intellij.psi.StringEscapesTokenTypes.*;
 import static org.rustidea.lexer.RsStringLiteralLexer.ESCAPE.*;
 
-public class RsStringLiteralLexerTest extends LexerTestCase {
+public class RsStringLiteralLexerTest extends RsLexerTestCaseBase {
     public void testShortByteEscapes() {
-        doTest(
-            "\\\\\\n\\r\\t\\0\\'\\\"",
-            new LexerTestKeyBuilder()
-                .add(VALID_STRING_ESCAPE_TOKEN, "\\\\")
-                .add(VALID_STRING_ESCAPE_TOKEN, "\\n")
-                .add(VALID_STRING_ESCAPE_TOKEN, "\\r")
-                .add(VALID_STRING_ESCAPE_TOKEN, "\\t")
-                .add(VALID_STRING_ESCAPE_TOKEN, "\\0")
-                .add(VALID_STRING_ESCAPE_TOKEN, "\\'")
-                .add(VALID_STRING_ESCAPE_TOKEN, "\\\"")
-                .toString()
-        );
+        TestBuilder data = new TestBuilder()
+            .add("\\\\", VALID_STRING_ESCAPE_TOKEN)
+            .add("\\n", VALID_STRING_ESCAPE_TOKEN)
+            .add("\\r", VALID_STRING_ESCAPE_TOKEN)
+            .add("\\t", VALID_STRING_ESCAPE_TOKEN)
+            .add("\\0", VALID_STRING_ESCAPE_TOKEN)
+            .add("\\'", VALID_STRING_ESCAPE_TOKEN)
+            .add("\\\"", VALID_STRING_ESCAPE_TOKEN);
+        doTest(data);
     }
 
     public void testLongByteEscapes() {
-        doTest(
-            "\\x00\\x7f\\x7F\\x2a",
-            new LexerTestKeyBuilder()
-                .add(VALID_STRING_ESCAPE_TOKEN, "\\x00")
-                .add(VALID_STRING_ESCAPE_TOKEN, "\\x7f")
-                .add(VALID_STRING_ESCAPE_TOKEN, "\\x7F")
-                .add(VALID_STRING_ESCAPE_TOKEN, "\\x2a")
-                .toString()
-        );
+        TestBuilder data = new TestBuilder()
+            .add("\\x00", VALID_STRING_ESCAPE_TOKEN)
+            .add("\\x7f", VALID_STRING_ESCAPE_TOKEN)
+            .add("\\x7F", VALID_STRING_ESCAPE_TOKEN)
+            .add("\\x2a", VALID_STRING_ESCAPE_TOKEN);
+        doTest(data);
     }
 
     public void testSampleUnicodeEscapes() {
-        doTest(
-            "\\u{aaa}\\u{7fff}\\u{7FFF}\\u{007fff}",
-            new LexerTestKeyBuilder()
-                .add(VALID_STRING_ESCAPE_TOKEN, "\\u{aaa}")
-                .add(VALID_STRING_ESCAPE_TOKEN, "\\u{7fff}")
-                .add(VALID_STRING_ESCAPE_TOKEN, "\\u{7FFF}")
-                .add(VALID_STRING_ESCAPE_TOKEN, "\\u{007fff}")
-                .toString()
-        );
+        TestBuilder data = new TestBuilder()
+            .add("\\u{aaa}", VALID_STRING_ESCAPE_TOKEN)
+            .add("\\u{7fff}", VALID_STRING_ESCAPE_TOKEN)
+            .add("\\u{7FFF}", VALID_STRING_ESCAPE_TOKEN)
+            .add("\\u{007fff}", VALID_STRING_ESCAPE_TOKEN);
+        doTest(data);
     }
 
     public void testVariableLengthUnicodeEscapes() {
-        doTest(
-            "\\u{0}\\u{00}\\u{000}\\u{0000}\\u{00000}\\u{000000}",
-            new LexerTestKeyBuilder()
-                .add(VALID_STRING_ESCAPE_TOKEN, "\\u{0}")
-                .add(VALID_STRING_ESCAPE_TOKEN, "\\u{00}")
-                .add(VALID_STRING_ESCAPE_TOKEN, "\\u{000}")
-                .add(VALID_STRING_ESCAPE_TOKEN, "\\u{0000}")
-                .add(VALID_STRING_ESCAPE_TOKEN, "\\u{00000}")
-                .add(VALID_STRING_ESCAPE_TOKEN, "\\u{000000}")
-                .toString()
-        );
+        TestBuilder data = new TestBuilder()
+            .add("\\u{0}", VALID_STRING_ESCAPE_TOKEN)
+            .add("\\u{00}", VALID_STRING_ESCAPE_TOKEN)
+            .add("\\u{000}", VALID_STRING_ESCAPE_TOKEN)
+            .add("\\u{0000}", VALID_STRING_ESCAPE_TOKEN)
+            .add("\\u{00000}", VALID_STRING_ESCAPE_TOKEN)
+            .add("\\u{000000}", VALID_STRING_ESCAPE_TOKEN)
+            .add("\\u{0000000}", INVALID_UNICODE_ESCAPE_TOKEN)
+            .add("\\u{00000000}", INVALID_UNICODE_ESCAPE_TOKEN);
+        doTest(data);
     }
 
     public void testInvalidShortByteEscapes() {
-        doTest(
-            "\\a\\b\\c",
-            new LexerTestKeyBuilder()
-                .add(INVALID_CHARACTER_ESCAPE_TOKEN, "\\a")
-                .add(INVALID_CHARACTER_ESCAPE_TOKEN, "\\b")
-                .add(INVALID_CHARACTER_ESCAPE_TOKEN, "\\c")
-                .toString()
-        );
+        TestBuilder data = new TestBuilder()
+            .add("\\a", INVALID_CHARACTER_ESCAPE_TOKEN)
+            .add("\\b", INVALID_CHARACTER_ESCAPE_TOKEN)
+            .add("\\c", INVALID_CHARACTER_ESCAPE_TOKEN);
+        doTest(data);
     }
 
     public void testInvalidLongByteEscapes() {
-        doTest(
-            "\\xaa\\x80\\xa\\x9\\xz\\xzz",
-            new LexerTestKeyBuilder()
-                .add(INVALID_CHARACTER_ESCAPE_TOKEN, "\\xaa")
-                .add(INVALID_CHARACTER_ESCAPE_TOKEN, "\\x80")
-                .add(INVALID_CHARACTER_ESCAPE_TOKEN, "\\xa")
-                .add(INVALID_CHARACTER_ESCAPE_TOKEN, "\\x9")
-                .add(INVALID_CHARACTER_ESCAPE_TOKEN, "\\xz")
-                .add(INVALID_CHARACTER_ESCAPE_TOKEN, "\\xzz")
-                .toString()
-        );
+        TestBuilder data = new TestBuilder()
+            .add("\\xaa", INVALID_CHARACTER_ESCAPE_TOKEN)
+            .add("\\x80", INVALID_CHARACTER_ESCAPE_TOKEN)
+            .add("\\xa", INVALID_CHARACTER_ESCAPE_TOKEN)
+            .add("\\x9", INVALID_CHARACTER_ESCAPE_TOKEN)
+            .add("\\xz", INVALID_CHARACTER_ESCAPE_TOKEN)
+            .add("\\xzz", INVALID_CHARACTER_ESCAPE_TOKEN);
+        doTest(data);
     }
 
     public void testInvalidUnicodeEscapes() {
-        doTest(
-            "\\u{7fffff}\\u{000000000}\\u{}\\u{800000}",
-            new LexerTestKeyBuilder()
-                .add(INVALID_UNICODE_ESCAPE_TOKEN, "\\u{7fffff}")
-                .add(INVALID_UNICODE_ESCAPE_TOKEN, "\\u{000000000}")
-                .add(INVALID_UNICODE_ESCAPE_TOKEN, "\\u{}")
-                .add(INVALID_UNICODE_ESCAPE_TOKEN, "\\u{800000}")
-                .toString()
-        );
+        TestBuilder data = new TestBuilder()
+            .add("\\u{7fffff}", INVALID_UNICODE_ESCAPE_TOKEN)
+            .add("\\u{000000000}", INVALID_UNICODE_ESCAPE_TOKEN)
+            .add("\\u{}", INVALID_UNICODE_ESCAPE_TOKEN)
+            .add("\\u{800000}", INVALID_UNICODE_ESCAPE_TOKEN);
+        doTest(data);
+    }
+
+    public void testMixed() {
+        TestBuilder data = new TestBuilder("foo\\x20bar\\u{}")
+            .add("foo", RsTypes.STRING_LIT)
+            .add("\\x20", VALID_STRING_ESCAPE_TOKEN)
+            .add("bar", RsTypes.STRING_LIT)
+            .add("\\u{}", INVALID_UNICODE_ESCAPE_TOKEN);
+        doTest(data);
+    }
+
+    public void testMixedQuoted() {
+        TestBuilder data = new TestBuilder("\"foo\\u{aaa}\"")
+            .add("\"foo", RsTypes.STRING_LIT)
+            .add("\\u{aaa}", VALID_STRING_ESCAPE_TOKEN)
+            .add("\"", RsTypes.STRING_LIT);
+        doTest(data);
     }
 
     @Override
     protected Lexer createLexer() {
         return new RsStringLiteralLexer(RsTypes.STRING_LIT, EnumSet.of(BYTE_ESCAPE, UNICODE_ESCAPE, EOL_ESCAPE));
-    }
-
-    @Override
-    protected String getDirPath() {
-        throw new UnsupportedOperationException("should not be called");
     }
 }
