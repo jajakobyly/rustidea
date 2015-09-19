@@ -17,7 +17,6 @@
 package org.rustidea.psi.impl;
 
 import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
@@ -40,8 +39,10 @@ public class RsDocImpl extends IRsStubPsiElement<RsDocStub> implements RsDoc {
 
     @NotNull
     @Override
-    public RsToken[] getDoc() {
-        return findChildrenByType(RsTypes.DOC_TOKEN_SET, RsToken.class);
+    public RsToken getToken() {
+        final RsToken child = findChildByType(RsTypes.DOC_TOKEN_SET);
+        assert child != null;
+        return child;
     }
 
     @Nullable
@@ -63,14 +64,12 @@ public class RsDocImpl extends IRsStubPsiElement<RsDocStub> implements RsDoc {
         return PsiTreeUtil.getStubOrPsiParentOfType(this, IRsAttributeOwner.class);
     }
 
-    @Nullable
+    @NotNull
     @Override
     public IElementType getTokenType() {
-        PsiElement child = findChildByType(RsTypes.DOC_TOKEN_SET);
-        if (child != null) {
-            return child.getNode().getElementType();
-        }
-        return null;
+        final IElementType type = getToken().getNode().getElementType();
+        assert RsTypes.DOC_TOKEN_SET.contains(type);
+        return type;
     }
 
     @Override

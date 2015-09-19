@@ -62,9 +62,9 @@ public final class RsItemParser extends Parser {
     public static final Parser attrItemList =
         wrap(OP_LPAREN, OP_RPAREN, sep(OP_COMMA, attrItem)).mark(ATTRIBUTE_ITEM_LIST);
 
-    /** {@code doc ::= BLOCK_DOC | LINE_DOC+} */
+    /** {@code doc ::= BLOCK_DOC | LINE_DOC} */
     public static final Parser doc =
-        token(BLOCK_DOC).or(many1(token(LINE_DOC))).mark(DOC);
+        token(BLOCK_DOC).or(token(LINE_DOC)).mark(DOC);
 
     /** <pre>attr ::= "#" "[" {@link #attrItem} "]"</pre> */
     public static final Parser attr =
@@ -74,9 +74,9 @@ public final class RsItemParser extends Parser {
     public static final Parser attrOrDoc =
         doc.or(attr);
 
-    /** {@code parentDoc ::= BLOCK_PARENT_DOC | LINE_PARENT_DOC+} */
+    /** {@code parentDoc ::= BLOCK_PARENT_DOC | LINE_PARENT_DOC} */
     public static final Parser parentDoc =
-        token(BLOCK_PARENT_DOC).or(many1(token(LINE_PARENT_DOC))).mark(DOC);
+        token(BLOCK_PARENT_DOC).or(token(LINE_PARENT_DOC)).mark(DOC);
 
     /** <pre>parentAttr ::= "#" "!" "[" {@link #attrItem} "]"</pre> */
     public static final Parser parentAttr =

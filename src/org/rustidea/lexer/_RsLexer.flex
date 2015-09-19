@@ -115,6 +115,10 @@ import org.rustidea.psi.types.RsTokenTypes;
         }
         return false;
     }
+
+    private IElementType returnRawString() {
+        return rawStringIsByte ? RsTokenTypes.RAW_BYTE_STRING_LIT : RsTokenTypes.RAW_STRING_LIT;
+    }
 %}
 
 %class _RsLexer
@@ -124,16 +128,11 @@ import org.rustidea.psi.types.RsTokenTypes;
 %type IElementType
 
 
-//=== White spaces
-//=== https://doc.rust-lang.org/nightly/reference.html#whitespace
 EOL              = \n | \r | \r\n
 LINE_WS          = [\ \t]
 WHITE_SPACE_CHAR = {EOL} | {LINE_WS}
 WHITE_SPACE      = {WHITE_SPACE_CHAR}+
 
-
-//=== Identifiers
-//=== https://doc.rust-lang.org/nightly/reference.html#identifiers
 // XID_START ::= [[:L:][:Nl:][:Other_ID_Start:]--[:Pattern_Syntax:]--[:Pattern_White_Space:]]
 // XID_CONTINUE ::= [[:ID_Start:][:Mn:][:Mc:][:Nd:][:Pc:][:Other_ID_Continue:]--[:Pattern_Syntax:]--[:Pattern_White_Space:]]
 // FIXME These rules do not comply in 100% with spec
@@ -141,9 +140,6 @@ XID_START    = [:letter:]
 XID_CONTINUE = {XID_START} | [:digit:] | _
 IDENTIFIER   = {XID_START} {XID_CONTINUE}*
 
-
-//=== Literals
-//=== https://doc.rust-lang.org/nightly/reference.html#literals
 SUFFIX = {IDENTIFIER}?
 
 // Character literals without ending single quote conflict with lifetimes
@@ -164,6 +160,9 @@ _FLOAT_LIT2 = [0-9] [0-9_]* {EXPONENT} {SUFFIX}
 _FLOAT_LIT3 = [0-9] [0-9_]* \.
 FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
 
+LINE_PARENT_DOC = "//!" [^\r\n]*
+LINE_DOC = "///" [^\r\n]*
+
 
 %state IN_BLOCK_COMMENT, IN_RAW_STRING
 
@@ -174,9 +173,6 @@ FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
 <YYINITIAL> {
     {WHITE_SPACE} { return RsTokenTypes.WHITE_SPACE; }
 
-
-    //=== Keywords
-    //=== https://doc.rust-lang.org/nightly/grammar.html#keywords
     "abstract"  { return RsTokenTypes.KW_ABSTRACT; }
     "alignof"   { return RsTokenTypes.KW_ALIGNOF; }
     "as"        { return RsTokenTypes.KW_AS; }
@@ -230,10 +226,6 @@ FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
     "while"     { return RsTokenTypes.KW_WHILE; }
     "yield"     { return RsTokenTypes.KW_YIELD; }
 
-
-    //=== Operators
-    //=== https://doc.rust-lang.org/nightly/grammar.html#symbols
-    //=== https://doc.rust-lang.org/nightly/reference.html#expressions
     "&"    { return RsTokenTypes.OP_AND; }
     "&&"   { return RsTokenTypes.OP_ANDAND; }
     "&="   { return RsTokenTypes.OP_ANDEQ; }
@@ -284,26 +276,17 @@ FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
     "^"    { return RsTokenTypes.OP_XOR; }
     "^="   { return RsTokenTypes.OP_XOREQ; }
 
-
-    //=== Comments & Docs
-    //=== https://doc.rust-lang.org/nightly/reference.html#comments
-    "//!" [^\r\n]*      { return RsTokenTypes.LINE_PARENT_DOC; }
-    "///" "/"+ [^\r\n]* { return RsTokenTypes.LINE_COMMENT; }
-    "///" [^\r\n]*      { return RsTokenTypes.LINE_DOC; }
-    "//" [^\r\n]*       { return RsTokenTypes.LINE_COMMENT; }
+    ( {LINE_PARENT_DOC} {EOL} )* {LINE_PARENT_DOC}  { return RsTokenTypes.LINE_PARENT_DOC; }
+    "///" "/"+ [^\r\n]*                             { return RsTokenTypes.LINE_COMMENT; }
+    ( {LINE_DOC} {EOL} )* {LINE_DOC}                { return RsTokenTypes.LINE_DOC; }
+    "//" [^\r\n]*                                   { return RsTokenTypes.LINE_COMMENT; }
 
     "/*!"      { beginBlockComment(CommentType.PARENT_DOC); }
     "/**"[^*/] { beginBlockComment(CommentType.DOC); }
     "/*"       { beginBlockComment(CommentType.NORMAL); }
 
-
-    //=== Lifetimes
-    //=== I couldn't find docs for them in both Rust Reference and Grammar
     \' {IDENTIFIER} { return RsTokenTypes.LIFETIME_TOKEN; }
 
-
-    //=== Character & string literals
-    //=== https://doc.rust-lang.org/nightly/reference.html#characters-and-strings
     b {CHAR_LIT} { return RsTokenTypes.BYTE_LIT; }
     {CHAR_LIT}   { return RsTokenTypes.CHAR_LIT; }
 
@@ -313,15 +296,12 @@ FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
     b {RAW_STRING_BEGIN} { beginRawString(true,  yylength() - 3); }
     {RAW_STRING_BEGIN}   { beginRawString(false, yylength() - 2); }
 
-
     {DEC_LIT} | {BIN_LIT} | {OCT_LIT} | {HEX_LIT} { return RsTokenTypes.INT_LIT; }
     // Prevent matching ranges as [float] [dot] [dec], e.g. 0..9 as 0. . 9
     {DEC_LIT} / ".."                              { return RsTokenTypes.INT_LIT; }
     {FLOAT_LIT}                                   { return RsTokenTypes.FLOAT_LIT; }
 
-
     {IDENTIFIER} { return RsTokenTypes.IDENTIFIER; }
-
 
     [^] { return RsTokenTypes.BAD_CHARACTER; }
 }
@@ -336,11 +316,7 @@ FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
 
 
 <IN_RAW_STRING> {
-    {RAW_STRING_END} { if (endRawString())  return rawStringIsByte
-                                                   ? RsTokenTypes.RAW_BYTE_STRING_LIT
-                                                   : RsTokenTypes.RAW_STRING_LIT; }
-    <<EOF>>          { endCompositeToken(); return rawStringIsByte
-                                                   ? RsTokenTypes.RAW_BYTE_STRING_LIT
-                                                   : RsTokenTypes.RAW_STRING_LIT; }
+    {RAW_STRING_END} { if (endRawString())  return returnRawString(); }
+    <<EOF>>          { endCompositeToken(); return returnRawString(); }
     [^]              { /* continue */ }
 }

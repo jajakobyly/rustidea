@@ -22,6 +22,9 @@ import static com.intellij.psi.TokenType.WHITE_SPACE;
 import static org.rustidea.psi.types.RsTokenTypes.*;
 
 public class RsLexerTest extends IRsLexerTestCase {
+    // Tests prefixed with "testRust" are based on Rust's test suite
+    // https://github.com/rust-lang/rust/blob/405c616eaf4e58a8bed67924c364c8e9c83b2581/src/libsyntax/parse/lexer/mod.rs
+
     public void testUnfinishedCharacters() {
         MultiTest test = new MultiTest()
             .test("'", CHAR_LIT)
@@ -119,8 +122,82 @@ public class RsLexerTest extends IRsLexerTestCase {
         doTest(test);
     }
 
-    // Following tests are based on Rust's test suite
-    // https://github.com/rust-lang/rust/blob/405c616eaf4e58a8bed67924c364c8e9c83b2581/src/libsyntax/parse/lexer/mod.rs
+    public void testMultilineLineDoc() {
+        CompositeTest test = new CompositeTest(
+            "/// foo",
+            "/// bar",
+            "/// baz")
+            .test("/// foo\n/// bar\n/// baz", LINE_DOC);
+        doTest(test);
+    }
+
+    public void testMultilineLineDoc2() {
+        CompositeTest test = new CompositeTest(
+            "//! foo",
+            "//! bar",
+            "//! baz")
+            .test("//! foo\n//! bar\n//! baz", LINE_PARENT_DOC);
+        doTest(test);
+    }
+
+    public void testMultilineLineDoc3() {
+        CompositeTest test = new CompositeTest(
+            "//! foo",
+            "//! bar",
+            "/// foo",
+            "/// bar")
+            .test("//! foo\n//! bar", LINE_PARENT_DOC).test("\n", WHITE_SPACE)
+            .test("/// foo\n/// bar", LINE_DOC);
+        doTest(test);
+    }
+
+    public void testMultilineLineDoc4() {
+        CompositeTest test = new CompositeTest(
+            "// foo",
+            "/// foo",
+            "/// bar",
+            "// bar")
+            .test("// foo", LINE_COMMENT).test("\n", WHITE_SPACE)
+            .test("/// foo\n/// bar", LINE_DOC).test("\n", WHITE_SPACE)
+            .test("// bar", LINE_COMMENT);
+        doTest(test);
+    }
+
+    public void testMultilineLineDoc5() {
+        CompositeTest test = new CompositeTest(
+            "/// foo",
+            "// foo",
+            "/// bar",
+            "// bar")
+            .test("/// foo", LINE_DOC).test("\n", WHITE_SPACE)
+            .test("// foo", LINE_COMMENT).test("\n", WHITE_SPACE)
+            .test("/// bar", LINE_DOC).test("\n", WHITE_SPACE)
+            .test("// bar", LINE_COMMENT);
+        doTest(test);
+    }
+
+    public void testMultilineLineDoc6() {
+        CompositeTest test = new CompositeTest(
+            "/// foo",
+            "///",
+            "/// bar",
+            "// bar")
+            .test("/// foo\n///\n/// bar", LINE_DOC).test("\n", WHITE_SPACE)
+            .test("// bar", LINE_COMMENT);
+        doTest(test);
+    }
+
+    public void testMultilineLineDoc7() {
+        CompositeTest test = new CompositeTest(
+            "///////",
+            "/// foo",
+            "///////",
+            "/// bar",
+            "///////",
+            "")
+            .test("///////\n/// foo\n///////\n/// bar\n///////", LINE_DOC).test("\n", WHITE_SPACE);
+        doTest(test);
+    }
 
     public void testRust1() {
         CompositeTest test = new CompositeTest(
@@ -144,8 +221,7 @@ public class RsLexerTest extends IRsLexerTestCase {
             .test(")", OP_RPAREN)
             .test(";", OP_SEMICOLON)
             .test(" ", WHITE_SPACE)
-            .test("}", OP_RBRACE)
-            .test("\n", WHITE_SPACE);
+            .test("}", OP_RBRACE).test("\n", WHITE_SPACE);
         doTest(test);
     }
 
@@ -186,8 +262,7 @@ public class RsLexerTest extends IRsLexerTestCase {
         MultiTest test = new MultiTest()
             .test("///", LINE_DOC)
             .test("/// blah", LINE_DOC)
-            .test("////", LINE_COMMENT)
-            .test("///////", LINE_COMMENT);
+            .test("////", LINE_COMMENT);
         doTest(test);
     }
 
@@ -200,10 +275,8 @@ public class RsLexerTest extends IRsLexerTestCase {
 
     public void testRustCrlfComments() {
         CompositeTest test = new CompositeTest("// test\r\n/// test\r\n")
-            .test("// test", LINE_COMMENT)
-            .test("\r\n", WHITE_SPACE)
-            .test("/// test", LINE_DOC)
-            .test("\r\n", WHITE_SPACE);
+            .test("// test", LINE_COMMENT).test("\r\n", WHITE_SPACE)
+            .test("/// test", LINE_DOC).test("\r\n", WHITE_SPACE);
         doTest(test);
     }
 
