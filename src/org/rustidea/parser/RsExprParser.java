@@ -24,7 +24,7 @@ import static org.rustidea.psi.types.RsTypes.LITERAL_TOKEN_SET;
 
 public final class RsExprParser {
     /**
-     * {@code literalRequired ::= BIN_LIT | DEC_LIT | FLOAT_LIT | HEX_LIT | OCT_LIT | BYTE_LIT | CHAR_LIT | BYTE_STRING_LIT | STRING_LIT | RAW_BYTE_STRING_LIT | RAW_STRING_LIT}
+     * {@code literalRequired ::= "true" | "false" | BIN_LIT | DEC_LIT | FLOAT_LIT | HEX_LIT | OCT_LIT | BYTE_LIT | CHAR_LIT | BYTE_STRING_LIT | STRING_LIT | RAW_BYTE_STRING_LIT | RAW_STRING_LIT}
      *
      * <p>Fails if parsing failed.</p>
      *
@@ -34,7 +34,7 @@ public final class RsExprParser {
         token(LITERAL_TOKEN_SET).markGreedy(LITERAL).fail("expected literal");
 
     /**
-     * {@code literal ::= BIN_LIT | DEC_LIT | FLOAT_LIT | HEX_LIT | OCT_LIT | BYTE_LIT | CHAR_LIT | BYTE_STRING_LIT | STRING_LIT | RAW_BYTE_STRING_LIT | RAW_STRING_LIT}
+     * {@code literal ::= "true" | "false" | BIN_LIT | DEC_LIT | FLOAT_LIT | HEX_LIT | OCT_LIT | BYTE_LIT | CHAR_LIT | BYTE_STRING_LIT | STRING_LIT | RAW_BYTE_STRING_LIT | RAW_STRING_LIT}
      *
      * <p>Warns if parsing fails.</p>
      *
