@@ -288,8 +288,8 @@ FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
     //=== Comments & Docs
     //=== https://doc.rust-lang.org/nightly/reference.html#comments
     "//!" [^\r\n]*      { return RsTokenTypes.LINE_PARENT_DOC; }
+    "///" "/"+ [^\r\n]* { return RsTokenTypes.LINE_COMMENT; }
     "///" [^\r\n]*      { return RsTokenTypes.LINE_DOC; }
-    "///" "/"+ [^\r\n]* |
     "//" [^\r\n]*       { return RsTokenTypes.LINE_COMMENT; }
 
     "/*!"      { beginBlockComment(CommentType.PARENT_DOC); }
