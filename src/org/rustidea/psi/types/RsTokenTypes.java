@@ -21,7 +21,7 @@ import com.intellij.psi.tree.IElementType;
 
 public interface RsTokenTypes extends TokenType {
     IElementType IDENTIFIER = new IRsIdentifierType("IDENTIFIER");
-    IElementType LIFETIME_TOKEN = new IRsIdentifierType("LIFETIME_TOKEN");
+    IElementType LIFETIME_TOKEN = new IRsIdentifierType("LIFETIME");
 
     IElementType KW_ABSTRACT = new IRsKeywordType("abstract");
     IElementType KW_ALIGNOF = new IRsKeywordType("alignof");

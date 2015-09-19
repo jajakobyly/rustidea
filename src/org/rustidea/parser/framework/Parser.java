@@ -102,7 +102,7 @@ public abstract class Parser {
             @Override
             public boolean parse(@NotNull ParserContext ctx) {
                 Section section = Section.begin(ctx);
-                section.call(parser);
+                section.forceCall(parser);
                 return section.end(type, null);
             }
         };
@@ -120,7 +120,7 @@ public abstract class Parser {
             @Override
             public boolean parse(@NotNull ParserContext ctx) {
                 Section section = Section.begin(ctx);
-                section.call(parser);
+                section.forceCall(parser);
                 return section.endGreedy(type, null);
             }
         };

@@ -17,9 +17,10 @@
 package org.rustidea.parser;
 
 import org.rustidea.parser.framework.Parser;
-import org.rustidea.psi.types.RsTypes;
 
 import static org.rustidea.parser.framework.Scanners.token;
+import static org.rustidea.psi.types.RsCompositeTypes.LITERAL;
+import static org.rustidea.psi.types.RsTypes.LITERAL_TOKEN_SET;
 
 public final class RsExprParser {
     /**
@@ -29,7 +30,8 @@ public final class RsExprParser {
      *
      * @see #literal
      */
-    public static final Parser literalRequired = token(RsTypes.LITERAL_TOKEN_SET).fail("expected literal");
+    public static final Parser literalRequired =
+        token(LITERAL_TOKEN_SET).markGreedy(LITERAL).fail("expected literal");
 
     /**
      * {@code literal ::= BIN_LIT | DEC_LIT | FLOAT_LIT | HEX_LIT | OCT_LIT | BYTE_LIT | CHAR_LIT | BYTE_STRING_LIT | STRING_LIT | RAW_BYTE_STRING_LIT | RAW_STRING_LIT}
@@ -38,7 +40,8 @@ public final class RsExprParser {
      *
      * @see #literalRequired
      */
-    public static final Parser literal = token(RsTypes.LITERAL_TOKEN_SET).warn("expected literal");
+    public static final Parser literal =
+        token(LITERAL_TOKEN_SET).markGreedy(LITERAL).warn("expected literal");
 
     private RsExprParser() {
     }

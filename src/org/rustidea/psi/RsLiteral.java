@@ -17,7 +17,6 @@
 package org.rustidea.psi;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public interface RsLiteral extends IRsPsiElement {
     /**
@@ -27,8 +26,8 @@ public interface RsLiteral extends IRsPsiElement {
     String getValueString();
 
     /**
-     * Get literal suffix, or null if not applicable.
+     * Get literal suffix.
      */
-    @Nullable
+    @NotNull
     String getSuffix();
 }
