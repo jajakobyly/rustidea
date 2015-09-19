@@ -16,40 +16,29 @@
 
 package org.rustidea.parser;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.lang.PsiBuilder;
-import com.intellij.lang.PsiBuilder.Marker;
 import com.intellij.lang.PsiParser;
 import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.parser.framework.Parser;
-import org.rustidea.parser.framework.ParserContext;
-import org.rustidea.parser.framework.ParserContextImpl;
+import org.rustidea.parser.framework.PsiParserImpl;
 
 import static org.rustidea.parser.RsItemParser.itemGreedy;
 import static org.rustidea.parser.RsItemParser.parentAttrOrDoc;
 import static org.rustidea.parser.framework.Combinators.manyGreedy;
 
-public class RsParser implements PsiParser {
+public class RsParser extends PsiParserImpl implements PsiParser {
     public static final Parser fileContents = manyGreedy(parentAttrOrDoc.or(itemGreedy));
     private static final Logger LOG = Logger.getInstance(RsParser.class);
 
     @NotNull
     @Override
-    public ASTNode parse(@NotNull final IElementType root, @NotNull final PsiBuilder builder) {
-        final ParserContext ctx = new ParserContextImpl(builder);
+    public Parser getEntryRule() {
+        return fileContents;
+    }
 
-        long time = System.currentTimeMillis();
-
-        Marker marker = builder.mark();
-        fileContents.parse(ctx);
-        marker.done(root);
-
-        time = System.currentTimeMillis() - time;
-        final double size = builder.getCurrentOffset() / 1000.0;
-        LOG.info(String.format("Parsed %.1f kb file in %dms.", size, time));
-
-        return builder.getTreeBuilt();
+    @NotNull
+    @Override
+    protected Logger getLogger() {
+        return LOG;
     }
 }
