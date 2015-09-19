@@ -16,7 +16,6 @@
 
 package org.rustidea.parser.framework;
 
-import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilderUtil;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
@@ -34,8 +33,8 @@ public final class Scanners {
     public static Parser token(@NotNull final IElementType token) {
         return new Parser() {
             @Override
-            public boolean parse(@NotNull PsiBuilder builder) {
-                return PsiBuilderUtil.expect(builder, token);
+            public boolean parse(@NotNull ParserContext ctx) {
+                return PsiBuilderUtil.expect(ctx.getBuilder(), token);
             }
         };
     }
@@ -45,8 +44,8 @@ public final class Scanners {
     public static Parser token(@NotNull final TokenSet tokens) {
         return new Parser() {
             @Override
-            public boolean parse(@NotNull PsiBuilder builder) {
-                return PsiBuilderUtil.expect(builder, tokens);
+            public boolean parse(@NotNull ParserContext ctx) {
+                return PsiBuilderUtil.expect(ctx.getBuilder(), tokens);
             }
         };
     }
@@ -56,10 +55,10 @@ public final class Scanners {
     public static Parser token(@NotNull final IElementType... tokens) {
         return new Parser() {
             @Override
-            public boolean parse(@NotNull PsiBuilder builder) {
-                Section section = Section.begin(builder);
+            public boolean parse(@NotNull ParserContext ctx) {
+                Section section = Section.begin(ctx);
                 for (IElementType token : tokens) {
-                    if (!PsiBuilderUtil.expect(builder, token)) {
+                    if (!PsiBuilderUtil.expect(ctx.getBuilder(), token)) {
                         section.setState(false);
                         break;
                     }
@@ -74,8 +73,8 @@ public final class Scanners {
     public static Parser notToken(@NotNull final IElementType token) {
         return new Parser() {
             @Override
-            public boolean parse(@NotNull PsiBuilder builder) {
-                return PsiBuilderUtilEx.expectNot(builder, token);
+            public boolean parse(@NotNull ParserContext ctx) {
+                return PsiBuilderUtilEx.expectNot(ctx.getBuilder(), token);
             }
         };
     }
@@ -85,8 +84,8 @@ public final class Scanners {
     public static Parser notToken(@NotNull final TokenSet tokens) {
         return new Parser() {
             @Override
-            public boolean parse(@NotNull PsiBuilder builder) {
-                return PsiBuilderUtilEx.expectNot(builder, tokens);
+            public boolean parse(@NotNull ParserContext ctx) {
+                return PsiBuilderUtilEx.expectNot(ctx.getBuilder(), tokens);
             }
         };
     }
@@ -96,8 +95,8 @@ public final class Scanners {
     public static Parser maybeToken(@NotNull final IElementType token) {
         return new Parser() {
             @Override
-            public boolean parse(@NotNull PsiBuilder builder) {
-                return PsiBuilderUtilEx.maybe(builder, token);
+            public boolean parse(@NotNull ParserContext ctx) {
+                return PsiBuilderUtilEx.maybe(ctx.getBuilder(), token);
             }
         };
     }
@@ -107,8 +106,8 @@ public final class Scanners {
     public static Parser maybeToken(@NotNull final TokenSet tokens) {
         return new Parser() {
             @Override
-            public boolean parse(@NotNull PsiBuilder builder) {
-                return PsiBuilderUtilEx.maybe(builder, tokens);
+            public boolean parse(@NotNull ParserContext ctx) {
+                return PsiBuilderUtilEx.maybe(ctx.getBuilder(), tokens);
             }
         };
     }

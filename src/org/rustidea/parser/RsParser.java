@@ -24,6 +24,8 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.parser.framework.Parser;
+import org.rustidea.parser.framework.ParserContext;
+import org.rustidea.parser.framework.ParserContextImpl;
 
 import static org.rustidea.parser.RsItemParser.itemGreedy;
 import static org.rustidea.parser.RsItemParser.parentAttrOrDoc;
@@ -36,14 +38,16 @@ public class RsParser implements PsiParser {
     @NotNull
     @Override
     public ASTNode parse(@NotNull final IElementType root, @NotNull final PsiBuilder builder) {
+        final ParserContext ctx = new ParserContextImpl(builder);
+
         long time = System.currentTimeMillis();
 
         Marker marker = builder.mark();
-        fileContents.parse(builder);
+        fileContents.parse(ctx);
         marker.done(root);
 
         time = System.currentTimeMillis() - time;
-        double size = builder.getCurrentOffset() / 1000.0;
+        final double size = builder.getCurrentOffset() / 1000.0;
         LOG.info(String.format("Parsed %.1f kb file in %dms.", size, time));
 
         return builder.getTreeBuilt();

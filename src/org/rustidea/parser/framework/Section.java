@@ -17,7 +17,6 @@
 package org.rustidea.parser.framework;
 
 import com.google.common.base.Strings;
-import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
@@ -26,32 +25,32 @@ import org.jetbrains.annotations.Nullable;
 // TODO Write some JavaDoc
 public class Section {
     @NotNull
-    private final PsiBuilder builder;
+    private final ParserContext ctx;
     private Marker marker;
     private boolean state;
 
-    private Section(@NotNull final PsiBuilder builder,
+    private Section(@NotNull final ParserContext ctx,
                     @NotNull final Marker marker,
                     final boolean initialState) {
-        this.builder = builder;
+        this.ctx = ctx;
         this.marker = marker;
         this.setState(initialState);
     }
 
-    public static boolean wrap(@NotNull final PsiBuilder builder, @NotNull final Parser parser) {
-        Section section = begin(builder);
+    public static boolean wrap(@NotNull final ParserContext ctx, @NotNull final Parser parser) {
+        Section section = begin(ctx);
         section.forceCall(parser);
         return section.end();
     }
 
     @NotNull
-    public static Section begin(@NotNull final PsiBuilder builder) {
-        return begin(builder, true);
+    public static Section begin(@NotNull final ParserContext ctx) {
+        return begin(ctx, true);
     }
 
     @NotNull
-    public static Section begin(@NotNull PsiBuilder builder, boolean initialResult) {
-        return new Section(builder, builder.mark(), initialResult);
+    public static Section begin(@NotNull final ParserContext ctx, final boolean initialResult) {
+        return new Section(ctx, ctx.getBuilder().mark(), initialResult);
     }
 
     public boolean getState() {
@@ -113,13 +112,13 @@ public class Section {
     }
 
     public boolean forceCall(@NotNull final Parser parser) {
-        setState(parser.parse(builder));
+        setState(parser.parse(ctx));
         return getState();
     }
 
     public boolean callWrapped(@NotNull final Parser parser) {
         if (getState()) {
-            setState(wrap(builder, parser));
+            setState(wrap(ctx, parser));
         }
         return getState();
     }

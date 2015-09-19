@@ -16,7 +16,6 @@
 
 package org.rustidea.parser.framework;
 
-import com.intellij.lang.PsiBuilder;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
@@ -30,10 +29,10 @@ public abstract class Parser {
     /**
      * Perform parsing.
      *
-     * @param builder {@link PsiBuilder} for input text
+     * @param ctx parser context
      * @return {@code true} if parsing succeeded; otherwise, {@code false}
      */
-    public abstract boolean parse(@NotNull final PsiBuilder builder);
+    public abstract boolean parse(@NotNull final ParserContext ctx);
 
     /**
      * {@code p.then(q) ::= p q}
@@ -61,8 +60,8 @@ public abstract class Parser {
     public Parser evenThen(@NotNull final Parser q) {
         return new WrapperParser(this) {
             @Override
-            public boolean parse(@NotNull PsiBuilder builder) {
-                Section section = Section.begin(builder);
+            public boolean parse(@NotNull ParserContext ctx) {
+                Section section = Section.begin(ctx);
                 if (section.callWrapped(parser)) {
                     if (section.callWrapped(q)) {
                         // matched `p q`
@@ -101,8 +100,8 @@ public abstract class Parser {
     public Parser mark(@NotNull final IElementType type) {
         return new WrapperParser(this) {
             @Override
-            public boolean parse(@NotNull PsiBuilder builder) {
-                Section section = Section.begin(builder);
+            public boolean parse(@NotNull ParserContext ctx) {
+                Section section = Section.begin(ctx);
                 section.call(parser);
                 return section.end(type, null);
             }
@@ -119,8 +118,8 @@ public abstract class Parser {
     public Parser markGreedy(@NotNull final IElementType type) {
         return new WrapperParser(this) {
             @Override
-            public boolean parse(@NotNull PsiBuilder builder) {
-                Section section = Section.begin(builder);
+            public boolean parse(@NotNull ParserContext ctx) {
+                Section section = Section.begin(ctx);
                 section.call(parser);
                 return section.endGreedy(type, null);
             }
@@ -137,8 +136,8 @@ public abstract class Parser {
     public Parser fail(@NotNull final String errorMessage) {
         return new WrapperParser(this) {
             @Override
-            public boolean parse(@NotNull PsiBuilder builder) {
-                Section section = Section.begin(builder);
+            public boolean parse(@NotNull ParserContext ctx) {
+                Section section = Section.begin(ctx);
                 section.forceCall(parser);
                 return section.endGreedy(null, errorMessage);
             }
@@ -155,8 +154,8 @@ public abstract class Parser {
     public Parser warn(@NotNull final String errorMessage) {
         return new WrapperParser(this) {
             @Override
-            public boolean parse(@NotNull PsiBuilder builder) {
-                Section section = Section.begin(builder);
+            public boolean parse(@NotNull ParserContext ctx) {
+                Section section = Section.begin(ctx);
                 section.forceCall(parser);
                 section.endGreedy(null, errorMessage);
                 return true;

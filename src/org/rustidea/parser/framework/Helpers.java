@@ -16,7 +16,6 @@
 
 package org.rustidea.parser.framework;
 
-import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilderUtil;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
@@ -45,11 +44,11 @@ public final class Helpers {
             private Parser parser = null;
 
             @Override
-            public boolean parse(@NotNull PsiBuilder builder) {
+            public boolean parse(@NotNull ParserContext ctx) {
                 if (parser == null) {
                     parser = initParser();
                 }
-                return parser.parse(builder);
+                return parser.parse(ctx);
             }
 
             @NotNull
@@ -81,11 +80,11 @@ public final class Helpers {
                               @NotNull final Parser p) {
         return new WrapperParser(p) {
             @Override
-            public boolean parse(@NotNull PsiBuilder builder) {
-                Section section = Section.begin(builder);
-                section.setState(PsiBuilderUtil.expect(builder, open));
+            public boolean parse(@NotNull ParserContext ctx) {
+                Section section = Section.begin(ctx);
+                section.setState(PsiBuilderUtil.expect(ctx.getBuilder(), open));
                 section.call(parser);
-                PsiBuilderUtilEx.expectOrWarn(builder, close, "missing " + close);
+                PsiBuilderUtilEx.expectOrWarn(ctx.getBuilder(), close, "missing " + close);
                 return section.end();
             }
         };
@@ -121,13 +120,13 @@ public final class Helpers {
         }
 
         @Override
-        public boolean parse(@NotNull PsiBuilder builder) {
-            Section section = Section.begin(builder);
+        public boolean parse(@NotNull ParserContext ctx) {
+            Section section = Section.begin(ctx);
 
-            if (parser.parse(builder)) {
-                while (!builder.eof()) {
-                    Section section1 = Section.begin(builder);
-                    PsiBuilderUtilEx.expectOrWarn(builder, separator, "missing " + separator.toString());
+            if (parser.parse(ctx)) {
+                while (!ctx.eof()) {
+                    Section section1 = Section.begin(ctx);
+                    PsiBuilderUtilEx.expectOrWarn(ctx.getBuilder(), separator, "missing " + separator.toString());
                     section1.forceCall(parser);
                     if (!section1.end()) {
                         break;
@@ -135,11 +134,11 @@ public final class Helpers {
                 }
 
                 // Check for trailing separator
-                if (builder.getTokenType() == separator) {
+                if (ctx.getBuilder().getTokenType() == separator) {
                     if (trailing) {
-                        builder.advanceLexer();
+                        ctx.getBuilder().advanceLexer();
                     } else {
-                        PsiBuilderUtilEx.unexpected(builder);
+                        PsiBuilderUtilEx.unexpected(ctx.getBuilder());
                     }
                 }
             }

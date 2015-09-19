@@ -16,7 +16,6 @@
 
 package org.rustidea.parser.framework;
 
-import com.intellij.lang.PsiBuilder;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
@@ -37,8 +36,8 @@ public final class Combinators {
     public static Parser maybe(@NotNull final Parser p) {
         return new WrapperParser(p) {
             @Override
-            public boolean parse(@NotNull PsiBuilder builder) {
-                Section.wrap(builder, parser);
+            public boolean parse(@NotNull ParserContext ctx) {
+                Section.wrap(ctx, parser);
                 return true;
             }
         };
@@ -73,9 +72,9 @@ public final class Combinators {
     public static Parser many(@NotNull final Parser p) {
         return new WrapperParser(p) {
             @Override
-            public boolean parse(@NotNull PsiBuilder builder) {
-                while (!builder.eof()) {
-                    if (!Section.wrap(builder, parser)) break;
+            public boolean parse(@NotNull ParserContext ctx) {
+                while (!ctx.eof()) {
+                    if (!Section.wrap(ctx, parser)) break;
                 }
                 return true;
             }
@@ -89,12 +88,12 @@ public final class Combinators {
     public static Parser many1(@NotNull final Parser p) {
         return new WrapperParser(p) {
             @Override
-            public boolean parse(@NotNull PsiBuilder builder) {
+            public boolean parse(@NotNull ParserContext ctx) {
                 // p+ ::= p p*
-                Section section = Section.begin(builder);
+                Section section = Section.begin(ctx);
                 if (section.call(parser)) {
-                    while (!builder.eof()) {
-                        if (!Section.wrap(builder, parser)) break;
+                    while (!ctx.eof()) {
+                        if (!Section.wrap(ctx, parser)) break;
                     }
                 }
                 return section.end();
@@ -111,10 +110,10 @@ public final class Combinators {
     public static Parser manyGreedy(@NotNull final Parser p) {
         return new WrapperParser(p) {
             @Override
-            public boolean parse(@NotNull PsiBuilder builder) {
-                while (!builder.eof()) {
-                    if (!parser.parse(builder)) {
-                        PsiBuilderUtilEx.unexpected(builder);
+            public boolean parse(@NotNull ParserContext ctx) {
+                while (!ctx.eof()) {
+                    if (!parser.parse(ctx)) {
+                        PsiBuilderUtilEx.unexpected(ctx.getBuilder());
                     }
                 }
                 return true;
@@ -128,8 +127,8 @@ public final class Combinators {
         }
 
         @Override
-        public boolean parse(@NotNull PsiBuilder builder) {
-            Section section = Section.begin(builder);
+        public boolean parse(@NotNull ParserContext ctx) {
+            Section section = Section.begin(ctx);
             for (Parser parser : parsers) {
                 if (!section.call(parser)) break;
             }
@@ -143,9 +142,9 @@ public final class Combinators {
         }
 
         @Override
-        public boolean parse(@NotNull PsiBuilder builder) {
+        public boolean parse(@NotNull ParserContext ctx) {
             for (Parser parser : parsers) {
-                if (Section.wrap(builder, parser)) return true;
+                if (Section.wrap(ctx, parser)) return true;
             }
             return false;
         }

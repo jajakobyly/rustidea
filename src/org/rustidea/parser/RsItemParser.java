@@ -16,12 +16,12 @@
 
 package org.rustidea.parser;
 
-import com.intellij.lang.PsiBuilder;
 import com.intellij.openapi.util.Pair;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.util.containers.ContainerUtil;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.parser.framework.Parser;
+import org.rustidea.parser.framework.ParserContext;
 import org.rustidea.parser.framework.Section;
 
 import java.util.List;
@@ -109,8 +109,8 @@ public final class RsItemParser extends Parser {
     }
 
     @Override
-    public boolean parse(@NotNull PsiBuilder builder) {
-        Section section = Section.begin(builder);
+    public boolean parse(@NotNull ParserContext ctx) {
+        Section section = Section.begin(ctx);
 
         boolean hasModifierList = section.callWrapped(modifierList);
         section.setState(true); // ignore result of parsing modifierList
@@ -122,7 +122,7 @@ public final class RsItemParser extends Parser {
         }
 
         if (greedy && hasModifierList) {
-            builder.mark().error("expected item");
+            ctx.error("expected item");
             section.endGreedy();
             return true; // prevent rolling back
         }
