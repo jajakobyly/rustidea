@@ -95,6 +95,30 @@ public class RsLexerTest extends IRsLexerTestCase {
         doTest(test);
     }
 
+    // https://github.com/rust-lang/rust/issues/7048
+    public void testFlipTable() {
+        CompositeTest test = new CompositeTest(
+            "fn _╯°□°╯︵┻━┻() {}")
+            .test("fn", KW_FN)
+            .test(" ", WHITE_SPACE)
+            .test("_", OP_UNDERSCORE)
+            .test("╯", BAD_CHARACTER)
+            .test("°", BAD_CHARACTER)
+            .test("□", BAD_CHARACTER)
+            .test("°", BAD_CHARACTER)
+            .test("╯", BAD_CHARACTER)
+            .test("︵", BAD_CHARACTER)
+            .test("┻", BAD_CHARACTER)
+            .test("━", BAD_CHARACTER)
+            .test("┻", BAD_CHARACTER)
+            .test("(", OP_LPAREN)
+            .test(")", OP_RPAREN)
+            .test(" ", WHITE_SPACE)
+            .test("{", OP_LBRACE)
+            .test("}", OP_RBRACE);
+        doTest(test);
+    }
+
     // Following tests are based on Rust's test suite
     // https://github.com/rust-lang/rust/blob/405c616eaf4e58a8bed67924c364c8e9c83b2581/src/libsyntax/parse/lexer/mod.rs
 
