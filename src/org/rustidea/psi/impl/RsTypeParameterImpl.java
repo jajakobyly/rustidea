@@ -24,6 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.*;
 import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.util.PsiImplUtil;
 import org.rustidea.stubs.RsTypeParameterStub;
 
 public class RsTypeParameterImpl extends IRsStubPsiElement<RsTypeParameterStub> implements RsTypeParameter {

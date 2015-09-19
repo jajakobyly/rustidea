@@ -28,6 +28,7 @@ import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsLifetime;
 import org.rustidea.psi.RsLifetimeTypeParameter;
 import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.util.PsiImplUtil;
 
 public class RsLifetimeTypeParameterImpl extends IRsStubPsiElement<EmptyStub> implements RsLifetimeTypeParameter {
     public RsLifetimeTypeParameterImpl(@NotNull EmptyStub stub) {

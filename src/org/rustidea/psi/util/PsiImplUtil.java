@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi.impl;
+package org.rustidea.psi.util;
 
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;

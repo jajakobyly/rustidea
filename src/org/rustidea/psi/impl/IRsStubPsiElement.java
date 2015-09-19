@@ -26,6 +26,7 @@ import com.intellij.psi.stubs.StubElement;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.IRsPsiElement;
 import org.rustidea.psi.RsElementVisitor;
+import org.rustidea.psi.util.PsiImplUtil;
 
 public abstract class IRsStubPsiElement<StubT extends StubElement>
     extends StubBasedPsiElementBase<StubT> implements StubBasedPsiElement<StubT>, IRsPsiElement {
