@@ -22,6 +22,7 @@ import com.intellij.psi.tree.IElementType;
 import com.intellij.util.containers.ContainerUtil;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsLiteral;
 import org.rustidea.psi.types.RsTypes;
 
@@ -215,11 +216,51 @@ public final class RsLiteralUtil {
     }
 
     @NotNull
+    public static String removeStrLitPrefix(@NotNull final String str) {
+        if (str.startsWith("br")) return str.substring(2);
+        if (str.startsWith("b") || str.startsWith("r")) return str.substring(1);
+        return str;
+    }
+
+    @Contract("null -> null")
+    public static String removeDecoration(@Nullable final RsLiteral literal) {
+        if (literal == null) return null;
+        final String text = literal.getText();
+        final String suffix = literal.getSuffix();
+        final String noSuffix = StringUtil.trimEnd(text, suffix);
+        if (RsTypes.STRING_LITERAL_TOKEN_SET.contains(literal.getTokenType())) {
+            return removeStrLitPrefix(noSuffix);
+        }
+        return noSuffix;
+    }
+
+    @Contract(pure = true)
+    public static int countRawStrHashes(@NotNull final String str) {
+        return StringUtil.countChars(removeStrLitPrefix(str), '#', 0, true);
+    }
+
+    @NotNull
     @Contract(pure = true)
     public static String removeRawStringHashes(@NotNull final String str) {
-        final String noR = StringUtil.trimStart(str, "r");
-        final int count = StringUtil.countChars(noR, '#', 0, true);
-        final String hashes = StringUtil.repeatSymbol('#', count);
-        return StringUtil.trimEnd(StringUtil.trimStart(noR, hashes + '"'), '"' + hashes);
+        final String strNoPrefix = removeStrLitPrefix(str);
+        final String hashes = StringUtil.repeatSymbol('#', countRawStrHashes(strNoPrefix));
+        return StringUtil.trimEnd(StringUtil.trimStart(strNoPrefix, hashes + '"'), '"' + hashes);
+    }
+
+    @Contract("null -> false")
+    public static boolean hasClosedQuotes(@Nullable final RsLiteral literal) {
+        if (literal == null) return false;
+        final IElementType tokenType = literal.getTokenType();
+
+        if (RsTypes.CHAR_TOKEN_SET.contains(tokenType) ||
+            RsTypes.STRING_TOKEN_SET.contains(tokenType)) {
+            return StringUtil.isQuotedString(removeDecoration(literal));
+        } else if (RsTypes.RAW_STRING_TOKEN_SET.contains(tokenType)) {
+            final String text = literal.getText();
+            final int hashes = countRawStrHashes(text);
+            return text.endsWith('"' + StringUtil.repeatSymbol('#', hashes));
+        }
+
+        return true;
     }
 }

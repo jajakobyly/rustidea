@@ -16,7 +16,6 @@
 
 package org.rustidea.psi.impl;
 
-import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
@@ -29,7 +28,8 @@ import org.rustidea.psi.util.PsiImplUtil;
 import org.rustidea.psi.util.RsLiteralUtil;
 import org.rustidea.psi.util.RsStringUtil;
 
-import static org.rustidea.psi.types.RsTokenTypes.*;
+import static org.rustidea.psi.types.RsTokenTypes.KW_FALSE;
+import static org.rustidea.psi.types.RsTokenTypes.KW_TRUE;
 
 public class RsLiteralImpl extends IRsCompositePsiElement implements RsLiteral {
     private static final String TRUE = "true";
@@ -56,31 +56,29 @@ public class RsLiteralImpl extends IRsCompositePsiElement implements RsLiteral {
     @Nullable
     @Override
     public String getValueString() {
-        IElementType tokenType = getTokenType();
+        final IElementType tokenType = getTokenType();
 
         if (tokenType == KW_TRUE) return TRUE;
         if (tokenType == KW_FALSE) return FALSE;
 
         String text = getText();
-        String noSuffix = StringUtil.trimEnd(text, getSuffix());
+        boolean isByte = text.startsWith("b");
+        String raw = RsLiteralUtil.removeDecoration(this);
 
-        if (tokenType == INT_LIT || tokenType == FLOAT_LIT) {
-            return noSuffix;
+        if (RsTypes.NUMBER_TOKEN_SET.contains(tokenType)) {
+            return raw;
         }
 
-        boolean isByte = noSuffix.startsWith("b");
-        String noB = StringUtil.trimStart(noSuffix, "b");
-
-        if (tokenType == CHAR_LIT || tokenType == BYTE_LIT) {
-            return RsStringUtil.unescapeRust(RsStringUtil.unquote(noB, '\''), !isByte, false);
+        if (RsTypes.CHAR_TOKEN_SET.contains(tokenType)) {
+            return RsStringUtil.unescapeRust(RsStringUtil.unquote(raw, '\''), !isByte, false);
         }
 
-        if (tokenType == STRING_LIT || tokenType == BYTE_STRING_LIT) {
-            return RsStringUtil.unescapeRust(RsStringUtil.unquote(noB, '"'), !isByte, true);
+        if (RsTypes.STRING_TOKEN_SET.contains(tokenType)) {
+            return RsStringUtil.unescapeRust(RsStringUtil.unquote(raw, '"'), !isByte, true);
         }
 
-        if (tokenType == RAW_STRING_LIT || tokenType == RAW_BYTE_STRING_LIT) {
-            return RsLiteralUtil.removeRawStringHashes(noB);
+        if (RsTypes.RAW_STRING_TOKEN_SET.contains(tokenType)) {
+            return RsLiteralUtil.removeRawStringHashes(raw);
         }
 
         return null;
@@ -89,25 +87,25 @@ public class RsLiteralImpl extends IRsCompositePsiElement implements RsLiteral {
     @NotNull
     @Override
     public String getSuffix() {
-        IElementType tokenType = getTokenType();
+        final IElementType tokenType = getTokenType();
 
         if (tokenType == KW_TRUE || tokenType == KW_FALSE) return "";
 
         String text = getText();
 
-        if (tokenType == INT_LIT || tokenType == FLOAT_LIT) {
+        if (RsTypes.NUMBER_TOKEN_SET.contains(tokenType)) {
             return RsLiteralUtil.extractSuffixFromNumLit(text);
         }
 
-        if (tokenType == CHAR_LIT || tokenType == BYTE_LIT) {
+        if (RsTypes.CHAR_TOKEN_SET.contains(tokenType)) {
             return RsLiteralUtil.extractSuffixFromQuotedLit(text, '\'');
         }
 
-        if (tokenType == STRING_LIT || tokenType == BYTE_STRING_LIT) {
+        if (RsTypes.STRING_TOKEN_SET.contains(tokenType)) {
             return RsLiteralUtil.extractSuffixFromQuotedLit(text, '"');
         }
 
-        if (tokenType == RAW_STRING_LIT || tokenType == RAW_BYTE_STRING_LIT) {
+        if (RsTypes.RAW_STRING_TOKEN_SET.contains(tokenType)) {
             return RsLiteralUtil.extractSuffixFromRawStr(text);
         }
 

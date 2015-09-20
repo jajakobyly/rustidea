@@ -16,13 +16,16 @@
 
 package org.rustidea.editor;
 
+import com.google.common.base.Strings;
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
 import com.intellij.openapi.project.DumbAware;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsLiteral;
+import org.rustidea.psi.types.RsTypes;
 import org.rustidea.psi.util.RsLiteralUtil;
 import org.rustidea.psi.util.RsTokenUtil;
 
@@ -44,14 +47,28 @@ public class RsDumbAwareAnnotator implements Annotator, DumbAware {
 
         @Override
         public void visitLiteral(RsLiteral literal) {
-            validateSuffix(literal);
-        }
+            final IElementType tokenType = literal.getTokenType();
+            final String humanReadableName = RsTokenUtil.getHumanReadableName(tokenType);
 
-        private void validateSuffix(RsLiteral literal) {
+            // Check character literal length
+            if (RsTypes.CHAR_TOKEN_SET.contains(tokenType)) {
+                final String value = literal.getValueString();
+                if (Strings.isNullOrEmpty(value)) {
+                    holder.createErrorAnnotation(literal, "empty " + humanReadableName);
+                } else if (value.length() > 1) {
+                    holder.createErrorAnnotation(literal, "too many characters in " + humanReadableName);
+                }
+            }
+
+            // check quotes
+            if (!RsLiteralUtil.hasClosedQuotes(literal)) {
+                holder.createErrorAnnotation(literal, "unclosed " + humanReadableName);
+            }
+
+            // check suffix
             if (!RsLiteralUtil.hasValidSuffix(literal)) {
                 final String suffix = literal.getSuffix();
                 final List<String> possibleSuffixes = RsLiteralUtil.getValidSuffixesFor(literal);
-                final String humanReadableName = RsTokenUtil.getHumanReadableName(literal.getTokenType());
                 final StringBuilder sb = new StringBuilder();
 
                 if (!possibleSuffixes.isEmpty()) {
