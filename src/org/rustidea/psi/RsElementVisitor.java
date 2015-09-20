@@ -17,6 +17,7 @@
 package org.rustidea.psi;
 
 import com.intellij.psi.PsiElementVisitor;
+import com.intellij.psi.PsiFile;
 
 public abstract class RsElementVisitor extends PsiElementVisitor {
     public void visitAttribute(RsAttribute attribute) {
@@ -43,11 +44,15 @@ public abstract class RsElementVisitor extends PsiElementVisitor {
         visitItem(externCrateDecl);
     }
 
+    public void visitFile(RsFile file) {
+        visitModuleOrFile(file);
+    }
+
     public void visitIdentifier(RsIdentifier identifier) {
         visitRustToken(identifier);
     }
 
-    private void visitItem(IRsItem item) {
+    public void visitItem(IRsItem item) {
         visitElement(item);
     }
 
@@ -69,6 +74,15 @@ public abstract class RsElementVisitor extends PsiElementVisitor {
 
     public void visitModifierList(RsModifierList modifierList) {
         visitElement(modifierList);
+    }
+
+    public void visitModule(RsModule module) {
+        visitModuleOrFile(module);
+    }
+
+    public void visitModuleOrFile(IRsModule module) {
+        if (module instanceof PsiFile) super.visitFile((PsiFile) module);
+        visitElement(module);
     }
 
     public void visitPath(RsPath path) {

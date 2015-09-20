@@ -46,7 +46,7 @@ public class RsDumbAwareAnnotator implements Annotator, DumbAware {
         }
 
         @Override
-        public void visitLiteral(RsLiteral literal) {
+        public void visitLiteral(@NotNull RsLiteral literal) {
             final IElementType tokenType = literal.getTokenType();
             final String humanReadableName = RsTokenUtil.getHumanReadableName(tokenType);
 

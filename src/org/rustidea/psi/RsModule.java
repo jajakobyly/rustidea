@@ -16,9 +16,9 @@
 
 package org.rustidea.psi;
 
-import org.jetbrains.annotations.NotNull;
+import com.intellij.psi.PsiNameIdentifierOwner;
+import com.intellij.psi.StubBasedPsiElement;
+import org.rustidea.stubs.RsModuleStub;
 
-public interface IRsAttributeOwner extends IRsPsiElement {
-    @NotNull
-    IRsAttribute[] getAttributes();
+public interface RsModule extends StubBasedPsiElement<RsModuleStub>, IRsModule, PsiNameIdentifierOwner, IRsModifierListOwner {
 }

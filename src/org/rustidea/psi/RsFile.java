@@ -18,5 +18,5 @@ package org.rustidea.psi;
 
 import com.intellij.psi.PsiFile;
 
-public interface RsFile extends PsiFile, IRsAttributeOwner, IRsItemOwner {
+public interface RsFile extends PsiFile, IRsModule {
 }

@@ -14,11 +14,17 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi;
+package org.rustidea.stubs.impl;
 
-import org.jetbrains.annotations.NotNull;
+import com.intellij.psi.stubs.NamedStubBase;
+import com.intellij.psi.stubs.StubElement;
+import com.intellij.util.io.StringRef;
+import org.rustidea.psi.RsModule;
+import org.rustidea.psi.types.RsTypes;
+import org.rustidea.stubs.RsModuleStub;
 
-public interface IRsAttributeOwner extends IRsPsiElement {
-    @NotNull
-    IRsAttribute[] getAttributes();
+public class RsModuleStubImpl extends NamedStubBase<RsModule> implements RsModuleStub {
+    public RsModuleStubImpl(StubElement parent, StringRef name) {
+        super(parent, RsTypes.MODULE, name);
+    }
 }

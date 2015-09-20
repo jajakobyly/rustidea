@@ -24,6 +24,7 @@ import org.rustidea.RustFileType;
 import org.rustidea.RustLanguage;
 import org.rustidea.psi.IRsAttribute;
 import org.rustidea.psi.IRsItem;
+import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsFile;
 
 public class RsFileImpl extends PsiFileBase implements RsFile {
@@ -48,6 +49,11 @@ public class RsFileImpl extends PsiFileBase implements RsFile {
     public IRsAttribute[] getAttributes() {
         // FIXME Does this method operate on stubs wherever possible?
         return findChildrenByClass(IRsAttribute.class);
+    }
+
+    @Override
+    public void accept(@NotNull RsElementVisitor visitor) {
+        visitor.visitFile(this);
     }
 
     @NotNull

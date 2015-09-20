@@ -17,6 +17,7 @@
 package org.rustidea.lexer;
 
 import com.intellij.lexer.Lexer;
+import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.types.RsTypes;
 
 import java.util.EnumSet;
@@ -113,6 +114,7 @@ public class RsStringLiteralLexerTest extends IRsLexerTestCase {
         doTest(data);
     }
 
+    @NotNull
     @Override
     protected Lexer createLexer() {
         return new RsStringLiteralLexer(RsTypes.STRING_LIT, EnumSet.of(BYTE_ESCAPE, UNICODE_ESCAPE, EOL_ESCAPE));

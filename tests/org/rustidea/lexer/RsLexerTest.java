@@ -17,6 +17,7 @@
 package org.rustidea.lexer;
 
 import com.intellij.lexer.Lexer;
+import org.jetbrains.annotations.NotNull;
 
 import static com.intellij.psi.TokenType.WHITE_SPACE;
 import static org.rustidea.psi.types.RsTokenTypes.*;
@@ -280,6 +281,7 @@ public class RsLexerTest extends IRsLexerTestCase {
         doTest(test);
     }
 
+    @NotNull
     @Override
     protected Lexer createLexer() {
         return new RsLexer();

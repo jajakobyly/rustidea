@@ -17,6 +17,7 @@
 package org.rustidea.parser;
 
 import com.intellij.testFramework.ParsingTestCase;
+import org.jetbrains.annotations.NotNull;
 import org.rustidea.RustParserDefinition;
 
 public class RsParserTest extends ParsingTestCase {
@@ -34,6 +35,7 @@ public class RsParserTest extends ParsingTestCase {
         doTest(true);
     }
 
+    @NotNull
     @Override
     protected String getTestDataPath() {
         return "testData";

@@ -222,9 +222,9 @@ public final class RsLiteralUtil {
         return str;
     }
 
-    @Contract("null -> null")
+    @NotNull
     public static String removeDecoration(@Nullable final RsLiteral literal) {
-        if (literal == null) return null;
+        if (literal == null) return "";
         final String text = literal.getText();
         final String suffix = literal.getSuffix();
         final String noSuffix = StringUtil.trimEnd(text, suffix);

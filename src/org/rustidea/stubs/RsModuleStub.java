@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi;
+package org.rustidea.stubs;
 
-import org.jetbrains.annotations.NotNull;
+import com.intellij.psi.stubs.NamedStub;
+import org.rustidea.psi.RsModule;
 
-public interface IRsAttributeOwner extends IRsPsiElement {
-    @NotNull
-    IRsAttribute[] getAttributes();
+public interface RsModuleStub extends NamedStub<RsModule> {
 }

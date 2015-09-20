@@ -97,9 +97,18 @@ public final class RsItemParser extends Parser {
             maybe(token(KW_AS).then(ident)),
             semicolon);
 
+    /** <pre>module ::= "mod" {@link RsParserUtil#identRequired} ( "{" {@link #itemGreedy}* "}" | ";" )</pre> */
+    private static final Parser module =
+        seq(token(KW_MOD),
+            identRequired,
+            wrap(OP_LBRACE, OP_RBRACE, many(itemGreedy))
+                .or(token(OP_SEMICOLON))
+                .warn("missing '{' or ';'"));
+
     @SuppressWarnings("unchecked") // don't care about array type
     private static final List<Pair<Parser, IElementType>> itemParsers = ContainerUtil.immutableList(
-        Pair.create(externCrateDecl, (IElementType) EXTERN_CRATE_DECL)
+        Pair.create(externCrateDecl, (IElementType) EXTERN_CRATE_DECL),
+        Pair.create(module, (IElementType) MODULE)
     );
 
     private final boolean greedy;
@@ -119,7 +128,9 @@ public final class RsItemParser extends Parser {
             if (section.callWrapped(p.getFirst())) {
                 return section.end(p.getSecond(), null);
             }
+            section.setState(true); // ignore result of parsing item
         }
+        section.setState(false);
 
         if (greedy && hasModifierList) {
             ctx.error("expected item");
