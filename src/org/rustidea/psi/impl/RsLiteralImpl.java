@@ -80,8 +80,7 @@ public class RsLiteralImpl extends IRsCompositePsiElement implements RsLiteral {
         }
 
         if (tokenType == RAW_STRING_LIT || tokenType == RAW_BYTE_STRING_LIT) {
-            // TODO Implement this.
-            throw new UnsupportedOperationException("not implemented yet");
+            return RsLiteralUtil.removeRawStringHashes(noB);
         }
 
         return null;

@@ -195,4 +195,13 @@ public final class RsLiteralUtil {
 
         return "";
     }
+
+    @NotNull
+    @Contract(pure = true)
+    public static String removeRawStringHashes(@NotNull final String str) {
+        final String noR = StringUtil.trimStart(str, "r");
+        final int count = StringUtil.countChars(noR, '#', 0, true);
+        final String hashes = StringUtil.repeatSymbol('#', count);
+        return StringUtil.trimEnd(StringUtil.trimStart(noR, hashes + '"'), '"' + hashes);
+    }
 }

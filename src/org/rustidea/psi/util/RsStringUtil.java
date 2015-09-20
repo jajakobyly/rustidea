@@ -78,6 +78,8 @@ public final class RsStringUtil {
         return str.substring(begin, end + 1);
     }
 
+    // TODO write #escapeRust method which escapes strings using Rust's escaping rules
+
     @NotNull
     @Contract(pure = true)
     public static String unescapeRust(@NotNull final String str,
