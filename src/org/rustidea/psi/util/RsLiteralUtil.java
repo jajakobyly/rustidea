@@ -16,6 +16,7 @@
 
 package org.rustidea.psi.util;
 
+import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.util.containers.ContainerUtil;
 import org.jetbrains.annotations.Contract;
@@ -30,6 +31,11 @@ public final class RsLiteralUtil {
         "u8", "i8", "u16", "i16", "u32", "i32", "u64", "i64", "isize", "usize");
     public static final Set<String> VALID_FLOAT_SUFFIXES = ContainerUtil.immutableSet(
         "f32", "f64");
+    private static final String DEC_DIGIT = "0123456789";
+    private static final String BIN_DIGIT = "01";
+    private static final String OCT_DIGIT = "01234567";
+    private static final String HEX_DIGIT = "0123456789abcdefABCDEF";
+    private static final String NUM_OTHER_CHARS = "+-_.";
 
     private RsLiteralUtil() {
     }
@@ -64,15 +70,47 @@ public final class RsLiteralUtil {
 
     @NotNull
     @Contract(pure = true)
+    // TODO This code is a very basic pseudo-lexer so it can be enhanced and extracted as a new literal lexer
     public static String extractSuffixFromNumLit(@NotNull final String text) {
-        int idx = text.length() - 1;
-        while (idx >= 0 && RsIdentifierUtil.isRustIdentifierPart(text.charAt(idx))) idx--;
-        return text.substring(idx + 1);
+        final int len = text.length();
+
+        String digits = DEC_DIGIT;
+        boolean hasExponent = false;
+
+        int idx = 0;
+        if (len >= 2 && text.charAt(0) == '0') {
+            final char ch1 = text.charAt(1);
+            if (ch1 == 'b') {
+                digits = BIN_DIGIT;
+                idx = 2;
+            } else if (ch1 == 'o') {
+                digits = OCT_DIGIT;
+                idx = 2;
+            } else if (ch1 == 'x') {
+                digits = HEX_DIGIT;
+                idx = 2;
+            }
+        }
+
+        for (; idx < len; idx++) {
+            final char ch = text.charAt(idx);
+
+            if (!hasExponent && ch == 'e' || ch == 'E') {
+                hasExponent = true;
+                continue;
+            }
+
+            if (!StringUtil.containsChar(digits, ch) && !StringUtil.containsChar(NUM_OTHER_CHARS, ch)) {
+                return text.substring(idx);
+            }
+        }
+
+        return "";
     }
 
     @NotNull
     @Contract(pure = true)
-    // TODO This code is a very basic lexer so it can be enhanced and extracted as a new RsStringLiteralLexer
+    // TODO This code is a very basic pseudo-lexer so it can be enhanced and extracted as a new literal lexer
     public static String extractSuffixFromQuotedLit(@NotNull final String text, final char quote) {
         final int len = text.length();
 
@@ -94,7 +132,7 @@ public final class RsLiteralUtil {
             }
 
             // we have closing quote so the rest must be the suffix
-            if (idx < len && ch == quote) {
+            if (ch == quote) {
                 return text.substring(idx + 1);
             }
         }
@@ -104,7 +142,7 @@ public final class RsLiteralUtil {
 
     @NotNull
     @Contract(pure = true)
-    // TODO This code is a very basic lexer so it can be enhanced and extracted as a new RsStringLiteralLexer
+    // TODO This code is a very basic pseudo-lexer so it can be enhanced and extracted as a new literal lexer
     public static String extractSuffixFromRawStr(@NotNull final String text) {
         final int NORMAL = 0;
         final int COUNTING_START_HASHES = 1;
