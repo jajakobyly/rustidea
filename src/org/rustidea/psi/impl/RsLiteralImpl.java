@@ -16,6 +16,7 @@
 
 package org.rustidea.psi.impl;
 
+import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
@@ -26,10 +27,14 @@ import org.rustidea.psi.RsToken;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.psi.util.PsiImplUtil;
 import org.rustidea.psi.util.RsLiteralUtil;
+import org.rustidea.psi.util.RsStringUtil;
 
 import static org.rustidea.psi.types.RsTokenTypes.*;
 
 public class RsLiteralImpl extends IRsCompositePsiElement implements RsLiteral {
+    private static final String TRUE = "true";
+    private static final String FALSE = "false";
+
     public RsLiteralImpl() {
         super(RsTypes.LITERAL);
     }
@@ -51,8 +56,35 @@ public class RsLiteralImpl extends IRsCompositePsiElement implements RsLiteral {
     @Nullable
     @Override
     public String getValueString() {
-        // TODO Implement this.
-        throw new UnsupportedOperationException("not implemented yet");
+        IElementType tokenType = getTokenType();
+
+        if (tokenType == KW_TRUE) return TRUE;
+        if (tokenType == KW_FALSE) return FALSE;
+
+        String text = getText();
+        String noSuffix = StringUtil.trimEnd(text, getSuffix());
+
+        if (tokenType == INT_LIT || tokenType == FLOAT_LIT) {
+            return noSuffix;
+        }
+
+        boolean isByte = noSuffix.startsWith("b");
+        String noB = StringUtil.trimStart(noSuffix, "b");
+
+        if (tokenType == CHAR_LIT || tokenType == BYTE_LIT) {
+            return RsStringUtil.unescapeRust(RsStringUtil.unquote(noB, '\''), !isByte, false);
+        }
+
+        if (tokenType == STRING_LIT || tokenType == BYTE_STRING_LIT) {
+            return RsStringUtil.unescapeRust(RsStringUtil.unquote(noB, '"'), !isByte, true);
+        }
+
+        if (tokenType == RAW_STRING_LIT || tokenType == RAW_BYTE_STRING_LIT) {
+            // TODO Implement this.
+            throw new UnsupportedOperationException("not implemented yet");
+        }
+
+        return null;
     }
 
     @NotNull

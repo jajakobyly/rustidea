@@ -31,11 +31,6 @@ public final class RsLiteralUtil {
         "u8", "i8", "u16", "i16", "u32", "i32", "u64", "i64", "isize", "usize");
     public static final Set<String> VALID_FLOAT_SUFFIXES = ContainerUtil.immutableSet(
         "f32", "f64");
-    private static final String DEC_DIGIT = "0123456789";
-    private static final String BIN_DIGIT = "01";
-    private static final String OCT_DIGIT = "01234567";
-    private static final String HEX_DIGIT = "0123456789abcdefABCDEF";
-    private static final String NUM_OTHER_CHARS = "+-_.";
 
     private RsLiteralUtil() {
     }
@@ -74,20 +69,20 @@ public final class RsLiteralUtil {
     public static String extractSuffixFromNumLit(@NotNull final String text) {
         final int len = text.length();
 
-        String digits = DEC_DIGIT;
+        String digits = RsStringUtil.DEC_DIGIT;
         boolean hasExponent = false;
 
         int idx = 0;
         if (len >= 2 && text.charAt(0) == '0') {
             final char ch1 = text.charAt(1);
             if (ch1 == 'b') {
-                digits = BIN_DIGIT;
+                digits = RsStringUtil.BIN_DIGIT;
                 idx = 2;
             } else if (ch1 == 'o') {
-                digits = OCT_DIGIT;
+                digits = RsStringUtil.OCT_DIGIT;
                 idx = 2;
             } else if (ch1 == 'x') {
-                digits = HEX_DIGIT;
+                digits = RsStringUtil.HEX_DIGIT;
                 idx = 2;
             }
         }
@@ -100,7 +95,7 @@ public final class RsLiteralUtil {
                 continue;
             }
 
-            if (!StringUtil.containsChar(digits, ch) && !StringUtil.containsChar(NUM_OTHER_CHARS, ch)) {
+            if (!StringUtil.containsChar(digits, ch) && !StringUtil.containsChar(RsStringUtil.NUM_OTHER_CHARS, ch)) {
                 return text.substring(idx);
             }
         }
