@@ -16,15 +16,11 @@
 
 package org.rustidea.parser;
 
-import com.intellij.openapi.util.Pair;
 import com.intellij.psi.tree.IElementType;
-import com.intellij.util.containers.ContainerUtil;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.parser.framework.Parser;
 import org.rustidea.parser.framework.ParserContext;
 import org.rustidea.parser.framework.Section;
-
-import java.util.List;
 
 import static org.rustidea.parser.RsExprParser.literal;
 import static org.rustidea.parser.RsParserUtil.*;
@@ -105,11 +101,10 @@ public final class RsItemParser extends Parser {
                 .or(token(OP_SEMICOLON))
                 .warn("missing '{' or ';'"));
 
-    @SuppressWarnings("unchecked") // don't care about array type
-    private static final List<Pair<Parser, IElementType>> itemParsers = ContainerUtil.immutableList(
-        Pair.create(externCrateDecl, (IElementType) EXTERN_CRATE_DECL),
-        Pair.create(module, (IElementType) MODULE)
-    );
+    private static final Object[][] itemParsers = new Object[][]{
+        {externCrateDecl, EXTERN_CRATE_DECL},
+        {module, MODULE},
+    };
 
     private final boolean greedy;
 
@@ -124,9 +119,16 @@ public final class RsItemParser extends Parser {
         boolean hasModifierList = section.callWrapped(modifierList);
         section.setState(true); // ignore result of parsing modifierList
 
-        for (Pair<Parser, IElementType> p : itemParsers) {
-            if (section.callWrapped(p.getFirst())) {
-                return section.end(p.getSecond(), null);
+        for (Object[] p : itemParsers) {
+            assert p.length == 2;
+            assert p[0] instanceof Parser;
+            assert p[1] instanceof IElementType;
+
+            Parser parser = (Parser) p[0];
+            IElementType type = (IElementType) p[1];
+
+            if (section.callWrapped(parser)) {
+                return section.end(type, null);
             }
             section.setState(true); // ignore result of parsing item
         }
