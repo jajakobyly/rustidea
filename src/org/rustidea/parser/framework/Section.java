@@ -26,11 +26,12 @@ import org.jetbrains.annotations.Nullable;
 public class Section {
     @NotNull
     private final ParserContext ctx;
+    @Nullable
     private Marker marker;
     private boolean state;
 
     private Section(@NotNull final ParserContext ctx,
-                    @NotNull final Marker marker,
+                    @SuppressWarnings("NullableProblems") @NotNull final Marker marker,
                     final boolean initialState) {
         this.ctx = ctx;
         this.marker = marker;
