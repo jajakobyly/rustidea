@@ -42,6 +42,7 @@
         <lang.parserDefinition language="Rust" implementationClass="org.rustidea.RustParserDefinition"/>
         <stubElementTypeHolder class="org.rustidea.psi.types.RsStubElementTypes"/>
         <lang.syntaxHighlighterFactory key="Rust" implementationClass="org.rustidea.editor.RsSyntaxHighlighterFactory"/>
+        <annotator language="Rust" implementationClass="org.rustidea.editor.RsDumbAwareAnnotator"/>
     </extensions>
 
     <application-components>

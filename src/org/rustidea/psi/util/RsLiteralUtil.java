@@ -16,6 +16,7 @@
 
 package org.rustidea.psi.util;
 
+import com.google.common.base.Strings;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.util.containers.ContainerUtil;
@@ -24,12 +25,12 @@ import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.RsLiteral;
 import org.rustidea.psi.types.RsTypes;
 
-import java.util.Set;
+import java.util.List;
 
 public final class RsLiteralUtil {
-    public static final Set<String> VALID_INT_SUFFIXES = ContainerUtil.immutableSet(
+    public static final List<String> VALID_INT_SUFFIXES = ContainerUtil.immutableList(
         "u8", "i8", "u16", "i16", "u32", "i32", "u64", "i64", "isize", "usize");
-    public static final Set<String> VALID_FLOAT_SUFFIXES = ContainerUtil.immutableSet(
+    public static final List<String> VALID_FLOAT_SUFFIXES = ContainerUtil.immutableList(
         "f32", "f64");
 
     private RsLiteralUtil() {
@@ -39,15 +40,16 @@ public final class RsLiteralUtil {
     @SuppressWarnings("SimplifiableIfStatement")
     public static boolean hasValidSuffix(@NotNull final RsLiteral literal) {
         IElementType tokenType = literal.getTokenType();
-
         assert RsTypes.LITERAL_TOKEN_SET.contains(tokenType);
+        final String suffix = literal.getSuffix();
+        if (Strings.isNullOrEmpty(suffix)) return true;
 
         if (tokenType == RsTypes.INT_LIT) {
-            return isValidIntegerSuffix(literal.getSuffix());
+            return isValidIntegerSuffix(suffix);
         }
 
         if (tokenType == RsTypes.FLOAT_LIT) {
-            return isValidFloatSuffix(literal.getSuffix());
+            return isValidFloatSuffix(suffix);
         }
 
         return false;
@@ -61,6 +63,22 @@ public final class RsLiteralUtil {
     @Contract(pure = true)
     public static boolean isValidFloatSuffix(@NotNull final String suffix) {
         return VALID_FLOAT_SUFFIXES.contains(suffix);
+    }
+
+    @NotNull
+    @Contract(pure = true)
+    public static List<String> getValidSuffixesFor(@NotNull final RsLiteral literal) {
+        IElementType tokenType = literal.getTokenType();
+
+        if (tokenType == RsTypes.INT_LIT) {
+            return VALID_INT_SUFFIXES;
+        }
+
+        if (tokenType == RsTypes.FLOAT_LIT) {
+            return VALID_FLOAT_SUFFIXES;
+        }
+
+        return ContainerUtil.emptyList();
     }
 
     @NotNull
