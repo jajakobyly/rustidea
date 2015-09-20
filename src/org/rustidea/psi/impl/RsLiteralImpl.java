@@ -16,10 +16,18 @@
 
 package org.rustidea.psi.impl;
 
+import com.intellij.psi.tree.IElementType;
+import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsLiteral;
+import org.rustidea.psi.RsToken;
 import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.util.PsiImplUtil;
+import org.rustidea.psi.util.RsLiteralUtil;
+
+import static org.rustidea.psi.types.RsTokenTypes.*;
 
 public class RsLiteralImpl extends IRsCompositePsiElement implements RsLiteral {
     public RsLiteralImpl() {
@@ -28,14 +36,51 @@ public class RsLiteralImpl extends IRsCompositePsiElement implements RsLiteral {
 
     @NotNull
     @Override
+    public IElementType getTokenType() {
+        RsToken token = PsiTreeUtil.getRequiredChildOfType(this, RsToken.class);
+        return token.getTokenType();
+    }
+
+    @Nullable
+    @Override
+    public Object getValue() {
+        // TODO Implement this.
+        throw new UnsupportedOperationException("not implemented yet");
+    }
+
+    @Nullable
+    @Override
     public String getValueString() {
-        return ""; // TODO
+        // TODO Implement this.
+        throw new UnsupportedOperationException("not implemented yet");
     }
 
     @NotNull
     @Override
     public String getSuffix() {
-        return ""; // TODO
+        IElementType tokenType = getTokenType();
+
+        if (tokenType == KW_TRUE || tokenType == KW_FALSE) return "";
+
+        String text = getText();
+
+        if (tokenType == INT_LIT || tokenType == FLOAT_LIT) {
+            return RsLiteralUtil.extractSuffixFromNumLit(text);
+        }
+
+        if (tokenType == CHAR_LIT || tokenType == BYTE_LIT) {
+            return RsLiteralUtil.extractSuffixFromQuotedLit(text, '\'');
+        }
+
+        if (tokenType == STRING_LIT || tokenType == BYTE_STRING_LIT) {
+            return RsLiteralUtil.extractSuffixFromQuotedLit(text, '"');
+        }
+
+        if (tokenType == RAW_STRING_LIT || tokenType == RAW_BYTE_STRING_LIT) {
+            return RsLiteralUtil.extractSuffixFromRawStr(text);
+        }
+
+        throw new UnsupportedOperationException("unreachable");
     }
 
     @Override

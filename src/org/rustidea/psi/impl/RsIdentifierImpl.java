@@ -32,6 +32,12 @@ public class RsIdentifierImpl extends IRsLeafPsiElement implements RsIdentifier 
         return getText();
     }
 
+    @NotNull
+    @Override
+    public IElementType getTokenType() {
+        return getElementType();
+    }
+
     @Override
     public void accept(@NotNull RsElementVisitor visitor) {
         visitor.visitIdentifier(this);

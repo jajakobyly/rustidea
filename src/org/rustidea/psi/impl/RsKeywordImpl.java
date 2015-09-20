@@ -26,6 +26,12 @@ public class RsKeywordImpl extends IRsLeafPsiElement implements RsKeyword {
         super(type, text);
     }
 
+    @NotNull
+    @Override
+    public IElementType getTokenType() {
+        return getElementType();
+    }
+
     @Override
     public void accept(@NotNull RsElementVisitor visitor) {
         visitor.visitKeyword(this);

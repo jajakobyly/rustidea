@@ -16,5 +16,18 @@
 
 package org.rustidea.psi;
 
+import com.intellij.psi.tree.IElementType;
+import org.jetbrains.annotations.NotNull;
+
+/**
+ * Represents a single token in a Rust file (the lowest-level element in the Rust PSI tree).
+ */
 public interface RsToken extends IRsPsiElement {
+    /**
+     * Returns the type of the token.
+     *
+     * @return the token type.
+     */
+    @NotNull
+    IElementType getTokenType();
 }
