@@ -7,6 +7,7 @@ cache:
   directories:
     - $HOME/idea
     - $HOME/.ant
+    - $HOME/.ivy2
 env:
   - IDEA_VERSION=14.1.4
 install:
@@ -28,3 +29,5 @@ install:
         mv $IDEA_PARENT_DIR/idea-IC-* $IDEA_DIR
     fi
   - echo "idea.home=$IDEA_DIR" >> build.properties
+  - ant resolve
+script: ant

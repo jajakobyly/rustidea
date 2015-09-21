@@ -50,4 +50,5 @@ crashlytics-build.properties
 ### Custom
 .idea/misc.xml
 /gen/
+/lib/
 /build.properties

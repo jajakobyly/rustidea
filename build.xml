@@ -16,8 +16,20 @@
   ~ limitations under the License.
   -->
 
-<project name="rustidea">
+<project xmlns:ivy="antlib:org.apache.ivy.ant"
+         xmlns:jacoco="antlib:org.jacoco.ant"
+         name="rustidea"
+         default="all">
     <property file="build.properties"/>
+
+    <property name="ivy.install.version" value="2.4.0"/>
+    <property name="ivy.jar.dir" value="${basedir}/lib"/>
+    <property name="ivy.jar.file" value="${ivy.jar.dir}/ivy.jar"/>
+    <property name="ivy.download.url"
+              value="https://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.install.version}/ivy-${ivy.install.version}.jar"/>
+    <condition property="ivy.isDownloaded">
+        <available file="${ivy.jar.file}"/>
+    </condition>
 
     <!--
       ~ Output dirs
@@ -27,6 +39,9 @@
     <property name="test.output.dir" value="${output.dir}/test/Rustidea"/>
     <property name="generate.dir" value="${basedir}/gen"/>
     <property name="jflex.output.dir" value="${generate.dir}/org/rustidea/lexer"/>
+    <property name="jacoco.destfile" value="${output.dir}/jacoco.exec"/>
+    <property name="coverage.output.dir" value="${output.dir}/coverage"/>
+    <property name="coverage.xml.output.file" value="${coverage.output.dir}/jacoco.xml"/>
 
     <!--
       ~ Compiler options
@@ -57,8 +72,8 @@
     <!--
       ~ Project Libraries
       -->
-    <property name="jflex.jar" value="${basedir}/lib/JFlex.jar"/>
-    <property name="jflex.skeleton" value="${basedir}/lib/idea-flex.skeleton"/>
+    <property name="jflex.jar" value="${basedir}/jflex/JFlex.jar"/>
+    <property name="jflex.skeleton" value="${basedir}/jflex/idea-flex.skeleton"/>
 
     <!--
       ~ Custom compilers
@@ -103,6 +118,7 @@
       ~ Classpaths
       -->
     <path id="production.classpath">
+        <path refid="ivy.lib.path"/>
         <path refid="jdk.classpath"/>
     </path>
     <path id="test.classpath">
@@ -116,6 +132,42 @@
     <target name="init" description="Initialize build">
         <echo message="Using IDEA home: ${idea.home}"/>
         <echo message="Using JDK home: ${jdk.home}"/>
+    </target>
+
+    <target name="ivy.acquire"
+            depends="init"
+            unless="ivy.isDownloaded"
+            description="Acquire Ivy">
+        <mkdir dir="${ivy.jar.dir}"/>
+        <echo message="Installing Ivy..."/>
+        <get src="${ivy.download.url}"
+             dest="${ivy.jar.file}"
+             usetimestamp="true"/>
+    </target>
+
+    <target name="ivy.install"
+            depends="init, ivy.acquire"
+            description="Setup Ivy tasks and paths">
+        <path id="ivy.lib.path">
+            <fileset dir="${ivy.jar.dir}" includes="*.jar"/>
+        </path>
+        <taskdef resource="org/apache/ivy/ant/antlib.xml"
+                 uri="antlib:org.apache.ivy.ant"
+                 classpathref="ivy.lib.path"/>
+    </target>
+
+    <target name="resolve"
+            depends="init, ivy.install"
+            description="Resolve dependencies">
+        <ivy:retrieve/>
+    </target>
+
+    <target name="coverage.install"
+            depends="init, resolve"
+            description="Setup coverage tasks">
+        <taskdef resource="org/jacoco/ant/antlib.xml"
+                 uri="antlib:org.jacoco.ant"
+                 classpathref="production.classpath"/>
     </target>
 
     <target name="generate.jflex.rsLexer"
@@ -149,7 +201,7 @@
             description="Generate lexers"/>
 
     <target name="build.production"
-            depends="init, generate.jflex"
+            depends="init, resolve, generate.jflex"
             description="Build plugin source">
         <mkdir dir="${production.output.dir}"/>
 
@@ -168,7 +220,7 @@
     </target>
 
     <target name="build.test"
-            depends="init, build.production"
+            depends="init, resolve, build.production"
             description="Build tests">
         <mkdir dir="${test.output.dir}"/>
 
@@ -190,46 +242,83 @@
             depends="init, build.production, build.test"
             description="Build all"/>
 
-    <target name="test.do"
-            depends="init, build.test"
+    <target name="test"
+            depends="init, coverage.install, build.test"
             description="Run tests">
-        <junit printsummary="yes"
-               haltonfailure="false"
-               failureproperty="failureFound"
-               showoutput="yes"
-               fork="yes"
-               forkmode="once">
-            <jvmarg value="-Didea.home.path=${idea.home}"/>
-            <jvmarg value="-Xbootclasspath/a:${idea.home}/lib/boot.jar"/>
-            <jvmarg value="-Dfile.encoding=UTF-8"/>
-            <jvmarg value="-ea"/>
-            <jvmarg value="-Didea.plugins.path=${idea.home}/plugins"/>
-            <jvmarg value="-Didea.launcher.bin.path=${idea.home}/bin"/>
-            <classpath>
-                <path refid="test.classpath"/>
-                <pathelement location="${test.output.dir}"/>
-            </classpath>
-            <formatter type="brief" usefile="false"/>
-            <batchtest>
-                <fileset dir="${basedir}/tests">
-                    <include name="**/*.java"/>
-                    <exclude name="**/I*TestCase.java"/>
-                </fileset>
-            </batchtest>
-        </junit>
+        <jacoco:coverage destfile="${jacoco.destfile}" includes="org.rustidea.*">
+            <junit printsummary="yes"
+                   haltonfailure="false"
+                   failureproperty="failureFound"
+                   showoutput="yes"
+                   fork="yes"
+                   forkmode="once">
+                <jvmarg value="-Didea.home.path=${idea.home}"/>
+                <jvmarg value="-Xbootclasspath/a:${idea.home}/lib/boot.jar"/>
+                <jvmarg value="-Dfile.encoding=UTF-8"/>
+                <jvmarg value="-ea"/>
+                <jvmarg value="-Didea.plugins.path=${idea.home}/plugins"/>
+                <jvmarg value="-Didea.launcher.bin.path=${idea.home}/bin"/>
+                <classpath>
+                    <path refid="test.classpath"/>
+                    <pathelement location="${test.output.dir}"/>
+                </classpath>
+                <formatter type="brief" usefile="false"/>
+                <batchtest>
+                    <fileset dir="${basedir}/tests">
+                        <include name="**/*.java"/>
+                        <exclude name="**/I*TestCase.java"/>
+                    </fileset>
+                </batchtest>
+            </junit>
+        </jacoco:coverage>
+
     </target>
 
-    <target name="test" if="failureFound" depends="init, test.do">
+    <target name="test.check" if="failureFound" depends="init, test">
         <fail message="Test failure."/>
+    </target>
+
+    <target name="coverage.report" depends="init, coverage.install, test">
+        <mkdir dir="${coverage.output.dir}"/>
+        <jacoco:report>
+            <executiondata>
+                <file file="${jacoco.destfile}"/>
+            </executiondata>
+            <structure name="Rustidea">
+                <classfiles>
+                    <fileset dir="${production.output.dir}"/>
+                </classfiles>
+                <sourcefiles encoding="UTF-8">
+                    <fileset>
+                        <include name="${basedir}/resources/**"/>
+                        <include name="${basedir}/src/**"/>
+                    </fileset>
+                </sourcefiles>
+            </structure>
+            <xml destfile="${coverage.xml.output.file}"/>
+        </jacoco:report>
     </target>
 
     <target name="generate.clean" depends="init" description="Delete generated files">
         <delete dir="${generate.dir}"/>
     </target>
 
-    <target name="clean"
-            depends="init, generate.clean"
-            description="Clean build output">
-        <delete dir="${output.dir}"/>
+    <target name="ivy.clean"
+            description="Clean Ivy installation">
+        <delete dir="${ivy.jar.dir}"/>
     </target>
+
+    <target name="ivy.cache.clean"
+            depends="ivy.install"
+            description="Clean Ivy cache">
+        <ivy:cleancache/>
+    </target>
+
+    <target name="clean"
+            depends="init, generate.clean, ivy.clean"
+            description="Clean build output">
+        <delete dir="${output.dir}" includeemptydirs="true"/>
+    </target>
+
+    <target name="all" depends="test.check, coverage.report"/>
 </project>
