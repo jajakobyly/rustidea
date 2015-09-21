@@ -7,7 +7,6 @@ cache:
   directories:
     - $HOME/idea
     - $HOME/.ant
-    - $HOME/.ivy2
 env:
   - IDEA_VERSION=14.1.4
 before_install:
@@ -33,7 +32,5 @@ install:
   - echo "idea.home=$IDEA_DIR" >> build.properties
   - ant resolve
 script: ant
-before_cache:
-  - find $HOME/.ivy2/cache/ -name "*.properties" | xargs sed -i 's/#.*$//g'
 after_success:
   - codecov
