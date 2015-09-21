@@ -16,19 +16,8 @@
   ~ limitations under the License.
   -->
 
-<project xmlns:ivy="antlib:org.apache.ivy.ant"
-         name="rustidea"
-         default="all">
+<project name="rustidea" default="all">
     <property file="build.properties"/>
-
-    <property name="ivy.install.version" value="2.4.0"/>
-    <property name="ivy.jar.dir" value="${basedir}/lib"/>
-    <property name="ivy.jar.file" value="${ivy.jar.dir}/ivy.jar"/>
-    <property name="ivy.download.url"
-              value="https://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.install.version}/ivy-${ivy.install.version}.jar"/>
-    <condition property="ivy.isDownloaded">
-        <available file="${ivy.jar.file}"/>
-    </condition>
 
     <!--
       ~ Output dirs
@@ -114,7 +103,6 @@
       ~ Classpaths
       -->
     <path id="production.classpath">
-        <path refid="ivy.lib.path"/>
         <path refid="jdk.classpath"/>
     </path>
     <path id="test.classpath">
@@ -128,34 +116,6 @@
     <target name="init" description="Initialize build">
         <echo message="Using IDEA home: ${idea.home}"/>
         <echo message="Using JDK home: ${jdk.home}"/>
-    </target>
-
-    <target name="ivy.acquire"
-            depends="init"
-            unless="ivy.isDownloaded"
-            description="Acquire Ivy">
-        <mkdir dir="${ivy.jar.dir}"/>
-        <echo message="Installing Ivy..."/>
-        <get src="${ivy.download.url}"
-             dest="${ivy.jar.file}"
-             usetimestamp="true"/>
-    </target>
-
-    <target name="ivy.install"
-            depends="init, ivy.acquire"
-            description="Setup Ivy tasks and paths">
-        <path id="ivy.lib.path">
-            <fileset dir="${ivy.jar.dir}" includes="*.jar"/>
-        </path>
-        <taskdef resource="org/apache/ivy/ant/antlib.xml"
-                 uri="antlib:org.apache.ivy.ant"
-                 classpathref="ivy.lib.path"/>
-    </target>
-
-    <target name="resolve"
-            depends="init, ivy.install"
-            description="Resolve dependencies">
-        <ivy:retrieve/>
     </target>
 
     <target name="generate.jflex.rsLexer"
@@ -189,7 +149,7 @@
             description="Generate lexers"/>
 
     <target name="build.production"
-            depends="init, resolve, generate.jflex"
+            depends="init, generate.jflex"
             description="Build plugin source">
         <mkdir dir="${production.output.dir}"/>
 
@@ -208,7 +168,7 @@
     </target>
 
     <target name="build.test"
-            depends="init, resolve, build.production"
+            depends="init, build.production"
             description="Build tests">
         <mkdir dir="${test.output.dir}"/>
 
@@ -267,19 +227,8 @@
         <delete dir="${generate.dir}"/>
     </target>
 
-    <target name="ivy.clean"
-            description="Clean Ivy installation">
-        <delete dir="${ivy.jar.dir}"/>
-    </target>
-
-    <target name="ivy.cache.clean"
-            depends="ivy.install"
-            description="Clean Ivy cache">
-        <ivy:cleancache/>
-    </target>
-
     <target name="clean"
-            depends="init, generate.clean, ivy.clean"
+            depends="init, generate.clean"
             description="Clean build output">
         <delete dir="${output.dir}" includeemptydirs="true"/>
     </target>
