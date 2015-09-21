@@ -29,5 +29,3 @@ install:
     fi
   - echo "idea.home=$IDEA_DIR" >> build.properties
 script: ant
-after_success:
-  - bash <(curl -s https://codecov.io/bash)

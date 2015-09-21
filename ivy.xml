@@ -19,6 +19,5 @@
     <dependencies>
         <dependency org="com.google.guava" name="guava" rev="18.0"/>
         <dependency org="junit" name="junit" rev="4.12"/>
-        <dependency org="org.jacoco" name="org.jacoco.ant" rev="0.7.5.201505241946"/>
     </dependencies>
 </ivy-module>

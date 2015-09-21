@@ -17,7 +17,6 @@
   -->
 
 <project xmlns:ivy="antlib:org.apache.ivy.ant"
-         xmlns:jacoco="antlib:org.jacoco.ant"
          name="rustidea"
          default="all">
     <property file="build.properties"/>
@@ -39,9 +38,6 @@
     <property name="test.output.dir" value="${output.dir}/test/Rustidea"/>
     <property name="generate.dir" value="${basedir}/gen"/>
     <property name="jflex.output.dir" value="${generate.dir}/org/rustidea/lexer"/>
-    <property name="coverage.output.dir" value="${output.dir}/coverage"/>
-    <property name="coverage.destfile" value="${coverage.output.dir}/jacoco.exec"/>
-    <property name="coverage.xml.output.file" value="${coverage.output.dir}/jacoco.xml"/>
 
     <!--
       ~ Compiler options
@@ -162,14 +158,6 @@
         <ivy:retrieve/>
     </target>
 
-    <target name="coverage.install"
-            depends="init, resolve"
-            description="Setup coverage tasks">
-        <taskdef resource="org/jacoco/ant/antlib.xml"
-                 uri="antlib:org.jacoco.ant"
-                 classpathref="production.classpath"/>
-    </target>
-
     <target name="generate.jflex.rsLexer"
             depends="init, generate.clean"
             description="Generate _RsLexer">
@@ -243,61 +231,36 @@
             description="Build all"/>
 
     <target name="test"
-            depends="init, coverage.install, build.test"
+            depends="init, build.test"
             description="Run tests">
-        <mkdir dir="${coverage.output.dir}"/>
-        <jacoco:coverage destfile="${coverage.destfile}">
-            <junit printsummary="yes"
-                   haltonfailure="false"
-                   failureproperty="failureFound"
-                   showoutput="yes"
-                   fork="yes"
-                   forkmode="once">
-                <jvmarg value="-Didea.home.path=${idea.home}"/>
-                <jvmarg value="-Xbootclasspath/a:${idea.home}/lib/boot.jar"/>
-                <jvmarg value="-Dfile.encoding=UTF-8"/>
-                <jvmarg value="-ea"/>
-                <jvmarg value="-Didea.plugins.path=${idea.home}/plugins"/>
-                <jvmarg value="-Didea.launcher.bin.path=${idea.home}/bin"/>
-                <classpath>
-                    <path refid="test.classpath"/>
-                    <pathelement location="${test.output.dir}"/>
-                </classpath>
-                <formatter type="brief" usefile="false"/>
-                <batchtest>
-                    <fileset dir="${basedir}/tests">
-                        <include name="**/*.java"/>
-                        <exclude name="**/I*TestCase.java"/>
-                    </fileset>
-                </batchtest>
-            </junit>
-        </jacoco:coverage>
-
+        <junit printsummary="yes"
+               haltonfailure="false"
+               failureproperty="failureFound"
+               showoutput="yes"
+               fork="yes"
+               forkmode="once">
+            <jvmarg value="-Didea.home.path=${idea.home}"/>
+            <jvmarg value="-Xbootclasspath/a:${idea.home}/lib/boot.jar"/>
+            <jvmarg value="-Dfile.encoding=UTF-8"/>
+            <jvmarg value="-ea"/>
+            <jvmarg value="-Didea.plugins.path=${idea.home}/plugins"/>
+            <jvmarg value="-Didea.launcher.bin.path=${idea.home}/bin"/>
+            <classpath>
+                <path refid="test.classpath"/>
+                <pathelement location="${test.output.dir}"/>
+            </classpath>
+            <formatter type="brief" usefile="false"/>
+            <batchtest>
+                <fileset dir="${basedir}/tests">
+                    <include name="**/*.java"/>
+                    <exclude name="**/I*TestCase.java"/>
+                </fileset>
+            </batchtest>
+        </junit>
     </target>
 
     <target name="test.check" if="failureFound" depends="init, test">
         <fail message="Test failure."/>
-    </target>
-
-    <target name="coverage.report" depends="init, coverage.install, test">
-        <mkdir dir="${coverage.output.dir}"/>
-        <jacoco:report>
-            <executiondata>
-                <file file="${coverage.destfile}"/>
-            </executiondata>
-            <structure name="Rustidea">
-                <classfiles>
-                    <fileset dir="${production.output.dir}"/>
-                </classfiles>
-                <sourcefiles encoding="UTF-8">
-                    <fileset dir="${basedir}">
-                        <include name="resources/**"/>
-                        <include name="src/**"/>
-                    </fileset>
-                </sourcefiles>
-            </structure>
-            <xml destfile="${coverage.xml.output.file}"/>
-        </jacoco:report>
     </target>
 
     <target name="generate.clean" depends="init" description="Delete generated files">
@@ -321,5 +284,5 @@
         <delete dir="${output.dir}" includeemptydirs="true"/>
     </target>
 
-    <target name="all" depends="test.check, coverage.report"/>
+    <target name="all" depends="test.check"/>
 </project>
