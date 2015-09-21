@@ -1,5 +1,11 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="All in Rustidea" type="JUnit" factoryName="JUnit" singleton="true" nameIsGenerated="true">
+    <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="jacoco">
+      <pattern>
+        <option name="PATTERN" value="org.rustidea.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
     <module name="Rustidea" />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
     <option name="ALTERNATIVE_JRE_PATH" value="" />
