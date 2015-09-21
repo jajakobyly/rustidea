@@ -1,7 +1,4 @@
 #![test]
-#![foo = ]
-#![test(]
-#![cfg(foo=)]
 #![foo = "bar"]
 #![cfg(foo="bar")]
 #![cfg(foo="bar", bar="baz", baz="foo")]
@@ -13,6 +10,4 @@
 #[foo = "bar"]
 #[cfg(foo="bar", foo="foo")]
 #[cfg(foo="bar", bar="baz", baz="foo")]
-///moo
-#[a=''
-#[b='\
+extern crate a;
