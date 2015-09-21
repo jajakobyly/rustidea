@@ -21,5 +21,6 @@ import com.intellij.openapi.util.IconLoader;
 import javax.swing.*;
 
 public interface Icons {
-    Icon FILE = IconLoader.getIcon("/icons/rust-file.png");
+    Icon RUST = IconLoader.getIcon("/icons/rust.png");
+    Icon RUST_FILE = IconLoader.getIcon("/icons/rust-file.png");
 }
