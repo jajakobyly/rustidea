@@ -33,5 +33,7 @@ install:
   - echo "idea.home=$IDEA_DIR" >> build.properties
   - ant resolve
 script: ant
+before_cache:
+  - find $HOME/.ivy2/cache/ -name "*.properties" | xargs sed -i 's/#.*$//g'
 after_success:
   - codecov
