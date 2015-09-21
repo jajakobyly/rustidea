@@ -39,8 +39,8 @@
     <property name="test.output.dir" value="${output.dir}/test/Rustidea"/>
     <property name="generate.dir" value="${basedir}/gen"/>
     <property name="jflex.output.dir" value="${generate.dir}/org/rustidea/lexer"/>
-    <property name="jacoco.destfile" value="${output.dir}/jacoco.exec"/>
     <property name="coverage.output.dir" value="${output.dir}/coverage"/>
+    <property name="coverage.destfile" value="${coverage.output.dir}/jacoco.exec"/>
     <property name="coverage.xml.output.file" value="${coverage.output.dir}/jacoco.xml"/>
 
     <!--
@@ -245,7 +245,8 @@
     <target name="test"
             depends="init, coverage.install, build.test"
             description="Run tests">
-        <jacoco:coverage destfile="${jacoco.destfile}" includes="org.rustidea.*">
+        <mkdir dir="${coverage.output.dir}"/>
+        <jacoco:coverage destfile="${coverage.destfile}">
             <junit printsummary="yes"
                    haltonfailure="false"
                    failureproperty="failureFound"
@@ -282,7 +283,7 @@
         <mkdir dir="${coverage.output.dir}"/>
         <jacoco:report>
             <executiondata>
-                <file file="${jacoco.destfile}"/>
+                <file file="${coverage.destfile}"/>
             </executiondata>
             <structure name="Rustidea">
                 <classfiles>
