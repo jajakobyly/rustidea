@@ -22,12 +22,11 @@ import org.jetbrains.annotations.NotNull;
 import org.rustidea.parser.framework.Parser;
 import org.rustidea.parser.framework.PsiParserImpl;
 
-import static org.rustidea.parser.RsItemParser.itemGreedy;
-import static org.rustidea.parser.RsItemParser.parentAttrOrDoc;
+import static org.rustidea.parser.RsItemParser.modElem;
 import static org.rustidea.parser.framework.Combinators.manyGreedy;
 
 public class RsParser extends PsiParserImpl implements PsiParser {
-    public static final Parser fileContents = manyGreedy(parentAttrOrDoc.or(itemGreedy));
+    public static final Parser fileContents = manyGreedy(modElem);
     private static final Logger LOG = Logger.getInstance(RsParser.class);
 
     @NotNull

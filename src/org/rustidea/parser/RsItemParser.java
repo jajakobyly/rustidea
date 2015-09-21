@@ -82,6 +82,9 @@ public final class RsItemParser extends Parser {
     public static final Parser parentAttrOrDoc =
         parentDoc.or(parentAttr);
 
+    /** <pre>modElem ::= {@link #parentAttrOrDoc} | {@link #itemGreedy}</pre> */
+    public static final Parser modElem = parentAttrOrDoc.or(itemGreedy);
+
     /** <pre>modifierList ::= {@link #attr}+ | "pub" | {@link #attr}+ "pub"</pre> */
     private static final Parser modifierList =
         many1(attrOrDoc).evenThen(token(KW_PUB)).mark(MODIFIER_LIST);
@@ -97,7 +100,7 @@ public final class RsItemParser extends Parser {
     private static final Parser module =
         seq(token(KW_MOD),
             identRequired,
-            wrap(OP_LBRACE, OP_RBRACE, many(itemGreedy))
+            wrap(OP_LBRACE, OP_RBRACE, many(modElem))
                 .or(token(OP_SEMICOLON))
                 .warn("missing '{' or ';'"));
 
@@ -120,9 +123,7 @@ public final class RsItemParser extends Parser {
         section.setState(true); // ignore result of parsing modifierList
 
         for (Object[] p : itemParsers) {
-            assert p.length == 2;
-            assert p[0] instanceof Parser;
-            assert p[1] instanceof IElementType;
+            assert p.length == 2 && p[0] instanceof Parser && p[1] instanceof IElementType;
 
             Parser parser = (Parser) p[0];
             IElementType type = (IElementType) p[1];
