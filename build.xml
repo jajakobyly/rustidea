@@ -289,9 +289,9 @@
                     <fileset dir="${production.output.dir}"/>
                 </classfiles>
                 <sourcefiles encoding="UTF-8">
-                    <fileset>
-                        <include name="${basedir}/resources/**"/>
-                        <include name="${basedir}/src/**"/>
+                    <fileset dir="${basedir}">
+                        <include name="resources/**"/>
+                        <include name="src/**"/>
                     </fileset>
                 </sourcefiles>
             </structure>
