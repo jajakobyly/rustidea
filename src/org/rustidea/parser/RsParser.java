@@ -31,7 +31,7 @@ public class RsParser extends PsiParserImpl implements PsiParser {
 
     @NotNull
     @Override
-    public Parser getEntryRule() {
+    public Parser getFileRule() {
         return fileContents;
     }
 

@@ -16,6 +16,7 @@
 
 package org.rustidea.parser.framework;
 
+import com.google.common.base.Stopwatch;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiParser;
@@ -25,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
 
 public abstract class PsiParserImpl implements PsiParser {
     @NotNull
-    public abstract Parser getEntryRule();
+    public abstract Parser getFileRule();
 
     @NotNull
     protected abstract Logger getLogger();
@@ -38,16 +39,16 @@ public abstract class PsiParserImpl implements PsiParser {
     @NotNull
     @Override
     public ASTNode parse(@NotNull final IElementType root, @NotNull final PsiBuilder builder) {
-        long time = System.currentTimeMillis();
+        final Stopwatch stopwatch = Stopwatch.createStarted();
 
         final ParserContext ctx = createParserContext(builder);
         PsiBuilder.Marker marker = builder.mark();
-        getEntryRule().parse(ctx);
+        getFileRule().parse(ctx);
         marker.done(root);
 
-        time = System.currentTimeMillis() - time;
+        stopwatch.stop();
         final double size = builder.getCurrentOffset() / 1000.0;
-        getLogger().info(String.format("Parsed %.1f kb file in %dms.", size, time));
+        getLogger().info(String.format("Parsed %.1f kb file in %s.", size, stopwatch));
 
         return builder.getTreeBuilt();
     }

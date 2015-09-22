@@ -17,6 +17,7 @@
 package org.rustidea.psi.util;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableSet;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.util.containers.ContainerUtil;
@@ -26,13 +27,12 @@ import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsLiteral;
 import org.rustidea.psi.types.RsTypes;
 
-import java.util.List;
+import java.util.Collection;
 
 public final class RsLiteralUtil {
-    public static final List<String> VALID_INT_SUFFIXES = ContainerUtil.immutableList(
+    public static final Collection<String> VALID_INT_SUFFIXES = ImmutableSet.of(
         "u8", "i8", "u16", "i16", "u32", "i32", "u64", "i64", "isize", "usize");
-    public static final List<String> VALID_FLOAT_SUFFIXES = ContainerUtil.immutableList(
-        "f32", "f64");
+    public static final Collection<String> VALID_FLOAT_SUFFIXES = ImmutableSet.of("f32", "f64");
 
     private RsLiteralUtil() {
     }
@@ -68,7 +68,7 @@ public final class RsLiteralUtil {
 
     @NotNull
     @Contract(pure = true)
-    public static List<String> getValidSuffixesFor(@NotNull final RsLiteral literal) {
+    public static Collection<String> getValidSuffixesFor(@NotNull final RsLiteral literal) {
         IElementType tokenType = literal.getTokenType();
 
         if (tokenType == RsTypes.INT_LIT) {

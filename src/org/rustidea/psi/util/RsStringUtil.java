@@ -17,7 +17,7 @@
 package org.rustidea.psi.util;
 
 import com.google.common.base.Strings;
-import com.intellij.util.containers.ContainerUtil;
+import com.google.common.collect.ImmutableMap;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -31,7 +31,7 @@ public final class RsStringUtil {
     public static final String HEX_DIGIT = "0123456789abcdefABCDEF";
     public static final String NUM_OTHER_CHARS = "+-_.";
     private static final Map<Character, Character> SHORT_ESCAPES =
-        ContainerUtil.<Character, Character>immutableMapBuilder()
+        new ImmutableMap.Builder<Character, Character>()
             .put('n', '\n')
             .put('r', '\r')
             .put('t', '\t')

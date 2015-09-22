@@ -29,7 +29,7 @@ import org.rustidea.psi.types.RsTypes;
 import org.rustidea.psi.util.RsLiteralUtil;
 import org.rustidea.psi.util.RsTokenUtil;
 
-import java.util.List;
+import java.util.Collection;
 
 public class RsDumbAwareAnnotator implements Annotator, DumbAware {
     @Override
@@ -68,7 +68,7 @@ public class RsDumbAwareAnnotator implements Annotator, DumbAware {
             // check suffix
             if (!RsLiteralUtil.hasValidSuffix(literal)) {
                 final String suffix = literal.getSuffix();
-                final List<String> possibleSuffixes = RsLiteralUtil.getValidSuffixesFor(literal);
+                final Collection<String> possibleSuffixes = RsLiteralUtil.getValidSuffixesFor(literal);
                 final StringBuilder sb = new StringBuilder();
 
                 if (!possibleSuffixes.isEmpty()) {

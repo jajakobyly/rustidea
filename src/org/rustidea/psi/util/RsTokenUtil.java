@@ -17,9 +17,9 @@
 package org.rustidea.psi.util;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableMap;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.tree.IElementType;
-import com.intellij.util.containers.ContainerUtil;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.types.RsTypes;
@@ -30,7 +30,7 @@ import static org.rustidea.psi.types.RsTokenTypes.*;
 
 public final class RsTokenUtil {
     private static final Map<IElementType, String> HUMAN_READABLE_NAMES =
-        ContainerUtil.<IElementType, String>immutableMapBuilder()
+        new ImmutableMap.Builder<IElementType, String>()
             .put(INT_LIT, "numeric literal")
             .put(FLOAT_LIT, "float literal")
             .put(CHAR_LIT, "char literal")
