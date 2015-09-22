@@ -24,5 +24,9 @@ import org.rustidea.stubs.IRsItemStub;
 public interface IRsItem<StubT extends IRsItemStub>
     extends StubBasedPsiElement<StubT>, PsiNameIdentifierOwner, IRsModifierListOwner, IRsPsiElement {
     @Nullable
+    @Override
+    RsIdentifier getNameIdentifier();
+
+    @Nullable
     IRsItemOwner getOwner();
 }

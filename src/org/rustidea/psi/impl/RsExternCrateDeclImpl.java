@@ -22,13 +22,15 @@ import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.rustidea.psi.*;
+import org.rustidea.psi.RsElementVisitor;
+import org.rustidea.psi.RsExternCrateDecl;
+import org.rustidea.psi.RsIdentifier;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.psi.util.PsiImplUtil;
 import org.rustidea.stubs.RsExternCrateDeclStub;
 import org.rustidea.util.NotImplementedException;
 
-public class RsExternCrateDeclImpl extends IRsStubPsiElement<RsExternCrateDeclStub> implements RsExternCrateDecl {
+public class RsExternCrateDeclImpl extends IRsItemPsiElement<RsExternCrateDeclStub> implements RsExternCrateDecl {
     public RsExternCrateDeclImpl(@NotNull RsExternCrateDeclStub stub) {
         super(stub, RsTypes.EXTERN_CRATE_DECL);
     }
@@ -83,18 +85,6 @@ public class RsExternCrateDeclImpl extends IRsStubPsiElement<RsExternCrateDeclSt
         String name = getName();
         String crateName = getCrateName();
         return name != null && !name.equals(crateName);
-    }
-
-    @Nullable
-    @Override
-    public IRsItemOwner getOwner() {
-        return getStubOrPsiParentOfType(IRsItemOwner.class);
-    }
-
-    @Nullable
-    @Override
-    public RsModifierList getModifierList() {
-        return getStubOrPsiChild(RsTypes.MODIFIER_LIST);
     }
 
     @Override
