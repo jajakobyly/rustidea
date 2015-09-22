@@ -56,7 +56,7 @@ public final class RsItemParser extends Parser {
     /** <pre>attrItemList ::= "(" [ {@link #attrItem } ("," {@link #attrItem})* ] ")"</pre> */
     @SuppressWarnings("unused") // lazily loaded in #attrItem
     public static final Parser attrItemList =
-        wrap(OP_LPAREN, OP_RPAREN, sep(OP_COMMA, attrItem)).mark(ATTRIBUTE_ITEM_LIST);
+        wrap(OP_LPAREN, OP_RPAREN, maybe(sep(OP_COMMA, attrItem))).mark(ATTRIBUTE_ITEM_LIST);
 
     /** {@code doc ::= BLOCK_DOC | LINE_DOC} */
     public static final Parser doc =

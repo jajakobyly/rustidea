@@ -124,7 +124,7 @@ public final class Helpers {
         public boolean parse(@NotNull ParserContext ctx) {
             Section section = Section.begin(ctx);
 
-            if (parser.parse(ctx)) {
+            if (section.call(parser)) {
                 while (!ctx.eof()) {
                     Section section1 = Section.begin(ctx);
                     PsiBuilderUtilEx.expectOrWarn(ctx.getBuilder(), separator,
@@ -145,8 +145,7 @@ public final class Helpers {
                 }
             }
 
-            section.end();
-            return true;
+            return section.end();
         }
     }
 }
