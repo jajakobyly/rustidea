@@ -38,5 +38,5 @@ Rust File(0,54)
     RsIdentifier:foo('foo')(49,52)
     PsiWhiteSpace(' ')(52,53)
     RsToken:{('{')(53,54)
-    PsiErrorElement:missing }(54,54)
+    PsiErrorElement:missing '}'(54,54)
       <empty list>

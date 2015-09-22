@@ -56,7 +56,7 @@ public final class RsTokenUtil {
         if (RsTypes.KEYWORD_TOKEN_SET.contains(tokenType) || RsTypes.OPERATOR_TOKEN_SET.contains(tokenType)) {
             return '\'' + tokenType.toString() + '\'';
         }
-        return null;
+        return tokenType.toString();
     }
 
     @Nullable

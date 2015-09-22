@@ -55,6 +55,10 @@ public class PsiBuilderUtilEx {
         return true;
     }
 
+    public static boolean expectOrWarn(@NotNull final PsiBuilder builder, @NotNull final IElementType token) {
+        return expectOrWarn(builder, token, "missing " + RsTokenUtil.getHumanReadableName(token));
+    }
+
     public static boolean expectOrWarn(@NotNull final PsiBuilder builder,
                                        @NotNull final IElementType token,
                                        @NotNull final String errMsg) {

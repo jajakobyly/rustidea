@@ -20,7 +20,6 @@ import com.intellij.lang.PsiBuilderUtil;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.rustidea.psi.util.RsTokenUtil;
 
 import java.lang.reflect.Field;
 
@@ -85,7 +84,7 @@ public final class Helpers {
                 Section section = Section.begin(ctx);
                 section.setState(PsiBuilderUtil.expect(ctx.getBuilder(), open));
                 section.call(parser);
-                PsiBuilderUtilEx.expectOrWarn(ctx.getBuilder(), close, "missing " + close);
+                PsiBuilderUtilEx.expectOrWarn(ctx.getBuilder(), close);
                 return section.end();
             }
         };
@@ -127,8 +126,7 @@ public final class Helpers {
             if (section.call(parser)) {
                 while (!ctx.eof()) {
                     Section section1 = Section.begin(ctx);
-                    PsiBuilderUtilEx.expectOrWarn(ctx.getBuilder(), separator,
-                        "missing " + RsTokenUtil.getHumanReadableName(separator));
+                    PsiBuilderUtilEx.expectOrWarn(ctx.getBuilder(), separator);
                     section1.forceCall(parser);
                     if (!section1.end()) {
                         break;
