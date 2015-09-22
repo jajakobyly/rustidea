@@ -16,37 +16,32 @@
 
 package org.rustidea.parser;
 
+import com.intellij.psi.tree.IElementType;
 import org.rustidea.parser.framework.Parser;
+import org.rustidea.parser.framework.Scanners;
 
-import static org.rustidea.parser.framework.Scanners.token;
+import static org.rustidea.parser.framework.Scanners.tokenFail;
+import static org.rustidea.parser.framework.Scanners.tokenWarn;
 import static org.rustidea.psi.types.RsTokenTypes.OP_SEMICOLON;
 import static org.rustidea.psi.types.RsTypes.IDENTIFIER;
 
 public final class RsParserUtil {
     /**
-     * {@code identRequired ::= IDENTIFIER}
-     *
-     * <p>Fails if parsing fails.</p>
+     * <pre>identRequired = {@link Scanners#tokenFail(IElementType)}(IDENTIFIER)</pre>
      *
      * @see #ident
      */
-    public static final Parser identRequired = token(IDENTIFIER).fail("expected identifier");
+    public static final Parser identRequired = tokenFail(IDENTIFIER);
 
     /**
-     * {@code ident ::= IDENTIFIER}
-     *
-     * <p>Warns if parsing fails.</p>
+     * <pre>ident = {@link Scanners#tokenWarn(IElementType)}(IDENTIFIER)</pre>
      *
      * @see #identRequired
      */
-    public static final Parser ident = token(IDENTIFIER).warn("expected identifier");
+    public static final Parser ident = tokenWarn(IDENTIFIER);
 
-    /**
-     * {@code semicolon ::= ";"}
-     *
-     * <p>Warns if parsing fails.</p>
-     */
-    public static final Parser semicolon = token(OP_SEMICOLON).warn("missing semicolon");
+    /** <pre>semicolon = {@link Scanners#tokenWarn(IElementType, String)}(";", ...)</pre> */
+    public static final Parser semicolon = tokenWarn(OP_SEMICOLON, "missing semicolon");
 
     private RsParserUtil() {
     }

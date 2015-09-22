@@ -16,10 +16,12 @@
 
 package org.rustidea.parser.framework;
 
+import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilderUtil;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
+import org.rustidea.psi.util.RsTokenUtil;
 
 /**
  * The most basic parsers which match tokens.
@@ -108,6 +110,53 @@ public final class Scanners {
             @Override
             public boolean parse(@NotNull ParserContext ctx) {
                 return PsiBuilderUtilEx.maybe(ctx.getBuilder(), tokens);
+            }
+        };
+    }
+
+    /** <pre>tokenFail(TOKEN) = {@link #tokenFail(IElementType, String)}(TOKEN, ...)</pre> */
+    @NotNull
+    public static Parser tokenFail(@NotNull final IElementType token) {
+        return tokenFail(token, "expected " + RsTokenUtil.getHumanReadableName(token));
+    }
+
+    /** {@code tokenFail(TOKEN, msg) ::= TOKEN} **/
+    @NotNull
+    public static Parser tokenFail(@NotNull final IElementType token, @NotNull final String errorMessage) {
+        return new Parser() {
+            @Override
+            public boolean parse(@NotNull ParserContext ctx) {
+                PsiBuilder.Marker marker = ctx.getBuilder().mark();
+                if (PsiBuilderUtil.expect(ctx.getBuilder(), token)) {
+                    marker.drop();
+                    return true;
+                } else {
+                    marker.error(errorMessage);
+                    return false;
+                }
+            }
+        };
+    }
+
+    /** <pre>tokenWarn(TOKEN) = {@link #tokenWarn(IElementType, String)}(TOKEN, ...)</pre> */
+    @NotNull
+    public static Parser tokenWarn(@NotNull final IElementType token) {
+        return tokenWarn(token, "expected " + RsTokenUtil.getHumanReadableName(token));
+    }
+
+    /** {@code tokenWarn(TOKEN, msg) ::= TOKEN} **/
+    @NotNull
+    public static Parser tokenWarn(@NotNull final IElementType token, @NotNull final String errorMessage) {
+        return new Parser() {
+            @Override
+            public boolean parse(@NotNull ParserContext ctx) {
+                PsiBuilder.Marker marker = ctx.getBuilder().mark();
+                if (PsiBuilderUtil.expect(ctx.getBuilder(), token)) {
+                    marker.drop();
+                } else {
+                    marker.error(errorMessage);
+                }
+                return true;
             }
         };
     }
