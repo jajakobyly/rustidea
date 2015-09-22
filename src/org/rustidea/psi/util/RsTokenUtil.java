@@ -41,9 +41,6 @@ public final class RsTokenUtil {
             .put(RAW_BYTE_STRING_LIT, "raw byte string literal")
             .put(IDENTIFIER, "identifier")
             .put(LIFETIME_TOKEN, "lifetime")
-            .put(OP_SEMICOLON, "semicolon")
-            .put(OP_COMMA, "comma")
-            .put(OP_DOT, "dot")
             .build();
 
     private RsTokenUtil() {

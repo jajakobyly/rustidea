@@ -22,6 +22,7 @@ import com.intellij.lang.PsiBuilderUtil;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
+import org.rustidea.psi.util.RsTokenUtil;
 
 public class PsiBuilderUtilEx {
     public static boolean expectNot(@NotNull final PsiBuilder builder, @NotNull final IElementType token) {
@@ -65,8 +66,8 @@ public class PsiBuilderUtilEx {
 
     public static void unexpected(@NotNull final PsiBuilder builder) {
         Marker marker = builder.mark();
-        String tokenText = builder.getTokenText();
+        final String token = RsTokenUtil.getHumanReadableName(builder.getTokenType());
         builder.advanceLexer();
-        marker.error("unexpected " + tokenText);
+        marker.error("unexpected " + token);
     }
 }
