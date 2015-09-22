@@ -53,7 +53,7 @@ public class RsLiteralImpl extends IRsCompositePsiElement implements RsLiteral {
         throw new UnsupportedOperationException("not implemented yet");
     }
 
-    @Nullable
+    @NotNull
     @Override
     public String getValueString() {
         final IElementType tokenType = getTokenType();
@@ -81,7 +81,7 @@ public class RsLiteralImpl extends IRsCompositePsiElement implements RsLiteral {
             return RsLiteralUtil.removeRawStringHashes(raw);
         }
 
-        return null;
+        throw new IllegalStateException("unreachable");
     }
 
     @NotNull

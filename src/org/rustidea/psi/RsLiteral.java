@@ -91,7 +91,7 @@ public interface RsLiteral extends IRsPsiElement {
      *
      * @return literal value without any decorations and suffixes or null if operation failed.
      */
-    @Nullable
+    @NotNull
     String getValueString();
 
     /**
