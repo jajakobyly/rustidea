@@ -16,8 +16,13 @@
 
 package org.rustidea.stubs;
 
-import com.intellij.psi.stubs.NamedStub;
+import com.intellij.psi.stubs.StubElement;
+import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsAttributeItem;
 
-public interface RsAttributeItemStub extends NamedStub<RsAttributeItem> {
+public interface RsAttributeItemStub extends StubElement<RsAttributeItem> {
+    @Nullable
+    @NonNls
+    String getName();
 }

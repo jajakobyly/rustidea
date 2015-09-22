@@ -17,16 +17,13 @@
 package org.rustidea.psi.impl;
 
 import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.*;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.psi.util.PsiImplUtil;
 import org.rustidea.stubs.RsAttributeItemStub;
-import org.rustidea.util.NotImplementedException;
 
 public class RsAttributeItemImpl extends IRsStubPsiElement<RsAttributeItemStub> implements RsAttributeItem {
     public RsAttributeItemImpl(@NotNull final RsAttributeItemStub stub) {
@@ -87,13 +84,6 @@ public class RsAttributeItemImpl extends IRsStubPsiElement<RsAttributeItemStub> 
     @Override
     public String getName() {
         return getNameIdentifier().getText();
-    }
-
-    @NotNull
-    @Override
-    public PsiElement setName(@NotNull String name) throws IncorrectOperationException {
-        // TODO Implement this.
-        throw new IncorrectOperationException(new NotImplementedException());
     }
 
     @Override
