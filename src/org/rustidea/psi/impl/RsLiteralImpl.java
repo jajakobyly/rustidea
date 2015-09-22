@@ -27,6 +27,8 @@ import org.rustidea.psi.types.RsTypes;
 import org.rustidea.psi.util.PsiImplUtil;
 import org.rustidea.psi.util.RsLiteralUtil;
 import org.rustidea.psi.util.RsStringUtil;
+import org.rustidea.util.NotImplementedException;
+import org.rustidea.util.UnreachableException;
 
 import static org.rustidea.psi.types.RsTokenTypes.KW_FALSE;
 import static org.rustidea.psi.types.RsTokenTypes.KW_TRUE;
@@ -50,7 +52,7 @@ public class RsLiteralImpl extends IRsCompositePsiElement implements RsLiteral {
     @Override
     public Object getValue() {
         // TODO Implement this.
-        throw new UnsupportedOperationException("not implemented yet");
+        throw new NotImplementedException();
     }
 
     @NotNull
@@ -81,7 +83,7 @@ public class RsLiteralImpl extends IRsCompositePsiElement implements RsLiteral {
             return RsLiteralUtil.removeRawStringHashes(raw);
         }
 
-        throw new IllegalStateException("unreachable");
+        throw new UnreachableException();
     }
 
     @NotNull
@@ -109,7 +111,7 @@ public class RsLiteralImpl extends IRsCompositePsiElement implements RsLiteral {
             return RsLiteralUtil.extractSuffixFromRawStr(text);
         }
 
-        throw new IllegalStateException("unreachable");
+        throw new UnreachableException();
     }
 
     @Override

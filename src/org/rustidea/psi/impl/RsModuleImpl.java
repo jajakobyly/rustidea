@@ -26,6 +26,7 @@ import org.rustidea.psi.*;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.psi.util.PsiImplUtil;
 import org.rustidea.stubs.RsModuleStub;
+import org.rustidea.util.NotImplementedException;
 
 public class RsModuleImpl extends IRsStubPsiElement<RsModuleStub> implements RsModule {
     public RsModuleImpl(@NotNull RsModuleStub stub) {
@@ -56,7 +57,7 @@ public class RsModuleImpl extends IRsStubPsiElement<RsModuleStub> implements RsM
     @Override
     public PsiElement setName(@NotNull String name) throws IncorrectOperationException {
         // TODO Implement this
-        throw new UnsupportedOperationException("not implemented yet");
+        throw new IncorrectOperationException(new NotImplementedException());
     }
 
     @Nullable

@@ -26,6 +26,7 @@ import org.rustidea.psi.*;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.psi.util.PsiImplUtil;
 import org.rustidea.stubs.RsTypeParameterStub;
+import org.rustidea.util.NotImplementedException;
 
 public class RsTypeParameterImpl extends IRsStubPsiElement<RsTypeParameterStub> implements RsTypeParameter {
     public RsTypeParameterImpl(@NotNull RsTypeParameterStub stub) {
@@ -56,7 +57,7 @@ public class RsTypeParameterImpl extends IRsStubPsiElement<RsTypeParameterStub> 
     @Override
     public PsiElement setName(@NotNull String name) throws IncorrectOperationException {
         // TODO Implement this.
-        throw new IncorrectOperationException("not implemented yet");
+        throw new IncorrectOperationException(new NotImplementedException());
     }
 
     @Nullable

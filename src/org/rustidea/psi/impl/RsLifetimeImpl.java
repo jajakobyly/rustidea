@@ -27,6 +27,7 @@ import org.rustidea.psi.RsIdentifier;
 import org.rustidea.psi.RsLifetime;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.stubs.RsLifetimeStub;
+import org.rustidea.util.NotImplementedException;
 
 public class RsLifetimeImpl extends IRsStubPsiElement<RsLifetimeStub> implements RsLifetime {
     public RsLifetimeImpl(@NotNull RsLifetimeStub stub) {
@@ -58,7 +59,7 @@ public class RsLifetimeImpl extends IRsStubPsiElement<RsLifetimeStub> implements
     @Override
     public PsiElement setName(@NotNull String name) throws IncorrectOperationException {
         // TODO Implement this.
-        throw new IncorrectOperationException("not implemented yet");
+        throw new IncorrectOperationException(new NotImplementedException());
     }
 
     @Override

@@ -26,6 +26,7 @@ import org.rustidea.psi.*;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.psi.util.PsiImplUtil;
 import org.rustidea.stubs.RsPathComponentStub;
+import org.rustidea.util.NotImplementedException;
 
 public class RsPathComponentImpl extends IRsStubPsiElement<RsPathComponentStub> implements RsPathComponent {
     public RsPathComponentImpl(@NotNull RsPathComponentStub stub) {
@@ -56,7 +57,7 @@ public class RsPathComponentImpl extends IRsStubPsiElement<RsPathComponentStub> 
     @Override
     public PsiElement setName(@NotNull String name) throws IncorrectOperationException {
         // TODO Implement this.
-        throw new IncorrectOperationException("not implemented yet");
+        throw new IncorrectOperationException(new NotImplementedException());
     }
 
     @Nullable
