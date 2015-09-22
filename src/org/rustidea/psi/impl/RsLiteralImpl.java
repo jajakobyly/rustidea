@@ -109,7 +109,7 @@ public class RsLiteralImpl extends IRsCompositePsiElement implements RsLiteral {
             return RsLiteralUtil.extractSuffixFromRawStr(text);
         }
 
-        throw new UnsupportedOperationException("unreachable");
+        throw new IllegalStateException("unreachable");
     }
 
     @Override
