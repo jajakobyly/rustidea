@@ -33,7 +33,7 @@ import java.io.IOException;
 public class RsModuleElementType extends IRsStubElementType<RsModuleStub, RsModule> {
     public static final RsModuleElementType INSTANCE = new RsModuleElementType();
 
-    protected RsModuleElementType() {
+    private RsModuleElementType() {
         super("MODULE");
     }
 

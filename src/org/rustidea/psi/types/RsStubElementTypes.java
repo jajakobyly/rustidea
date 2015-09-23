@@ -38,6 +38,7 @@ public interface RsStubElementTypes {
     RsPathElementType PATH = RsPathElementType.INSTANCE;
     RsPathComponentElementType PATH_COMPONENT = RsPathComponentElementType.INSTANCE;
     RsTypeParameterElementType TYPE_PARAMETER = RsTypeParameterElementType.INSTANCE;
+    RsUseDeclElementType USE_DECL = RsUseDeclElementType.INSTANCE;
 
     IRsEmptyStubElementType<RsLifetimeTypeParameter> LIFETIME_TYPE_PARAMETER =
         new IRsEmptyStubElementType<RsLifetimeTypeParameter>("LIFETIME_TYPE_PARAMETER") {

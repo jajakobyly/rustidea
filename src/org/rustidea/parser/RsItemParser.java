@@ -23,6 +23,7 @@ import org.rustidea.parser.framework.ParserContext;
 import org.rustidea.parser.framework.Section;
 
 import static org.rustidea.parser.RsExprParser.literal;
+import static org.rustidea.parser.RsExprParser.path;
 import static org.rustidea.parser.RsParserUtil.*;
 import static org.rustidea.parser.framework.Combinators.*;
 import static org.rustidea.parser.framework.Helpers.*;
@@ -96,6 +97,15 @@ public final class RsItemParser extends Parser {
             maybe(token(KW_AS).then(ident)),
             semicolon);
 
+    private static final Parser useDeclPath =
+        path;
+
+    private static final Parser useDecl =
+        seq(token(KW_USE),
+            useDeclPath,
+            maybe(token(KW_AS).then(ident)),
+            semicolon);
+
     /** <pre>module ::= "mod" {@link RsParserUtil#identRequired} ( "{" {@link #itemGreedy}* "}" | ";" )</pre> */
     private static final Parser module =
         seq(token(KW_MOD),
@@ -106,6 +116,7 @@ public final class RsItemParser extends Parser {
 
     private static final Object[][] itemParsers = new Object[][]{
         {externCrateDecl, EXTERN_CRATE_DECL},
+        {useDecl, USE_DECL},
         {module, MODULE},
     };
 

@@ -109,6 +109,10 @@ public abstract class RsElementVisitor extends PsiElementVisitor {
         visitElement(typeParameterList);
     }
 
+    public void visitUseDecl(RsUseDecl useDecl) {
+        visitItem(useDecl);
+    }
+
     public void visitWhereClause(RsWhereClause whereClause) {
         visitElement(whereClause);
     }
