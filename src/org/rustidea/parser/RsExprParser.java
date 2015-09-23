@@ -24,6 +24,7 @@ import org.rustidea.parser.framework.Parser;
 import org.rustidea.parser.framework.ParserContext;
 import org.rustidea.parser.framework.PsiBuilderUtilEx;
 import org.rustidea.parser.framework.Section;
+import org.rustidea.psi.types.RsTypes;
 
 import static org.rustidea.parser.framework.Helpers.sep;
 import static org.rustidea.parser.framework.Scanners.token;
@@ -55,7 +56,13 @@ public final class RsExprParser {
     public static final Parser literal =
         token(LITERAL_TOKEN_SET).markGreedy(LITERAL).warn("expected literal");
 
-    /** <pre>pathBase ::= [ [ "self" | "super" ] "::" ] IDENTIFIER ( "::" IDENTIFIER )*</pre> */
+    /**
+     * {@code pathBase ::= [ [ "self" | "super" ] "::" ] IDENTIFIER ( "::" IDENTIFIER )*}
+     *
+     * <p>Base for more specialized path rules, does not produce {@link RsTypes#PATH} marker.</p>
+     *
+     * @see #path
+     */
     public static final Parser pathBase = new Parser() {
         private final TokenSet SELF_OR_SUPER = TokenSet.create(KW_SELF, KW_SUPER);
         private final Parser components = sep(OP_DOUBLE_COLON, token(IDENTIFIER).mark(PATH_COMPONENT));
@@ -81,7 +88,13 @@ public final class RsExprParser {
         }
     };
 
-    /** <pre>path ::= {@link #pathBase}</pre> */
+    /**
+     * <pre>path ::= {@link #pathBase}</pre>
+     *
+     * <p>Wraps {@link #pathBase} and produces {@link RsTypes#PATH} marker.</p>
+     *
+     * @see #pathBase
+     */
     public static final Parser path =
         pathBase.mark(PATH);
 
