@@ -34,7 +34,7 @@ public abstract class IRsStubElementType<StubT extends StubElement, PsiT extends
     }
 
     @NotNull
-    public abstract PsiT createPsi(ASTNode node);
+    public abstract PsiT createPsi(@NotNull ASTNode node);
 
     @Override
     public void indexStub(@NotNull StubT stub, @NotNull IndexSink sink) {

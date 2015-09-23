@@ -56,6 +56,7 @@ public class RsUseDeclImpl extends IRsItemPsiElement<RsUseDeclStub> implements R
         return nameIdentifier == null ? null : nameIdentifier.getText();
     }
 
+    @NotNull
     @Override
     public PsiElement setName(@NotNull String name) throws IncorrectOperationException {
         // TODO Implement this

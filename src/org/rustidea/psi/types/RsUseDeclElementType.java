@@ -38,6 +38,7 @@ public class RsUseDeclElementType extends IRsStubElementType<RsUseDeclStub, RsUs
         super("USE_DECL");
     }
 
+    @NotNull
     @Override
     public RsUseDecl createPsi(@NotNull RsUseDeclStub stub) {
         return new RsUseDeclImpl(stub);
@@ -45,10 +46,11 @@ public class RsUseDeclElementType extends IRsStubElementType<RsUseDeclStub, RsUs
 
     @NotNull
     @Override
-    public RsUseDecl createPsi(ASTNode node) {
+    public RsUseDecl createPsi(@NotNull ASTNode node) {
         return new RsUseDeclImpl(node);
     }
 
+    @NotNull
     @Override
     public RsUseDeclStub createStub(@NotNull RsUseDecl psi, StubElement parentStub) {
         return new RsUseDeclStubImpl(parentStub, StringRef.fromString(psi.getName()), psi.resolveAll());
