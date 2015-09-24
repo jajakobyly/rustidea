@@ -5,10 +5,12 @@
 1. You need [Intellij IDEA Community or Ultimate](https://www.jetbrains.com/idea/) to be installed in your system
 2. Set up plugin development environment, see [IntelliJ Platform SDK DevGuide / Setting Up Development Environment](http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/setting_up_environment.html)
 3. Install and enable additional plugins:
+    - **Ant Support**
     - **Grammar-Kit** (only for syntax highlighting of `flex` files)
     - **UI Designer**
 4. Additionally you can enable following plugins:
     - **PsiViewer** (very usable when debugging parsers)
+    - **EditorConfig**
 
 ## Project configuration
 
