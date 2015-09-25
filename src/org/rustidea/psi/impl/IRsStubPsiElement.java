@@ -26,7 +26,7 @@ import com.intellij.psi.stubs.StubElement;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.IRsPsiElement;
 import org.rustidea.psi.RsElementVisitor;
-import org.rustidea.psi.util.PsiImplUtil;
+import org.rustidea.psi.util.RsPsiUtil;
 
 public abstract class IRsStubPsiElement<StubT extends StubElement>
     extends StubBasedPsiElementBase<StubT> implements StubBasedPsiElement<StubT>, IRsPsiElement {
@@ -56,7 +56,7 @@ public abstract class IRsStubPsiElement<StubT extends StubElement>
     @NotNull
     @Override
     public String toString() {
-        String clsName = PsiImplUtil.getPsiClassName(this);
+        String clsName = RsPsiUtil.getPsiClassName(this);
         String psiName = getName();
         if (psiName != null) {
             return clsName + ":" + psiName;

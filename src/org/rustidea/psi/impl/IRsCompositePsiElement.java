@@ -22,7 +22,7 @@ import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.IRsPsiElement;
 import org.rustidea.psi.RsElementVisitor;
-import org.rustidea.psi.util.PsiImplUtil;
+import org.rustidea.psi.util.RsPsiUtil;
 
 public abstract class IRsCompositePsiElement extends CompositePsiElement implements IRsPsiElement {
     protected IRsCompositePsiElement(@NotNull final IElementType type) {
@@ -41,6 +41,6 @@ public abstract class IRsCompositePsiElement extends CompositePsiElement impleme
     @NotNull
     @Override
     public String toString() {
-        return PsiImplUtil.getPsiClassName(this);
+        return RsPsiUtil.getPsiClassName(this);
     }
 }

@@ -29,8 +29,8 @@ import org.rustidea.psi.impl.IRsStubPsiElement;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.util.SimpleArrayFactory;
 
-public final class PsiImplUtil extends PsiUtilBase {
-    private PsiImplUtil() {
+public final class RsPsiUtil extends PsiUtilBase {
+    private RsPsiUtil() {
     }
 
     public static boolean hasTypeParameters(@NotNull final IRsTypeParameterListOwner owner) {

@@ -22,7 +22,7 @@ import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.IRsPsiElement;
 import org.rustidea.psi.RsElementVisitor;
-import org.rustidea.psi.util.PsiImplUtil;
+import org.rustidea.psi.util.RsPsiUtil;
 
 public abstract class IRsLeafPsiElement extends LeafPsiElement implements IRsPsiElement {
     public IRsLeafPsiElement(@NotNull final IElementType type, final CharSequence text) {
@@ -44,6 +44,6 @@ public abstract class IRsLeafPsiElement extends LeafPsiElement implements IRsPsi
     @NotNull
     @Override
     public String toString() {
-        return PsiImplUtil.getPsiClassName(this) + ":" + getDebugName();
+        return RsPsiUtil.getPsiClassName(this) + ":" + getDebugName();
     }
 }

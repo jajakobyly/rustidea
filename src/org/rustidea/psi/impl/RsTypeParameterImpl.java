@@ -23,8 +23,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.*;
 import org.rustidea.psi.types.RsTypes;
-import org.rustidea.psi.util.PsiImplUtil;
 import org.rustidea.psi.util.RsPsiTreeUtil;
+import org.rustidea.psi.util.RsPsiUtil;
 import org.rustidea.stubs.RsTypeParameterStub;
 import org.rustidea.util.NotImplementedException;
 
@@ -74,7 +74,7 @@ public class RsTypeParameterImpl extends IRsStubPsiElement<RsTypeParameterStub> 
 
     @Override
     public int getIndex() {
-        return PsiImplUtil.getStubElementIndex(this, getStub(), RsTypeParameter.class);
+        return RsPsiUtil.getStubElementIndex(this, getStub(), RsTypeParameter.class);
     }
 
     @Override

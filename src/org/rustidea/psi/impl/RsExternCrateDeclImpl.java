@@ -25,8 +25,8 @@ import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsExternCrateDecl;
 import org.rustidea.psi.RsIdentifier;
 import org.rustidea.psi.types.RsTypes;
-import org.rustidea.psi.util.PsiImplUtil;
 import org.rustidea.psi.util.RsPsiTreeUtil;
+import org.rustidea.psi.util.RsPsiUtil;
 import org.rustidea.stubs.RsExternCrateDeclStub;
 import org.rustidea.util.NotImplementedException;
 
@@ -96,7 +96,7 @@ public class RsExternCrateDeclImpl extends IRsItemPsiElement<RsExternCrateDeclSt
     @Override
     public String toString() {
         if (isRenamed()) {
-            return String.format("%s:%s as %s", PsiImplUtil.getPsiClassName(this), getCrateName(), getName());
+            return String.format("%s:%s as %s", RsPsiUtil.getPsiClassName(this), getCrateName(), getName());
         }
         return super.toString();
     }

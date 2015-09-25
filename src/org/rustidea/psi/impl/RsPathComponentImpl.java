@@ -23,8 +23,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.*;
 import org.rustidea.psi.types.RsTypes;
-import org.rustidea.psi.util.PsiImplUtil;
 import org.rustidea.psi.util.RsPsiTreeUtil;
+import org.rustidea.psi.util.RsPsiUtil;
 import org.rustidea.stubs.RsPathComponentStub;
 import org.rustidea.util.NotImplementedException;
 
@@ -68,12 +68,12 @@ public class RsPathComponentImpl extends IRsStubPsiElement<RsPathComponentStub> 
 
     @Override
     public int getIndex() {
-        return PsiImplUtil.getStubElementIndex(this, getStub(), RsPathComponent.class);
+        return RsPsiUtil.getStubElementIndex(this, getStub(), RsPathComponent.class);
     }
 
     @Override
     public boolean hasTypeParameters() {
-        return PsiImplUtil.hasTypeParameters(this);
+        return RsPsiUtil.hasTypeParameters(this);
     }
 
     @Nullable
@@ -85,7 +85,7 @@ public class RsPathComponentImpl extends IRsStubPsiElement<RsPathComponentStub> 
     @NotNull
     @Override
     public RsTypeParameter[] getTypeParameters() {
-        return PsiImplUtil.getTypeParameters(this);
+        return RsPsiUtil.getTypeParameters(this);
     }
 
     @Override

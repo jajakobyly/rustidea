@@ -21,8 +21,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.*;
 import org.rustidea.psi.types.RsTypes;
-import org.rustidea.psi.util.PsiImplUtil;
 import org.rustidea.psi.util.RsPsiTreeUtil;
+import org.rustidea.psi.util.RsPsiUtil;
 import org.rustidea.stubs.RsAttributeItemStub;
 
 public class RsAttributeItemImpl extends IRsStubPsiElement<RsAttributeItemStub> implements RsAttributeItem {
@@ -77,7 +77,7 @@ public class RsAttributeItemImpl extends IRsStubPsiElement<RsAttributeItemStub> 
         if (getParentItem() == null) {
             return 0;
         }
-        return PsiImplUtil.getStubElementIndex(this, getStub(), RsAttributeItem.class);
+        return RsPsiUtil.getStubElementIndex(this, getStub(), RsAttributeItem.class);
     }
 
     @Nullable

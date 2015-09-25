@@ -21,7 +21,10 @@ import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class RsPsiTreeUtil extends PsiTreeUtil {
+public final class RsPsiTreeUtil extends PsiTreeUtil {
+    private RsPsiTreeUtil() {
+    }
+
     @Nullable
     public static <T extends PsiElement> T findLastChildByClass(@NotNull final PsiElement element, @NotNull final Class<T> cls) {
         for (PsiElement cur = element.getLastChild(); cur != null; cur = cur.getPrevSibling()) {

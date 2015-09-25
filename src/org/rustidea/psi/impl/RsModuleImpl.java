@@ -23,8 +23,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.*;
 import org.rustidea.psi.types.RsTypes;
-import org.rustidea.psi.util.PsiImplUtil;
 import org.rustidea.psi.util.RsPsiTreeUtil;
+import org.rustidea.psi.util.RsPsiUtil;
 import org.rustidea.stubs.RsModuleStub;
 import org.rustidea.util.NotImplementedException;
 
@@ -69,7 +69,7 @@ public class RsModuleImpl extends IRsStubPsiElement<RsModuleStub> implements RsM
     @NotNull
     @Override
     public IRsAttribute[] getAttributes() {
-        return PsiImplUtil.getAttributes(this);
+        return RsPsiUtil.getAttributes(this);
     }
 
     @NotNull

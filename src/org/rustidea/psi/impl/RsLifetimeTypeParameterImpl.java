@@ -27,8 +27,8 @@ import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsLifetime;
 import org.rustidea.psi.RsLifetimeTypeParameter;
 import org.rustidea.psi.types.RsTypes;
-import org.rustidea.psi.util.PsiImplUtil;
 import org.rustidea.psi.util.RsPsiTreeUtil;
+import org.rustidea.psi.util.RsPsiUtil;
 
 public class RsLifetimeTypeParameterImpl extends IRsStubPsiElement<EmptyStub> implements RsLifetimeTypeParameter {
     public RsLifetimeTypeParameterImpl(@NotNull EmptyStub stub) {
@@ -69,7 +69,7 @@ public class RsLifetimeTypeParameterImpl extends IRsStubPsiElement<EmptyStub> im
 
     @Override
     public int getIndex() {
-        return PsiImplUtil.getStubElementIndex(this, getStub(), RsLifetimeTypeParameter.class);
+        return RsPsiUtil.getStubElementIndex(this, getStub(), RsLifetimeTypeParameter.class);
     }
 
     @Override
