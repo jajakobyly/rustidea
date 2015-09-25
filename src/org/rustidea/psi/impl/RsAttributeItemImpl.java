@@ -17,12 +17,12 @@
 package org.rustidea.psi.impl;
 
 import com.intellij.lang.ASTNode;
-import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.*;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.psi.util.PsiImplUtil;
+import org.rustidea.psi.util.RsPsiTreeUtil;
 import org.rustidea.stubs.RsAttributeItemStub;
 
 public class RsAttributeItemImpl extends IRsStubPsiElement<RsAttributeItemStub> implements RsAttributeItem {
@@ -37,7 +37,7 @@ public class RsAttributeItemImpl extends IRsStubPsiElement<RsAttributeItemStub> 
     @NotNull
     @Override
     public RsIdentifier getNameIdentifier() {
-        return PsiTreeUtil.getRequiredChildOfType(this, RsIdentifier.class);
+        return RsPsiTreeUtil.getRequiredChildOfType(this, RsIdentifier.class);
     }
 
     @Nullable

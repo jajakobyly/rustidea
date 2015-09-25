@@ -14,29 +14,19 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi;
+package org.rustidea.psi.util;
 
-import com.intellij.psi.util.QualifiedName;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.rustidea.stubs.RsUseDeclStub;
 
-public interface RsUseDecl extends IRsItem<RsUseDeclStub> {
-    @NotNull
-    RsPath getPath();
-
+public class RsPsiTreeUtil extends PsiTreeUtil {
     @Nullable
-    Type getType();
-
-    boolean isRenamed();
-
-    @NotNull
-    QualifiedName resolve();
-
-    @NotNull
-    QualifiedName[] resolveAll();
-
-    enum Type {
-        SINGLE, LIST, GLOB
+    public static <T extends PsiElement> T findLastChildByClass(@NotNull final PsiElement element, @NotNull final Class<T> cls) {
+        for (PsiElement cur = element.getLastChild(); cur != null; cur = cur.getPrevSibling()) {
+            if (cls.isInstance(cur)) return (T) cur;
+        }
+        return null;
     }
 }

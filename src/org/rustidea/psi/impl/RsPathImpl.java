@@ -17,13 +17,13 @@
 package org.rustidea.psi.impl;
 
 import com.intellij.lang.ASTNode;
-import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsPath;
 import org.rustidea.psi.RsPathComponent;
 import org.rustidea.psi.RsPathRelation;
 import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.util.RsPsiTreeUtil;
 import org.rustidea.stubs.RsPathStub;
 import org.rustidea.util.SimpleArrayFactory;
 
@@ -39,7 +39,7 @@ public class RsPathImpl extends IRsStubPsiElement<RsPathStub> implements RsPath 
     @NotNull
     @Override
     public RsPathRelation getRelation() {
-        return PsiTreeUtil.getRequiredChildOfType(this, RsPathRelation.class);
+        return RsPsiTreeUtil.getRequiredChildOfType(this, RsPathRelation.class);
     }
 
     @NotNull

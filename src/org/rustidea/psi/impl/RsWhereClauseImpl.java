@@ -18,7 +18,6 @@ package org.rustidea.psi.impl;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.stubs.EmptyStub;
-import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsElementVisitor;
@@ -26,6 +25,7 @@ import org.rustidea.psi.RsPath;
 import org.rustidea.psi.RsTypeParameter;
 import org.rustidea.psi.RsWhereClause;
 import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.util.RsPsiTreeUtil;
 import org.rustidea.util.SimpleArrayFactory;
 
 public class RsWhereClauseImpl extends IRsStubPsiElement<EmptyStub> implements RsWhereClause {
@@ -46,7 +46,7 @@ public class RsWhereClauseImpl extends IRsStubPsiElement<EmptyStub> implements R
     @Nullable
     @Override
     public RsTypeParameter getOwner() {
-        return PsiTreeUtil.getStubOrPsiParentOfType(this, RsTypeParameter.class);
+        return RsPsiTreeUtil.getStubOrPsiParentOfType(this, RsTypeParameter.class);
     }
 
     @Override

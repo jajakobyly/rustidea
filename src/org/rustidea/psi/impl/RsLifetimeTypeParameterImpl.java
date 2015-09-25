@@ -19,7 +19,6 @@ package org.rustidea.psi.impl;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.stubs.EmptyStub;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -29,6 +28,7 @@ import org.rustidea.psi.RsLifetime;
 import org.rustidea.psi.RsLifetimeTypeParameter;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.psi.util.PsiImplUtil;
+import org.rustidea.psi.util.RsPsiTreeUtil;
 
 public class RsLifetimeTypeParameterImpl extends IRsStubPsiElement<EmptyStub> implements RsLifetimeTypeParameter {
     public RsLifetimeTypeParameterImpl(@NotNull EmptyStub stub) {
@@ -58,13 +58,13 @@ public class RsLifetimeTypeParameterImpl extends IRsStubPsiElement<EmptyStub> im
     @NotNull
     @Override
     public RsLifetime getLifetime() {
-        return PsiTreeUtil.getRequiredChildOfType(this, RsLifetime.class);
+        return RsPsiTreeUtil.getRequiredChildOfType(this, RsLifetime.class);
     }
 
     @Nullable
     @Override
     public IRsTypeParameterListOwner getOwner() {
-        return PsiTreeUtil.getStubOrPsiParentOfType(this, IRsTypeParameterListOwner.class);
+        return RsPsiTreeUtil.getStubOrPsiParentOfType(this, IRsTypeParameterListOwner.class);
     }
 
     @Override

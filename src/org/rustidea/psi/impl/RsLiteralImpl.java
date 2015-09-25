@@ -17,7 +17,6 @@
 package org.rustidea.psi.impl;
 
 import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsElementVisitor;
@@ -26,6 +25,7 @@ import org.rustidea.psi.RsToken;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.psi.util.PsiImplUtil;
 import org.rustidea.psi.util.RsLiteralUtil;
+import org.rustidea.psi.util.RsPsiTreeUtil;
 import org.rustidea.psi.util.RsStringUtil;
 import org.rustidea.util.NotImplementedException;
 import org.rustidea.util.UnreachableException;
@@ -44,7 +44,7 @@ public class RsLiteralImpl extends IRsCompositePsiElement implements RsLiteral {
     @NotNull
     @Override
     public IElementType getTokenType() {
-        RsToken token = PsiTreeUtil.getRequiredChildOfType(this, RsToken.class);
+        RsToken token = RsPsiTreeUtil.getRequiredChildOfType(this, RsToken.class);
         return token.getTokenType();
     }
 

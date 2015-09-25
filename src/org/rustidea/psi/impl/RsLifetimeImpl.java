@@ -18,7 +18,6 @@ package org.rustidea.psi.impl;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -26,6 +25,7 @@ import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsIdentifier;
 import org.rustidea.psi.RsLifetime;
 import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.util.RsPsiTreeUtil;
 import org.rustidea.stubs.RsLifetimeStub;
 import org.rustidea.util.NotImplementedException;
 
@@ -41,7 +41,7 @@ public class RsLifetimeImpl extends IRsStubPsiElement<RsLifetimeStub> implements
     @NotNull
     @Override
     public RsIdentifier getNameIdentifier() {
-        return PsiTreeUtil.getRequiredChildOfType(this, RsIdentifier.class);
+        return RsPsiTreeUtil.getRequiredChildOfType(this, RsIdentifier.class);
     }
 
     @Nullable

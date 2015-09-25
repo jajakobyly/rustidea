@@ -22,11 +22,9 @@ import com.intellij.psi.util.QualifiedName;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.rustidea.psi.RsElementVisitor;
-import org.rustidea.psi.RsIdentifier;
-import org.rustidea.psi.RsPath;
-import org.rustidea.psi.RsUseDecl;
+import org.rustidea.psi.*;
 import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.util.RsPsiTreeUtil;
 import org.rustidea.stubs.RsUseDeclStub;
 import org.rustidea.util.NotImplementedException;
 
@@ -42,7 +40,7 @@ public class RsUseDeclImpl extends IRsItemPsiElement<RsUseDeclStub> implements R
     @Nullable
     @Override
     public RsIdentifier getNameIdentifier() {
-        return findLastChildByType(RsTypes.IDENTIFIER);
+        return getType() != Type.SINGLE ? null : (RsIdentifier) findLastChildByType(RsTypes.IDENTIFIER);
     }
 
     @Override
@@ -59,8 +57,12 @@ public class RsUseDeclImpl extends IRsItemPsiElement<RsUseDeclStub> implements R
     @NotNull
     @Override
     public PsiElement setName(@NotNull String name) throws IncorrectOperationException {
-        // TODO Implement this
-        throw new IncorrectOperationException(new NotImplementedException());
+        if (getType() == Type.SINGLE) {
+            // TODO Implement this
+            throw new IncorrectOperationException(new NotImplementedException());
+        } else {
+            throw new IncorrectOperationException("cannot rename multiple name binding");
+        }
     }
 
     @NotNull
@@ -69,23 +71,18 @@ public class RsUseDeclImpl extends IRsItemPsiElement<RsUseDeclStub> implements R
         return getRequiredStubOrPsiChild(RsTypes.PATH);
     }
 
-    @NotNull
+    @Nullable
     @Override
     public Type getType() {
-        // TODO Implement this
-        throw new NotImplementedException();
+        RsPathComponent lastComponent = RsPsiTreeUtil.findLastChildByClass(this, RsPathComponent.class);
+        if (lastComponent == null) return null;
+        // TODO Implement this for list and glob declarations.
+        return Type.SINGLE;
     }
 
     @Override
     public boolean isRenamed() {
-        // TODO Implement this
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public boolean isGlob() {
-        // TODO Implement this
-        throw new NotImplementedException();
+        return getName() != null;
     }
 
     @NotNull

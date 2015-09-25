@@ -17,7 +17,6 @@
 package org.rustidea.psi.impl;
 
 import com.intellij.lang.ASTNode;
-import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.IRsAttributeOwner;
@@ -25,6 +24,7 @@ import org.rustidea.psi.RsAttribute;
 import org.rustidea.psi.RsAttributeItem;
 import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.util.RsPsiTreeUtil;
 import org.rustidea.stubs.RsAttributeStub;
 
 public class RsAttributeImpl extends IRsStubPsiElement<RsAttributeStub> implements RsAttribute {
@@ -50,7 +50,7 @@ public class RsAttributeImpl extends IRsStubPsiElement<RsAttributeStub> implemen
     @Nullable
     @Override
     public IRsAttributeOwner getOwner() {
-        return PsiTreeUtil.getStubOrPsiParentOfType(this, IRsAttributeOwner.class);
+        return RsPsiTreeUtil.getStubOrPsiParentOfType(this, IRsAttributeOwner.class);
     }
 
     @Override

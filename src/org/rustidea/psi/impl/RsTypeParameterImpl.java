@@ -18,13 +18,13 @@ package org.rustidea.psi.impl;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.*;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.psi.util.PsiImplUtil;
+import org.rustidea.psi.util.RsPsiTreeUtil;
 import org.rustidea.stubs.RsTypeParameterStub;
 import org.rustidea.util.NotImplementedException;
 
@@ -40,7 +40,7 @@ public class RsTypeParameterImpl extends IRsStubPsiElement<RsTypeParameterStub> 
     @NotNull
     @Override
     public RsIdentifier getNameIdentifier() {
-        return PsiTreeUtil.getRequiredChildOfType(this, RsIdentifier.class);
+        return RsPsiTreeUtil.getRequiredChildOfType(this, RsIdentifier.class);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class RsTypeParameterImpl extends IRsStubPsiElement<RsTypeParameterStub> 
     @Nullable
     @Override
     public IRsTypeParameterListOwner getOwner() {
-        return PsiTreeUtil.getStubOrPsiParentOfType(this, IRsTypeParameterListOwner.class);
+        return RsPsiTreeUtil.getStubOrPsiParentOfType(this, IRsTypeParameterListOwner.class);
     }
 
     @Override
