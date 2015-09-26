@@ -25,7 +25,7 @@ import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 
 public class RsParser {
-    public static final Proxy PROXY = new Proxy();
+    public static final Factory FACTORY = new Factory();
     private static final Logger LOG = Logger.getInstance(RsParser.class);
 
     @NotNull
@@ -74,7 +74,7 @@ public class RsParser {
         return builder.getTreeBuilt();
     }
 
-    static class Proxy implements PsiParser {
+    private static class Factory implements PsiParser {
         @NotNull
         @Override
         public ASTNode parse(IElementType root, @NotNull PsiBuilder builder) {

@@ -46,7 +46,7 @@ public class RustParserDefinition implements ParserDefinition {
     @NotNull
     @Override
     public PsiParser createParser(Project project) {
-        return RsParser.PROXY;
+        return RsParser.FACTORY;
     }
 
     @NotNull
