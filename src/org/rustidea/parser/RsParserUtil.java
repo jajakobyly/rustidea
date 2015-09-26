@@ -16,33 +16,57 @@
 
 package org.rustidea.parser;
 
+import com.intellij.lang.PsiBuilder;
+import com.intellij.lang.PsiBuilder.Marker;
+import com.intellij.lang.PsiBuilderUtil;
 import com.intellij.psi.tree.IElementType;
-import org.rustidea.parser.framework.Parser;
-import org.rustidea.parser.framework.Scanners;
+import org.jetbrains.annotations.NotNull;
+import org.rustidea.psi.types.RsTypes;
 
-import static org.rustidea.parser.framework.Scanners.tokenFail;
-import static org.rustidea.parser.framework.Scanners.tokenWarn;
-import static org.rustidea.psi.types.RsTokenTypes.OP_SEMICOLON;
-import static org.rustidea.psi.types.RsTypes.IDENTIFIER;
+import static org.rustidea.psi.util.RsPsiUtil.getHumanReadableName;
 
 public final class RsParserUtil {
-    /**
-     * <pre>identRequired = {@link Scanners#tokenFail(IElementType)}(IDENTIFIER)</pre>
-     *
-     * @see #ident
-     */
-    public static final Parser identRequired = tokenFail(IDENTIFIER);
-
-    /**
-     * <pre>ident = {@link Scanners#tokenWarn(IElementType)}(IDENTIFIER)</pre>
-     *
-     * @see #identRequired
-     */
-    public static final Parser ident = tokenWarn(IDENTIFIER);
-
-    /** <pre>semicolon = {@link Scanners#tokenWarn(IElementType, String)}(";", ...)</pre> */
-    public static final Parser semicolon = tokenWarn(OP_SEMICOLON, "missing semicolon");
-
     private RsParserUtil() {
+    }
+
+    public static void error(@NotNull final PsiBuilder builder, final String message) {
+        builder.mark().error(message);
+    }
+
+    public static void errorExpected(@NotNull final PsiBuilder builder, final IElementType elementType) {
+        error(builder, "expected " + getHumanReadableName(elementType));
+    }
+
+    public static boolean expectOrWarn(@NotNull final PsiBuilder builder, @NotNull final IElementType token) {
+        return expectOrWarn(builder, token, "expected " + getHumanReadableName(token));
+    }
+
+    public static boolean expectOrWarnMissing(@NotNull final PsiBuilder builder, @NotNull final IElementType token) {
+        return expectOrWarn(builder, token, "missing " + getHumanReadableName(token));
+    }
+
+    public static boolean expectOrWarn(@NotNull final PsiBuilder builder,
+                                       @NotNull final IElementType token,
+                                       @NotNull final String errMsg) {
+        if (!PsiBuilderUtil.expect(builder, token)) {
+            error(builder, errMsg);
+            return false;
+        }
+        return true;
+    }
+
+    public static void unexpected(@NotNull final PsiBuilder builder) {
+        Marker marker = builder.mark();
+        final String token = getHumanReadableName(builder.getTokenType());
+        builder.advanceLexer();
+        marker.error("unexpected " + token);
+    }
+
+    public static boolean identifier(@NotNull final PsiBuilder builder) {
+        return expectOrWarn(builder, RsTypes.IDENTIFIER);
+    }
+
+    public static boolean semicolon(@NotNull final PsiBuilder builder) {
+        return expectOrWarnMissing(builder, RsTypes.OP_SEMICOLON);
     }
 }
