@@ -88,12 +88,35 @@ public class RsModuleParser {
     }
 
     private boolean externCrateDecl() {
-        // TODO
-        return false;
+        final Marker marker = builder.mark();
+
+        if (!expect(builder, KW_EXTERN) || !expect(builder, KW_CRATE)) {
+            marker.rollbackTo();
+            return false;
+        }
+
+        if (!expectOrWarn(builder, IDENTIFIER)) {
+            semicolon(builder);
+            marker.drop();
+            return false;
+        }
+
+        if (expect(builder, KW_AS)) {
+            expectOrWarn(builder, IDENTIFIER);
+        }
+
+        semicolon(builder);
+
+        marker.drop(); // PSI element will be marked in #item()
+        return true;
     }
 
     private boolean useDecl() {
+        final Marker marker = builder.mark();
+
         // TODO
+
+        marker.drop(); // PSI element will be marked in #item()
         return false;
     }
 

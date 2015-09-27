@@ -70,6 +70,6 @@ public final class RsParserUtil {
     }
 
     public static boolean semicolon(@NotNull final PsiBuilder builder) {
-        return expectOrWarnMissing(builder, RsTypes.OP_SEMICOLON);
+        return expectOrWarn(builder, RsTypes.OP_SEMICOLON, "missing semicolon");
     }
 }
