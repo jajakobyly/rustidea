@@ -19,6 +19,7 @@ package org.rustidea.parser;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
 import com.intellij.lang.PsiBuilderUtil;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.types.RsTypes;
@@ -26,6 +27,8 @@ import org.rustidea.psi.types.RsTypes;
 import static org.rustidea.psi.util.RsPsiUtil.getHumanReadableName;
 
 public final class RsParserUtil {
+    private static final Logger LOG = Logger.getInstance(RsParserUtil.class);
+
     private RsParserUtil() {
     }
 

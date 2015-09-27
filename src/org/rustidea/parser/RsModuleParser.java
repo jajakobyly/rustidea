@@ -153,7 +153,12 @@ public class RsModuleParser {
             parser.getExpressionParser().literal();
             value.drop();
         } else if (expect(builder, OP_LPAREN)) {
-            // TODO
+            boolean first = true;
+            while (builder.getTokenType() == IDENTIFIER || builder.getTokenType() == OP_COMMA) {
+                if (!first) expectOrWarnMissing(builder, OP_COMMA);
+                attributeItem();
+                first = false;
+            }
 
             expectOrWarnMissing(builder, OP_RPAREN);
             value.done(ATTRIBUTE_ITEM_LIST);
