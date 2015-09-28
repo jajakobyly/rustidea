@@ -31,6 +31,7 @@ public class RsExpressionParser {
 
     @NotNull
     private final RsParser parser;
+    @NotNull
     private final PsiBuilder builder;
 
     public RsExpressionParser(@NotNull final RsParser parser) {

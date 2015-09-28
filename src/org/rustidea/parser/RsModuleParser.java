@@ -34,6 +34,7 @@ public class RsModuleParser {
 
     @NotNull
     private final RsParser parser;
+    @NotNull
     private final PsiBuilder builder;
 
     public RsModuleParser(@NotNull final RsParser parser) {
