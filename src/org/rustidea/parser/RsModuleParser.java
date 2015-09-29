@@ -65,6 +65,11 @@ public class RsModuleParser {
             return true;
         }
 
+        if (mod()) {
+            marker.done(MODULE);
+            return true;
+        }
+
         if (hasModifierList) {
             RsParserUtil.error(builder, "expected item");
             marker.drop();
@@ -121,6 +126,29 @@ public class RsModuleParser {
         return false;
     }
 
+    private boolean mod() {
+        final Marker marker = builder.mark();
+
+        if (!expect(builder, KW_MOD) || !identifier(builder)) {
+            marker.rollbackTo();
+            return false;
+        }
+
+        //noinspection StatementWithEmptyBody
+        if (expect(builder, OP_SEMICOLON)) {
+            // do nothing
+        } else if (expect(builder, OP_LBRACE)) {
+            //noinspection StatementWithEmptyBody
+            while (attribute(true) || item()) ;
+            expectOrWarnMissing(builder, OP_RBRACE);
+        } else {
+            error(builder, "missing '{' or ';'");
+        }
+
+        marker.drop(); // PSI element will be marked in #item()
+        return true;
+    }
+
     public boolean attributeList() {
         final Marker marker = builder.mark();
         if (attribute(false)) {
@@ -171,7 +199,7 @@ public class RsModuleParser {
             return false;
         }
 
-        Marker value = builder.mark();
+        final Marker value = builder.mark();
 
         if (expect(builder, OP_EQ)) {
             parser.getExpressionParser().literal();
