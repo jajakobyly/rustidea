@@ -153,7 +153,7 @@ public class RsModuleParser {
             return false;
         }
 
-        expectOrWarnMissing(builder, OP_LBRACKET);
+        expectOrWarn(builder, OP_LBRACKET);
 
         attributeItem();
 
