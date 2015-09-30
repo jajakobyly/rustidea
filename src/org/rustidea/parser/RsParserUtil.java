@@ -21,8 +21,11 @@ import com.intellij.lang.PsiBuilder.Marker;
 import com.intellij.lang.PsiBuilderUtil;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.psi.tree.IElementType;
+import com.intellij.util.BooleanFunction;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.types.RsTypes;
+
+import java.util.EnumSet;
 
 import static org.rustidea.psi.util.RsPsiUtil.getHumanReadableName;
 
@@ -82,5 +85,55 @@ public final class RsParserUtil {
 
     public static boolean semicolon(@NotNull final PsiBuilder builder) {
         return expectOrWarn(builder, RsTypes.OP_SEMICOLON, "missing semicolon");
+    }
+
+    public static boolean sep(@NotNull final PsiBuilder builder,
+                              @NotNull final IElementType separator,
+                              @NotNull final BooleanFunction<PsiBuilder> parser) {
+        return sep(builder, separator, parser, EnumSet.noneOf(SepCfg.class));
+    }
+
+    public static boolean sep(@NotNull final PsiBuilder builder,
+                              @NotNull final IElementType separator,
+                              @NotNull final BooleanFunction<PsiBuilder> parser,
+                              @NotNull final EnumSet<SepCfg> config) {
+        boolean globalResult = false;
+        boolean first = true;
+        while (!builder.eof()) {
+            final Marker marker = builder.mark();
+            boolean result = true;
+
+            if (!first) result = expectOrWarn(builder, separator);
+            result = result && parser.fun(builder);
+
+            if (!result && config.contains(SepCfg.TOLERATE_EMPTY) && builder.getTokenType() == separator) {
+                result = true;
+            }
+
+            if (result) {
+                marker.drop();
+                globalResult = true;
+            } else {
+                marker.rollbackTo();
+                break;
+            }
+
+            first = false;
+        }
+
+        if (builder.getTokenType() == separator) {
+            if (config.contains(SepCfg.ALLOW_TRAILING)) {
+                builder.advanceLexer();
+                globalResult = true;
+            } else {
+                unexpected(builder);
+            }
+        }
+
+        return globalResult;
+    }
+
+    public enum SepCfg {
+        ALLOW_TRAILING, TOLERATE_EMPTY
     }
 }

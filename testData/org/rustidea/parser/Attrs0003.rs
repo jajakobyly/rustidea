@@ -9,7 +9,10 @@ extern crate a;
 
 #![foo(a, b, c,)]
 #![foo(a,,b)]
+
 #![foo(,)]
+#![foo(,,)]
+#![foo(,,,)]
 
 #![foo()]
 #![foo(]

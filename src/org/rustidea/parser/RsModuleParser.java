@@ -20,7 +20,10 @@ import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.psi.tree.TokenSet;
+import com.intellij.util.BooleanFunction;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.EnumSet;
 
 import static com.intellij.lang.PsiBuilderUtil.expect;
 import static org.rustidea.parser.RsParserUtil.*;
@@ -214,12 +217,16 @@ public class RsModuleParser {
             parser.getExpressionParser().literal();
             value.drop();
         } else if (expect(builder, OP_LPAREN)) {
-            boolean first = true;
-            while (builder.getTokenType() == IDENTIFIER || builder.getTokenType() == OP_COMMA) {
-                if (!first) expectOrWarnMissing(builder, OP_COMMA);
-                attributeItem();
-                first = false;
-            }
+            sep(
+                builder,
+                OP_COMMA,
+                new BooleanFunction<PsiBuilder>() {
+                    @Override
+                    public boolean fun(PsiBuilder builder) {
+                        return attributeItem();
+                    }
+                },
+                EnumSet.of(SepCfg.TOLERATE_EMPTY));
 
             expectOrWarnMissing(builder, OP_RPAREN);
             value.done(ATTRIBUTE_ITEM_LIST);

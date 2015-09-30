@@ -19,6 +19,7 @@ package org.rustidea.parser;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
 import com.intellij.psi.tree.TokenSet;
+import com.intellij.util.BooleanFunction;
 import org.jetbrains.annotations.NotNull;
 
 import static com.intellij.lang.PsiBuilderUtil.expect;
@@ -43,42 +44,29 @@ public class RsReferenceParser {
     public boolean path() {
         final Marker marker = builder.mark();
 
-        {
-            final Marker relationMarker = builder.mark();
-            final boolean hasSelfOrSuper = expect(builder, SELF_OR_SUPER);
-            if (!hasSelfOrSuper) {
-                expect(builder, OP_DOUBLE_COLON);
-            }
-            relationMarker.done(PATH_RELATION);
+        final Marker relationMarker = builder.mark();
+        final boolean hasSelfOrSuper = expect(builder, SELF_OR_SUPER);
+        if (!hasSelfOrSuper) {
+            expect(builder, OP_DOUBLE_COLON);
+        }
+        relationMarker.done(PATH_RELATION);
 
-            if (hasSelfOrSuper) {
-                expectOrWarnMissing(builder, OP_DOUBLE_COLON);
-            }
+        if (hasSelfOrSuper) {
+            expectOrWarnMissing(builder, OP_DOUBLE_COLON);
         }
 
-        boolean first = true;
-        while (!builder.eof()) {
-            final Marker componentMarker = builder.mark();
-
-            boolean result = true;
-            if (!first) result = expectOrWarn(builder, OP_DOUBLE_COLON);
-            result = result && identifier(builder, PATH_COMPONENT);
-
-            if (result) {
-                componentMarker.drop();
-            } else {
-                componentMarker.rollbackTo();
-                break;
-            }
-
-            first = false;
-        }
-
-        if (builder.getTokenType() == OP_DOUBLE_COLON) {
-            unexpected(builder);
-        }
+        sep(builder, OP_DOUBLE_COLON, PathComponentParser.INSTANCE);
 
         marker.done(PATH);
         return true;
+    }
+
+    private enum PathComponentParser implements BooleanFunction<PsiBuilder> {
+        INSTANCE;
+
+        @Override
+        public boolean fun(PsiBuilder builder) {
+            return identifier(builder, PATH_COMPONENT);
+        }
     }
 }
