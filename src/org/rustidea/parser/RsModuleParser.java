@@ -120,10 +120,19 @@ public class RsModuleParser {
     private boolean useDecl() {
         final Marker marker = builder.mark();
 
-        // TODO
+        if (!expect(builder, KW_USE) || !parser.getReferenceParser().path()) {
+            marker.rollbackTo();
+            return false;
+        }
+
+        if (expect(builder, KW_AS)) {
+            identifier(builder);
+        }
+
+        semicolon(builder);
 
         marker.drop(); // PSI element will be marked in #item()
-        return false;
+        return true;
     }
 
     private boolean mod() {

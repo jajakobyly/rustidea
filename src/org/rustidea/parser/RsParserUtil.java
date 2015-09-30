@@ -69,6 +69,17 @@ public final class RsParserUtil {
         return expectOrWarn(builder, RsTypes.IDENTIFIER);
     }
 
+    public static boolean identifier(@NotNull final PsiBuilder builder, @NotNull final IElementType psiType) {
+        final Marker marker = builder.mark();
+        if (identifier(builder)) {
+            marker.done(psiType);
+            return true;
+        } else {
+            marker.drop();
+            return false;
+        }
+    }
+
     public static boolean semicolon(@NotNull final PsiBuilder builder) {
         return expectOrWarn(builder, RsTypes.OP_SEMICOLON, "missing semicolon");
     }

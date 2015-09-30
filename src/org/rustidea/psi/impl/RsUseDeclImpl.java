@@ -22,7 +22,10 @@ import com.intellij.psi.util.QualifiedName;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.rustidea.psi.*;
+import org.rustidea.psi.RsElementVisitor;
+import org.rustidea.psi.RsIdentifier;
+import org.rustidea.psi.RsPath;
+import org.rustidea.psi.RsUseDecl;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.psi.util.RsPsiTreeUtil;
 import org.rustidea.stubs.RsUseDeclStub;
@@ -74,8 +77,8 @@ public class RsUseDeclImpl extends IRsItemPsiElement<RsUseDeclStub> implements R
     @Nullable
     @Override
     public Type getType() {
-        RsPathComponent lastComponent = RsPsiTreeUtil.findLastChildByClass(this, RsPathComponent.class);
-        if (lastComponent == null) return null;
+        RsPath path = RsPsiTreeUtil.findLastChildByClass(this, RsPath.class);
+        if (path == null) return null;
         // TODO Implement this for list and glob declarations.
         return Type.SINGLE;
     }
