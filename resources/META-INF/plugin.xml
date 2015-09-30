@@ -43,6 +43,7 @@
         <stubElementTypeHolder class="org.rustidea.psi.types.RsStubElementTypes"/>
         <lang.syntaxHighlighterFactory key="Rust" implementationClass="org.rustidea.editor.RsSyntaxHighlighterFactory"/>
         <lang.braceMatcher language="Rust" implementationClass="org.rustidea.editor.RsBraceMatcher"/>
+        <lang.commenter language="Rust" implementationClass="org.rustidea.editor.RsCommenter"/>
         <annotator language="Rust" implementationClass="org.rustidea.editor.RsDumbAwareAnnotator"/>
     </extensions>
 
