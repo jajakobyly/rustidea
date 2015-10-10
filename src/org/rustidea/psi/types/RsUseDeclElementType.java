@@ -22,11 +22,11 @@ import com.intellij.psi.stubs.StubInputStream;
 import com.intellij.psi.stubs.StubOutputStream;
 import com.intellij.util.io.StringRef;
 import org.jetbrains.annotations.NotNull;
+import org.rustidea.psi.RsReferenceElement;
 import org.rustidea.psi.RsUseDecl;
 import org.rustidea.psi.impl.RsUseDeclImpl;
 import org.rustidea.stubs.RsUseDeclStub;
 import org.rustidea.stubs.impl.RsUseDeclStubImpl;
-import org.rustidea.util.NotImplementedException;
 
 import java.io.IOException;
 
@@ -52,8 +52,9 @@ public class RsUseDeclElementType extends IRsStubElementType<RsUseDeclStub, RsUs
     @NotNull
     @Override
     public RsUseDeclStub createStub(@NotNull RsUseDecl psi, StubElement parentStub) {
-        // TODO Implement this.
-        throw new NotImplementedException();
+        final RsReferenceElement referenceElement = psi.getUseReference();
+        final String refText = referenceElement == null ? null : referenceElement.getText();
+        return new RsUseDeclStubImpl(parentStub, StringRef.fromNullableString(refText), psi.getType().pack());
     }
 
     @Override

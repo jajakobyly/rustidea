@@ -19,13 +19,10 @@ package org.rustidea.psi.impl;
 import com.intellij.lang.ASTNode;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.rustidea.psi.RsElementVisitor;
-import org.rustidea.psi.RsReferenceElement;
-import org.rustidea.psi.RsUseDecl;
+import org.rustidea.psi.*;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.psi.util.RsPsiUtil;
 import org.rustidea.stubs.RsUseDeclStub;
-import org.rustidea.util.NotImplementedException;
 
 public class RsUseDeclImpl extends IRsItemPsiElement<RsUseDeclStub> implements RsUseDecl {
     public RsUseDeclImpl(@NotNull RsUseDeclStub stub) {
@@ -50,8 +47,14 @@ public class RsUseDeclImpl extends IRsItemPsiElement<RsUseDeclStub> implements R
     @NotNull
     @Override
     public Type getType() {
-        // TODO Implement this.
-        throw new NotImplementedException();
+        // TODO Lists and globs.
+
+        final RsToken asToken = findChildByType(RsTypes.KW_AS);
+        if (asToken != null && asToken.getNextSibling() instanceof RsIdentifier) {
+            return Type.RENAMED;
+        }
+
+        return Type.SIMPLE;
     }
 
     @Override

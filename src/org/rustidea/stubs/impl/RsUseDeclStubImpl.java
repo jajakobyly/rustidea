@@ -35,9 +35,9 @@ public class RsUseDeclStubImpl extends StubBase<RsUseDecl> implements RsUseDeclS
     private final byte flags;
     private Reference<RsReferenceElement> reference = null;
 
-    public RsUseDeclStubImpl(StubElement parent, final StringRef text, final byte flags) {
+    public RsUseDeclStubImpl(StubElement parent, final StringRef referenceText, final byte flags) {
         super(parent, RsTypes.USE_DECL);
-        this.text = text;
+        this.text = referenceText;
         this.flags = flags;
     }
 
@@ -57,7 +57,7 @@ public class RsUseDeclStubImpl extends StubBase<RsUseDecl> implements RsUseDeclS
     public RsReferenceElement getUseReference() {
         RsReferenceElement ref = SoftReference.dereference(reference);
         if (ref == null) {
-            // TODO Implement this.
+            // TODO Implement this (build reference PSI from `text`).
             throw new NotImplementedException();
         }
         return ref;

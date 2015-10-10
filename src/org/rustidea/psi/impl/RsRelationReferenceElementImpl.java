@@ -31,10 +31,6 @@ import org.rustidea.psi.util.RsPsiUtil;
 import org.rustidea.util.NotImplementedException;
 import org.rustidea.util.UnreachableException;
 
-import static org.rustidea.psi.types.RsTokenTypes.KW_SELF;
-import static org.rustidea.psi.types.RsTokenTypes.KW_SUPER;
-import static org.rustidea.psi.types.RsTypes.SELF_OR_SUPER;
-
 public class RsRelationReferenceElementImpl extends IRsCompositePsiElement implements RsRelationReferenceElement {
     public RsRelationReferenceElementImpl() {
         super(RsTypes.RELATION_REFERENCE_ELEMENT);
@@ -49,11 +45,11 @@ public class RsRelationReferenceElementImpl extends IRsCompositePsiElement imple
             return Type.GLOBAL;
         }
 
-        if (element.getTokenType() == KW_SELF) {
+        if (element.getTokenType() == RsTypes.KW_SELF) {
             return Type.SELF;
         }
 
-        if (element.getTokenType() == KW_SUPER) {
+        if (element.getTokenType() == RsTypes.KW_SUPER) {
             return Type.SUPER;
         }
 
@@ -63,7 +59,7 @@ public class RsRelationReferenceElementImpl extends IRsCompositePsiElement imple
     @Nullable
     @Override
     public RsToken getReferenceNameElement() {
-        return (RsToken) findPsiChildByType(SELF_OR_SUPER);
+        return (RsToken) findPsiChildByType(RsTypes.SELF_OR_SUPER);
     }
 
     @Nullable
