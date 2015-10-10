@@ -25,7 +25,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.types.IRsElementType;
 
-import static org.rustidea.psi.types.RsTypes.*;
+import static org.rustidea.psi.types.RsPsiTypes.*;
 
 public class RsBraceMatcher implements PairedBraceMatcher {
     private static final BracePair[] PAIRS = new BracePair[]{

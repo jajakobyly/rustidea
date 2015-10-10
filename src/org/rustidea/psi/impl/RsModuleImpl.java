@@ -22,7 +22,7 @@ import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.*;
-import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsPsiTreeUtil;
 import org.rustidea.psi.util.RsPsiUtil;
 import org.rustidea.stubs.RsModuleStub;
@@ -30,7 +30,7 @@ import org.rustidea.util.NotImplementedException;
 
 public class RsModuleImpl extends IRsStubPsiElement<RsModuleStub> implements RsModule {
     public RsModuleImpl(@NotNull RsModuleStub stub) {
-        super(stub, RsTypes.MODULE);
+        super(stub, RsPsiTypes.MODULE);
     }
 
     public RsModuleImpl(@NotNull ASTNode node) {
@@ -63,7 +63,7 @@ public class RsModuleImpl extends IRsStubPsiElement<RsModuleStub> implements RsM
     @Nullable
     @Override
     public RsModifierList getModifierList() {
-        return getStubOrPsiChild(RsTypes.MODIFIER_LIST);
+        return getStubOrPsiChild(RsPsiTypes.MODIFIER_LIST);
     }
 
     @NotNull

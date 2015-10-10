@@ -19,7 +19,7 @@ package org.rustidea.psi;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.types.RsPsiTypes;
 
 public interface RsLiteral extends IRsPsiElement {
     /**
@@ -34,24 +34,24 @@ public interface RsLiteral extends IRsPsiElement {
      * <p><table>
      * <tr><th>Token</th><th>Java type</th></tr>
      * <tr>
-     * <td>{@link RsTypes#KW_TRUE}, {@link RsTypes#KW_FALSE}</td>
+     * <td>{@link RsPsiTypes#KW_TRUE}, {@link RsPsiTypes#KW_FALSE}</td>
      * <td>{@link Boolean}</td>
      * </tr>
      * <tr>
-     * <td>{@link RsTypes#INT_LIT}</td>
+     * <td>{@link RsPsiTypes#INT_LIT}</td>
      * <td>{@link java.math.BigInteger} (Java 6 {@link Long} is too small)</td>
      * </tr>
      * <tr>
-     * <td>{@link RsTypes#FLOAT_LIT}</td>
+     * <td>{@link RsPsiTypes#FLOAT_LIT}</td>
      * <td>{@link Double}</td>
      * </tr>
      * <tr>
-     * <td>{@link RsTypes#CHAR_LIT}, {@link RsTypes#BYTE_LIT}</td>
+     * <td>{@link RsPsiTypes#CHAR_LIT}, {@link RsPsiTypes#BYTE_LIT}</td>
      * <td>{@link Character}</td>
      * </tr>
      * <tr>
-     * <td>{@link RsTypes#STRING_LIT}, {@link RsTypes#BYTE_STRING_LIT},
-     * {@link RsTypes#RAW_STRING_LIT}, {@link RsTypes#RAW_BYTE_STRING_LIT}</td>
+     * <td>{@link RsPsiTypes#STRING_LIT}, {@link RsPsiTypes#BYTE_STRING_LIT},
+     * {@link RsPsiTypes#RAW_STRING_LIT}, {@link RsPsiTypes#RAW_BYTE_STRING_LIT}</td>
      * <td>{@link String}</td>
      * </tr>
      * </table></p>
@@ -67,24 +67,24 @@ public interface RsLiteral extends IRsPsiElement {
      * <p><table>
      * <tr><th>Token</th><th>Example</th></tr>
      * <tr>
-     * <td>{@link RsTypes#KW_TRUE}, {@link RsTypes#KW_FALSE}</td>
+     * <td>{@link RsPsiTypes#KW_TRUE}, {@link RsPsiTypes#KW_FALSE}</td>
      * <td>{@code true} -> {@code true}</td>
      * </tr>
      * <tr>
-     * <td>{@link RsTypes#INT_LIT}, {@link RsTypes#FLOAT_LIT}</td>
+     * <td>{@link RsPsiTypes#INT_LIT}, {@link RsPsiTypes#FLOAT_LIT}</td>
      * <td>{@code 100usize} -> {@code 100}, {@code 0xAafi32} -> {@code 0xAaf},
      * {@code 0b100_111} -> {@code 0b100_111}, {@code 123.0E+77f32} -> {@code 123.0E+77}</td>
      * </tr>
      * <tr>
-     * <td>{@link RsTypes#CHAR_LIT}, {@link RsTypes#BYTE_LIT}</td>
+     * <td>{@link RsPsiTypes#CHAR_LIT}, {@link RsPsiTypes#BYTE_LIT}</td>
      * <td>{@code 'a'} -> {@code a}, {@code b'b'suffix} -> {@code b}</td>
      * </tr>
      * <tr>
-     * <td>{@link RsTypes#STRING_LIT}, {@link RsTypes#BYTE_STRING_LIT}</td>
+     * <td>{@link RsPsiTypes#STRING_LIT}, {@link RsPsiTypes#BYTE_STRING_LIT}</td>
      * <td>{@code "foo"} -> {@code foo}, {@code b"foo\nbar"} -> <code>foo<br/>bar</code></td>
      * </tr>
      * <tr>
-     * <td>{@link RsTypes#RAW_STRING_LIT}, {@link RsTypes#RAW_BYTE_STRING_LIT}</td>
+     * <td>{@link RsPsiTypes#RAW_STRING_LIT}, {@link RsPsiTypes#RAW_BYTE_STRING_LIT}</td>
      * <td>{@code r###"foo " bar"###} -> {@code foo " bar}</td>
      * </tr>
      * </table></p>

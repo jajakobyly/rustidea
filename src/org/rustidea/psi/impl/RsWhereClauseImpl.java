@@ -24,12 +24,12 @@ import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsReferenceElement;
 import org.rustidea.psi.RsTypeParameter;
 import org.rustidea.psi.RsWhereClause;
-import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsPsiTreeUtil;
 
 public class RsWhereClauseImpl extends IRsStubPsiElement<EmptyStub> implements RsWhereClause {
     public RsWhereClauseImpl(@NotNull EmptyStub stub) {
-        super(stub, RsTypes.WHERE_CLAUSE);
+        super(stub, RsPsiTypes.WHERE_CLAUSE);
     }
 
     public RsWhereClauseImpl(@NotNull ASTNode node) {

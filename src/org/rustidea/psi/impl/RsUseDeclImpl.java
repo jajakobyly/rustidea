@@ -20,13 +20,13 @@ import com.intellij.lang.ASTNode;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.*;
-import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsPsiUtil;
 import org.rustidea.stubs.RsUseDeclStub;
 
 public class RsUseDeclImpl extends IRsItemPsiElement<RsUseDeclStub> implements RsUseDecl {
     public RsUseDeclImpl(@NotNull RsUseDeclStub stub) {
-        super(stub, RsTypes.USE_DECL);
+        super(stub, RsPsiTypes.USE_DECL);
     }
 
     public RsUseDeclImpl(@NotNull ASTNode node) {
@@ -41,7 +41,7 @@ public class RsUseDeclImpl extends IRsItemPsiElement<RsUseDeclStub> implements R
         if (stub != null) {
             return stub.getUseReference();
         }
-        return findChildByType(RsTypes.REFERENCE_ELEMENT);
+        return findChildByType(RsPsiTypes.REFERENCE_ELEMENT);
     }
 
     @NotNull
@@ -49,7 +49,7 @@ public class RsUseDeclImpl extends IRsItemPsiElement<RsUseDeclStub> implements R
     public Type getType() {
         // TODO Lists and globs.
 
-        final RsToken asToken = findChildByType(RsTypes.KW_AS);
+        final RsToken asToken = findChildByType(RsPsiTypes.KW_AS);
         if (asToken != null && asToken.getNextSibling() instanceof RsIdentifier) {
             return Type.RENAMED;
         }

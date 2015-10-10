@@ -20,11 +20,11 @@ import com.intellij.psi.stubs.NamedStubBase;
 import com.intellij.psi.stubs.StubElement;
 import com.intellij.util.io.StringRef;
 import org.rustidea.psi.RsLifetime;
-import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.stubs.RsLifetimeStub;
 
 public class RsLifetimeStubImpl extends NamedStubBase<RsLifetime> implements RsLifetimeStub {
     public RsLifetimeStubImpl(final StubElement parent, final StringRef name) {
-        super(parent, RsTypes.LIFETIME, name);
+        super(parent, RsPsiTypes.LIFETIME, name);
     }
 }

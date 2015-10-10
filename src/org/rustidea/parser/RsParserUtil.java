@@ -23,7 +23,7 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.util.BooleanFunction;
 import org.jetbrains.annotations.NotNull;
-import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.types.RsPsiTypes;
 
 import java.util.EnumSet;
 
@@ -69,7 +69,7 @@ public final class RsParserUtil {
     }
 
     public static boolean identifier(@NotNull final PsiBuilder builder) {
-        return expectOrWarn(builder, RsTypes.IDENTIFIER);
+        return expectOrWarn(builder, RsPsiTypes.IDENTIFIER);
     }
 
     public static boolean identifier(@NotNull final PsiBuilder builder, @NotNull final IElementType psiType) {
@@ -84,7 +84,7 @@ public final class RsParserUtil {
     }
 
     public static boolean semicolon(@NotNull final PsiBuilder builder) {
-        return expectOrWarn(builder, RsTypes.OP_SEMICOLON, "missing semicolon");
+        return expectOrWarn(builder, RsPsiTypes.OP_SEMICOLON, "missing semicolon");
     }
 
     public static boolean sep(@NotNull final PsiBuilder builder,

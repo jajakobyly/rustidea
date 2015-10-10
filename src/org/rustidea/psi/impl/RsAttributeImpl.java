@@ -23,13 +23,13 @@ import org.rustidea.psi.IRsAttributeOwner;
 import org.rustidea.psi.RsAttribute;
 import org.rustidea.psi.RsAttributeItem;
 import org.rustidea.psi.RsElementVisitor;
-import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsPsiTreeUtil;
 import org.rustidea.stubs.RsAttributeStub;
 
 public class RsAttributeImpl extends IRsStubPsiElement<RsAttributeStub> implements RsAttribute {
     public RsAttributeImpl(@NotNull final RsAttributeStub stub) {
-        super(stub, RsTypes.ATTRIBUTE);
+        super(stub, RsPsiTypes.ATTRIBUTE);
     }
 
     public RsAttributeImpl(@NotNull final ASTNode node) {
@@ -39,12 +39,12 @@ public class RsAttributeImpl extends IRsStubPsiElement<RsAttributeStub> implemen
     @Nullable
     @Override
     public RsAttributeItem getItem() {
-        return getStubOrPsiChild(RsTypes.ATTRIBUTE_ITEM);
+        return getStubOrPsiChild(RsPsiTypes.ATTRIBUTE_ITEM);
     }
 
     @Override
     public boolean isParentAttribute() {
-        return findChildByType(RsTypes.OP_BANG) != null;
+        return findChildByType(RsPsiTypes.OP_BANG) != null;
     }
 
     @Nullable

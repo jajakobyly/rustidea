@@ -19,11 +19,11 @@ package org.rustidea.stubs.impl;
 import com.intellij.psi.stubs.StubBase;
 import com.intellij.psi.stubs.StubElement;
 import org.rustidea.psi.RsAttributeItemList;
-import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.stubs.RsAttributeItemListStub;
 
 public class RsAttributeItemListStubImpl extends StubBase<RsAttributeItemList> implements RsAttributeItemListStub {
     public RsAttributeItemListStubImpl(final StubElement parent) {
-        super(parent, RsTypes.ATTRIBUTE_ITEM_LIST);
+        super(parent, RsPsiTypes.ATTRIBUTE_ITEM_LIST);
     }
 }

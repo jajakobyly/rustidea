@@ -26,7 +26,7 @@ import com.intellij.psi.tree.IElementType;
 import com.intellij.util.containers.ContainerUtil;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.lexer.RsHighlightingLexer;
-import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.types.RsPsiTypes;
 
 import java.util.Map;
 
@@ -88,32 +88,32 @@ public class RsSyntaxHighlighter extends SyntaxHighlighterBase {
     public static final Map<IElementType, TextAttributesKey> KEYS = ContainerUtil.newHashMap();
 
     static {
-        fillMap(KEYS, RsTypes.KEYWORD_TOKEN_SET, KEYWORD);
-        fillMap(KEYS, RsTypes.BRACE_TOKEN_SET, BRACES);
-        fillMap(KEYS, RsTypes.BRACKET_TOKEN_SET, BRACKETS);
-        fillMap(KEYS, RsTypes.PAREN_TOKEN_SET, PARENTHESES);
-        fillMap(KEYS, RsTypes.NUMBER_TOKEN_SET, NUMBER);
-        fillMap(KEYS, RsTypes.CHAR_TOKEN_SET, CHAR);
-        fillMap(KEYS, RsTypes.STRING_TOKEN_SET, STRING);
-        fillMap(KEYS, RsTypes.RAW_STRING_TOKEN_SET, RAW_STRING);
+        fillMap(KEYS, RsPsiTypes.KEYWORD_TOKEN_SET, KEYWORD);
+        fillMap(KEYS, RsPsiTypes.BRACE_TOKEN_SET, BRACES);
+        fillMap(KEYS, RsPsiTypes.BRACKET_TOKEN_SET, BRACKETS);
+        fillMap(KEYS, RsPsiTypes.PAREN_TOKEN_SET, PARENTHESES);
+        fillMap(KEYS, RsPsiTypes.NUMBER_TOKEN_SET, NUMBER);
+        fillMap(KEYS, RsPsiTypes.CHAR_TOKEN_SET, CHAR);
+        fillMap(KEYS, RsPsiTypes.STRING_TOKEN_SET, STRING);
+        fillMap(KEYS, RsPsiTypes.RAW_STRING_TOKEN_SET, RAW_STRING);
 
-        safeMap(KEYS, RsTypes.IDENTIFIER, IDENTIFIER);
-        safeMap(KEYS, RsTypes.LIFETIME_TOKEN, LIFETIME);
+        safeMap(KEYS, RsPsiTypes.IDENTIFIER, IDENTIFIER);
+        safeMap(KEYS, RsPsiTypes.LIFETIME_TOKEN, LIFETIME);
         safeMap(KEYS, StringEscapesTokenTypes.VALID_STRING_ESCAPE_TOKEN, VALID_ESCAPE);
         safeMap(KEYS, StringEscapesTokenTypes.INVALID_CHARACTER_ESCAPE_TOKEN, INVALID_ESCAPE);
         safeMap(KEYS, StringEscapesTokenTypes.INVALID_UNICODE_ESCAPE_TOKEN, INVALID_ESCAPE);
-        safeMap(KEYS, RsTypes.BLOCK_COMMENT, BLOCK_COMMENT);
-        safeMap(KEYS, RsTypes.LINE_COMMENT, LINE_COMMENT);
-        safeMap(KEYS, RsTypes.BLOCK_DOC, BLOCK_DOC);
-        safeMap(KEYS, RsTypes.LINE_DOC, LINE_DOC);
-        safeMap(KEYS, RsTypes.BLOCK_PARENT_DOC, BLOCK_PARENT_DOC);
-        safeMap(KEYS, RsTypes.LINE_PARENT_DOC, LINE_PARENT_DOC);
-        safeMap(KEYS, RsTypes.BAD_CHARACTER, BAD_CHARACTER);
+        safeMap(KEYS, RsPsiTypes.BLOCK_COMMENT, BLOCK_COMMENT);
+        safeMap(KEYS, RsPsiTypes.LINE_COMMENT, LINE_COMMENT);
+        safeMap(KEYS, RsPsiTypes.BLOCK_DOC, BLOCK_DOC);
+        safeMap(KEYS, RsPsiTypes.LINE_DOC, LINE_DOC);
+        safeMap(KEYS, RsPsiTypes.BLOCK_PARENT_DOC, BLOCK_PARENT_DOC);
+        safeMap(KEYS, RsPsiTypes.LINE_PARENT_DOC, LINE_PARENT_DOC);
+        safeMap(KEYS, RsPsiTypes.BAD_CHARACTER, BAD_CHARACTER);
 
-        fillMap(KEYS, RsTypes.OPERATOR_TOKEN_SET, OPERATION_SIGN);
-        KEYS.put(RsTypes.OP_DOT, DOT);
-        KEYS.put(RsTypes.OP_SEMICOLON, SEMICOLON);
-        KEYS.put(RsTypes.OP_COMMA, COMMA);
+        fillMap(KEYS, RsPsiTypes.OPERATOR_TOKEN_SET, OPERATION_SIGN);
+        KEYS.put(RsPsiTypes.OP_DOT, DOT);
+        KEYS.put(RsPsiTypes.OP_SEMICOLON, SEMICOLON);
+        KEYS.put(RsPsiTypes.OP_COMMA, COMMA);
     }
 
     @NotNull

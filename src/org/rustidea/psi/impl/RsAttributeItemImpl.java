@@ -20,14 +20,14 @@ import com.intellij.lang.ASTNode;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.*;
-import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsPsiTreeUtil;
 import org.rustidea.psi.util.RsPsiUtil;
 import org.rustidea.stubs.RsAttributeItemStub;
 
 public class RsAttributeItemImpl extends IRsStubPsiElement<RsAttributeItemStub> implements RsAttributeItem {
     public RsAttributeItemImpl(@NotNull final RsAttributeItemStub stub) {
-        super(stub, RsTypes.ATTRIBUTE_ITEM);
+        super(stub, RsPsiTypes.ATTRIBUTE_ITEM);
     }
 
     public RsAttributeItemImpl(@NotNull final ASTNode node) {
@@ -69,7 +69,7 @@ public class RsAttributeItemImpl extends IRsStubPsiElement<RsAttributeItemStub> 
     @Nullable
     @Override
     public RsAttributeItemList getParams() {
-        return getStubOrPsiChild(RsTypes.ATTRIBUTE_ITEM_LIST);
+        return getStubOrPsiChild(RsPsiTypes.ATTRIBUTE_ITEM_LIST);
     }
 
     @Override

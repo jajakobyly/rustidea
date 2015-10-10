@@ -22,7 +22,7 @@ import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.*;
-import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsPsiTreeUtil;
 import org.rustidea.psi.util.RsPsiUtil;
 import org.rustidea.stubs.RsTypeParameterStub;
@@ -30,7 +30,7 @@ import org.rustidea.util.NotImplementedException;
 
 public class RsTypeParameterImpl extends IRsStubPsiElement<RsTypeParameterStub> implements RsTypeParameter {
     public RsTypeParameterImpl(@NotNull RsTypeParameterStub stub) {
-        super(stub, RsTypes.TYPE_PARAMETER);
+        super(stub, RsPsiTypes.TYPE_PARAMETER);
     }
 
     public RsTypeParameterImpl(@NotNull ASTNode node) {
@@ -63,7 +63,7 @@ public class RsTypeParameterImpl extends IRsStubPsiElement<RsTypeParameterStub> 
     @Nullable
     @Override
     public RsWhereClause getWhereClause() {
-        return getStubOrPsiChild(RsTypes.WHERE_CLAUSE);
+        return getStubOrPsiChild(RsPsiTypes.WHERE_CLAUSE);
     }
 
     @Nullable

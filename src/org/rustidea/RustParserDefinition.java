@@ -34,7 +34,7 @@ import org.rustidea.parser.RsParser;
 import org.rustidea.psi.impl.RsFileImpl;
 import org.rustidea.psi.types.IRsStubElementType;
 import org.rustidea.psi.types.RsFileElementType;
-import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.types.RsPsiTypes;
 
 public class RustParserDefinition implements ParserDefinition {
     @NotNull
@@ -58,19 +58,19 @@ public class RustParserDefinition implements ParserDefinition {
     @NotNull
     @Override
     public TokenSet getWhitespaceTokens() {
-        return RsTypes.WHITE_SPACE_TOKEN_SET;
+        return RsPsiTypes.WHITE_SPACE_TOKEN_SET;
     }
 
     @NotNull
     @Override
     public TokenSet getCommentTokens() {
-        return RsTypes.COMMENT_TOKEN_SET;
+        return RsPsiTypes.COMMENT_TOKEN_SET;
     }
 
     @NotNull
     @Override
     public TokenSet getStringLiteralElements() {
-        return RsTypes.STRING_LITERAL_TOKEN_SET;
+        return RsPsiTypes.STRING_LITERAL_TOKEN_SET;
     }
 
     @NotNull

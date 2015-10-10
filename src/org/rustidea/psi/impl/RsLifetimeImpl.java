@@ -24,14 +24,14 @@ import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsIdentifier;
 import org.rustidea.psi.RsLifetime;
-import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsPsiTreeUtil;
 import org.rustidea.stubs.RsLifetimeStub;
 import org.rustidea.util.NotImplementedException;
 
 public class RsLifetimeImpl extends IRsStubPsiElement<RsLifetimeStub> implements RsLifetime {
     public RsLifetimeImpl(@NotNull RsLifetimeStub stub) {
-        super(stub, RsTypes.LIFETIME);
+        super(stub, RsPsiTypes.LIFETIME);
     }
 
     public RsLifetimeImpl(@NotNull ASTNode node) {

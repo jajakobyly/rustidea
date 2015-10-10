@@ -25,7 +25,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsLiteral;
-import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.types.RsPsiTypes;
 
 import java.util.Collection;
 
@@ -41,15 +41,15 @@ public final class RsLiteralUtil {
     @SuppressWarnings("SimplifiableIfStatement")
     public static boolean hasValidSuffix(@NotNull final RsLiteral literal) {
         IElementType tokenType = literal.getTokenType();
-        assert RsTypes.LITERAL_TOKEN_SET.contains(tokenType);
+        assert RsPsiTypes.LITERAL_TOKEN_SET.contains(tokenType);
         final String suffix = literal.getSuffix();
         if (Strings.isNullOrEmpty(suffix)) return true;
 
-        if (tokenType == RsTypes.INT_LIT) {
+        if (tokenType == RsPsiTypes.INT_LIT) {
             return isValidIntegerSuffix(suffix);
         }
 
-        if (tokenType == RsTypes.FLOAT_LIT) {
+        if (tokenType == RsPsiTypes.FLOAT_LIT) {
             return isValidFloatSuffix(suffix);
         }
 
@@ -71,11 +71,11 @@ public final class RsLiteralUtil {
     public static Collection<String> getValidSuffixesFor(@NotNull final RsLiteral literal) {
         IElementType tokenType = literal.getTokenType();
 
-        if (tokenType == RsTypes.INT_LIT) {
+        if (tokenType == RsPsiTypes.INT_LIT) {
             return VALID_INT_SUFFIXES;
         }
 
-        if (tokenType == RsTypes.FLOAT_LIT) {
+        if (tokenType == RsPsiTypes.FLOAT_LIT) {
             return VALID_FLOAT_SUFFIXES;
         }
 
@@ -228,7 +228,7 @@ public final class RsLiteralUtil {
         final String text = literal.getText();
         final String suffix = literal.getSuffix();
         final String noSuffix = StringUtil.trimEnd(text, suffix);
-        if (RsTypes.STRING_LITERAL_TOKEN_SET.contains(literal.getTokenType())) {
+        if (RsPsiTypes.STRING_LITERAL_TOKEN_SET.contains(literal.getTokenType())) {
             return removeStrLitPrefix(noSuffix);
         }
         return noSuffix;
@@ -252,10 +252,10 @@ public final class RsLiteralUtil {
         if (literal == null) return false;
         final IElementType tokenType = literal.getTokenType();
 
-        if (RsTypes.CHAR_TOKEN_SET.contains(tokenType) ||
-            RsTypes.STRING_TOKEN_SET.contains(tokenType)) {
+        if (RsPsiTypes.CHAR_TOKEN_SET.contains(tokenType) ||
+            RsPsiTypes.STRING_TOKEN_SET.contains(tokenType)) {
             return StringUtil.isQuotedString(removeDecoration(literal));
-        } else if (RsTypes.RAW_STRING_TOKEN_SET.contains(tokenType)) {
+        } else if (RsPsiTypes.RAW_STRING_TOKEN_SET.contains(tokenType)) {
             final String text = literal.getText();
             final int hashes = countRawStrHashes(text);
             return text.endsWith('"' + StringUtil.repeatSymbol('#', hashes));

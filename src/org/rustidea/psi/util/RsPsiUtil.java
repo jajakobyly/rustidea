@@ -30,7 +30,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.*;
 import org.rustidea.psi.impl.IRsStubPsiElement;
-import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.util.SimpleArrayFactory;
 
 import java.util.Map;
@@ -64,7 +64,7 @@ public final class RsPsiUtil extends PsiUtilBase {
         if (HUMAN_READABLE_NAMES.containsKey(tokenType)) {
             return HUMAN_READABLE_NAMES.get(tokenType);
         }
-        if (RsTypes.KEYWORD_TOKEN_SET.contains(tokenType) || RsTypes.OPERATOR_TOKEN_SET.contains(tokenType)) {
+        if (RsPsiTypes.KEYWORD_TOKEN_SET.contains(tokenType) || RsPsiTypes.OPERATOR_TOKEN_SET.contains(tokenType)) {
             return '\'' + tokenType.toString() + '\'';
         }
         return tokenType.toString(); // fallback to debug name
@@ -123,7 +123,7 @@ public final class RsPsiUtil extends PsiUtilBase {
         IRsAttribute[] a1 = modifierList != null ? modifierList.getAttributes() : SimpleArrayFactory.empty(IRsAttribute.class);
 
         IRsAttribute[] a2 = (IRsAttribute[]) element.getStubOrPsiChildren(
-            RsTypes.ATTRIBUTE_OR_DOC_TOKEN_SET, SimpleArrayFactory.get(IRsAttribute.class));
+            RsPsiTypes.ATTRIBUTE_OR_DOC_TOKEN_SET, SimpleArrayFactory.get(IRsAttribute.class));
 
         return ArrayUtil.mergeArrays(a1, a2, SimpleArrayFactory.get(IRsAttribute.class));
     }

@@ -22,7 +22,7 @@ import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsLiteral;
 import org.rustidea.psi.RsToken;
-import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsLiteralUtil;
 import org.rustidea.psi.util.RsPsiTreeUtil;
 import org.rustidea.psi.util.RsPsiUtil;
@@ -38,7 +38,7 @@ public class RsLiteralImpl extends IRsCompositePsiElement implements RsLiteral {
     private static final String FALSE = "false";
 
     public RsLiteralImpl() {
-        super(RsTypes.LITERAL);
+        super(RsPsiTypes.LITERAL);
     }
 
     @NotNull
@@ -67,19 +67,19 @@ public class RsLiteralImpl extends IRsCompositePsiElement implements RsLiteral {
         boolean isByte = text.startsWith("b");
         String raw = RsLiteralUtil.removeDecoration(this);
 
-        if (RsTypes.NUMBER_TOKEN_SET.contains(tokenType)) {
+        if (RsPsiTypes.NUMBER_TOKEN_SET.contains(tokenType)) {
             return raw;
         }
 
-        if (RsTypes.CHAR_TOKEN_SET.contains(tokenType)) {
+        if (RsPsiTypes.CHAR_TOKEN_SET.contains(tokenType)) {
             return RsStringUtil.unescapeRust(RsStringUtil.unquote(raw, '\''), !isByte, false);
         }
 
-        if (RsTypes.STRING_TOKEN_SET.contains(tokenType)) {
+        if (RsPsiTypes.STRING_TOKEN_SET.contains(tokenType)) {
             return RsStringUtil.unescapeRust(RsStringUtil.unquote(raw, '"'), !isByte, true);
         }
 
-        if (RsTypes.RAW_STRING_TOKEN_SET.contains(tokenType)) {
+        if (RsPsiTypes.RAW_STRING_TOKEN_SET.contains(tokenType)) {
             return RsLiteralUtil.removeRawStringHashes(raw);
         }
 
@@ -95,19 +95,19 @@ public class RsLiteralImpl extends IRsCompositePsiElement implements RsLiteral {
 
         String text = getText();
 
-        if (RsTypes.NUMBER_TOKEN_SET.contains(tokenType)) {
+        if (RsPsiTypes.NUMBER_TOKEN_SET.contains(tokenType)) {
             return RsLiteralUtil.extractSuffixFromNumLit(text);
         }
 
-        if (RsTypes.CHAR_TOKEN_SET.contains(tokenType)) {
+        if (RsPsiTypes.CHAR_TOKEN_SET.contains(tokenType)) {
             return RsLiteralUtil.extractSuffixFromQuotedLit(text, '\'');
         }
 
-        if (RsTypes.STRING_TOKEN_SET.contains(tokenType)) {
+        if (RsPsiTypes.STRING_TOKEN_SET.contains(tokenType)) {
             return RsLiteralUtil.extractSuffixFromQuotedLit(text, '"');
         }
 
-        if (RsTypes.RAW_STRING_TOKEN_SET.contains(tokenType)) {
+        if (RsPsiTypes.RAW_STRING_TOKEN_SET.contains(tokenType)) {
             return RsLiteralUtil.extractSuffixFromRawStr(text);
         }
 

@@ -26,14 +26,14 @@ import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsReferenceElement;
 import org.rustidea.psi.RsRelationReferenceElement;
 import org.rustidea.psi.RsToken;
-import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsPsiUtil;
 import org.rustidea.util.NotImplementedException;
 import org.rustidea.util.UnreachableException;
 
 public class RsRelationReferenceElementImpl extends IRsCompositePsiElement implements RsRelationReferenceElement {
     public RsRelationReferenceElementImpl() {
-        super(RsTypes.RELATION_REFERENCE_ELEMENT);
+        super(RsPsiTypes.RELATION_REFERENCE_ELEMENT);
     }
 
     @NotNull
@@ -45,11 +45,11 @@ public class RsRelationReferenceElementImpl extends IRsCompositePsiElement imple
             return Type.GLOBAL;
         }
 
-        if (element.getTokenType() == RsTypes.KW_SELF) {
+        if (element.getTokenType() == RsPsiTypes.KW_SELF) {
             return Type.SELF;
         }
 
-        if (element.getTokenType() == RsTypes.KW_SUPER) {
+        if (element.getTokenType() == RsPsiTypes.KW_SUPER) {
             return Type.SUPER;
         }
 
@@ -59,13 +59,13 @@ public class RsRelationReferenceElementImpl extends IRsCompositePsiElement imple
     @Nullable
     @Override
     public RsToken getReferenceNameElement() {
-        return (RsToken) findPsiChildByType(RsTypes.SELF_OR_SUPER);
+        return (RsToken) findPsiChildByType(RsPsiTypes.SELF_OR_SUPER);
     }
 
     @Nullable
     @Override
     public RsReferenceElement getQualifier() {
-        return (RsReferenceElement) findPsiChildByType(RsTypes.REFERENCE_ELEMENT);
+        return (RsReferenceElement) findPsiChildByType(RsPsiTypes.REFERENCE_ELEMENT);
     }
 
     @Nullable

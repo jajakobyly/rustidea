@@ -25,25 +25,25 @@ import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsIdentifier;
 import org.rustidea.psi.RsReferenceElement;
-import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsPsiUtil;
 import org.rustidea.util.NotImplementedException;
 
 public class RsReferenceElementImpl extends IRsCompositePsiElement implements RsReferenceElement {
     public RsReferenceElementImpl() {
-        super(RsTypes.REFERENCE_ELEMENT);
+        super(RsPsiTypes.REFERENCE_ELEMENT);
     }
 
     @Nullable
     @Override
     public RsIdentifier getReferenceNameElement() {
-        return (RsIdentifier) findPsiChildByType(RsTypes.IDENTIFIER);
+        return (RsIdentifier) findPsiChildByType(RsPsiTypes.IDENTIFIER);
     }
 
     @Nullable
     @Override
     public RsReferenceElement getQualifier() {
-        return (RsReferenceElement) findPsiChildByType(RsTypes.REFERENCE_ELEMENT);
+        return (RsReferenceElement) findPsiChildByType(RsPsiTypes.REFERENCE_ELEMENT);
     }
 
     @Nullable

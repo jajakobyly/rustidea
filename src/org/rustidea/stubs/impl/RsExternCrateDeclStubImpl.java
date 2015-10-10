@@ -21,14 +21,14 @@ import com.intellij.psi.stubs.StubElement;
 import com.intellij.util.io.StringRef;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.RsExternCrateDecl;
-import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.stubs.RsExternCrateDeclStub;
 
 public class RsExternCrateDeclStubImpl extends NamedStubBase<RsExternCrateDecl> implements RsExternCrateDeclStub {
     private final StringRef crateName;
 
     public RsExternCrateDeclStubImpl(StubElement parent, StringRef name, StringRef crateName) {
-        super(parent, RsTypes.EXTERN_CRATE_DECL, name);
+        super(parent, RsPsiTypes.EXTERN_CRATE_DECL, name);
         this.crateName = crateName;
     }
 

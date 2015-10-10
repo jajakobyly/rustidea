@@ -23,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.IRsItem;
 import org.rustidea.psi.IRsItemOwner;
 import org.rustidea.psi.RsModifierList;
-import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.stubs.IRsItemStub;
 
 public abstract class IRsItemPsiElement<StubT extends IRsItemStub>
@@ -45,6 +45,6 @@ public abstract class IRsItemPsiElement<StubT extends IRsItemStub>
     @Nullable
     @Override
     public RsModifierList getModifierList() {
-        return getStubOrPsiChild(RsTypes.MODIFIER_LIST);
+        return getStubOrPsiChild(RsPsiTypes.MODIFIER_LIST);
     }
 }

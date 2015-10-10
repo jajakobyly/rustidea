@@ -19,14 +19,14 @@ package org.rustidea.stubs.impl;
 import com.intellij.psi.stubs.StubBase;
 import com.intellij.psi.stubs.StubElement;
 import org.rustidea.psi.RsModifierList;
-import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.stubs.RsModifierListStub;
 
 public class RsModifierListStubImpl extends StubBase<RsModifierList> implements RsModifierListStub {
     private final boolean pub;
 
     public RsModifierListStubImpl(final StubElement parent, final boolean pub) {
-        super(parent, RsTypes.MODIFIER_LIST);
+        super(parent, RsPsiTypes.MODIFIER_LIST);
         this.pub = pub;
     }
 

@@ -19,14 +19,14 @@ package org.rustidea.stubs.impl;
 import com.intellij.psi.stubs.StubBase;
 import com.intellij.psi.stubs.StubElement;
 import org.rustidea.psi.RsAttribute;
-import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.stubs.RsAttributeStub;
 
 public class RsAttributeStubImpl extends StubBase<RsAttribute> implements RsAttributeStub {
     private final boolean isParent;
 
     public RsAttributeStubImpl(final StubElement parent, final boolean isParent) {
-        super(parent, RsTypes.ATTRIBUTE);
+        super(parent, RsPsiTypes.ATTRIBUTE);
         this.isParent = isParent;
     }
 

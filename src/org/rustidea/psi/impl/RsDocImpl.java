@@ -24,13 +24,13 @@ import org.rustidea.psi.IRsAttributeOwner;
 import org.rustidea.psi.RsDoc;
 import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsToken;
-import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsPsiTreeUtil;
 import org.rustidea.stubs.RsDocStub;
 
 public class RsDocImpl extends IRsStubPsiElement<RsDocStub> implements RsDoc {
     public RsDocImpl(@NotNull final RsDocStub stub) {
-        super(stub, RsTypes.DOC);
+        super(stub, RsPsiTypes.DOC);
     }
 
     public RsDocImpl(@NotNull final ASTNode node) {
@@ -40,7 +40,7 @@ public class RsDocImpl extends IRsStubPsiElement<RsDocStub> implements RsDoc {
     @NotNull
     @Override
     public RsToken getToken() {
-        final RsToken child = findChildByType(RsTypes.DOC_TOKEN_SET);
+        final RsToken child = findChildByType(RsPsiTypes.DOC_TOKEN_SET);
         assert child != null;
         return child;
     }
@@ -49,13 +49,13 @@ public class RsDocImpl extends IRsStubPsiElement<RsDocStub> implements RsDoc {
     @Override
     public Type getType() {
         IElementType type = getTokenType();
-        return type == RsTypes.LINE_DOC || type == RsTypes.LINE_PARENT_DOC ? Type.LINE : Type.BLOCK;
+        return type == RsPsiTypes.LINE_DOC || type == RsPsiTypes.LINE_PARENT_DOC ? Type.LINE : Type.BLOCK;
     }
 
     @Override
     public boolean isParentAttribute() {
         IElementType type = getTokenType();
-        return type == RsTypes.LINE_PARENT_DOC || type == RsTypes.BLOCK_PARENT_DOC;
+        return type == RsPsiTypes.LINE_PARENT_DOC || type == RsPsiTypes.BLOCK_PARENT_DOC;
     }
 
     @Nullable
@@ -68,7 +68,7 @@ public class RsDocImpl extends IRsStubPsiElement<RsDocStub> implements RsDoc {
     @Override
     public IElementType getTokenType() {
         final IElementType type = getToken().getNode().getElementType();
-        assert RsTypes.DOC_TOKEN_SET.contains(type);
+        assert RsPsiTypes.DOC_TOKEN_SET.contains(type);
         return type;
     }
 

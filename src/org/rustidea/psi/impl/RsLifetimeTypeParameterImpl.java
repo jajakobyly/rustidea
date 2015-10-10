@@ -26,13 +26,13 @@ import org.rustidea.psi.IRsTypeParameterListOwner;
 import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsLifetime;
 import org.rustidea.psi.RsLifetimeTypeParameter;
-import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsPsiTreeUtil;
 import org.rustidea.psi.util.RsPsiUtil;
 
 public class RsLifetimeTypeParameterImpl extends IRsStubPsiElement<EmptyStub> implements RsLifetimeTypeParameter {
     public RsLifetimeTypeParameterImpl(@NotNull EmptyStub stub) {
-        super(stub, RsTypes.LIFETIME_TYPE_PARAMETER);
+        super(stub, RsPsiTypes.LIFETIME_TYPE_PARAMETER);
     }
 
     public RsLifetimeTypeParameterImpl(@NotNull ASTNode node) {

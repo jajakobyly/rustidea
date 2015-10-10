@@ -19,14 +19,14 @@ package org.rustidea.stubs.impl;
 import com.intellij.psi.stubs.StubBase;
 import com.intellij.psi.stubs.StubElement;
 import org.rustidea.psi.RsDoc;
-import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.stubs.RsDocStub;
 
 public class RsDocStubImpl extends StubBase<RsDoc> implements RsDocStub {
     private final boolean isParent;
 
     public RsDocStubImpl(final StubElement parent, final boolean isParent) {
-        super(parent, RsTypes.DOC);
+        super(parent, RsPsiTypes.DOC);
         this.isParent = isParent;
     }
 

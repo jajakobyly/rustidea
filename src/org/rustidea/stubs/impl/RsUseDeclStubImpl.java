@@ -24,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsReferenceElement;
 import org.rustidea.psi.RsUseDecl;
-import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.stubs.RsUseDeclStub;
 import org.rustidea.util.NotImplementedException;
 
@@ -36,7 +36,7 @@ public class RsUseDeclStubImpl extends StubBase<RsUseDecl> implements RsUseDeclS
     private Reference<RsReferenceElement> reference = null;
 
     public RsUseDeclStubImpl(StubElement parent, final StringRef referenceText, final byte flags) {
-        super(parent, RsTypes.USE_DECL);
+        super(parent, RsPsiTypes.USE_DECL);
         this.text = referenceText;
         this.flags = flags;
     }

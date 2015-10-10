@@ -25,7 +25,7 @@ import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsLiteral;
-import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsLiteralUtil;
 import org.rustidea.psi.util.RsPsiUtil;
 
@@ -51,7 +51,7 @@ public class RsDumbAwareAnnotator implements Annotator, DumbAware {
             final String humanReadableName = RsPsiUtil.getHumanReadableName(tokenType);
 
             // Check character literal length
-            if (RsTypes.CHAR_TOKEN_SET.contains(tokenType)) {
+            if (RsPsiTypes.CHAR_TOKEN_SET.contains(tokenType)) {
                 final String value = literal.getValueString();
                 if (Strings.isNullOrEmpty(value)) {
                     holder.createErrorAnnotation(literal, "empty " + humanReadableName);

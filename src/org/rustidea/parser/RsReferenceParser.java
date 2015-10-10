@@ -28,9 +28,9 @@ import static com.intellij.lang.PsiBuilderUtil.expect;
 import static org.rustidea.parser.RsParserUtil.error;
 import static org.rustidea.psi.types.RsCompositeTypes.REFERENCE_ELEMENT;
 import static org.rustidea.psi.types.RsCompositeTypes.RELATION_REFERENCE_ELEMENT;
+import static org.rustidea.psi.types.RsPsiTypes.SELF_OR_SUPER;
 import static org.rustidea.psi.types.RsTokenTypes.IDENTIFIER;
 import static org.rustidea.psi.types.RsTokenTypes.OP_DOUBLE_COLON;
-import static org.rustidea.psi.types.RsTypes.SELF_OR_SUPER;
 
 public class RsReferenceParser {
     private static final TokenSet PATH_FIRST_TOKEN = TokenSet.orSet(SELF_OR_SUPER, TokenSet.create(IDENTIFIER, OP_DOUBLE_COLON));

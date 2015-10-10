@@ -20,11 +20,11 @@ import com.intellij.psi.stubs.NamedStubBase;
 import com.intellij.psi.stubs.StubElement;
 import com.intellij.util.io.StringRef;
 import org.rustidea.psi.RsTypeParameter;
-import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.stubs.RsTypeParameterStub;
 
 public class RsTypeParameterStubImpl extends NamedStubBase<RsTypeParameter> implements RsTypeParameterStub {
     public RsTypeParameterStubImpl(StubElement parent, StringRef name) {
-        super(parent, RsTypes.TYPE_PARAMETER, name);
+        super(parent, RsPsiTypes.TYPE_PARAMETER, name);
     }
 }

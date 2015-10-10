@@ -20,19 +20,19 @@ import com.intellij.lang.CodeDocumentationAwareCommenter;
 import com.intellij.psi.PsiComment;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.Nullable;
-import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.types.RsPsiTypes;
 
 public class RsCommenter implements CodeDocumentationAwareCommenter {
     @Nullable
     @Override
     public IElementType getLineCommentTokenType() {
-        return RsTypes.LINE_COMMENT;
+        return RsPsiTypes.LINE_COMMENT;
     }
 
     @Nullable
     @Override
     public IElementType getBlockCommentTokenType() {
-        return RsTypes.BLOCK_COMMENT;
+        return RsPsiTypes.BLOCK_COMMENT;
     }
 
     @Nullable

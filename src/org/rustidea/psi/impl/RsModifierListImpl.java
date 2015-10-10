@@ -21,13 +21,13 @@ import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.IRsAttribute;
 import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsModifierList;
-import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.stubs.RsModifierListStub;
 import org.rustidea.util.SimpleArrayFactory;
 
 public class RsModifierListImpl extends IRsStubPsiElement<RsModifierListStub> implements RsModifierList {
     public RsModifierListImpl(@NotNull RsModifierListStub stub) {
-        super(stub, RsTypes.MODIFIER_LIST);
+        super(stub, RsPsiTypes.MODIFIER_LIST);
     }
 
     public RsModifierListImpl(@NotNull ASTNode node) {
@@ -41,13 +41,13 @@ public class RsModifierListImpl extends IRsStubPsiElement<RsModifierListStub> im
             return stub.hasPub();
         }
 
-        return findChildByType(RsTypes.KW_PUB) != null;
+        return findChildByType(RsPsiTypes.KW_PUB) != null;
     }
 
     @NotNull
     @Override
     public IRsAttribute[] getAttributes() {
-        return getStubOrPsiChildren(RsTypes.ATTRIBUTE_OR_DOC_TOKEN_SET, SimpleArrayFactory.get(IRsAttribute.class));
+        return getStubOrPsiChildren(RsPsiTypes.ATTRIBUTE_OR_DOC_TOKEN_SET, SimpleArrayFactory.get(IRsAttribute.class));
     }
 
     @Override

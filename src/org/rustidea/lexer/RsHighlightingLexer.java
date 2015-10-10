@@ -19,7 +19,7 @@ package org.rustidea.lexer;
 import com.google.common.collect.ImmutableMap;
 import com.intellij.lexer.LayeredLexer;
 import com.intellij.psi.tree.IElementType;
-import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.types.RsPsiTypes;
 
 import java.util.EnumSet;
 import java.util.Map;
@@ -29,10 +29,10 @@ import static org.rustidea.lexer.RsStringLiteralLexer.ESCAPE.*;
 public class RsHighlightingLexer extends LayeredLexer {
     private static final Map<IElementType, EnumSet<RsStringLiteralLexer.ESCAPE>> STRING_LAYERS =
         new ImmutableMap.Builder<IElementType, EnumSet<RsStringLiteralLexer.ESCAPE>>()
-            .put(RsTypes.CHAR_LIT, EnumSet.of(BYTE_ESCAPE, UNICODE_ESCAPE))
-            .put(RsTypes.BYTE_LIT, EnumSet.of(BYTE_ESCAPE))
-            .put(RsTypes.STRING_LIT, EnumSet.of(BYTE_ESCAPE, UNICODE_ESCAPE, EOL_ESCAPE))
-            .put(RsTypes.BYTE_STRING_LIT, EnumSet.of(BYTE_ESCAPE, EOL_ESCAPE))
+            .put(RsPsiTypes.CHAR_LIT, EnumSet.of(BYTE_ESCAPE, UNICODE_ESCAPE))
+            .put(RsPsiTypes.BYTE_LIT, EnumSet.of(BYTE_ESCAPE))
+            .put(RsPsiTypes.STRING_LIT, EnumSet.of(BYTE_ESCAPE, UNICODE_ESCAPE, EOL_ESCAPE))
+            .put(RsPsiTypes.BYTE_STRING_LIT, EnumSet.of(BYTE_ESCAPE, EOL_ESCAPE))
             .build();
 
     public RsHighlightingLexer() {

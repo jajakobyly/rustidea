@@ -24,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import static com.intellij.lang.PsiBuilderUtil.expect;
 import static org.rustidea.parser.RsParserUtil.errorExpected;
 import static org.rustidea.psi.types.RsCompositeTypes.LITERAL;
-import static org.rustidea.psi.types.RsTypes.LITERAL_TOKEN_SET;
+import static org.rustidea.psi.types.RsPsiTypes.LITERAL_TOKEN_SET;
 
 public class RsExpressionParser {
     private static final Logger LOG = Logger.getInstance(RsExpressionParser.class);

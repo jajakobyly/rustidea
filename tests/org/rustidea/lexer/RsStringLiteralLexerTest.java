@@ -18,7 +18,7 @@ package org.rustidea.lexer;
 
 import com.intellij.lexer.Lexer;
 import org.jetbrains.annotations.NotNull;
-import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.types.RsPsiTypes;
 
 import java.util.EnumSet;
 
@@ -99,24 +99,24 @@ public class RsStringLiteralLexerTest extends IRsLexerTestCase {
 
     public void testMixed() {
         CompositeTest data = new CompositeTest("foo\\x20bar\\u{}")
-            .test("foo", RsTypes.STRING_LIT)
+            .test("foo", RsPsiTypes.STRING_LIT)
             .test("\\x20", VALID_STRING_ESCAPE_TOKEN)
-            .test("bar", RsTypes.STRING_LIT)
+            .test("bar", RsPsiTypes.STRING_LIT)
             .test("\\u{}", INVALID_UNICODE_ESCAPE_TOKEN);
         doTest(data);
     }
 
     public void testMixedQuoted() {
         CompositeTest data = new CompositeTest("\"foo\\u{aaa}\"")
-            .test("\"foo", RsTypes.STRING_LIT)
+            .test("\"foo", RsPsiTypes.STRING_LIT)
             .test("\\u{aaa}", VALID_STRING_ESCAPE_TOKEN)
-            .test("\"", RsTypes.STRING_LIT);
+            .test("\"", RsPsiTypes.STRING_LIT);
         doTest(data);
     }
 
     @NotNull
     @Override
     protected Lexer createLexer() {
-        return new RsStringLiteralLexer(RsTypes.STRING_LIT, EnumSet.of(BYTE_ESCAPE, UNICODE_ESCAPE, EOL_ESCAPE));
+        return new RsStringLiteralLexer(RsPsiTypes.STRING_LIT, EnumSet.of(BYTE_ESCAPE, UNICODE_ESCAPE, EOL_ESCAPE));
     }
 }

@@ -24,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsExternCrateDecl;
 import org.rustidea.psi.RsIdentifier;
-import org.rustidea.psi.types.RsTypes;
+import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsPsiTreeUtil;
 import org.rustidea.psi.util.RsPsiUtil;
 import org.rustidea.stubs.RsExternCrateDeclStub;
@@ -32,7 +32,7 @@ import org.rustidea.util.NotImplementedException;
 
 public class RsExternCrateDeclImpl extends IRsNamedItemPsiElement<RsExternCrateDeclStub> implements RsExternCrateDecl {
     public RsExternCrateDeclImpl(@NotNull RsExternCrateDeclStub stub) {
-        super(stub, RsTypes.EXTERN_CRATE_DECL);
+        super(stub, RsPsiTypes.EXTERN_CRATE_DECL);
     }
 
     public RsExternCrateDeclImpl(@NotNull ASTNode node) {
@@ -48,7 +48,7 @@ public class RsExternCrateDeclImpl extends IRsNamedItemPsiElement<RsExternCrateD
     @Nullable
     @Override
     public RsIdentifier getNameIdentifier() {
-        return findLastChildByType(RsTypes.IDENTIFIER);
+        return findLastChildByType(RsPsiTypes.IDENTIFIER);
     }
 
     @NotNull
