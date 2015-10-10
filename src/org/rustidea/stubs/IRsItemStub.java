@@ -16,8 +16,8 @@
 
 package org.rustidea.stubs;
 
-import com.intellij.psi.stubs.NamedStub;
+import com.intellij.psi.stubs.StubElement;
 import org.rustidea.psi.IRsItem;
 
-public interface IRsItemStub<PsiT extends IRsItem> extends NamedStub<PsiT> {
+public interface IRsItemStub<PsiT extends IRsItem> extends StubElement<PsiT> {
 }

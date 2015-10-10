@@ -21,12 +21,11 @@ import com.intellij.psi.stubs.EmptyStub;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsElementVisitor;
-import org.rustidea.psi.RsPath;
+import org.rustidea.psi.RsReferenceElement;
 import org.rustidea.psi.RsTypeParameter;
 import org.rustidea.psi.RsWhereClause;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.psi.util.RsPsiTreeUtil;
-import org.rustidea.util.SimpleArrayFactory;
 
 public class RsWhereClauseImpl extends IRsStubPsiElement<EmptyStub> implements RsWhereClause {
     public RsWhereClauseImpl(@NotNull EmptyStub stub) {
@@ -39,8 +38,8 @@ public class RsWhereClauseImpl extends IRsStubPsiElement<EmptyStub> implements R
 
     @NotNull
     @Override
-    public RsPath[] getBounds() {
-        return getStubOrPsiChildren(RsTypes.PATH, SimpleArrayFactory.get(RsPath.class));
+    public RsReferenceElement[] getBounds() {
+        return findChildrenByClass(RsReferenceElement.class);
     }
 
     @Nullable

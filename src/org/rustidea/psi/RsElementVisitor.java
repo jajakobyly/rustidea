@@ -72,6 +72,10 @@ public abstract class RsElementVisitor extends PsiElementVisitor {
         visitElement(literal); // TODO visit expression
     }
 
+    public void visitMagicReferenceElement(RsRelationReferenceElement magicReferenceElement) {
+        visitReferenceElement(magicReferenceElement);
+    }
+
     public void visitModifierList(RsModifierList modifierList) {
         visitElement(modifierList);
     }
@@ -81,20 +85,15 @@ public abstract class RsElementVisitor extends PsiElementVisitor {
     }
 
     public void visitModuleOrFile(IRsModule module) {
-        if (module instanceof PsiFile) super.visitFile((PsiFile) module);
-        visitElement(module);
+        if (module instanceof PsiFile) {
+            super.visitFile((PsiFile) module);
+        } else {
+            visitElement(module);
+        }
     }
 
-    public void visitPath(RsPath path) {
-        visitElement(path);
-    }
-
-    public void visitPathComponent(RsPathComponent pathComponent) {
-        visitElement(pathComponent);
-    }
-
-    public void visitPathRelation(RsPathRelation pathRelation) {
-        visitElement(pathRelation);
+    public void visitReferenceElement(RsReferenceElement referenceElement) {
+        visitElement(referenceElement);
     }
 
     public void visitRustToken(RsToken token) {

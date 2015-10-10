@@ -20,16 +20,15 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.stubs.StubElement;
 import com.intellij.psi.stubs.StubInputStream;
 import com.intellij.psi.stubs.StubOutputStream;
-import com.intellij.psi.util.QualifiedName;
 import com.intellij.util.io.StringRef;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.RsUseDecl;
 import org.rustidea.psi.impl.RsUseDeclImpl;
 import org.rustidea.stubs.RsUseDeclStub;
 import org.rustidea.stubs.impl.RsUseDeclStubImpl;
+import org.rustidea.util.NotImplementedException;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class RsUseDeclElementType extends IRsStubElementType<RsUseDeclStub, RsUseDecl> {
     public static final RsUseDeclElementType INSTANCE = new RsUseDeclElementType();
@@ -53,30 +52,21 @@ public class RsUseDeclElementType extends IRsStubElementType<RsUseDeclStub, RsUs
     @NotNull
     @Override
     public RsUseDeclStub createStub(@NotNull RsUseDecl psi, StubElement parentStub) {
-        return new RsUseDeclStubImpl(parentStub, StringRef.fromString(psi.getName()), psi.resolveAll());
+        // TODO Implement this.
+        throw new NotImplementedException();
     }
 
     @Override
     public void serialize(@NotNull RsUseDeclStub stub, @NotNull StubOutputStream dataStream) throws IOException {
-        dataStream.writeName(stub.getName());
-        final QualifiedName[] resolvedNames = stub.getResolvedNames();
-        dataStream.writeVarInt(resolvedNames.length);
-        for (QualifiedName name : resolvedNames) {
-            QualifiedName.serialize(name, dataStream);
-        }
+        dataStream.writeByte(((RsUseDeclStubImpl) stub).getFlags());
+        dataStream.writeName(stub.getReferenceText());
     }
 
     @NotNull
     @Override
     public RsUseDeclStub deserialize(@NotNull StubInputStream dataStream, StubElement parentStub) throws IOException {
-        final StringRef name = dataStream.readName();
-
-        final int rNameCount = dataStream.readVarInt();
-        final ArrayList<QualifiedName> rNames = new ArrayList<QualifiedName>(rNameCount);
-        for (int i = 0; i < rNameCount; i++) {
-            rNames.add(QualifiedName.deserialize(dataStream));
-        }
-
-        return new RsUseDeclStubImpl(parentStub, name, (QualifiedName[]) rNames.toArray());
+        final byte flags = dataStream.readByte();
+        final StringRef text = dataStream.readName();
+        return new RsUseDeclStubImpl(parentStub, text, flags);
     }
 }

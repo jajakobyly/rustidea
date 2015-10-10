@@ -23,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 
 public interface RsWhereClause extends StubBasedPsiElement<EmptyStub>, IRsPsiElement {
     @NotNull
-    RsPath[] getBounds();
+    RsReferenceElement[] getBounds();
 
     @Nullable
     RsTypeParameter getOwner();

@@ -16,27 +16,54 @@
 
 package org.rustidea.stubs.impl;
 
-import com.intellij.psi.stubs.NamedStubBase;
+import com.intellij.psi.stubs.StubBase;
 import com.intellij.psi.stubs.StubElement;
-import com.intellij.psi.util.QualifiedName;
+import com.intellij.reference.SoftReference;
 import com.intellij.util.io.StringRef;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.rustidea.psi.RsReferenceElement;
 import org.rustidea.psi.RsUseDecl;
 import org.rustidea.psi.types.RsTypes;
 import org.rustidea.stubs.RsUseDeclStub;
+import org.rustidea.util.NotImplementedException;
 
-public class RsUseDeclStubImpl extends NamedStubBase<RsUseDecl> implements RsUseDeclStub {
-    @NotNull
-    private final QualifiedName[] resolvedNames;
+import java.lang.ref.Reference;
 
-    public RsUseDeclStubImpl(StubElement parent, StringRef name, @NotNull QualifiedName[] resolvedNames) {
-        super(parent, RsTypes.USE_DECL, name);
-        this.resolvedNames = resolvedNames;
+public class RsUseDeclStubImpl extends StubBase<RsUseDecl> implements RsUseDeclStub {
+    private final StringRef text;
+    private final byte flags;
+    private Reference<RsReferenceElement> reference = null;
+
+    public RsUseDeclStubImpl(StubElement parent, final StringRef text, final byte flags) {
+        super(parent, RsTypes.USE_DECL);
+        this.text = text;
+        this.flags = flags;
     }
 
     @NotNull
     @Override
-    public QualifiedName[] getResolvedNames() {
-        return resolvedNames;
+    public RsUseDecl.Type getType() {
+        return RsUseDecl.Type.unpack(flags);
+    }
+
+    @Override
+    public String getReferenceText() {
+        return StringRef.toString(text);
+    }
+
+    @Nullable
+    @Override
+    public RsReferenceElement getUseReference() {
+        RsReferenceElement ref = SoftReference.dereference(reference);
+        if (ref == null) {
+            // TODO Implement this.
+            throw new NotImplementedException();
+        }
+        return ref;
+    }
+
+    public byte getFlags() {
+        return flags;
     }
 }

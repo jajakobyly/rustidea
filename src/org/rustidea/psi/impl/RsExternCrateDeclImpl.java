@@ -30,7 +30,7 @@ import org.rustidea.psi.util.RsPsiUtil;
 import org.rustidea.stubs.RsExternCrateDeclStub;
 import org.rustidea.util.NotImplementedException;
 
-public class RsExternCrateDeclImpl extends IRsItemPsiElement<RsExternCrateDeclStub> implements RsExternCrateDecl {
+public class RsExternCrateDeclImpl extends IRsNamedItemPsiElement<RsExternCrateDeclStub> implements RsExternCrateDecl {
     public RsExternCrateDeclImpl(@NotNull RsExternCrateDeclStub stub) {
         super(stub, RsTypes.EXTERN_CRATE_DECL);
     }

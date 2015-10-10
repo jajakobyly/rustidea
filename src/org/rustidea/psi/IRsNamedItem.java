@@ -14,14 +14,15 @@
  * limitations under the License.
  */
 
-package org.rustidea.stubs;
+package org.rustidea.psi;
 
-import com.intellij.psi.stubs.StubElement;
-import org.jetbrains.annotations.NotNull;
-import org.rustidea.psi.RsPath;
-import org.rustidea.psi.RsPathRelation;
+import com.intellij.psi.PsiNameIdentifierOwner;
+import org.jetbrains.annotations.Nullable;
+import org.rustidea.stubs.IRsNamedItemStub;
 
-public interface RsPathStub extends StubElement<RsPath> {
-    @NotNull
-    RsPathRelation.Type getRelationType();
+public interface IRsNamedItem<StubT extends IRsNamedItemStub>
+    extends IRsItem<StubT>, PsiNameIdentifierOwner {
+    @Nullable
+    @Override
+    RsIdentifier getNameIdentifier();
 }

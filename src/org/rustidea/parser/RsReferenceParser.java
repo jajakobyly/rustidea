@@ -18,19 +18,22 @@ package org.rustidea.parser;
 
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
+import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
-import com.intellij.util.BooleanFunction;
 import org.jetbrains.annotations.NotNull;
+import org.rustidea.psi.util.RsPsiUtil;
+import org.rustidea.util.UnreachableException;
 
 import static com.intellij.lang.PsiBuilderUtil.expect;
-import static org.rustidea.parser.RsParserUtil.*;
-import static org.rustidea.psi.types.RsCompositeTypes.PATH_RELATION;
-import static org.rustidea.psi.types.RsStubElementTypes.PATH;
-import static org.rustidea.psi.types.RsStubElementTypes.PATH_COMPONENT;
-import static org.rustidea.psi.types.RsTokenTypes.*;
+import static org.rustidea.parser.RsParserUtil.error;
+import static org.rustidea.psi.types.RsCompositeTypes.REFERENCE_ELEMENT;
+import static org.rustidea.psi.types.RsCompositeTypes.RELATION_REFERENCE_ELEMENT;
+import static org.rustidea.psi.types.RsTokenTypes.IDENTIFIER;
+import static org.rustidea.psi.types.RsTokenTypes.OP_DOUBLE_COLON;
+import static org.rustidea.psi.types.RsTypes.SELF_OR_SUPER;
 
 public class RsReferenceParser {
-    private static final TokenSet SELF_OR_SUPER = TokenSet.create(KW_SELF, KW_SUPER);
+    private static final TokenSet PATH_FIRST_TOKEN = TokenSet.orSet(SELF_OR_SUPER, TokenSet.create(IDENTIFIER, OP_DOUBLE_COLON));
 
     @NotNull
     private final RsParser parser;
@@ -41,32 +44,68 @@ public class RsReferenceParser {
         this.builder = parser.getBuilder();
     }
 
+    // TODO Maybe rename to `reference` to keep consistent with PSI classes?
     public boolean path() {
-        final Marker marker = builder.mark();
+        // I         a::b::c::d
+        // II      (a::b::c)::d
+        // III   ((a::b)::c)::d
+        // IV  (((a)::b)::c)::d
 
-        final Marker relationMarker = builder.mark();
-        final boolean hasSelfOrSuper = expect(builder, SELF_OR_SUPER);
-        if (!hasSelfOrSuper) {
-            expect(builder, OP_DOUBLE_COLON);
-        }
-        relationMarker.done(PATH_RELATION);
+        Marker beginMarker = builder.mark();
 
-        if (hasSelfOrSuper) {
-            expectOrWarnMissing(builder, OP_DOUBLE_COLON);
-        }
+        if (PATH_FIRST_TOKEN.contains(builder.getTokenType())) {
+            if (builder.getTokenType() == IDENTIFIER) {
+                final Marker qualifierMarker = builder.mark();
 
-        sep(builder, OP_DOUBLE_COLON, PathComponentParser.INSTANCE);
+                assert builder.getTokenType() == IDENTIFIER;
+                builder.advanceLexer();
 
-        marker.done(PATH);
-        return true;
-    }
+                qualifierMarker.done(REFERENCE_ELEMENT);
+            } else if (SELF_OR_SUPER.contains(builder.getTokenType())) {
+                final Marker qualifierMarker = builder.mark();
 
-    private enum PathComponentParser implements BooleanFunction<PsiBuilder> {
-        INSTANCE;
+                assert SELF_OR_SUPER.contains(builder.getTokenType());
+                builder.advanceLexer();
 
-        @Override
-        public boolean fun(PsiBuilder builder) {
-            return identifier(builder, PATH_COMPONENT);
+                qualifierMarker.done(RELATION_REFERENCE_ELEMENT);
+            } else if (builder.getTokenType() == OP_DOUBLE_COLON) {
+                builder.mark().done(RELATION_REFERENCE_ELEMENT);
+            } else {
+                throw new UnreachableException();
+            }
+
+            while (builder.getTokenType() == OP_DOUBLE_COLON) {
+                final Marker qualifierMarker = beginMarker;
+                beginMarker = qualifierMarker.precede();
+
+                assert builder.getTokenType() == OP_DOUBLE_COLON;
+                builder.advanceLexer();
+
+                if (expect(builder, IDENTIFIER)) {
+                    qualifierMarker.done(REFERENCE_ELEMENT);
+                } else if (SELF_OR_SUPER.contains(builder.getTokenType())) {
+                    // Leave error if we encounter `self` or `super` in the middle of the path.
+                    // Beware that RsRelationReferenceElement does not take into account qualifiers
+                    // in its methods.
+                    final IElementType token = builder.getTokenType();
+                    final Marker errorMarker = builder.mark();
+
+                    assert SELF_OR_SUPER.contains(builder.getTokenType());
+                    builder.advanceLexer();
+
+                    errorMarker.error("expected identifier, not " + RsPsiUtil.getHumanReadableName(token));
+                    qualifierMarker.done(RELATION_REFERENCE_ELEMENT);
+                } else {
+                    error(builder, "expected identifier");
+                    qualifierMarker.drop(); // don't rollback in order to leave error message
+                }
+            }
+
+            beginMarker.drop();
+            return true;
+        } else {
+            beginMarker.rollbackTo();
+            return false;
         }
     }
 }

@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.RsExternCrateDecl;
 
-public interface RsExternCrateDeclStub extends IRsItemStub<RsExternCrateDecl> {
+public interface RsExternCrateDeclStub extends IRsNamedItemStub<RsExternCrateDecl> {
     @NotNull
     @NonNls
     String getCrateName();

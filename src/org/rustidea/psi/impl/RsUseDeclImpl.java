@@ -17,17 +17,13 @@
 package org.rustidea.psi.impl;
 
 import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.util.QualifiedName;
-import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsElementVisitor;
-import org.rustidea.psi.RsIdentifier;
-import org.rustidea.psi.RsPath;
+import org.rustidea.psi.RsReferenceElement;
 import org.rustidea.psi.RsUseDecl;
 import org.rustidea.psi.types.RsTypes;
-import org.rustidea.psi.util.RsPsiTreeUtil;
+import org.rustidea.psi.util.RsPsiUtil;
 import org.rustidea.stubs.RsUseDeclStub;
 import org.rustidea.util.NotImplementedException;
 
@@ -42,63 +38,19 @@ public class RsUseDeclImpl extends IRsItemPsiElement<RsUseDeclStub> implements R
 
     @Nullable
     @Override
-    public RsIdentifier getNameIdentifier() {
-        return getType() != Type.SINGLE ? null : (RsIdentifier) findLastChildByType(RsTypes.IDENTIFIER);
-    }
-
-    @Override
-    public String getName() {
-        RsUseDeclStub stub = getStub();
+    public RsReferenceElement getUseReference() {
+        RsPsiUtil.ensureValid(this);
+        final RsUseDeclStub stub = getStub();
         if (stub != null) {
-            return stub.getName();
+            return stub.getUseReference();
         }
-
-        RsIdentifier nameIdentifier = getNameIdentifier();
-        return nameIdentifier == null ? null : nameIdentifier.getText();
+        return findChildByType(RsTypes.REFERENCE_ELEMENT);
     }
 
     @NotNull
-    @Override
-    public PsiElement setName(@NotNull String name) throws IncorrectOperationException {
-        if (getType() == Type.SINGLE) {
-            // TODO Implement this
-            throw new IncorrectOperationException(new NotImplementedException());
-        } else {
-            throw new IncorrectOperationException("cannot rename multiple name binding");
-        }
-    }
-
-    @NotNull
-    @Override
-    public RsPath getPath() {
-        return getRequiredStubOrPsiChild(RsTypes.PATH);
-    }
-
-    @Nullable
     @Override
     public Type getType() {
-        RsPath path = RsPsiTreeUtil.findLastChildByClass(this, RsPath.class);
-        if (path == null) return null;
-        // TODO Implement this for list and glob declarations.
-        return Type.SINGLE;
-    }
-
-    @Override
-    public boolean isRenamed() {
-        return getName() != null;
-    }
-
-    @NotNull
-    @Override
-    public QualifiedName resolve() {
-        // TODO Implement this
-        throw new NotImplementedException();
-    }
-
-    @NotNull
-    @Override
-    public QualifiedName[] resolveAll() {
-        // TODO Implement this
+        // TODO Implement this.
         throw new NotImplementedException();
     }
 

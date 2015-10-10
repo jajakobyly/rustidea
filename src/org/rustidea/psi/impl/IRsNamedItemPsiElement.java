@@ -14,22 +14,21 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi;
+package org.rustidea.psi.impl;
 
-import com.intellij.psi.StubBasedPsiElement;
+import com.intellij.lang.ASTNode;
+import com.intellij.psi.stubs.IStubElementType;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import org.rustidea.stubs.RsPathStub;
+import org.rustidea.psi.IRsNamedItem;
+import org.rustidea.stubs.IRsNamedItemStub;
 
-public interface RsPath extends StubBasedPsiElement<RsPathStub>, IRsPsiElement {
-    @Nullable
-    RsPathRelation getRelation();
+public abstract class IRsNamedItemPsiElement<StubT extends IRsNamedItemStub>
+    extends IRsItemPsiElement<StubT> implements IRsNamedItem<StubT> {
+    public IRsNamedItemPsiElement(@NotNull StubT stub, @NotNull IStubElementType nodeType) {
+        super(stub, nodeType);
+    }
 
-    @NotNull
-    RsPathRelation.Type getRelationType();
-
-    @NotNull
-    RsPathComponent[] getComponents();
-
-    int getComponentIndex(RsPathComponent component);
+    public IRsNamedItemPsiElement(@NotNull ASTNode node) {
+        super(node);
+    }
 }

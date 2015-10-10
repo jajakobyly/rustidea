@@ -16,11 +16,17 @@
 
 package org.rustidea.stubs;
 
-import com.intellij.psi.util.QualifiedName;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.rustidea.psi.RsReferenceElement;
 import org.rustidea.psi.RsUseDecl;
 
 public interface RsUseDeclStub extends IRsItemStub<RsUseDecl> {
     @NotNull
-    QualifiedName[] getResolvedNames();
+    RsUseDecl.Type getType();
+
+    String getReferenceText();
+
+    @Nullable
+    RsReferenceElement getUseReference();
 }

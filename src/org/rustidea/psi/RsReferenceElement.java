@@ -16,15 +16,25 @@
 
 package org.rustidea.psi;
 
-import com.intellij.psi.PsiNameIdentifierOwner;
-import com.intellij.psi.StubBasedPsiElement;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiPolyVariantReference;
+import com.intellij.psi.PsiQualifiedReferenceElement;
 import org.jetbrains.annotations.Nullable;
-import org.rustidea.stubs.RsPathComponentStub;
 
-public interface RsPathComponent
-    extends StubBasedPsiElement<RsPathComponentStub>, PsiNameIdentifierOwner, IRsTypeParameterListOwner, IRsPsiElement {
+/**
+ * Represents reference found in Rust code.
+ *
+ * In Rust Reference they are called <i>paths</i>.
+ */
+public interface RsReferenceElement extends PsiPolyVariantReference, PsiQualifiedReferenceElement, IRsPsiElement {
     @Nullable
-    RsPath getOwner();
+    PsiElement getReferenceNameElement();
 
-    int getIndex();
+    boolean isQualified();
+
+    /**
+     * @return null if qualifier is not specified
+     */
+    @Nullable
+    String getQualifiedName();
 }

@@ -40,4 +40,6 @@ public interface RsTypes extends RsStubElementTypes, RsCompositeTypes, RsTokenTy
 
     TokenSet DOC_TOKEN_SET = TokenSet.create(BLOCK_DOC, LINE_DOC, BLOCK_PARENT_DOC, LINE_PARENT_DOC);
     TokenSet ATTRIBUTE_OR_DOC_TOKEN_SET = TokenSet.create(ATTRIBUTE, DOC);
+
+    TokenSet SELF_OR_SUPER = TokenSet.create(KW_SELF, KW_SUPER);
 }

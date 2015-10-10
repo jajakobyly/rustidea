@@ -217,16 +217,12 @@ public class RsModuleParser {
             parser.getExpressionParser().literal();
             value.drop();
         } else if (expect(builder, OP_LPAREN)) {
-            sep(
-                builder,
-                OP_COMMA,
-                new BooleanFunction<PsiBuilder>() {
-                    @Override
-                    public boolean fun(PsiBuilder builder) {
-                        return attributeItem();
-                    }
-                },
-                EnumSet.of(SepCfg.TOLERATE_EMPTY));
+            sep(builder, OP_COMMA, new BooleanFunction<PsiBuilder>() {
+                @Override
+                public boolean fun(PsiBuilder builder) {
+                    return attributeItem();
+                }
+            }, EnumSet.of(SepCfg.TOLERATE_EMPTY));
 
             expectOrWarnMissing(builder, OP_RPAREN);
             value.done(ATTRIBUTE_ITEM_LIST);

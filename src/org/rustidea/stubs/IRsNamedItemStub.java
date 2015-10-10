@@ -14,17 +14,10 @@
  * limitations under the License.
  */
 
-package org.rustidea.stubs.impl;
+package org.rustidea.stubs;
 
-import com.intellij.psi.stubs.NamedStubBase;
-import com.intellij.psi.stubs.StubElement;
-import com.intellij.util.io.StringRef;
-import org.rustidea.psi.RsPathComponent;
-import org.rustidea.psi.types.RsTypes;
-import org.rustidea.stubs.RsPathComponentStub;
+import com.intellij.psi.stubs.NamedStub;
+import org.rustidea.psi.IRsNamedItem;
 
-public class RsPathComponentStubImpl extends NamedStubBase<RsPathComponent> implements RsPathComponentStub {
-    public RsPathComponentStubImpl(final StubElement parent, final StringRef name) {
-        super(parent, RsTypes.PATH_COMPONENT, name);
-    }
+public interface IRsNamedItemStub<PsiT extends IRsNamedItem> extends IRsItemStub<PsiT>, NamedStub<PsiT> {
 }

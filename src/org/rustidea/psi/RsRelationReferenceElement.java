@@ -14,10 +14,15 @@
  * limitations under the License.
  */
 
-package org.rustidea.stubs;
+package org.rustidea.psi;
 
-import com.intellij.psi.stubs.NamedStub;
-import org.rustidea.psi.RsPathComponent;
+import org.jetbrains.annotations.NotNull;
 
-public interface RsPathComponentStub extends NamedStub<RsPathComponent> {
+public interface RsRelationReferenceElement extends RsReferenceElement {
+    @NotNull
+    Type getType();
+
+    enum Type {
+        GLOBAL, SELF, SUPER
+    }
 }

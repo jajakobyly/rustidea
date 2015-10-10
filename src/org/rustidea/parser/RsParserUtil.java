@@ -99,6 +99,7 @@ public final class RsParserUtil {
                               @NotNull final EnumSet<SepCfg> config) {
         boolean globalResult = false;
         boolean first = true;
+
         while (!builder.eof()) {
             final Marker marker = builder.mark();
             boolean result = true;

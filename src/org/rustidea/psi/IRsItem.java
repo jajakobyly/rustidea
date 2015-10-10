@@ -16,17 +16,12 @@
 
 package org.rustidea.psi;
 
-import com.intellij.psi.PsiNameIdentifierOwner;
 import com.intellij.psi.StubBasedPsiElement;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.stubs.IRsItemStub;
 
 public interface IRsItem<StubT extends IRsItemStub>
-    extends StubBasedPsiElement<StubT>, PsiNameIdentifierOwner, IRsModifierListOwner, IRsPsiElement {
-    @Nullable
-    @Override
-    RsIdentifier getNameIdentifier();
-
+    extends StubBasedPsiElement<StubT>, IRsModifierListOwner, IRsPsiElement {
     @Nullable
     IRsItemOwner getOwner();
 }
