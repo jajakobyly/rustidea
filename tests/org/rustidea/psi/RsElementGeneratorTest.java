@@ -16,8 +16,12 @@
 
 package org.rustidea.psi;
 
-import com.intellij.psi.PsiNameIdentifierOwner;
-import org.rustidea.stubs.RsModuleStub;
+import com.intellij.testFramework.fixtures.LightPlatformCodeInsightFixtureTestCase;
 
-public interface RsModule extends IRsNamedItem<RsModuleStub>, IRsModule, PsiNameIdentifierOwner, IRsModifierListOwner {
+public class RsElementGeneratorTest extends LightPlatformCodeInsightFixtureTestCase {
+    public void testCreateDummyFile() throws Exception {
+        RsFile file = new RsElementGenerator(getProject()).createDummyFile("mod foo;");
+        RsModule mod = (RsModule) file.getItems()[0];
+        assertEquals("foo", mod.getName());
+    }
 }

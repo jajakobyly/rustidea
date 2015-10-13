@@ -16,8 +16,7 @@
 
 package org.rustidea.stubs;
 
-import com.intellij.psi.stubs.NamedStub;
 import org.rustidea.psi.RsModule;
 
-public interface RsModuleStub extends NamedStub<RsModule> {
+public interface RsModuleStub extends IRsNamedItemStub<RsModule> {
 }

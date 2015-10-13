@@ -28,7 +28,7 @@ import org.rustidea.psi.util.RsPsiUtil;
 import org.rustidea.stubs.RsModuleStub;
 import org.rustidea.util.NotImplementedException;
 
-public class RsModuleImpl extends IRsStubPsiElement<RsModuleStub> implements RsModule {
+public class RsModuleImpl extends IRsNamedItemPsiElement<RsModuleStub> implements RsModule {
     public RsModuleImpl(@NotNull RsModuleStub stub) {
         super(stub, RsPsiTypes.MODULE);
     }
