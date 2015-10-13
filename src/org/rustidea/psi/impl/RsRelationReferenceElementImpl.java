@@ -16,10 +16,6 @@
 
 package org.rustidea.psi.impl;
 
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.ResolveResult;
-import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsElementVisitor;
@@ -28,10 +24,9 @@ import org.rustidea.psi.RsRelationReferenceElement;
 import org.rustidea.psi.RsToken;
 import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsPsiUtil;
-import org.rustidea.util.NotImplementedException;
 import org.rustidea.util.UnreachableException;
 
-public class RsRelationReferenceElementImpl extends IRsCompositePsiElement implements RsRelationReferenceElement {
+public class RsRelationReferenceElementImpl extends RsReferenceElementImplBase implements RsRelationReferenceElement {
     public RsRelationReferenceElementImpl() {
         super(RsPsiTypes.RELATION_REFERENCE_ELEMENT);
     }
@@ -65,70 +60,7 @@ public class RsRelationReferenceElementImpl extends IRsCompositePsiElement imple
     @Nullable
     @Override
     public RsReferenceElement getQualifier() {
-        return (RsReferenceElement) findPsiChildByType(RsPsiTypes.REFERENCE_ELEMENT);
-    }
-
-    @Nullable
-    @Override
-    public String getReferenceName() {
-        final RsToken element = getReferenceNameElement();
-        return element == null ? "" : element.getText();
-    }
-
-    @Override
-    public PsiElement getElement() {
-        // TODO Implement this
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public TextRange getRangeInElement() {
-        // TODO Implement this
-        throw new NotImplementedException();
-    }
-
-    @Nullable
-    @Override
-    public PsiElement resolve() {
-        // TODO Implement this
-        throw new NotImplementedException();
-    }
-
-    @NotNull
-    @Override
-    public String getCanonicalText() {
-        // TODO Implement this
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public PsiElement handleElementRename(String newElementName) throws IncorrectOperationException {
-        // TODO Implement this
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public PsiElement bindToElement(@NotNull PsiElement element) throws IncorrectOperationException {
-        // TODO Implement this
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public boolean isReferenceTo(PsiElement element) {
-        // TODO Implement this
-        throw new NotImplementedException();
-    }
-
-    @NotNull
-    @Override
-    public Object[] getVariants() {
-        // TODO Implement this
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public boolean isSoft() {
-        return false;
+        return null;
     }
 
     @Override
@@ -141,16 +73,9 @@ public class RsRelationReferenceElementImpl extends IRsCompositePsiElement imple
         return "";
     }
 
-    @NotNull
-    @Override
-    public ResolveResult[] multiResolve(boolean incompleteCode) {
-        // TODO Implement this
-        throw new NotImplementedException();
-    }
-
     @Override
     public void accept(@NotNull RsElementVisitor visitor) {
-        visitor.visitMagicReferenceElement(this);
+        visitor.visitRelationReferenceElement(this);
     }
 
     @NotNull

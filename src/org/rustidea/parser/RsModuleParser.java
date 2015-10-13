@@ -123,7 +123,7 @@ public class RsModuleParser {
     private boolean useDecl() {
         final Marker marker = builder.mark();
 
-        if (!expect(builder, KW_USE) || !parser.getReferenceParser().path()) {
+        if (!expect(builder, KW_USE) || !useDeclPath()) {
             marker.rollbackTo();
             return false;
         }
@@ -136,6 +136,10 @@ public class RsModuleParser {
 
         marker.drop(); // PSI element will be marked in #item()
         return true;
+    }
+
+    private boolean useDeclPath() {
+        return parser.getReferenceParser().path(true, true);
     }
 
     private boolean mod() {

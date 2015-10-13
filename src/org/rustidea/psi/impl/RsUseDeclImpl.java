@@ -47,7 +47,15 @@ public class RsUseDeclImpl extends IRsItemPsiElement<RsUseDeclStub> implements R
     @NotNull
     @Override
     public Type getType() {
-        // TODO Lists and globs.
+        final RsReferenceElement ref = getUseReference();
+
+        if (ref instanceof RsListReferenceElement) {
+            return Type.LIST;
+        }
+
+        if (ref instanceof RsGlobReferenceElement) {
+            return Type.GLOB;
+        }
 
         final RsToken asToken = findChildByType(RsPsiTypes.KW_AS);
         if (asToken != null && asToken.getNextSibling() instanceof RsIdentifier) {

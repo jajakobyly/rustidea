@@ -48,6 +48,10 @@ public abstract class RsElementVisitor extends PsiElementVisitor {
         visitModuleOrFile(file);
     }
 
+    public void visitGlobReferenceElement(RsGlobReferenceElement globReferenceElement) {
+        visitReferenceElement(globReferenceElement);
+    }
+
     public void visitIdentifier(RsIdentifier identifier) {
         visitRustToken(identifier);
     }
@@ -68,12 +72,12 @@ public abstract class RsElementVisitor extends PsiElementVisitor {
         visitElement(lifetimeTypeParameter);
     }
 
-    public void visitLiteral(RsLiteral literal) {
-        visitElement(literal); // TODO visit expression
+    public void visitListReferenceElement(RsListReferenceElement listReferenceElement) {
+        visitReferenceElement(listReferenceElement);
     }
 
-    public void visitMagicReferenceElement(RsRelationReferenceElement magicReferenceElement) {
-        visitReferenceElement(magicReferenceElement);
+    public void visitLiteral(RsLiteral literal) {
+        visitElement(literal); // TODO visit expression
     }
 
     public void visitModifierList(RsModifierList modifierList) {
@@ -94,6 +98,10 @@ public abstract class RsElementVisitor extends PsiElementVisitor {
 
     public void visitReferenceElement(RsReferenceElement referenceElement) {
         visitElement(referenceElement);
+    }
+
+    public void visitRelationReferenceElement(RsRelationReferenceElement relationReferenceElement) {
+        visitReferenceElement(relationReferenceElement);
     }
 
     public void visitRustToken(RsToken token) {

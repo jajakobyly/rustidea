@@ -16,26 +16,26 @@
 
 package org.rustidea.psi.impl;
 
+import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsElementVisitor;
-import org.rustidea.psi.RsIdentifier;
-import org.rustidea.psi.RsReferenceElement;
+import org.rustidea.psi.RsListReferenceElement;
 import org.rustidea.psi.types.RsPsiTypes;
 
-public class RsReferenceElementImpl extends RsReferenceElementImplBase implements RsReferenceElement {
-    public RsReferenceElementImpl() {
-        super(RsPsiTypes.REFERENCE_ELEMENT);
+public class RsListReferenceElementImpl extends RsReferenceElementImplBase implements RsListReferenceElement {
+    public RsListReferenceElementImpl() {
+        super(RsPsiTypes.LIST_REFERENCE_ELEMENT);
     }
 
     @Nullable
     @Override
-    public RsIdentifier getReferenceNameElement() {
-        return (RsIdentifier) findPsiChildByType(RsPsiTypes.IDENTIFIER);
+    public PsiElement getReferenceNameElement() {
+        return null;
     }
 
     @Override
     public void accept(@NotNull RsElementVisitor visitor) {
-        visitor.visitReferenceElement(this);
+        visitor.visitListReferenceElement(this);
     }
 }

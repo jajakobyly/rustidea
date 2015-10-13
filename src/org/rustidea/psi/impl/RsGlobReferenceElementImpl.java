@@ -19,23 +19,30 @@ package org.rustidea.psi.impl;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsElementVisitor;
-import org.rustidea.psi.RsIdentifier;
-import org.rustidea.psi.RsReferenceElement;
+import org.rustidea.psi.RsGlobReferenceElement;
+import org.rustidea.psi.RsToken;
 import org.rustidea.psi.types.RsPsiTypes;
+import org.rustidea.psi.util.RsPsiUtil;
 
-public class RsReferenceElementImpl extends RsReferenceElementImplBase implements RsReferenceElement {
-    public RsReferenceElementImpl() {
-        super(RsPsiTypes.REFERENCE_ELEMENT);
+public class RsGlobReferenceElementImpl extends RsReferenceElementImplBase implements RsGlobReferenceElement {
+    public RsGlobReferenceElementImpl() {
+        super(RsPsiTypes.GLOB_REFERENCE_ELEMENT);
     }
 
     @Nullable
     @Override
-    public RsIdentifier getReferenceNameElement() {
-        return (RsIdentifier) findPsiChildByType(RsPsiTypes.IDENTIFIER);
+    public RsToken getReferenceNameElement() {
+        return (RsToken) findPsiChildByType(RsPsiTypes.OP_ASTERISK);
     }
 
     @Override
     public void accept(@NotNull RsElementVisitor visitor) {
-        visitor.visitReferenceElement(this);
+        visitor.visitGlobReferenceElement(this);
+    }
+
+    @NotNull
+    @Override
+    public String toString() {
+        return RsPsiUtil.getPsiClassName(this);
     }
 }
