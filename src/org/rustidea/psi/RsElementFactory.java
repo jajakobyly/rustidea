@@ -16,12 +16,20 @@
 
 package org.rustidea.psi;
 
-import com.intellij.testFramework.fixtures.LightPlatformCodeInsightFixtureTestCase;
+import com.intellij.openapi.project.Project;
+import com.intellij.psi.PsiFileFactory;
+import org.jetbrains.annotations.NotNull;
+import org.rustidea.RustFileType;
 
-public class RsElementGeneratorTest extends LightPlatformCodeInsightFixtureTestCase {
-    public void testCreateDummyFile() throws Exception {
-        RsFile file = new RsElementGenerator(getProject()).createDummyFile("mod foo;");
-        RsModule mod = (RsModule) file.getItems()[0];
-        assertEquals("foo", mod.getName());
+public class RsElementFactory {
+    public static final String DUMMY_FILE_NAME = "dummy." + RustFileType.INSTANCE.getDefaultExtension();
+
+    protected RsElementFactory() {
+    }
+
+    @NotNull
+    public static RsFile createFileFromText(@NotNull final Project project, @NotNull final String text) {
+        return (RsFile) PsiFileFactory.getInstance(project)
+            .createFileFromText(DUMMY_FILE_NAME, RustFileType.INSTANCE, text);
     }
 }
