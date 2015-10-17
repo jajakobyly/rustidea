@@ -48,7 +48,9 @@
             <include name="jre/lib/*.jar"/>
             <include name="jre/lib/ext/*.jar"/>
         </fileset>
-        <fileset dir="${idea.home}" includes="lib/**/*.jar">
+        <fileset dir="${idea.home}">
+            <include name="lib/**/*.jar"/>
+            <include name="plugins/**/*.jar"/>
             <exclude name="lib/ant/lib/**"/>
         </fileset>
     </path>
