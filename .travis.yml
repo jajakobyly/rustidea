@@ -29,3 +29,5 @@ install:
     fi
   - echo "idea.home=$IDEA_DIR" >> build.properties
 script: ant
+before_cache:
+  - rm -rf $HOME/idea/${IDEA_VERSION}/system
