@@ -33,6 +33,7 @@ import java.lang.ref.Reference;
 public class RsUseDeclStubImpl extends StubBase<RsUseDecl> implements RsUseDeclStub {
     private final StringRef text;
     private final byte flags;
+    @Nullable
     private Reference<RsReferenceElement> reference = null;
 
     public RsUseDeclStubImpl(StubElement parent, final StringRef referenceText, final byte flags) {
@@ -47,6 +48,7 @@ public class RsUseDeclStubImpl extends StubBase<RsUseDecl> implements RsUseDeclS
         return RsUseDecl.Type.unpack(flags);
     }
 
+    @Nullable
     @Override
     public String getReferenceText() {
         return StringRef.toString(text);

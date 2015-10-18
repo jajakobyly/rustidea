@@ -34,9 +34,6 @@ import static org.rustidea.psi.types.RsTokenTypes.KW_FALSE;
 import static org.rustidea.psi.types.RsTokenTypes.KW_TRUE;
 
 public class RsLiteralImpl extends IRsCompositePsiElement implements RsLiteral {
-    private static final String TRUE = "true";
-    private static final String FALSE = "false";
-
     public RsLiteralImpl() {
         super(RsPsiTypes.LITERAL);
     }
@@ -59,11 +56,10 @@ public class RsLiteralImpl extends IRsCompositePsiElement implements RsLiteral {
     @Override
     public String getValueString() {
         final IElementType tokenType = getTokenType();
+        final String text = getText();
 
-        if (tokenType == KW_TRUE) return TRUE;
-        if (tokenType == KW_FALSE) return FALSE;
+        if (tokenType == KW_TRUE || tokenType == KW_FALSE) return text;
 
-        String text = getText();
         boolean isByte = text.startsWith("b");
         String raw = RsLiteralUtil.removeDecoration(this);
 

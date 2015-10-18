@@ -37,6 +37,7 @@ public class RsReferenceParser {
     private static final TokenSet PATH_FIRST_TOKEN = TokenSet.orSet(SELF_OR_SUPER, TokenSet.create(IDENTIFIER, OP_DOUBLE_COLON));
     @NotNull
     private final RsParser parser;
+    @NotNull
     private final PsiBuilder builder;
 
     public RsReferenceParser(@NotNull final RsParser parser) {
@@ -87,7 +88,7 @@ public class RsReferenceParser {
 
                     sep(builder, OP_COMMA, new BooleanFunction<PsiBuilder>() {
                         @Override
-                        public boolean fun(PsiBuilder builder) {
+                        public boolean fun(@NotNull PsiBuilder builder) {
                             return expect(builder, IDENTIFIER_OR_SELF);
                         }
                     }, EnumSet.of(SepCfg.TOLERATE_EMPTY));

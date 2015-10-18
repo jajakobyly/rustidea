@@ -29,7 +29,7 @@ import org.rustidea.psi.util.RsPsiUtil;
 import org.rustidea.util.NotImplementedException;
 
 public abstract class RsReferenceElementImplBase extends IRsCompositePsiElement implements RsReferenceElement {
-    public RsReferenceElementImplBase(IElementType type) {
+    public RsReferenceElementImplBase(@NotNull IElementType type) {
         super(type);
     }
 
@@ -51,18 +51,21 @@ public abstract class RsReferenceElementImplBase extends IRsCompositePsiElement 
         return getQualifier() != null;
     }
 
+    @Nullable
     @Override
     public String getQualifiedName() {
         final RsReferenceElement qualifier = getQualifier();
         return qualifier == null ? "" : qualifier.getText();
     }
 
+    @NotNull
     @Override
     public PsiElement getElement() {
         // TODO Implement this
         throw new NotImplementedException();
     }
 
+    @NotNull
     @Override
     public TextRange getRangeInElement() {
         // TODO Implement this
@@ -83,12 +86,14 @@ public abstract class RsReferenceElementImplBase extends IRsCompositePsiElement 
         throw new NotImplementedException();
     }
 
+    @NotNull
     @Override
     public PsiElement handleElementRename(String newElementName) throws IncorrectOperationException {
         // TODO Implement this
         throw new NotImplementedException();
     }
 
+    @NotNull
     @Override
     public PsiElement bindToElement(@NotNull PsiElement element) throws IncorrectOperationException {
         // TODO Implement this

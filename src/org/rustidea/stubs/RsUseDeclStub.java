@@ -25,6 +25,7 @@ public interface RsUseDeclStub extends IRsItemStub<RsUseDecl> {
     @NotNull
     RsUseDecl.Type getType();
 
+    @Nullable
     String getReferenceText();
 
     @Nullable

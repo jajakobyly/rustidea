@@ -41,6 +41,7 @@ public class RsBraceMatcher implements PairedBraceMatcher {
         BRACE_TOKEN_SET,
         TokenSet.create(OP_SEMICOLON, OP_COMMA, OP_RPAREN, OP_RBRACKET));
 
+    @NotNull
     @Override
     public BracePair[] getPairs() {
         return PAIRS;
