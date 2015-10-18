@@ -18,11 +18,16 @@ package org.rustidea.psi.types;
 
 import com.intellij.lang.ASTNode;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.impl.RsIdentifierImpl;
 
 public class IRsIdentifierType extends IRsTokenType {
-    public IRsIdentifierType(@NotNull String debugName) {
-        super(debugName);
+    public IRsIdentifierType(@NotNull final String debugName) {
+        this(debugName, null);
+    }
+
+    public IRsIdentifierType(@NotNull final String debugName, @Nullable final String humanReadableName) {
+        super(debugName, humanReadableName);
     }
 
     @NotNull

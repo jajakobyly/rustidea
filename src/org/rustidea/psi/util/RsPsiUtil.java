@@ -17,7 +17,6 @@
 package org.rustidea.psi.util;
 
 import com.google.common.base.Strings;
-import com.google.common.collect.ImmutableMap;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.StubBasedPsiElement;
@@ -30,30 +29,11 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.*;
 import org.rustidea.psi.impl.IRsStubPsiElement;
+import org.rustidea.psi.types.IRsElementType;
 import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.util.SimpleArrayFactory;
 
-import java.util.Map;
-
-import static org.rustidea.psi.types.RsCompositeTypes.LITERAL;
-import static org.rustidea.psi.types.RsTokenTypes.*;
-
 public final class RsPsiUtil extends PsiUtilBase {
-    private static final Map<IElementType, String> HUMAN_READABLE_NAMES =
-        new ImmutableMap.Builder<IElementType, String>()
-            .put(INT_LIT, "numeric literal")
-            .put(FLOAT_LIT, "float literal")
-            .put(CHAR_LIT, "char literal")
-            .put(BYTE_LIT, "byte literal")
-            .put(STRING_LIT, "string literal")
-            .put(BYTE_STRING_LIT, "byte string literal")
-            .put(RAW_STRING_LIT, "raw string literal")
-            .put(RAW_BYTE_STRING_LIT, "raw byte string literal")
-            .put(IDENTIFIER, "identifier")
-            .put(LIFETIME_TOKEN, "lifetime")
-            .put(LITERAL, "literal")
-            .build();
-
     private RsPsiUtil() {
     }
 
@@ -61,11 +41,8 @@ public final class RsPsiUtil extends PsiUtilBase {
     @Contract(value = "null -> null", pure = true)
     public static String getHumanReadableName(@Nullable final IElementType tokenType) {
         if (tokenType == null) return null;
-        if (HUMAN_READABLE_NAMES.containsKey(tokenType)) {
-            return HUMAN_READABLE_NAMES.get(tokenType);
-        }
-        if (RsPsiTypes.KEYWORD_TOKEN_SET.contains(tokenType) || RsPsiTypes.OPERATOR_TOKEN_SET.contains(tokenType)) {
-            return '\'' + tokenType.toString() + '\'';
+        if (tokenType instanceof IRsElementType) {
+            return ((IRsElementType) tokenType).getHumanReadableName();
         }
         return tokenType.toString(); // fallback to debug name
     }

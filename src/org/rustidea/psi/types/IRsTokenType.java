@@ -19,16 +19,31 @@ package org.rustidea.psi.types;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.tree.ILeafElementType;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.impl.RsTokenImpl;
 
 public class IRsTokenType extends IRsElementType implements ILeafElementType {
-    public IRsTokenType(@NotNull String debugName) {
+    @Nullable
+    private final String humanReadableName;
+
+    public IRsTokenType(@NotNull final String debugName) {
+        this(debugName, null);
+    }
+
+    public IRsTokenType(@NotNull final String debugName, @Nullable final String humanReadableName) {
         super(debugName);
+        this.humanReadableName = humanReadableName;
     }
 
     @NotNull
     @Override
     public ASTNode createLeafNode(CharSequence leafText) {
         return new RsTokenImpl(this, leafText);
+    }
+
+    @NotNull
+    @Override
+    public String getHumanReadableName() {
+        return humanReadableName != null ? humanReadableName : super.getHumanReadableName();
     }
 }

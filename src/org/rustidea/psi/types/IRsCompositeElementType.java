@@ -20,14 +20,25 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.tree.ICompositeElementType;
 import com.intellij.util.ReflectionUtil;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class IRsCompositeElementType extends IRsElementType implements ICompositeElementType {
+    @Nullable
+    private final String humanReadableName;
+
     @NotNull
     private final Class<? extends ASTNode> implClass;
 
     public IRsCompositeElementType(@NotNull final String debugName,
                                    @NotNull final Class<? extends ASTNode> implClass) {
+        this(debugName, null, implClass);
+    }
+
+    public IRsCompositeElementType(@NotNull final String debugName,
+                                   @Nullable final String humanReadableName,
+                                   @NotNull final Class<? extends ASTNode> implClass) {
         super(debugName);
+        this.humanReadableName = humanReadableName;
         this.implClass = implClass;
     }
 
@@ -35,5 +46,11 @@ public class IRsCompositeElementType extends IRsElementType implements IComposit
     @Override
     public ASTNode createCompositeNode() {
         return ReflectionUtil.newInstance(implClass);
+    }
+
+    @NotNull
+    @Override
+    public String getHumanReadableName() {
+        return humanReadableName != null ? humanReadableName : toString();
     }
 }

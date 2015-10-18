@@ -21,7 +21,12 @@ import org.jetbrains.annotations.NotNull;
 import org.rustidea.RustLanguage;
 
 public class IRsElementType extends IElementType {
-    public IRsElementType(@NotNull String debugName) {
+    public IRsElementType(@NotNull final String debugName) {
         super(debugName, RustLanguage.INSTANCE);
+    }
+
+    @NotNull
+    public String getHumanReadableName() {
+        return toString();
     }
 }
