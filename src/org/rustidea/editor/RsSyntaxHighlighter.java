@@ -16,6 +16,7 @@
 
 package org.rustidea.editor;
 
+import com.intellij.ide.highlighter.custom.CustomHighlighterColors;
 import com.intellij.lexer.Lexer;
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors;
 import com.intellij.openapi.editor.HighlighterColors;
@@ -23,6 +24,7 @@ import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase;
 import com.intellij.psi.StringEscapesTokenTypes;
 import com.intellij.psi.tree.IElementType;
+import com.intellij.psi.tree.TokenSet;
 import com.intellij.util.containers.ContainerUtil;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.lexer.RsHighlightingLexer;
@@ -39,6 +41,9 @@ public class RsSyntaxHighlighter extends SyntaxHighlighterBase {
         createTextAttributesKey("RUST.IDENTIFIER", DefaultLanguageHighlighterColors.IDENTIFIER);
     public static final TextAttributesKey KEYWORD =
         createTextAttributesKey("RUST.KEYWORD", DefaultLanguageHighlighterColors.KEYWORD);
+    // TODO Invent better name
+    public static final TextAttributesKey KEYWORD2 =
+        createTextAttributesKey("RUST.KEYWORD2", CustomHighlighterColors.CUSTOM_KEYWORD2_ATTRIBUTES);
     public static final TextAttributesKey OPERATION_SIGN =
         createTextAttributesKey("RUST.OPERATION_SIGN", DefaultLanguageHighlighterColors.OPERATION_SIGN);
     public static final TextAttributesKey BRACES =
@@ -87,8 +92,13 @@ public class RsSyntaxHighlighter extends SyntaxHighlighterBase {
 
     public static final Map<IElementType, TextAttributesKey> KEYS = ContainerUtil.newHashMap();
 
+    private static final TokenSet KEYWORD2_TOKEN_SET = TokenSet.create(
+        RsPsiTypes.KW_MUT, RsPsiTypes.KW_SELF, RsPsiTypes.KW_SELF_T, RsPsiTypes.KW_SUPER, RsPsiTypes.KW_BOX, RsPsiTypes.KW_REF);
+
     static {
         fillMap(KEYS, RsPsiTypes.KEYWORD_TOKEN_SET, KEYWORD);
+        fillMap(KEYS, KEYWORD2_TOKEN_SET, KEYWORD2);
+
         fillMap(KEYS, RsPsiTypes.BRACE_TOKEN_SET, BRACES);
         fillMap(KEYS, RsPsiTypes.BRACKET_TOKEN_SET, BRACKETS);
         fillMap(KEYS, RsPsiTypes.PAREN_TOKEN_SET, PARENTHESES);
