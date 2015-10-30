@@ -17,14 +17,11 @@
 package org.rustidea.psi.impl;
 
 import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
-import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import org.rustidea.psi.*;
+import org.rustidea.psi.IRsItem;
+import org.rustidea.psi.RsElementVisitor;
+import org.rustidea.psi.RsModule;
 import org.rustidea.psi.types.RsPsiTypes;
-import org.rustidea.psi.util.RsPsiTreeUtil;
-import org.rustidea.psi.util.RsPsiUtil;
 import org.rustidea.stubs.RsModuleStub;
 import org.rustidea.util.NotImplementedException;
 
@@ -35,41 +32,6 @@ public class RsModuleImpl extends IRsNamedItemPsiElement<RsModuleStub> implement
 
     public RsModuleImpl(@NotNull ASTNode node) {
         super(node);
-    }
-
-    @NotNull
-    @Override
-    public RsIdentifier getNameIdentifier() {
-        return RsPsiTreeUtil.getRequiredChildOfType(this, RsIdentifier.class);
-    }
-
-    @Override
-    public String getName() {
-        RsModuleStub stub = getStub();
-        if (stub != null) {
-            return stub.getName();
-        }
-
-        return getNameIdentifier().getText();
-    }
-
-    @NotNull
-    @Override
-    public PsiElement setName(@NotNull String name) throws IncorrectOperationException {
-        // TODO Implement this
-        throw new IncorrectOperationException(new NotImplementedException());
-    }
-
-    @Nullable
-    @Override
-    public RsModifierList getModifierList() {
-        return getStubOrPsiChild(RsPsiTypes.MODIFIER_LIST);
-    }
-
-    @NotNull
-    @Override
-    public IRsAttribute[] getAttributes() {
-        return RsPsiUtil.getAttributes(this);
     }
 
     @NotNull

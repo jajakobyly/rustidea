@@ -23,14 +23,13 @@ import com.intellij.psi.StubBasedPsiElement;
 import com.intellij.psi.stubs.StubElement;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.util.PsiUtilBase;
-import com.intellij.util.ArrayUtil;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.rustidea.psi.*;
-import org.rustidea.psi.impl.IRsStubPsiElement;
+import org.rustidea.psi.IRsTypeParameterListOwner;
+import org.rustidea.psi.RsTypeParameter;
+import org.rustidea.psi.RsTypeParameterList;
 import org.rustidea.psi.types.IRsElementType;
-import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.util.SimpleArrayFactory;
 
 public final class RsPsiUtil extends PsiUtilBase {
@@ -92,17 +91,6 @@ public final class RsPsiUtil extends PsiUtilBase {
     @NotNull
     public static String getPsiClassName(@NotNull final Object element) {
         return StringUtil.trimEnd(element.getClass().getSimpleName(), "Impl");
-    }
-
-    @NotNull
-    public static <T extends IRsStubPsiElement & IRsModifierListOwner> IRsAttribute[] getAttributes(@NotNull final T element) {
-        RsModifierList modifierList = element.getModifierList();
-        IRsAttribute[] a1 = modifierList != null ? modifierList.getAttributes() : SimpleArrayFactory.empty(IRsAttribute.class);
-
-        IRsAttribute[] a2 = (IRsAttribute[]) element.getStubOrPsiChildren(
-            RsPsiTypes.ATTRIBUTE_OR_DOC_TOKEN_SET, SimpleArrayFactory.get(IRsAttribute.class));
-
-        return ArrayUtil.mergeArrays(a1, a2, SimpleArrayFactory.get(IRsAttribute.class));
     }
 }
 

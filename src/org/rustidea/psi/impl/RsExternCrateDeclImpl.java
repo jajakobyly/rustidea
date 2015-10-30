@@ -17,10 +17,7 @@
 package org.rustidea.psi.impl;
 
 import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
-import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsExternCrateDecl;
 import org.rustidea.psi.RsIdentifier;
@@ -28,7 +25,6 @@ import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsPsiTreeUtil;
 import org.rustidea.psi.util.RsPsiUtil;
 import org.rustidea.stubs.RsExternCrateDeclStub;
-import org.rustidea.util.NotImplementedException;
 
 public class RsExternCrateDeclImpl extends IRsNamedItemPsiElement<RsExternCrateDeclStub> implements RsExternCrateDecl {
     public RsExternCrateDeclImpl(@NotNull RsExternCrateDeclStub stub) {
@@ -45,10 +41,12 @@ public class RsExternCrateDeclImpl extends IRsNamedItemPsiElement<RsExternCrateD
         return RsPsiTreeUtil.getRequiredChildOfType(this, RsIdentifier.class);
     }
 
-    @Nullable
+    @NotNull
     @Override
     public RsIdentifier getNameIdentifier() {
-        return findLastChildByType(RsPsiTypes.IDENTIFIER);
+        RsIdentifier identifier = findLastChildByType(RsPsiTypes.IDENTIFIER);
+        assert identifier != null : "BUG ALERT: crate name is required"; // see #getCrateNameIdentifier()
+        return identifier;
     }
 
     @NotNull
@@ -60,24 +58,6 @@ public class RsExternCrateDeclImpl extends IRsNamedItemPsiElement<RsExternCrateD
         }
 
         return getCrateNameIdentifier().getText();
-    }
-
-    @Override
-    public String getName() {
-        RsExternCrateDeclStub stub = getStub();
-        if (stub != null) {
-            return stub.getName();
-        }
-
-        RsIdentifier node = getNameIdentifier();
-        return node == null ? null : node.getText();
-    }
-
-    @NotNull
-    @Override
-    public PsiElement setName(@NotNull String name) throws IncorrectOperationException {
-        // TODO Implement this
-        throw new IncorrectOperationException(new NotImplementedException());
     }
 
     @Override

@@ -18,13 +18,16 @@ package org.rustidea.psi.impl;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.stubs.IStubElementType;
+import com.intellij.util.ArrayUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.rustidea.psi.IRsAttribute;
 import org.rustidea.psi.IRsItem;
 import org.rustidea.psi.IRsItemOwner;
 import org.rustidea.psi.RsModifierList;
 import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.stubs.IRsItemStub;
+import org.rustidea.util.SimpleArrayFactory;
 
 public abstract class IRsItemPsiElement<StubT extends IRsItemStub>
     extends IRsStubPsiElement<StubT> implements IRsItem<StubT> {
@@ -46,5 +49,14 @@ public abstract class IRsItemPsiElement<StubT extends IRsItemStub>
     @Override
     public RsModifierList getModifierList() {
         return getStubOrPsiChild(RsPsiTypes.MODIFIER_LIST);
+    }
+
+    @NotNull
+    @Override
+    public IRsAttribute[] getAttributes() {
+        RsModifierList modifierList = this.getModifierList();
+        IRsAttribute[] a1 = modifierList != null ? modifierList.getAttributes() : SimpleArrayFactory.empty(IRsAttribute.class);
+        IRsAttribute[] a2 = this.getStubOrPsiChildren(RsPsiTypes.ATTRIBUTE_OR_DOC_TOKEN_SET, SimpleArrayFactory.get(IRsAttribute.class));
+        return ArrayUtil.mergeArrays(a1, a2, SimpleArrayFactory.get(IRsAttribute.class));
     }
 }

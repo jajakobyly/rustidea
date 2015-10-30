@@ -17,16 +17,11 @@
 package org.rustidea.psi.impl;
 
 import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
-import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.RsElementVisitor;
-import org.rustidea.psi.RsIdentifier;
 import org.rustidea.psi.RsStaticItem;
 import org.rustidea.psi.types.RsPsiTypes;
-import org.rustidea.psi.util.RsPsiTreeUtil;
 import org.rustidea.stubs.RsStaticItemStub;
-import org.rustidea.util.NotImplementedException;
 
 public class RsStaticItemImpl extends IRsNamedItemPsiElement<RsStaticItemStub> implements RsStaticItem {
     public RsStaticItemImpl(@NotNull RsStaticItemStub stub) {
@@ -35,28 +30,6 @@ public class RsStaticItemImpl extends IRsNamedItemPsiElement<RsStaticItemStub> i
 
     public RsStaticItemImpl(@NotNull ASTNode node) {
         super(node);
-    }
-
-    @NotNull
-    @Override
-    public RsIdentifier getNameIdentifier() {
-        return RsPsiTreeUtil.getRequiredChildOfType(this, RsIdentifier.class);
-    }
-
-    @Override
-    public String getName() {
-        final RsStaticItemStub stub = getStub();
-        if (stub != null) {
-            return stub.getName();
-        }
-
-        return getNameIdentifier().getText();
-    }
-
-    @Override
-    public PsiElement setName(@NotNull String name) throws IncorrectOperationException {
-        // TODO Implement this
-        throw new IncorrectOperationException(new NotImplementedException());
     }
 
     @Override

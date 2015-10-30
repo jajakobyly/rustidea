@@ -21,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
 import org.rustidea.stubs.IRsItemStub;
 
 public interface IRsItem<StubT extends IRsItemStub>
-    extends StubBasedPsiElement<StubT>, IRsModifierListOwner, IRsPsiElement {
+    extends StubBasedPsiElement<StubT>, IRsModifierListOwner, IRsAttributeOwner, IRsPsiElement {
     @Nullable
     IRsItemOwner getOwner();
 }
