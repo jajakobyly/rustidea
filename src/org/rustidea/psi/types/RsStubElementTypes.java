@@ -30,11 +30,13 @@ public interface RsStubElementTypes {
     RsAttributeElementType ATTRIBUTE = RsAttributeElementType.INSTANCE;
     RsAttributeItemElementType ATTRIBUTE_ITEM = RsAttributeItemElementType.INSTANCE;
     RsAttributeItemListElementType ATTRIBUTE_ITEM_LIST = RsAttributeItemListElementType.INSTANCE;
+    RsConstItemElementType CONST_ITEM = RsConstItemElementType.INSTANCE;
     RsDocElementType DOC = RsDocElementType.INSTANCE;
     RsExternCrateDeclElementType EXTERN_CRATE_DECL = RsExternCrateDeclElementType.INSTANCE;
     RsLifetimeElementType LIFETIME = RsLifetimeElementType.INSTANCE;
     RsModifierListElementType MODIFIER_LIST = RsModifierListElementType.INSTANCE;
     RsModuleElementType MODULE = RsModuleElementType.INSTANCE;
+    RsStaticItemElementType STATIC_ITEM = RsStaticItemElementType.INSTANCE;
     RsTypeParameterElementType TYPE_PARAMETER = RsTypeParameterElementType.INSTANCE;
     RsUseDeclElementType USE_DECL = RsUseDeclElementType.INSTANCE;
 

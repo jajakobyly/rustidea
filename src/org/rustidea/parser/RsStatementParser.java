@@ -14,13 +14,22 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi;
+package org.rustidea.parser;
 
-import com.intellij.psi.PsiNameIdentifierOwner;
-import org.rustidea.stubs.IRsNamedItemStub;
+import com.intellij.lang.PsiBuilder;
+import com.intellij.openapi.diagnostic.Logger;
+import org.jetbrains.annotations.NotNull;
 
-public interface IRsNamedItem<StubT extends IRsNamedItemStub>
-    extends IRsItem<StubT>, PsiNameIdentifierOwner {
-    @Override
-    RsIdentifier getNameIdentifier();
+public class RsStatementParser {
+    private static final Logger LOG = Logger.getInstance(RsStatementParser.class);
+
+    @NotNull
+    private final RsParser parser;
+    @NotNull
+    private final PsiBuilder builder;
+
+    public RsStatementParser(@NotNull final RsParser parser) {
+        this.parser = parser;
+        this.builder = parser.getBuilder();
+    }
 }

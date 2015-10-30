@@ -14,13 +14,17 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi;
+package org.rustidea.stubs.impl;
 
-import com.intellij.psi.PsiNameIdentifierOwner;
-import org.rustidea.stubs.IRsNamedItemStub;
+import com.intellij.psi.stubs.NamedStubBase;
+import com.intellij.psi.stubs.StubElement;
+import com.intellij.util.io.StringRef;
+import org.rustidea.psi.RsStaticItem;
+import org.rustidea.psi.types.RsPsiTypes;
+import org.rustidea.stubs.RsStaticItemStub;
 
-public interface IRsNamedItem<StubT extends IRsNamedItemStub>
-    extends IRsItem<StubT>, PsiNameIdentifierOwner {
-    @Override
-    RsIdentifier getNameIdentifier();
+public class RsStaticItemStubImpl extends NamedStubBase<RsStaticItem> implements RsStaticItemStub {
+    public RsStaticItemStubImpl(StubElement parent, StringRef name) {
+        super(parent, RsPsiTypes.STATIC_ITEM, name);
+    }
 }

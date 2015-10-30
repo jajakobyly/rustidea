@@ -27,8 +27,7 @@ import java.util.EnumSet;
 
 import static com.intellij.lang.PsiBuilderUtil.expect;
 import static org.rustidea.parser.RsParserUtil.*;
-import static org.rustidea.psi.types.RsStubElementTypes.*;
-import static org.rustidea.psi.types.RsTokenTypes.*;
+import static org.rustidea.psi.types.RsPsiTypes.*;
 
 public class RsModuleParser {
     private static final Logger LOG = Logger.getInstance(RsModuleParser.class);
@@ -70,6 +69,16 @@ public class RsModuleParser {
 
         if (mod()) {
             marker.done(MODULE);
+            return true;
+        }
+
+        if (constItem()) {
+            marker.done(CONST_ITEM);
+            return true;
+        }
+
+        if (staticItem()) {
+            marker.done(STATIC_ITEM);
             return true;
         }
 
@@ -160,6 +169,45 @@ public class RsModuleParser {
         } else {
             error(builder, "missing '{' or ';'");
         }
+
+        marker.drop(); // PSI element will be marked in #item()
+        return true;
+    }
+
+    private boolean constItem() {
+        final Marker marker = builder.mark();
+
+        if (!expect(builder, KW_CONST) || !identifier(builder)) {
+            marker.rollbackTo();
+            return false;
+        }
+        expectOrWarn(builder, OP_COLON);
+        parser.getTypeParser().expectType();
+        expectOrWarn(builder, OP_EQ);
+        parser.getExpressionParser().expectExpression();
+        semicolon(builder);
+
+        marker.drop(); // PSI element will be marked in #item()
+        return true;
+    }
+
+    private boolean staticItem() {
+        final Marker marker = builder.mark();
+
+        if (!expect(builder, KW_STATIC)) {
+            marker.rollbackTo();
+            return false;
+        }
+        expect(builder, KW_MUT);
+        if (!identifier(builder)) {
+            marker.rollbackTo();
+            return false;
+        }
+        expectOrWarn(builder, OP_COLON);
+        parser.getTypeParser().expectType();
+        expectOrWarn(builder, OP_EQ);
+        parser.getExpressionParser().expectExpression();
+        semicolon(builder);
 
         marker.drop(); // PSI element will be marked in #item()
         return true;

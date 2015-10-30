@@ -16,8 +16,7 @@
 
 package org.rustidea.psi;
 
-import com.intellij.psi.PsiNameIdentifierOwner;
 import org.rustidea.stubs.RsModuleStub;
 
-public interface RsModule extends IRsNamedItem<RsModuleStub>, IRsModule, PsiNameIdentifierOwner, IRsModifierListOwner {
+public interface RsModule extends IRsNamedItem<RsModuleStub>, IRsModule {
 }

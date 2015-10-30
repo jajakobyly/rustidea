@@ -39,6 +39,14 @@ public class RsParserTest extends ParsingTestCase {
         doTest(true);
     }
 
+    public void testConstAndStatic0001() {
+        doTest(true);
+    }
+
+    public void testConstAndStatic0002() {
+        doTest(true);
+    }
+
     public void testExternCrate0001() {
         doTest(true);
     }

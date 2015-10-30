@@ -36,14 +36,20 @@ public class RsParser {
     private final RsExpressionParser expressionParser;
     @NotNull
     private final RsReferenceParser referenceParser;
+    @NotNull
+    private final RsStatementParser statementParser;
+    @NotNull
+    private final RsTypeParser typeParser;
 
     public RsParser(@NotNull final PsiBuilder builder) {
-        builder.setDebugMode(true);
+//        builder.setDebugMode(true);
         this.builder = builder;
 
-        moduleParser = new RsModuleParser(this);
-        expressionParser = new RsExpressionParser(this);
-        referenceParser = new RsReferenceParser(this);
+        this.moduleParser = new RsModuleParser(this);
+        this.expressionParser = new RsExpressionParser(this);
+        this.referenceParser = new RsReferenceParser(this);
+        this.statementParser = new RsStatementParser(this);
+        this.typeParser = new RsTypeParser(this);
     }
 
     @NotNull
@@ -64,6 +70,16 @@ public class RsParser {
     @NotNull
     public RsReferenceParser getReferenceParser() {
         return referenceParser;
+    }
+
+    @NotNull
+    public RsStatementParser getStatementParser() {
+        return statementParser;
+    }
+
+    @NotNull
+    public RsTypeParser getTypeParser() {
+        return typeParser;
     }
 
     private ASTNode doParse(IElementType root) {

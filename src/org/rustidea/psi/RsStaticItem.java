@@ -16,11 +16,7 @@
 
 package org.rustidea.psi;
 
-import com.intellij.psi.PsiNameIdentifierOwner;
-import org.rustidea.stubs.IRsNamedItemStub;
+import org.rustidea.stubs.RsStaticItemStub;
 
-public interface IRsNamedItem<StubT extends IRsNamedItemStub>
-    extends IRsItem<StubT>, PsiNameIdentifierOwner {
-    @Override
-    RsIdentifier getNameIdentifier();
+public interface RsStaticItem extends IRsNamedItem<RsStaticItemStub> {
 }

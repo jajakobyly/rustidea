@@ -1,0 +1,238 @@
+Rust File(0,247)
+  PsiErrorElement:unexpected 'const'(0,5)
+    RsKeyword:const('const')(0,5)
+  PsiWhiteSpace('\n')(5,6)
+  PsiErrorElement:unexpected 'static'(6,12)
+    RsKeyword:static('static')(6,12)
+  PsiWhiteSpace('\n')(12,13)
+  PsiErrorElement:unexpected 'static'(13,19)
+    RsKeyword:static('static')(13,19)
+  PsiWhiteSpace(' ')(19,20)
+  PsiErrorElement:unexpected 'mut'(20,23)
+    RsKeyword:mut('mut')(20,23)
+  PsiWhiteSpace('\n\n')(23,25)
+  RsConstItem:FOO(25,34)
+    RsKeyword:const('const')(25,30)
+    PsiWhiteSpace(' ')(30,31)
+    RsIdentifier:FOO('FOO')(31,34)
+    PsiErrorElement:expected ':'(34,34)
+      <empty list>
+    PsiErrorElement:expected type(34,34)
+      <empty list>
+    PsiErrorElement:expected '='(34,34)
+      <empty list>
+    PsiErrorElement:expected expression(34,34)
+      <empty list>
+    PsiErrorElement:missing semicolon(34,34)
+      <empty list>
+  PsiWhiteSpace('\n')(34,35)
+  RsStaticItem:FOO(35,45)
+    RsKeyword:static('static')(35,41)
+    PsiWhiteSpace(' ')(41,42)
+    RsIdentifier:FOO('FOO')(42,45)
+    PsiErrorElement:expected ':'(45,45)
+      <empty list>
+    PsiErrorElement:expected type(45,45)
+      <empty list>
+    PsiErrorElement:expected '='(45,45)
+      <empty list>
+    PsiErrorElement:expected expression(45,45)
+      <empty list>
+    PsiErrorElement:missing semicolon(45,45)
+      <empty list>
+  PsiWhiteSpace('\n')(45,46)
+  RsStaticItem:FOO(46,60)
+    RsKeyword:static('static')(46,52)
+    PsiWhiteSpace(' ')(52,53)
+    RsKeyword:mut('mut')(53,56)
+    PsiWhiteSpace(' ')(56,57)
+    RsIdentifier:FOO('FOO')(57,60)
+    PsiErrorElement:expected ':'(60,60)
+      <empty list>
+    PsiErrorElement:expected type(60,60)
+      <empty list>
+    PsiErrorElement:expected '='(60,60)
+      <empty list>
+    PsiErrorElement:expected expression(60,60)
+      <empty list>
+    PsiErrorElement:missing semicolon(60,60)
+      <empty list>
+  PsiWhiteSpace('\n\n')(60,62)
+  RsConstItem:FOO(62,72)
+    RsKeyword:const('const')(62,67)
+    PsiWhiteSpace(' ')(67,68)
+    RsIdentifier:FOO('FOO')(68,71)
+    PsiErrorElement:expected ':'(71,71)
+      <empty list>
+    PsiErrorElement:expected type(71,71)
+      <empty list>
+    PsiErrorElement:expected '='(71,71)
+      <empty list>
+    PsiErrorElement:expected expression(71,71)
+      <empty list>
+    RsToken:;(';')(71,72)
+  PsiWhiteSpace('\n')(72,73)
+  RsStaticItem:FOO(73,84)
+    RsKeyword:static('static')(73,79)
+    PsiWhiteSpace(' ')(79,80)
+    RsIdentifier:FOO('FOO')(80,83)
+    PsiErrorElement:expected ':'(83,83)
+      <empty list>
+    PsiErrorElement:expected type(83,83)
+      <empty list>
+    PsiErrorElement:expected '='(83,83)
+      <empty list>
+    PsiErrorElement:expected expression(83,83)
+      <empty list>
+    RsToken:;(';')(83,84)
+  PsiWhiteSpace('\n')(84,85)
+  RsStaticItem:FOO(85,100)
+    RsKeyword:static('static')(85,91)
+    PsiWhiteSpace(' ')(91,92)
+    RsKeyword:mut('mut')(92,95)
+    PsiWhiteSpace(' ')(95,96)
+    RsIdentifier:FOO('FOO')(96,99)
+    PsiErrorElement:expected ':'(99,99)
+      <empty list>
+    PsiErrorElement:expected type(99,99)
+      <empty list>
+    PsiErrorElement:expected '='(99,99)
+      <empty list>
+    PsiErrorElement:expected expression(99,99)
+      <empty list>
+    RsToken:;(';')(99,100)
+  PsiWhiteSpace('\n\n')(100,102)
+  RsConstItem:FOO(102,114)
+    RsKeyword:const('const')(102,107)
+    PsiWhiteSpace(' ')(107,108)
+    RsIdentifier:FOO('FOO')(108,111)
+    RsToken::(':')(111,112)
+    PsiErrorElement:expected type(112,112)
+      <empty list>
+    PsiErrorElement:expected '='(112,112)
+      <empty list>
+    PsiErrorElement:expected expression(112,112)
+      <empty list>
+    PsiWhiteSpace(' ')(112,113)
+    RsToken:;(';')(113,114)
+  PsiWhiteSpace('\n')(114,115)
+  RsStaticItem:FOO(115,128)
+    RsKeyword:static('static')(115,121)
+    PsiWhiteSpace(' ')(121,122)
+    RsIdentifier:FOO('FOO')(122,125)
+    RsToken::(':')(125,126)
+    PsiErrorElement:expected type(126,126)
+      <empty list>
+    PsiErrorElement:expected '='(126,126)
+      <empty list>
+    PsiErrorElement:expected expression(126,126)
+      <empty list>
+    PsiWhiteSpace(' ')(126,127)
+    RsToken:;(';')(127,128)
+  PsiWhiteSpace('\n')(128,129)
+  RsStaticItem:FOO(129,146)
+    RsKeyword:static('static')(129,135)
+    PsiWhiteSpace(' ')(135,136)
+    RsKeyword:mut('mut')(136,139)
+    PsiWhiteSpace(' ')(139,140)
+    RsIdentifier:FOO('FOO')(140,143)
+    RsToken::(':')(143,144)
+    PsiErrorElement:expected type(144,144)
+      <empty list>
+    PsiErrorElement:expected '='(144,144)
+      <empty list>
+    PsiErrorElement:expected expression(144,144)
+      <empty list>
+    PsiWhiteSpace(' ')(144,145)
+    RsToken:;(';')(145,146)
+  PsiWhiteSpace('\n\n')(146,148)
+  RsConstItem:FOO(148,161)
+    RsKeyword:const('const')(148,153)
+    PsiWhiteSpace(' ')(153,154)
+    RsIdentifier:FOO('FOO')(154,157)
+    PsiErrorElement:expected ':'(157,157)
+      <empty list>
+    PsiErrorElement:expected type(157,157)
+      <empty list>
+    PsiWhiteSpace(' ')(157,158)
+    RsToken:=('=')(158,159)
+    PsiErrorElement:expected expression(159,159)
+      <empty list>
+    PsiWhiteSpace(' ')(159,160)
+    RsToken:;(';')(160,161)
+  PsiWhiteSpace('\n')(161,162)
+  RsStaticItem:FOO(162,176)
+    RsKeyword:static('static')(162,168)
+    PsiWhiteSpace(' ')(168,169)
+    RsIdentifier:FOO('FOO')(169,172)
+    PsiErrorElement:expected ':'(172,172)
+      <empty list>
+    PsiErrorElement:expected type(172,172)
+      <empty list>
+    PsiWhiteSpace(' ')(172,173)
+    RsToken:=('=')(173,174)
+    PsiErrorElement:expected expression(174,174)
+      <empty list>
+    PsiWhiteSpace(' ')(174,175)
+    RsToken:;(';')(175,176)
+  PsiWhiteSpace('\n')(176,177)
+  RsStaticItem:FOO(177,195)
+    RsKeyword:static('static')(177,183)
+    PsiWhiteSpace(' ')(183,184)
+    RsKeyword:mut('mut')(184,187)
+    PsiWhiteSpace(' ')(187,188)
+    RsIdentifier:FOO('FOO')(188,191)
+    PsiErrorElement:expected ':'(191,191)
+      <empty list>
+    PsiErrorElement:expected type(191,191)
+      <empty list>
+    PsiWhiteSpace(' ')(191,192)
+    RsToken:=('=')(192,193)
+    PsiErrorElement:expected expression(193,193)
+      <empty list>
+    PsiWhiteSpace(' ')(193,194)
+    RsToken:;(';')(194,195)
+  PsiWhiteSpace('\n\n')(195,197)
+  RsConstItem:FOO(197,211)
+    RsKeyword:const('const')(197,202)
+    PsiWhiteSpace(' ')(202,203)
+    RsIdentifier:FOO('FOO')(203,206)
+    RsToken::(':')(206,207)
+    PsiErrorElement:expected type(207,207)
+      <empty list>
+    PsiWhiteSpace(' ')(207,208)
+    RsToken:=('=')(208,209)
+    PsiErrorElement:expected expression(209,209)
+      <empty list>
+    PsiWhiteSpace(' ')(209,210)
+    RsToken:;(';')(210,211)
+  PsiWhiteSpace('\n')(211,212)
+  RsStaticItem:FOO(212,227)
+    RsKeyword:static('static')(212,218)
+    PsiWhiteSpace(' ')(218,219)
+    RsIdentifier:FOO('FOO')(219,222)
+    RsToken::(':')(222,223)
+    PsiErrorElement:expected type(223,223)
+      <empty list>
+    PsiWhiteSpace(' ')(223,224)
+    RsToken:=('=')(224,225)
+    PsiErrorElement:expected expression(225,225)
+      <empty list>
+    PsiWhiteSpace(' ')(225,226)
+    RsToken:;(';')(226,227)
+  PsiWhiteSpace('\n')(227,228)
+  RsStaticItem:FOO(228,247)
+    RsKeyword:static('static')(228,234)
+    PsiWhiteSpace(' ')(234,235)
+    RsKeyword:mut('mut')(235,238)
+    PsiWhiteSpace(' ')(238,239)
+    RsIdentifier:FOO('FOO')(239,242)
+    RsToken::(':')(242,243)
+    PsiErrorElement:expected type(243,243)
+      <empty list>
+    PsiWhiteSpace(' ')(243,244)
+    RsToken:=('=')(244,245)
+    PsiErrorElement:expected expression(245,245)
+      <empty list>
+    PsiWhiteSpace(' ')(245,246)
+    RsToken:;(';')(246,247)
