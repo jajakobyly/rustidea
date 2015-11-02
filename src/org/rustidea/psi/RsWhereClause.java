@@ -16,12 +16,10 @@
 
 package org.rustidea.psi;
 
-import com.intellij.psi.StubBasedPsiElement;
-import com.intellij.psi.stubs.EmptyStub;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public interface RsWhereClause extends StubBasedPsiElement<EmptyStub>, IRsPsiElement {
+public interface RsWhereClause extends IRsPsiElement {
     @NotNull
     RsReferenceElement[] getBounds();
 

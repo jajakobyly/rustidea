@@ -41,6 +41,11 @@ public abstract class IRsCompositePsiElement extends CompositePsiElement impleme
     @NotNull
     @Override
     public String toString() {
-        return RsPsiUtil.getPsiClassName(this);
+        String clsName = RsPsiUtil.getPsiClassName(this);
+        String psiName = getName();
+        if (psiName != null) {
+            return clsName + ":" + psiName;
+        }
+        return clsName;
     }
 }

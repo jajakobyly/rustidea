@@ -17,7 +17,11 @@
 package org.rustidea.stubs;
 
 import com.intellij.psi.stubs.PsiFileStub;
+import com.intellij.psi.stubs.PsiFileStubImpl;
 import org.rustidea.psi.RsFile;
 
-public interface RsFileStub extends PsiFileStub<RsFile> {
+public class RsFileStub extends PsiFileStubImpl<RsFile> implements PsiFileStub<RsFile> {
+    public RsFileStub(RsFile file) {
+        super(file);
+    }
 }

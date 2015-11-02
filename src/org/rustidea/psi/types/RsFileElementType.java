@@ -27,7 +27,6 @@ import org.jetbrains.annotations.NotNull;
 import org.rustidea.RustLanguage;
 import org.rustidea.psi.RsFile;
 import org.rustidea.stubs.RsFileStub;
-import org.rustidea.stubs.impl.RsFileStubImpl;
 
 import java.io.IOException;
 
@@ -52,7 +51,7 @@ public class RsFileElementType extends IStubFileElementType<RsFileStub> {
             @NotNull
             @Override
             protected StubElement createStubForFile(@NotNull PsiFile file) {
-                return file instanceof RsFile ? new RsFileStubImpl((RsFile) file) : super.createStubForFile(file);
+                return file instanceof RsFile ? new RsFileStub((RsFile) file) : super.createStubForFile(file);
             }
         };
     }
@@ -64,7 +63,7 @@ public class RsFileElementType extends IStubFileElementType<RsFileStub> {
     @NotNull
     @Override
     public RsFileStub deserialize(@NotNull StubInputStream dataStream, StubElement parentStub) throws IOException {
-        return new RsFileStubImpl(null);
+        return new RsFileStub(null);
     }
 
     @NotNull

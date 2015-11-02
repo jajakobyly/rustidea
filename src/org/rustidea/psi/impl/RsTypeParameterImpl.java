@@ -16,7 +16,6 @@
 
 package org.rustidea.psi.impl;
 
-import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
@@ -25,16 +24,11 @@ import org.rustidea.psi.*;
 import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsPsiTreeUtil;
 import org.rustidea.psi.util.RsPsiUtil;
-import org.rustidea.stubs.RsTypeParameterStub;
 import org.rustidea.util.NotImplementedException;
 
-public class RsTypeParameterImpl extends IRsStubPsiElement<RsTypeParameterStub> implements RsTypeParameter {
-    public RsTypeParameterImpl(@NotNull RsTypeParameterStub stub) {
-        super(stub, RsPsiTypes.TYPE_PARAMETER);
-    }
-
-    public RsTypeParameterImpl(@NotNull ASTNode node) {
-        super(node);
+public class RsTypeParameterImpl extends IRsCompositePsiElement implements RsTypeParameter {
+    public RsTypeParameterImpl() {
+        super(RsPsiTypes.TYPE_PARAMETER);
     }
 
     @NotNull
@@ -45,11 +39,6 @@ public class RsTypeParameterImpl extends IRsStubPsiElement<RsTypeParameterStub> 
 
     @Override
     public String getName() {
-        final RsTypeParameterStub stub = getStub();
-        if (stub != null) {
-            return stub.getName();
-        }
-
         return getNameIdentifier().getText();
     }
 
@@ -63,7 +52,7 @@ public class RsTypeParameterImpl extends IRsStubPsiElement<RsTypeParameterStub> 
     @Nullable
     @Override
     public RsWhereClause getWhereClause() {
-        return getStubOrPsiChild(RsPsiTypes.WHERE_CLAUSE);
+        return (RsWhereClause) findPsiChildByType(RsPsiTypes.WHERE_CLAUSE);
     }
 
     @Nullable
@@ -74,7 +63,7 @@ public class RsTypeParameterImpl extends IRsStubPsiElement<RsTypeParameterStub> 
 
     @Override
     public int getIndex() {
-        return RsPsiUtil.getStubElementIndex(this, getStub(), RsTypeParameter.class);
+        return RsPsiUtil.getElementIndex(this, RsTypeParameter.class);
     }
 
     @Override

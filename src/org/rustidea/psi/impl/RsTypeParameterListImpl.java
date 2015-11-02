@@ -16,8 +16,6 @@
 
 package org.rustidea.psi.impl;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.stubs.EmptyStub;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsLifetimeTypeParameter;
@@ -26,25 +24,21 @@ import org.rustidea.psi.RsTypeParameterList;
 import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.util.SimpleArrayFactory;
 
-public class RsTypeParameterListImpl extends IRsStubPsiElement<EmptyStub> implements RsTypeParameterList {
-    public RsTypeParameterListImpl(@NotNull EmptyStub stub) {
-        super(stub, RsPsiTypes.TYPE_PARAMETER_LIST);
-    }
-
-    public RsTypeParameterListImpl(@NotNull ASTNode node) {
-        super(node);
+public class RsTypeParameterListImpl extends IRsCompositePsiElement implements RsTypeParameterList {
+    public RsTypeParameterListImpl() {
+        super(RsPsiTypes.TYPE_PARAMETER_LIST);
     }
 
     @NotNull
     @Override
     public RsLifetimeTypeParameter[] getLifetimes() {
-        return getStubOrPsiChildren(RsPsiTypes.LIFETIME_TYPE_PARAMETER, SimpleArrayFactory.get(RsLifetimeTypeParameter.class));
+        return getChildrenAsPsiElements(RsPsiTypes.LIFETIME_TYPE_PARAMETER, SimpleArrayFactory.get(RsLifetimeTypeParameter.class));
     }
 
     @NotNull
     @Override
     public RsTypeParameter[] getTypeParameters() {
-        return getStubOrPsiChildren(RsPsiTypes.TYPE_PARAMETER, SimpleArrayFactory.get(RsTypeParameter.class));
+        return getChildrenAsPsiElements(RsPsiTypes.TYPE_PARAMETER, SimpleArrayFactory.get(RsTypeParameter.class));
     }
 
     @Override

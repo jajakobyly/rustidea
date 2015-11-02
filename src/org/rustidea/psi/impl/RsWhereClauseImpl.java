@@ -16,8 +16,6 @@
 
 package org.rustidea.psi.impl;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.stubs.EmptyStub;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsElementVisitor;
@@ -26,26 +24,24 @@ import org.rustidea.psi.RsTypeParameter;
 import org.rustidea.psi.RsWhereClause;
 import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsPsiTreeUtil;
+import org.rustidea.util.SimpleArrayFactory;
 
-public class RsWhereClauseImpl extends IRsStubPsiElement<EmptyStub> implements RsWhereClause {
-    public RsWhereClauseImpl(@NotNull EmptyStub stub) {
-        super(stub, RsPsiTypes.WHERE_CLAUSE);
-    }
-
-    public RsWhereClauseImpl(@NotNull ASTNode node) {
-        super(node);
+public class RsWhereClauseImpl extends IRsCompositePsiElement implements RsWhereClause {
+    public RsWhereClauseImpl() {
+        super(RsPsiTypes.WHERE_CLAUSE);
     }
 
     @NotNull
     @Override
     public RsReferenceElement[] getBounds() {
-        return findChildrenByClass(RsReferenceElement.class);
+        RsReferenceElement[] bounds = RsPsiTreeUtil.getChildrenOfType(this, RsReferenceElement.class);
+        return bounds != null ? bounds : SimpleArrayFactory.empty(RsReferenceElement.class);
     }
 
     @Nullable
     @Override
     public RsTypeParameter getOwner() {
-        return RsPsiTreeUtil.getStubOrPsiParentOfType(this, RsTypeParameter.class);
+        return RsPsiTreeUtil.getParentOfType(this, RsTypeParameter.class);
     }
 
     @Override

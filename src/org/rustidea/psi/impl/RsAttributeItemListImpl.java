@@ -16,28 +16,22 @@
 
 package org.rustidea.psi.impl;
 
-import com.intellij.lang.ASTNode;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.RsAttributeItem;
 import org.rustidea.psi.RsAttributeItemList;
 import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.types.RsPsiTypes;
-import org.rustidea.stubs.RsAttributeItemListStub;
 import org.rustidea.util.SimpleArrayFactory;
 
-public class RsAttributeItemListImpl extends IRsStubPsiElement<RsAttributeItemListStub> implements RsAttributeItemList {
-    public RsAttributeItemListImpl(@NotNull final RsAttributeItemListStub stub) {
-        super(stub, RsPsiTypes.ATTRIBUTE_ITEM_LIST);
-    }
-
-    public RsAttributeItemListImpl(@NotNull final ASTNode node) {
-        super(node);
+public class RsAttributeItemListImpl extends IRsCompositePsiElement implements RsAttributeItemList {
+    public RsAttributeItemListImpl() {
+        super(RsPsiTypes.ATTRIBUTE_ITEM_LIST);
     }
 
     @NotNull
     @Override
     public RsAttributeItem[] getItems() {
-        return getStubOrPsiChildren(RsPsiTypes.ATTRIBUTE_ITEM, SimpleArrayFactory.get(RsAttributeItem.class));
+        return getChildrenAsPsiElements(RsPsiTypes.ATTRIBUTE_ITEM, SimpleArrayFactory.get(RsAttributeItem.class));
     }
 
     @Override

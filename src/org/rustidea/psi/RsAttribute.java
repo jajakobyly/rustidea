@@ -17,9 +17,8 @@
 package org.rustidea.psi;
 
 import org.jetbrains.annotations.Nullable;
-import org.rustidea.stubs.RsAttributeStub;
 
-public interface RsAttribute extends IRsAttribute<RsAttributeStub> {
+public interface RsAttribute extends IRsAttribute {
     @Nullable
     RsAttributeItem getItem();
 }

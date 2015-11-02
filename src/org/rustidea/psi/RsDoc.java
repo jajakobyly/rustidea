@@ -19,9 +19,8 @@ package org.rustidea.psi;
 import com.intellij.psi.PsiDocCommentBase;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.rustidea.stubs.RsDocStub;
 
-public interface RsDoc extends IRsAttribute<RsDocStub>, PsiDocCommentBase {
+public interface RsDoc extends IRsAttribute, PsiDocCommentBase {
     @NotNull
     RsToken getToken();
 

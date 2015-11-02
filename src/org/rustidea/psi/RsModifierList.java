@@ -16,9 +16,6 @@
 
 package org.rustidea.psi;
 
-import com.intellij.psi.StubBasedPsiElement;
-import org.rustidea.stubs.RsModifierListStub;
-
-public interface RsModifierList extends StubBasedPsiElement<RsModifierListStub>, IRsPsiElement, IRsAttributeOwner {
+public interface RsModifierList extends IRsPsiElement, IRsAttributeOwner {
     boolean hasPub();
 }

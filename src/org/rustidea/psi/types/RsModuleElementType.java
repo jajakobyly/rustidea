@@ -26,7 +26,6 @@ import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsModule;
 import org.rustidea.psi.impl.RsModuleImpl;
 import org.rustidea.stubs.RsModuleStub;
-import org.rustidea.stubs.impl.RsModuleStubImpl;
 
 import java.io.IOException;
 
@@ -52,7 +51,7 @@ public class RsModuleElementType extends IRsStubElementType<RsModuleStub, RsModu
     @Nullable
     @Override
     public RsModuleStub createStub(@NotNull RsModule psi, StubElement parentStub) {
-        return new RsModuleStubImpl(parentStub, StringRef.fromString(psi.getName()));
+        return new RsModuleStub(parentStub, StringRef.fromString(psi.getName()));
     }
 
     @Override
@@ -63,6 +62,6 @@ public class RsModuleElementType extends IRsStubElementType<RsModuleStub, RsModu
     @NotNull
     @Override
     public RsModuleStub deserialize(@NotNull StubInputStream dataStream, StubElement parentStub) throws IOException {
-        return new RsModuleStubImpl(parentStub, dataStream.readName());
+        return new RsModuleStub(parentStub, dataStream.readName());
     }
 }

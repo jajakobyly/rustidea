@@ -55,6 +55,7 @@ public abstract class IRsNamedItemPsiElement<StubT extends IRsNamedItemStub>
         return getNameIdentifier().getText();
     }
 
+    @NotNull
     @Override
     public PsiElement setName(@NotNull String name) throws IncorrectOperationException {
         // TODO Implement this

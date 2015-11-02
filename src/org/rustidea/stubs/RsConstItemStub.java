@@ -16,7 +16,14 @@
 
 package org.rustidea.stubs;
 
+import com.intellij.psi.stubs.NamedStubBase;
+import com.intellij.psi.stubs.StubElement;
+import com.intellij.util.io.StringRef;
 import org.rustidea.psi.RsConstItem;
+import org.rustidea.psi.types.RsPsiTypes;
 
-public interface RsConstItemStub extends IRsNamedItemStub<RsConstItem> {
+public class RsConstItemStub extends NamedStubBase<RsConstItem> implements IRsNamedItemStub<RsConstItem> {
+    public RsConstItemStub(StubElement parent, StringRef name) {
+        super(parent, RsPsiTypes.CONST_ITEM, name);
+    }
 }

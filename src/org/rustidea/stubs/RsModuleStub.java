@@ -16,7 +16,14 @@
 
 package org.rustidea.stubs;
 
+import com.intellij.psi.stubs.NamedStubBase;
+import com.intellij.psi.stubs.StubElement;
+import com.intellij.util.io.StringRef;
 import org.rustidea.psi.RsModule;
+import org.rustidea.psi.types.RsPsiTypes;
 
-public interface RsModuleStub extends IRsNamedItemStub<RsModule> {
+public class RsModuleStub extends NamedStubBase<RsModule> implements IRsNamedItemStub<RsModule> {
+    public RsModuleStub(StubElement parent, StringRef name) {
+        super(parent, RsPsiTypes.MODULE, name);
+    }
 }

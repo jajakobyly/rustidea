@@ -48,7 +48,7 @@ public abstract class IRsItemPsiElement<StubT extends IRsItemStub>
     @Nullable
     @Override
     public RsModifierList getModifierList() {
-        return getStubOrPsiChild(RsPsiTypes.MODIFIER_LIST);
+        return findChildByType(RsPsiTypes.MODIFIER_LIST);
     }
 
     @NotNull

@@ -16,72 +16,10 @@
 
 package org.rustidea.psi.types;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.stubs.EmptyStub;
-import org.jetbrains.annotations.NotNull;
-import org.rustidea.psi.RsLifetimeTypeParameter;
-import org.rustidea.psi.RsTypeParameterList;
-import org.rustidea.psi.RsWhereClause;
-import org.rustidea.psi.impl.RsLifetimeTypeParameterImpl;
-import org.rustidea.psi.impl.RsTypeParameterListImpl;
-import org.rustidea.psi.impl.RsWhereClauseImpl;
-
 public interface RsStubElementTypes {
-    RsAttributeElementType ATTRIBUTE = RsAttributeElementType.INSTANCE;
-    RsAttributeItemElementType ATTRIBUTE_ITEM = RsAttributeItemElementType.INSTANCE;
-    RsAttributeItemListElementType ATTRIBUTE_ITEM_LIST = RsAttributeItemListElementType.INSTANCE;
     RsConstItemElementType CONST_ITEM = RsConstItemElementType.INSTANCE;
-    RsDocElementType DOC = RsDocElementType.INSTANCE;
     RsExternCrateDeclElementType EXTERN_CRATE_DECL = RsExternCrateDeclElementType.INSTANCE;
-    RsLifetimeElementType LIFETIME = RsLifetimeElementType.INSTANCE;
-    RsModifierListElementType MODIFIER_LIST = RsModifierListElementType.INSTANCE;
     RsModuleElementType MODULE = RsModuleElementType.INSTANCE;
     RsStaticItemElementType STATIC_ITEM = RsStaticItemElementType.INSTANCE;
-    RsTypeParameterElementType TYPE_PARAMETER = RsTypeParameterElementType.INSTANCE;
     RsUseDeclElementType USE_DECL = RsUseDeclElementType.INSTANCE;
-
-    IRsEmptyStubElementType<RsLifetimeTypeParameter> LIFETIME_TYPE_PARAMETER =
-        new IRsEmptyStubElementType<RsLifetimeTypeParameter>("LIFETIME_TYPE_PARAMETER") {
-            @NotNull
-            @Override
-            public RsLifetimeTypeParameter createPsi(@NotNull EmptyStub stub) {
-                return new RsLifetimeTypeParameterImpl(stub);
-            }
-
-            @NotNull
-            @Override
-            public RsLifetimeTypeParameter createPsi(@NotNull ASTNode node) {
-                return new RsLifetimeTypeParameterImpl(node);
-            }
-        };
-
-    IRsEmptyStubElementType<RsTypeParameterList> TYPE_PARAMETER_LIST =
-        new IRsEmptyStubElementType<RsTypeParameterList>("TYPE_PARAMETER_LIST") {
-            @NotNull
-            @Override
-            public RsTypeParameterList createPsi(@NotNull EmptyStub stub) {
-                return new RsTypeParameterListImpl(stub);
-            }
-
-            @NotNull
-            @Override
-            public RsTypeParameterList createPsi(@NotNull ASTNode node) {
-                return new RsTypeParameterListImpl(node);
-            }
-        };
-
-    IRsEmptyStubElementType<RsWhereClause> WHERE_CLAUSE =
-        new IRsEmptyStubElementType<RsWhereClause>("WHERE_CLAUSE") {
-            @NotNull
-            @Override
-            public RsWhereClause createPsi(@NotNull EmptyStub stub) {
-                return new RsWhereClauseImpl(stub);
-            }
-
-            @NotNull
-            @Override
-            public RsWhereClause createPsi(@NotNull ASTNode node) {
-                return new RsWhereClauseImpl(node);
-            }
-        };
 }

@@ -26,7 +26,6 @@ import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsConstItem;
 import org.rustidea.psi.impl.RsConstItemImpl;
 import org.rustidea.stubs.RsConstItemStub;
-import org.rustidea.stubs.impl.RsConstItemStubImpl;
 
 import java.io.IOException;
 
@@ -52,7 +51,7 @@ public class RsConstItemElementType extends IRsStubElementType<RsConstItemStub, 
     @Nullable
     @Override
     public RsConstItemStub createStub(@NotNull RsConstItem psi, StubElement parentStub) {
-        return new RsConstItemStubImpl(parentStub, StringRef.fromString(psi.getName()));
+        return new RsConstItemStub(parentStub, StringRef.fromString(psi.getName()));
     }
 
     @Override
@@ -63,6 +62,6 @@ public class RsConstItemElementType extends IRsStubElementType<RsConstItemStub, 
     @NotNull
     @Override
     public RsConstItemStub deserialize(@NotNull StubInputStream dataStream, StubElement parentStub) throws IOException {
-        return new RsConstItemStubImpl(parentStub, dataStream.readName());
+        return new RsConstItemStub(parentStub, dataStream.readName());
     }
 }

@@ -16,12 +16,9 @@
 
 package org.rustidea.psi;
 
-import com.intellij.psi.StubBasedPsiElement;
 import org.jetbrains.annotations.NotNull;
-import org.rustidea.stubs.RsAttributeItemListStub;
 
-public interface RsAttributeItemList
-    extends StubBasedPsiElement<RsAttributeItemListStub>, IRsPsiElement {
+public interface RsAttributeItemList extends IRsPsiElement {
     @NotNull
     RsAttributeItem[] getItems();
 

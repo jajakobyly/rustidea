@@ -16,38 +16,27 @@
 
 package org.rustidea.psi.impl;
 
-import com.intellij.lang.ASTNode;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.IRsAttribute;
 import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsModifierList;
 import org.rustidea.psi.types.RsPsiTypes;
-import org.rustidea.stubs.RsModifierListStub;
 import org.rustidea.util.SimpleArrayFactory;
 
-public class RsModifierListImpl extends IRsStubPsiElement<RsModifierListStub> implements RsModifierList {
-    public RsModifierListImpl(@NotNull RsModifierListStub stub) {
-        super(stub, RsPsiTypes.MODIFIER_LIST);
-    }
-
-    public RsModifierListImpl(@NotNull ASTNode node) {
-        super(node);
+public class RsModifierListImpl extends IRsCompositePsiElement implements RsModifierList {
+    public RsModifierListImpl() {
+        super(RsPsiTypes.MODIFIER_LIST);
     }
 
     @Override
     public boolean hasPub() {
-        RsModifierListStub stub = getStub();
-        if (stub != null) {
-            return stub.hasPub();
-        }
-
         return findChildByType(RsPsiTypes.KW_PUB) != null;
     }
 
     @NotNull
     @Override
     public IRsAttribute[] getAttributes() {
-        return getStubOrPsiChildren(RsPsiTypes.ATTRIBUTE_OR_DOC_TOKEN_SET, SimpleArrayFactory.get(IRsAttribute.class));
+        return getChildrenAsPsiElements(RsPsiTypes.ATTRIBUTE_OR_DOC_TOKEN_SET, SimpleArrayFactory.get(IRsAttribute.class));
     }
 
     @Override

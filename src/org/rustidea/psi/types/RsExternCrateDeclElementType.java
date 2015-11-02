@@ -25,7 +25,6 @@ import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.RsExternCrateDecl;
 import org.rustidea.psi.impl.RsExternCrateDeclImpl;
 import org.rustidea.stubs.RsExternCrateDeclStub;
-import org.rustidea.stubs.impl.RsExternCrateDeclStubImpl;
 
 import java.io.IOException;
 
@@ -51,7 +50,7 @@ public class RsExternCrateDeclElementType extends IRsStubElementType<RsExternCra
     @NotNull
     @Override
     public RsExternCrateDeclStub createStub(@NotNull RsExternCrateDecl psi, StubElement parentStub) {
-        return new RsExternCrateDeclStubImpl(
+        return new RsExternCrateDeclStub(
             parentStub,
             StringRef.fromString(psi.getName()),
             StringRef.fromString(psi.getCrateName()));
@@ -66,7 +65,7 @@ public class RsExternCrateDeclElementType extends IRsStubElementType<RsExternCra
     @NotNull
     @Override
     public RsExternCrateDeclStub deserialize(@NotNull StubInputStream dataStream, StubElement parentStub) throws IOException {
-        return new RsExternCrateDeclStubImpl(
+        return new RsExternCrateDeclStub(
             parentStub,
             dataStream.readName(),
             dataStream.readName());

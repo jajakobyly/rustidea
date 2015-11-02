@@ -16,7 +16,6 @@
 
 package org.rustidea.psi.impl;
 
-import com.intellij.lang.ASTNode;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.IRsAttributeOwner;
@@ -25,21 +24,16 @@ import org.rustidea.psi.RsAttributeItem;
 import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsPsiTreeUtil;
-import org.rustidea.stubs.RsAttributeStub;
 
-public class RsAttributeImpl extends IRsStubPsiElement<RsAttributeStub> implements RsAttribute {
-    public RsAttributeImpl(@NotNull final RsAttributeStub stub) {
-        super(stub, RsPsiTypes.ATTRIBUTE);
-    }
-
-    public RsAttributeImpl(@NotNull final ASTNode node) {
-        super(node);
+public class RsAttributeImpl extends IRsCompositePsiElement implements RsAttribute {
+    public RsAttributeImpl() {
+        super(RsPsiTypes.ATTRIBUTE);
     }
 
     @Nullable
     @Override
     public RsAttributeItem getItem() {
-        return getStubOrPsiChild(RsPsiTypes.ATTRIBUTE_ITEM);
+        return (RsAttributeItem) findPsiChildByType(RsPsiTypes.ATTRIBUTE_ITEM);
     }
 
     @Override

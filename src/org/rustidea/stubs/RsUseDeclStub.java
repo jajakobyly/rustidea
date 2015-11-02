@@ -16,18 +16,52 @@
 
 package org.rustidea.stubs;
 
+import com.intellij.psi.stubs.StubBase;
+import com.intellij.psi.stubs.StubElement;
+import com.intellij.reference.SoftReference;
+import com.intellij.util.io.StringRef;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.RsReferenceElement;
 import org.rustidea.psi.RsUseDecl;
+import org.rustidea.psi.types.RsPsiTypes;
+import org.rustidea.util.NotImplementedException;
 
-public interface RsUseDeclStub extends IRsItemStub<RsUseDecl> {
+import java.lang.ref.Reference;
+
+public class RsUseDeclStub extends StubBase<RsUseDecl> implements IRsItemStub<RsUseDecl> {
+    private final StringRef text;
+    private final byte flags;
+    @Nullable
+    private Reference<RsReferenceElement> reference = null;
+
+    public RsUseDeclStub(StubElement parent, final StringRef referenceText, final byte flags) {
+        super(parent, RsPsiTypes.USE_DECL);
+        this.text = referenceText;
+        this.flags = flags;
+    }
+
     @NotNull
-    RsUseDecl.Type getType();
+    public RsUseDecl.Type getType() {
+        return RsUseDecl.Type.unpack(flags);
+    }
 
     @Nullable
-    String getReferenceText();
+    public String getReferenceText() {
+        return StringRef.toString(text);
+    }
 
     @Nullable
-    RsReferenceElement getUseReference();
+    public RsReferenceElement getUseReference() {
+        RsReferenceElement ref = SoftReference.dereference(reference);
+        if (ref == null) {
+            // TODO Implement this (build reference PSI from `text`).
+            throw new NotImplementedException();
+        }
+        return ref;
+    }
+
+    public byte getFlags() {
+        return flags;
+    }
 }

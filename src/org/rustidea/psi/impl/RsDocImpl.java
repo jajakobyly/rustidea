@@ -16,7 +16,6 @@
 
 package org.rustidea.psi.impl;
 
-import com.intellij.lang.ASTNode;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -26,21 +25,16 @@ import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsToken;
 import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsPsiTreeUtil;
-import org.rustidea.stubs.RsDocStub;
 
-public class RsDocImpl extends IRsStubPsiElement<RsDocStub> implements RsDoc {
-    public RsDocImpl(@NotNull final RsDocStub stub) {
-        super(stub, RsPsiTypes.DOC);
-    }
-
-    public RsDocImpl(@NotNull final ASTNode node) {
-        super(node);
+public class RsDocImpl extends IRsCompositePsiElement implements RsDoc {
+    public RsDocImpl() {
+        super(RsPsiTypes.DOC);
     }
 
     @NotNull
     @Override
     public RsToken getToken() {
-        final RsToken child = findChildByType(RsPsiTypes.DOC_TOKEN_SET);
+        final RsToken child = (RsToken) findPsiChildByType(RsPsiTypes.DOC_TOKEN_SET);
         assert child != null;
         return child;
     }

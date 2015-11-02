@@ -16,22 +16,16 @@
 
 package org.rustidea.psi.impl;
 
-import com.intellij.lang.ASTNode;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.*;
 import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsPsiTreeUtil;
 import org.rustidea.psi.util.RsPsiUtil;
-import org.rustidea.stubs.RsAttributeItemStub;
 
-public class RsAttributeItemImpl extends IRsStubPsiElement<RsAttributeItemStub> implements RsAttributeItem {
-    public RsAttributeItemImpl(@NotNull final RsAttributeItemStub stub) {
-        super(stub, RsPsiTypes.ATTRIBUTE_ITEM);
-    }
-
-    public RsAttributeItemImpl(@NotNull final ASTNode node) {
-        super(node);
+public class RsAttributeItemImpl extends IRsCompositePsiElement implements RsAttributeItem {
+    public RsAttributeItemImpl() {
+        super(RsPsiTypes.ATTRIBUTE_ITEM);
     }
 
     @NotNull
@@ -42,14 +36,20 @@ public class RsAttributeItemImpl extends IRsStubPsiElement<RsAttributeItemStub> 
 
     @Nullable
     @Override
+    public String getName() {
+        return getNameIdentifier().getText();
+    }
+
+    @Nullable
+    @Override
     public IRsAttribute getAttribute() {
-        return getStubOrPsiParentOfType(RsAttribute.class);
+        return RsPsiTreeUtil.getParentOfType(this, RsAttribute.class);
     }
 
     @Nullable
     @Override
     public RsAttributeItem getParentItem() {
-        return getStubOrPsiParentOfType(RsAttributeItem.class);
+        return RsPsiTreeUtil.getParentOfType(this, RsAttributeItem.class);
     }
 
     @NotNull
@@ -63,13 +63,13 @@ public class RsAttributeItemImpl extends IRsStubPsiElement<RsAttributeItemStub> 
     @Nullable
     @Override
     public RsLiteral getValue() {
-        return findChildByClass(RsLiteral.class);
+        return RsPsiTreeUtil.getChildOfType(this, RsLiteral.class);
     }
 
     @Nullable
     @Override
     public RsAttributeItemList getParams() {
-        return getStubOrPsiChild(RsPsiTypes.ATTRIBUTE_ITEM_LIST);
+        return (RsAttributeItemList) findPsiChildByType(RsPsiTypes.ATTRIBUTE_ITEM_LIST);
     }
 
     @Override
@@ -77,13 +77,7 @@ public class RsAttributeItemImpl extends IRsStubPsiElement<RsAttributeItemStub> 
         if (getParentItem() == null) {
             return 0;
         }
-        return RsPsiUtil.getStubElementIndex(this, getStub(), RsAttributeItem.class);
-    }
-
-    @Nullable
-    @Override
-    public String getName() {
-        return getNameIdentifier().getText();
+        return RsPsiUtil.getElementIndex(this, RsAttributeItem.class);
     }
 
     @Override

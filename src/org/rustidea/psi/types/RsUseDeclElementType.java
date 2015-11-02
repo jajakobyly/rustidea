@@ -26,7 +26,6 @@ import org.rustidea.psi.RsReferenceElement;
 import org.rustidea.psi.RsUseDecl;
 import org.rustidea.psi.impl.RsUseDeclImpl;
 import org.rustidea.stubs.RsUseDeclStub;
-import org.rustidea.stubs.impl.RsUseDeclStubImpl;
 
 import java.io.IOException;
 
@@ -54,12 +53,12 @@ public class RsUseDeclElementType extends IRsStubElementType<RsUseDeclStub, RsUs
     public RsUseDeclStub createStub(@NotNull RsUseDecl psi, StubElement parentStub) {
         final RsReferenceElement referenceElement = psi.getUseReference();
         final String refText = referenceElement == null ? null : referenceElement.getText();
-        return new RsUseDeclStubImpl(parentStub, StringRef.fromNullableString(refText), psi.getType().pack());
+        return new RsUseDeclStub(parentStub, StringRef.fromNullableString(refText), psi.getType().pack());
     }
 
     @Override
     public void serialize(@NotNull RsUseDeclStub stub, @NotNull StubOutputStream dataStream) throws IOException {
-        dataStream.writeByte(((RsUseDeclStubImpl) stub).getFlags());
+        dataStream.writeByte(stub.getFlags());
         dataStream.writeName(stub.getReferenceText());
     }
 
@@ -68,6 +67,6 @@ public class RsUseDeclElementType extends IRsStubElementType<RsUseDeclStub, RsUs
     public RsUseDeclStub deserialize(@NotNull StubInputStream dataStream, StubElement parentStub) throws IOException {
         final byte flags = dataStream.readByte();
         final StringRef text = dataStream.readName();
-        return new RsUseDeclStubImpl(parentStub, text, flags);
+        return new RsUseDeclStub(parentStub, text, flags);
     }
 }

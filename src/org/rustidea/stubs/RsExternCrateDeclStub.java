@@ -16,12 +16,25 @@
 
 package org.rustidea.stubs;
 
+import com.intellij.psi.stubs.NamedStubBase;
+import com.intellij.psi.stubs.StubElement;
+import com.intellij.util.io.StringRef;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.RsExternCrateDecl;
+import org.rustidea.psi.types.RsPsiTypes;
 
-public interface RsExternCrateDeclStub extends IRsNamedItemStub<RsExternCrateDecl> {
+public class RsExternCrateDeclStub extends NamedStubBase<RsExternCrateDecl> implements IRsNamedItemStub<RsExternCrateDecl> {
+    private final StringRef crateName;
+
+    public RsExternCrateDeclStub(StubElement parent, StringRef name, StringRef crateName) {
+        super(parent, RsPsiTypes.EXTERN_CRATE_DECL, name);
+        this.crateName = crateName;
+    }
+
     @NotNull
     @NonNls
-    String getCrateName();
+    public String getCrateName() {
+        return crateName.toString();
+    }
 }

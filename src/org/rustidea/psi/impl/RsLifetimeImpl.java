@@ -16,7 +16,6 @@
 
 package org.rustidea.psi.impl;
 
-import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
@@ -26,16 +25,11 @@ import org.rustidea.psi.RsIdentifier;
 import org.rustidea.psi.RsLifetime;
 import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsPsiTreeUtil;
-import org.rustidea.stubs.RsLifetimeStub;
 import org.rustidea.util.NotImplementedException;
 
-public class RsLifetimeImpl extends IRsStubPsiElement<RsLifetimeStub> implements RsLifetime {
-    public RsLifetimeImpl(@NotNull RsLifetimeStub stub) {
-        super(stub, RsPsiTypes.LIFETIME);
-    }
-
-    public RsLifetimeImpl(@NotNull ASTNode node) {
-        super(node);
+public class RsLifetimeImpl extends IRsCompositePsiElement implements RsLifetime {
+    public RsLifetimeImpl() {
+        super(RsPsiTypes.LIFETIME);
     }
 
     @NotNull
@@ -47,11 +41,6 @@ public class RsLifetimeImpl extends IRsStubPsiElement<RsLifetimeStub> implements
     @Nullable
     @Override
     public String getName() {
-        final RsLifetimeStub stub = getStub();
-        if (stub != null) {
-            return stub.getName();
-        }
-
         return getNameIdentifier().getText().substring(1); // Trim initial '
     }
 
