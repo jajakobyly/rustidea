@@ -30,6 +30,10 @@ public interface RsReferenceElement extends PsiPolyVariantReference, PsiQualifie
     @Nullable
     PsiElement getReferenceNameElement();
 
+    @Nullable
+    @Override
+    RsReferenceElement getQualifier();
+
     boolean isQualified();
 
     /**

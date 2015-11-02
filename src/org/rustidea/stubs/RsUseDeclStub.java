@@ -55,7 +55,7 @@ public class RsUseDeclStub extends StubBase<RsUseDecl> implements IRsItemStub<Rs
     public RsReferenceElement getUseReference() {
         RsReferenceElement ref = SoftReference.dereference(reference);
         if (ref == null) {
-            // TODO Implement this (build reference PSI from `text`).
+            // TODO Implement this (build reference PSI from `text` with `getPsi()` as context).
             throw new NotImplementedException();
         }
         return ref;

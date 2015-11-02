@@ -45,7 +45,7 @@ public class RsReferenceParser {
         this.builder = parser.getBuilder();
     }
 
-    public boolean path(final boolean allowList, final boolean allowGlob) {
+    public boolean path() {
         // I         a::b::c::d
         // II      (a::b::c)::d
         // III   ((a::b)::c)::d
@@ -83,7 +83,7 @@ public class RsReferenceParser {
 
                 if (expect(builder, IDENTIFIER)) {
                     qualifierMarker.done(REFERENCE_ELEMENT);
-                } else if (allowList && builder.getTokenType() == OP_LBRACE) {
+                } else if (builder.getTokenType() == OP_LBRACE) {
                     builder.advanceLexer();
 
                     sep(builder, OP_COMMA, new BooleanFunction<PsiBuilder>() {
@@ -98,7 +98,7 @@ public class RsReferenceParser {
                     qualifierMarker.done(LIST_REFERENCE_ELEMENT);
 
                     break;
-                } else if (allowGlob && expect(builder, OP_ASTERISK)) {
+                } else if (expect(builder, OP_ASTERISK)) {
                     qualifierMarker.done(GLOB_REFERENCE_ELEMENT);
                     break;
                 } else {
