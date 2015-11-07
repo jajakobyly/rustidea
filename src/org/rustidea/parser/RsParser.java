@@ -85,23 +85,23 @@ public class RsParser {
     private ASTNode doParse(IElementType root) {
         final Stopwatch stopwatch = Stopwatch.createStarted();
 
-        PsiBuilder.Marker marker = builder.mark();
+        PsiBuilder.Marker marker = getBuilder().mark();
 
-        moduleParser.file();
+        getModuleParser().file();
 
         marker.done(root);
 
         stopwatch.stop();
-        final double size = builder.getCurrentOffset() / 1000.0;
+        final double size = getBuilder().getCurrentOffset() / 1000.0;
         LOG.info(String.format("Parsed %.1f kb file in %s.", size, stopwatch));
 
-        return builder.getTreeBuilt();
+        return getBuilder().getTreeBuilt();
     }
 
     private static class Factory implements PsiParser {
         @NotNull
         @Override
-        public ASTNode parse(IElementType root, @NotNull PsiBuilder builder) {
+        public ASTNode parse(@NotNull IElementType root, @NotNull PsiBuilder builder) {
             RsParser parser = new RsParser(builder);
             return parser.doParse(root);
         }

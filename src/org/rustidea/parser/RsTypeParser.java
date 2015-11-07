@@ -16,7 +16,6 @@
 
 package org.rustidea.parser;
 
-import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
 import com.intellij.openapi.diagnostic.Logger;
 import org.jetbrains.annotations.NotNull;
@@ -24,17 +23,11 @@ import org.rustidea.util.NotImplementedException;
 
 import static org.rustidea.parser.RsParserUtil.error;
 
-public class RsTypeParser {
+class RsTypeParser extends IRsParserBase {
     private static final Logger LOG = Logger.getInstance(RsTypeParser.class);
 
-    @NotNull
-    private final RsParser parser;
-    @NotNull
-    private final PsiBuilder builder;
-
     public RsTypeParser(@NotNull final RsParser parser) {
-        this.parser = parser;
-        this.builder = parser.getBuilder();
+        super(parser);
     }
 
     private boolean doType() {

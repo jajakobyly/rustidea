@@ -29,19 +29,13 @@ import static com.intellij.lang.PsiBuilderUtil.expect;
 import static org.rustidea.parser.RsParserUtil.*;
 import static org.rustidea.psi.types.RsPsiTypes.*;
 
-public class RsModuleParser {
+class RsModuleParser extends IRsParserBase {
     private static final Logger LOG = Logger.getInstance(RsModuleParser.class);
     private static final TokenSet LINE_OR_BLOCK_DOC = TokenSet.create(LINE_DOC, BLOCK_DOC);
     private static final TokenSet LINE_OR_BLOCK_PARENT_DOC = TokenSet.create(LINE_PARENT_DOC, BLOCK_PARENT_DOC);
 
-    @NotNull
-    private final RsParser parser;
-    @NotNull
-    private final PsiBuilder builder;
-
     public RsModuleParser(@NotNull final RsParser parser) {
-        this.parser = parser;
-        this.builder = parser.getBuilder();
+        super(parser);
     }
 
     public void file() {

@@ -16,13 +16,17 @@
 
 package org.rustidea.parser;
 
-import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.lang.PsiBuilder;
 import org.jetbrains.annotations.NotNull;
 
-class RsStatementParser extends IRsParserBase {
-    private static final Logger LOG = Logger.getInstance(RsStatementParser.class);
+abstract class IRsParserBase {
+    @NotNull
+    protected final RsParser parser;
+    @NotNull
+    protected final PsiBuilder builder;
 
-    public RsStatementParser(@NotNull final RsParser parser) {
-        super(parser);
+    public IRsParserBase(@NotNull final RsParser parser) {
+        this.builder = parser.getBuilder();
+        this.parser = parser;
     }
 }
