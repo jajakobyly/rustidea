@@ -18,6 +18,7 @@ package org.rustidea.psi;
 
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiFile;
+import org.rustidea.util.UnreachableException;
 
 public abstract class RsElementVisitor extends PsiElementVisitor {
     public void visitAttribute(RsAttribute attribute) {
@@ -95,8 +96,10 @@ public abstract class RsElementVisitor extends PsiElementVisitor {
     public void visitModuleOrFile(IRsModule module) {
         if (module instanceof PsiFile) {
             super.visitFile((PsiFile) module);
+        } else if (module instanceof RsModule) {
+            visitItem((RsModule) module);
         } else {
-            visitElement(module);
+            throw new UnreachableException();
         }
     }
 
