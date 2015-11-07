@@ -18,6 +18,7 @@ package org.rustidea.parser;
 
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.psi.tree.TokenSet;
 import com.intellij.util.BooleanFunction;
 import org.jetbrains.annotations.NotNull;
@@ -32,17 +33,13 @@ import static org.rustidea.psi.types.RsCompositeTypes.*;
 import static org.rustidea.psi.types.RsPsiTypes.SELF_OR_SUPER;
 import static org.rustidea.psi.types.RsTokenTypes.*;
 
-public class RsReferenceParser {
+class RsReferenceParser extends IRsParserBase {
     public static final TokenSet IDENTIFIER_OR_SELF = TokenSet.create(IDENTIFIER, KW_SELF);
+    private static final Logger LOG = Logger.getInstance(RsReferenceParser.class);
     private static final TokenSet PATH_FIRST_TOKEN = TokenSet.orSet(SELF_OR_SUPER, TokenSet.create(IDENTIFIER, OP_DOUBLE_COLON));
-    @NotNull
-    private final RsParser parser;
-    @NotNull
-    private final PsiBuilder builder;
 
     public RsReferenceParser(@NotNull final RsParser parser) {
-        this.parser = parser;
-        this.builder = parser.getBuilder();
+        super(parser);
     }
 
     public boolean path() {
