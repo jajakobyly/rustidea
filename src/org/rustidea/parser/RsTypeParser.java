@@ -19,10 +19,13 @@ package org.rustidea.parser;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
 import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.util.BooleanFunction;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.util.NotImplementedException;
 
-import static org.rustidea.parser.RsParserUtil.error;
+import static com.intellij.lang.PsiBuilderUtil.expect;
+import static org.rustidea.parser.RsParserUtil.*;
+import static org.rustidea.psi.types.RsPsiTypes.*;
 
 public class RsTypeParser {
     private static final Logger LOG = Logger.getInstance(RsTypeParser.class);
@@ -65,7 +68,23 @@ public class RsTypeParser {
     }
 
     public boolean tupleType() {
-        // TODO Implement this.
-        throw new NotImplementedException();
+        final Marker marker = builder.mark();
+
+        if (!expect(builder, OP_LPAREN)) {
+            marker.rollbackTo();
+            return false;
+        }
+
+        sep(builder, OP_COMMA, new BooleanFunction<PsiBuilder>() {
+            @Override
+            public boolean fun(PsiBuilder builder) {
+                return type();
+            }
+        });
+
+        expectOrWarn(builder, OP_RBRACE);
+
+        marker.done(TUPLE_TYPE);
+        return true;
     }
 }

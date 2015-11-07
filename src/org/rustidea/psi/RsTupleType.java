@@ -16,8 +16,11 @@
 
 package org.rustidea.psi;
 
-import com.intellij.psi.PsiNameIdentifierOwner;
+import org.jetbrains.annotations.NotNull;
 
-public interface RsType extends PsiNameIdentifierOwner, IRsTypeParameterListOwner, IRsPsiElement {
-    // TODO
+public interface RsTupleType extends IRsType {
+    @NotNull
+    IRsType[] getTypes();
+
+    int getTypeIndex(@NotNull IRsType type);
 }
