@@ -82,6 +82,11 @@ public class RsModuleParser {
             return true;
         }
 
+        if (structItem()) {
+            marker.done(STRUCT);
+            return true;
+        }
+
         if (hasModifierList) {
             RsParserUtil.error(builder, "expected item");
             marker.drop();
@@ -204,6 +209,37 @@ public class RsModuleParser {
         expectOrWarn(builder, OP_EQ);
         parser.getExpressionParser().expectExpression();
         semicolon(builder);
+
+        marker.drop(); // PSI element will be marked in #item()
+        return true;
+    }
+
+    private boolean structItem() {
+        final Marker marker = builder.mark();
+
+        if (!expect(builder, KW_STRUCT)) {
+            marker.rollbackTo();
+            return false;
+        }
+
+        if (!identifier(builder)) {
+            marker.rollbackTo();
+            return false;
+        }
+
+        parser.getTypeParser().typeParameterList();
+
+        //noinspection StatementWithEmptyBody
+        if (parser.getTypeParser().structureType()) {
+            // - structure type: struct Foo{x: i32, y: i32}
+        } else if (parser.getTypeParser().tupleType()) {
+            // - tuple type: struct Foo(i32, i32);
+            semicolon(builder);
+        } else {
+            // - unit-like struct: struct Foo;
+            semicolon(builder);
+        }
+
 
         marker.drop(); // PSI element will be marked in #item()
         return true;

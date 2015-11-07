@@ -53,4 +53,19 @@ public class RsTypeParser {
             return false;
         }
     }
+
+    public boolean typeParameterList() {
+        // TODO Implement this.
+        throw new NotImplementedException();
+    }
+
+    public boolean structureType() {
+        // TODO Implement this.
+        throw new NotImplementedException();
+    }
+
+    public boolean tupleType() {
+        // TODO Implement this.
+        throw new NotImplementedException();
+    }
 }

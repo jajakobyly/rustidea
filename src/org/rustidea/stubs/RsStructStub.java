@@ -14,13 +14,16 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi.types;
+package org.rustidea.stubs;
 
-public interface RsStubElementTypes {
-    RsConstItemElementType CONST_ITEM = RsConstItemElementType.INSTANCE;
-    RsExternCrateDeclElementType EXTERN_CRATE_DECL = RsExternCrateDeclElementType.INSTANCE;
-    RsModuleElementType MODULE = RsModuleElementType.INSTANCE;
-    RsStaticItemElementType STATIC_ITEM = RsStaticItemElementType.INSTANCE;
-    RsStructElementType STRUCT = RsStructElementType.INSTANCE;
-    RsUseDeclElementType USE_DECL = RsUseDeclElementType.INSTANCE;
+import com.intellij.psi.stubs.NamedStubBase;
+import com.intellij.psi.stubs.StubElement;
+import com.intellij.util.io.StringRef;
+import org.rustidea.psi.RsStruct;
+import org.rustidea.psi.types.RsPsiTypes;
+
+public class RsStructStub extends NamedStubBase<RsStruct> implements IRsNamedItemStub<RsStruct> {
+    public RsStructStub(StubElement parent, StringRef name) {
+        super(parent, RsPsiTypes.STRUCT, name);
+    }
 }
