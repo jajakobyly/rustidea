@@ -37,14 +37,14 @@ public class RsTypeParser {
         this.builder = parser.getBuilder();
     }
 
-    public boolean type() {
+    private boolean doType() {
         // TODO Implement this.
         throw new NotImplementedException();
     }
 
-    public boolean expectType() {
+    public boolean type() {
         final Marker marker = builder.mark();
-        if (type()) {
+        if (doType()) {
             marker.drop();
             return true;
         } else {

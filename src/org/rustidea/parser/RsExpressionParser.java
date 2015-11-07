@@ -41,14 +41,14 @@ public class RsExpressionParser {
         this.builder = parser.getBuilder();
     }
 
-    public boolean expression() {
+    private boolean doExpression() {
         // TODO Implement this.
         throw new NotImplementedException();
     }
 
-    public boolean expectExpression() {
+    public boolean expression() {
         final Marker marker = builder.mark();
-        if (expression()) {
+        if (doExpression()) {
             marker.drop();
             return true;
         } else {
