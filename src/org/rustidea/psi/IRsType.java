@@ -14,15 +14,8 @@
  * limitations under the License.
  */
 
-package org.rustidea.parser;
+package org.rustidea.psi;
 
-import com.intellij.openapi.diagnostic.Logger;
-import org.jetbrains.annotations.NotNull;
-
-class RsStatementParser extends IRsParserBase {
-    private static final Logger LOG = Logger.getInstance(RsStatementParser.class);
-
-    public RsStatementParser(@NotNull final RsParser parser) {
-        super(parser);
-    }
+public interface IRsType extends IRsPsiElement {
+    // TODO
 }

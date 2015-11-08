@@ -16,10 +16,31 @@
 
 package org.rustidea.psi.types;
 
+import com.intellij.lang.ASTNode;
+import com.intellij.psi.stubs.EmptyStub;
+import org.jetbrains.annotations.NotNull;
+import org.rustidea.psi.RsStructType;
+import org.rustidea.psi.impl.RsStructTypeImpl;
+
 public interface RsStubElementTypes {
     RsConstItemElementType CONST_ITEM = RsConstItemElementType.INSTANCE;
     RsExternCrateDeclElementType EXTERN_CRATE_DECL = RsExternCrateDeclElementType.INSTANCE;
     RsModuleElementType MODULE = RsModuleElementType.INSTANCE;
     RsStaticItemElementType STATIC_ITEM = RsStaticItemElementType.INSTANCE;
+    RsStructElementType STRUCT = RsStructElementType.INSTANCE;
+    RsStructFieldElementType STRUCT_FIELD = RsStructFieldElementType.INSTANCE;
     RsUseDeclElementType USE_DECL = RsUseDeclElementType.INSTANCE;
+
+    IRsEmptyStubElementType<RsStructType> STRUCT_TYPE = new IRsEmptyStubElementType<RsStructType>("STRUCT_TYPE") {
+        @NotNull
+        @Override
+        public RsStructType createPsi(@NotNull ASTNode node) {
+            return new RsStructTypeImpl(node);
+        }
+
+        @Override
+        public RsStructType createPsi(@NotNull EmptyStub stub) {
+            return new RsStructTypeImpl(stub);
+        }
+    };
 }

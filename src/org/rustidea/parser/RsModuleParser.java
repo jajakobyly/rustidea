@@ -29,19 +29,13 @@ import static com.intellij.lang.PsiBuilderUtil.expect;
 import static org.rustidea.parser.RsParserUtil.*;
 import static org.rustidea.psi.types.RsPsiTypes.*;
 
-public class RsModuleParser {
+class RsModuleParser extends IRsParserBase {
     private static final Logger LOG = Logger.getInstance(RsModuleParser.class);
     private static final TokenSet LINE_OR_BLOCK_DOC = TokenSet.create(LINE_DOC, BLOCK_DOC);
     private static final TokenSet LINE_OR_BLOCK_PARENT_DOC = TokenSet.create(LINE_PARENT_DOC, BLOCK_PARENT_DOC);
 
-    @NotNull
-    private final RsParser parser;
-    @NotNull
-    private final PsiBuilder builder;
-
     public RsModuleParser(@NotNull final RsParser parser) {
-        this.parser = parser;
-        this.builder = parser.getBuilder();
+        super(parser);
     }
 
     public void file() {
@@ -79,6 +73,11 @@ public class RsModuleParser {
 
         if (staticItem()) {
             marker.done(STATIC_ITEM);
+            return true;
+        }
+
+        if (structItem()) {
+            marker.done(STRUCT);
             return true;
         }
 
@@ -204,6 +203,37 @@ public class RsModuleParser {
         expectOrWarn(builder, OP_EQ);
         parser.getExpressionParser().expression();
         semicolon(builder);
+
+        marker.drop(); // PSI element will be marked in #item()
+        return true;
+    }
+
+    private boolean structItem() {
+        final Marker marker = builder.mark();
+
+        if (!expect(builder, KW_STRUCT)) {
+            marker.rollbackTo();
+            return false;
+        }
+
+        if (!identifier(builder)) {
+            marker.rollbackTo();
+            return false;
+        }
+
+        parser.getTypeParser().typeParameterList();
+
+        //noinspection StatementWithEmptyBody
+        if (parser.getTypeParser().structureType()) {
+            // - structure type: struct Foo{x: i32, y: i32}
+        } else if (parser.getTypeParser().tupleType()) {
+            // - tuple type: struct Foo(i32, i32);
+            semicolon(builder);
+        } else {
+            // - unit-like struct: struct Foo;
+            semicolon(builder);
+        }
+
 
         marker.drop(); // PSI element will be marked in #item()
         return true;

@@ -16,13 +16,7 @@
 
 package org.rustidea.psi;
 
-import com.intellij.psi.PsiNameIdentifierOwner;
-import org.jetbrains.annotations.NotNull;
 import org.rustidea.stubs.IRsNamedItemStub;
 
-public interface IRsNamedItem<StubT extends IRsNamedItemStub>
-    extends IRsItem<StubT>, PsiNameIdentifierOwner {
-    @NotNull
-    @Override
-    RsIdentifier getNameIdentifier();
+public interface IRsNamedItem<StubT extends IRsNamedItemStub> extends IRsItem<StubT>, IRsNameIdentifierOwner {
 }

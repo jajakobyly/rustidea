@@ -16,7 +16,6 @@
 
 package org.rustidea.parser;
 
-import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
 import com.intellij.openapi.diagnostic.Logger;
 import org.jetbrains.annotations.NotNull;
@@ -28,17 +27,11 @@ import static org.rustidea.parser.RsParserUtil.errorExpected;
 import static org.rustidea.psi.types.RsCompositeTypes.LITERAL;
 import static org.rustidea.psi.types.RsPsiTypes.LITERAL_TOKEN_SET;
 
-public class RsExpressionParser {
+class RsExpressionParser extends IRsParserBase {
     private static final Logger LOG = Logger.getInstance(RsExpressionParser.class);
 
-    @NotNull
-    private final RsParser parser;
-    @NotNull
-    private final PsiBuilder builder;
-
     public RsExpressionParser(@NotNull final RsParser parser) {
-        this.parser = parser;
-        this.builder = parser.getBuilder();
+        super(parser);
     }
 
     private boolean doExpression() {

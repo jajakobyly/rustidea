@@ -16,11 +16,10 @@
 
 package org.rustidea.psi;
 
-import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public interface IRsTypeParameterListOwner extends PsiElement {
+public interface IRsTypeParameterListOwner extends IRsPsiElement {
     boolean hasTypeParameters();
 
     @Nullable

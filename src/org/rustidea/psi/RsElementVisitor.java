@@ -119,6 +119,26 @@ public abstract class RsElementVisitor extends PsiElementVisitor {
         visitItem(staticItem);
     }
 
+    public void visitStruct(RsStruct struct) {
+        visitItem(struct);
+    }
+
+    public void visitStructField(RsStructField field) {
+        visitElement(field);
+    }
+
+    public void visitStructType(RsStructType structType) {
+        visitType(structType);
+    }
+
+    public void visitTupleType(RsTupleType tupleType) {
+        visitType(tupleType);
+    }
+
+    public void visitType(IRsType type) {
+        visitElement(type);
+    }
+
     public void visitTypeParameter(RsTypeParameter typeParameter) {
         visitElement(typeParameter);
     }

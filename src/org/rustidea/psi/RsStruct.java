@@ -16,8 +16,7 @@
 
 package org.rustidea.psi;
 
-import com.intellij.psi.PsiNameIdentifierOwner;
+import org.rustidea.stubs.RsStructStub;
 
-public interface RsType extends PsiNameIdentifierOwner, IRsTypeParameterListOwner, IRsPsiElement {
-    // TODO
+public interface RsStruct extends IRsNamedItem<RsStructStub> {
 }

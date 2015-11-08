@@ -14,15 +14,26 @@
  * limitations under the License.
  */
 
-package org.rustidea.parser;
+package org.rustidea.psi.impl;
 
-import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.lang.ASTNode;
 import org.jetbrains.annotations.NotNull;
+import org.rustidea.psi.RsElementVisitor;
+import org.rustidea.psi.RsStruct;
+import org.rustidea.psi.types.RsPsiTypes;
+import org.rustidea.stubs.RsStructStub;
 
-class RsStatementParser extends IRsParserBase {
-    private static final Logger LOG = Logger.getInstance(RsStatementParser.class);
+public class RsStructImpl extends IRsNamedItemPsiElement<RsStructStub> implements RsStruct {
+    public RsStructImpl(@NotNull RsStructStub stub) {
+        super(stub, RsPsiTypes.STRUCT);
+    }
 
-    public RsStatementParser(@NotNull final RsParser parser) {
-        super(parser);
+    public RsStructImpl(@NotNull ASTNode node) {
+        super(node);
+    }
+
+    @Override
+    public void accept(@NotNull RsElementVisitor visitor) {
+        visitor.visitStruct(this);
     }
 }
