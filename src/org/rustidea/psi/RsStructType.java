@@ -16,7 +16,11 @@
 
 package org.rustidea.psi;
 
-import org.rustidea.stubs.IRsNamedItemStub;
+import com.intellij.psi.StubBasedPsiElement;
+import com.intellij.psi.stubs.EmptyStub;
+import org.jetbrains.annotations.NotNull;
 
-public interface IRsNamedItem<StubT extends IRsNamedItemStub> extends IRsItem<StubT>, IRsNameIdentifierOwner {
+public interface RsStructType extends StubBasedPsiElement<EmptyStub>, IRsType {
+    @NotNull
+    RsStructField[] getFields();
 }

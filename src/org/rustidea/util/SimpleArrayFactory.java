@@ -21,6 +21,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Array;
 
+// TODO Caching may give better performance.
 public class SimpleArrayFactory {
     private SimpleArrayFactory() {
     }

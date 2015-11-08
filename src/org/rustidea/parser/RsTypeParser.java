@@ -16,11 +16,14 @@
 
 package org.rustidea.parser;
 
+import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.util.BooleanFunction;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.util.NotImplementedException;
+
+import java.util.EnumSet;
 
 import static com.intellij.lang.PsiBuilderUtil.expect;
 import static org.rustidea.parser.RsParserUtil.*;
@@ -56,8 +59,24 @@ class RsTypeParser extends IRsParserBase {
     }
 
     public boolean structureType() {
-        // TODO Implement this.
-        throw new NotImplementedException();
+        final Marker marker = builder.mark();
+
+        if (!expect(builder, OP_LBRACE)) {
+            marker.rollbackTo();
+            return false;
+        }
+
+        sep(builder, OP_COMMA, new BooleanFunction<PsiBuilder>() {
+            @Override
+            public boolean fun(PsiBuilder builder) {
+                return structField();
+            }
+        }, EnumSet.of(SepCfg.ALLOW_TRAILING));
+
+        expectOrWarn(builder, OP_RBRACE);
+
+        marker.done(STRUCT_TYPE);
+        return true;
     }
 
     public boolean tupleType() {
@@ -75,9 +94,25 @@ class RsTypeParser extends IRsParserBase {
             }
         });
 
-        expectOrWarn(builder, OP_RBRACE);
+        expectOrWarn(builder, OP_RPAREN);
 
         marker.done(TUPLE_TYPE);
+        return true;
+    }
+
+    public boolean structField() {
+        final Marker marker = builder.mark();
+
+        if (!expect(builder, IDENTIFIER)) {
+            marker.rollbackTo();
+            return false;
+        }
+
+        expectOrWarn(builder, OP_COLON);
+
+        type();
+
+        marker.done(STRUCT_FIELD);
         return true;
     }
 }

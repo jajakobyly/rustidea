@@ -16,7 +16,9 @@
 
 package org.rustidea.psi;
 
-import org.rustidea.stubs.IRsNamedItemStub;
+import org.jetbrains.annotations.Nullable;
 
-public interface IRsNamedItem<StubT extends IRsNamedItemStub> extends IRsItem<StubT>, IRsNameIdentifierOwner {
+public interface IRsTypeOwner extends IRsPsiElement {
+    @Nullable
+    IRsType getType();
 }

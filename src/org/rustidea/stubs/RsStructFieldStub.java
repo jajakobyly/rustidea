@@ -14,9 +14,17 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi;
+package org.rustidea.stubs;
 
-import org.rustidea.stubs.IRsNamedItemStub;
+import com.intellij.psi.stubs.NamedStub;
+import com.intellij.psi.stubs.NamedStubBase;
+import com.intellij.psi.stubs.StubElement;
+import com.intellij.util.io.StringRef;
+import org.rustidea.psi.RsStructField;
+import org.rustidea.psi.types.RsPsiTypes;
 
-public interface IRsNamedItem<StubT extends IRsNamedItemStub> extends IRsItem<StubT>, IRsNameIdentifierOwner {
+public class RsStructFieldStub extends NamedStubBase<RsStructField> implements NamedStub<RsStructField> {
+    public RsStructFieldStub(StubElement parent, StringRef name) {
+        super(parent, RsPsiTypes.STRUCT_FIELD, name);
+    }
 }
