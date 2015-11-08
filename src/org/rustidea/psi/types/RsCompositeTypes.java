@@ -19,5 +19,6 @@ public interface RsCompositeTypes {
     IElementType TUPLE_TYPE = new IRsCompositeElementType("TUPLE_TYPE", RsTupleTypeImpl.class);
     IElementType TYPE_PARAMETER = new IRsCompositeElementType("TYPE_PARAMETER", RsTypeParameterImpl.class);
     IElementType TYPE_PARAMETER_LIST = new IRsCompositeElementType("TYPE_PARAMETER_LIST", RsTypeParameterListImpl.class);
+    IElementType UNIT_TYPE = new IRsCompositeElementType("UNIT_TYPE", RsUnitTypeImpl.class);
     IElementType WHERE_CLAUSE = new IRsCompositeElementType("WHERE_CLAUSE", RsWhereClauseImpl.class);
 }

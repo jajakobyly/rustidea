@@ -147,6 +147,10 @@ public abstract class RsElementVisitor extends PsiElementVisitor {
         visitElement(typeParameterList);
     }
 
+    public void visitUnitType(RsUnitType unitType) {
+        visitTupleType(unitType);
+    }
+
     public void visitUseDecl(RsUseDecl useDecl) {
         visitItem(useDecl);
     }

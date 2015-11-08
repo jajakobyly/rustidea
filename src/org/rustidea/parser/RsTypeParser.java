@@ -87,6 +87,12 @@ class RsTypeParser extends IRsParserBase {
             return false;
         }
 
+        // Check if we have unit type
+        if (expect(builder, OP_RPAREN)) {
+            marker.done(UNIT_TYPE);
+            return true;
+        }
+
         sep(builder, OP_COMMA, new BooleanFunction<PsiBuilder>() {
             @Override
             public boolean fun(PsiBuilder builder) {

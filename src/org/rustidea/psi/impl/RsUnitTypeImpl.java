@@ -19,32 +19,28 @@ package org.rustidea.psi.impl;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.IRsType;
 import org.rustidea.psi.RsElementVisitor;
-import org.rustidea.psi.RsTupleType;
+import org.rustidea.psi.RsUnitType;
 import org.rustidea.psi.types.RsPsiTypes;
-import org.rustidea.psi.util.RsPsiTreeUtil;
-import org.rustidea.psi.util.RsPsiUtil;
 import org.rustidea.util.SimpleArrayFactory;
 
-public class RsTupleTypeImpl extends IRsCompositePsiElement implements RsTupleType {
-    public RsTupleTypeImpl() {
-        super(RsPsiTypes.TUPLE_TYPE);
+public class RsUnitTypeImpl extends IRsCompositePsiElement implements RsUnitType {
+    public RsUnitTypeImpl() {
+        super(RsPsiTypes.UNIT_TYPE);
     }
 
     @NotNull
     @Override
     public IRsType[] getTypes() {
-        IRsType[] types = RsPsiTreeUtil.getChildrenOfType(this, IRsType.class);
-        return types != null ? types : SimpleArrayFactory.empty(IRsType.class);
+        return SimpleArrayFactory.empty(IRsType.class);
     }
 
     @Override
-    public int getTypeIndex(@NotNull IRsType type) {
-        assert type.getParent() == this;
-        return RsPsiUtil.getElementIndex(type, IRsType.class);
+    public int getTypeIndex(@NotNull IRsType type) throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("unit type does not have children");
     }
 
     @Override
     public void accept(@NotNull RsElementVisitor visitor) {
-        visitor.visitTupleType(this);
+        visitor.visitUnitType(this);
     }
 }
