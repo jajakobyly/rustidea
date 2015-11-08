@@ -34,14 +34,14 @@ class RsExpressionParser extends IRsParserBase {
         super(parser);
     }
 
-    private boolean doExpression() {
+    public boolean expression() {
         // TODO Implement this.
         throw new NotImplementedException();
     }
 
-    public boolean expression() {
+    public boolean expectExpression() {
         final Marker marker = builder.mark();
-        if (doExpression()) {
+        if (expression()) {
             marker.drop();
             return true;
         } else {

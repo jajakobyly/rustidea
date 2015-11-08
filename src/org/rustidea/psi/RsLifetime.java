@@ -16,7 +16,5 @@
 
 package org.rustidea.psi;
 
-import com.intellij.psi.PsiNameIdentifierOwner;
-
-public interface RsLifetime extends PsiNameIdentifierOwner, IRsPsiElement {
+public interface RsLifetime extends IRsNameIdentifierOwner, IRsPsiElement {
 }

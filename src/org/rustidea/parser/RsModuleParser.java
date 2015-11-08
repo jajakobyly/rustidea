@@ -177,9 +177,9 @@ class RsModuleParser extends IRsParserBase {
             return false;
         }
         expectOrWarn(builder, OP_COLON);
-        parser.getTypeParser().type();
+        parser.getTypeParser().expectType();
         expectOrWarn(builder, OP_EQ);
-        parser.getExpressionParser().expression();
+        parser.getExpressionParser().expectExpression();
         semicolon(builder);
 
         marker.drop(); // PSI element will be marked in #item()
@@ -199,9 +199,9 @@ class RsModuleParser extends IRsParserBase {
             return false;
         }
         expectOrWarn(builder, OP_COLON);
-        parser.getTypeParser().type();
+        parser.getTypeParser().expectType();
         expectOrWarn(builder, OP_EQ);
-        parser.getExpressionParser().expression();
+        parser.getExpressionParser().expectExpression();
         semicolon(builder);
 
         marker.drop(); // PSI element will be marked in #item()

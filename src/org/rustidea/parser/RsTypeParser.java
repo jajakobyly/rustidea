@@ -36,14 +36,41 @@ class RsTypeParser extends IRsParserBase {
         super(parser);
     }
 
-    private boolean doType() {
-        // TODO Implement this.
-        throw new NotImplementedException();
+    public boolean lifetime() {
+        final Marker marker = builder.mark();
+        if (expect(builder, LIFETIME_TOKEN)) {
+            marker.done(LIFETIME);
+            return true;
+        } else {
+            marker.rollbackTo();
+            return false;
+        }
+    }
+
+    public boolean lifetimeTypeParameter() {
+        final Marker marker = builder.mark();
+        if (lifetime()) {
+            marker.done(LIFETIME_TYPE_PARAMETER);
+            return true;
+        } else {
+            marker.rollbackTo();
+            return false;
+        }
     }
 
     public boolean type() {
+        boolean result = false;
+        result = result || tupleType();
+
+        // TODO Implement the rest
+        if (!result) throw new NotImplementedException();
+
+        return result;
+    }
+
+    public boolean expectType() {
         final Marker marker = builder.mark();
-        if (doType()) {
+        if (type()) {
             marker.drop();
             return true;
         } else {
@@ -54,8 +81,29 @@ class RsTypeParser extends IRsParserBase {
     }
 
     public boolean typeParameterList() {
-        // TODO Implement this.
-        throw new NotImplementedException();
+        final Marker marker = builder.mark();
+
+        if (!expect(builder, OP_LT)) {
+            marker.rollbackTo();
+            return false;
+        }
+
+        sep(builder, OP_COMMA, new BooleanFunction<PsiBuilder>() {
+            @Override
+            public boolean fun(PsiBuilder psiBuilder) {
+                if (lifetimeTypeParameter() || type()) {
+                    return true;
+                } else {
+                    error(builder, "expected type or lifetime");
+                    return false;
+                }
+            }
+        }, EnumSet.of(SepCfg.TOLERATE_EMPTY));
+
+        expectOrWarn(builder, OP_GT);
+
+        marker.done(TYPE_PARAMETER_LIST);
+        return true;
     }
 
     public boolean structureType() {
@@ -69,9 +117,14 @@ class RsTypeParser extends IRsParserBase {
         sep(builder, OP_COMMA, new BooleanFunction<PsiBuilder>() {
             @Override
             public boolean fun(PsiBuilder builder) {
-                return structField();
+                if (structField()) {
+                    return true;
+                } else {
+                    error(builder, "expected struct field");
+                    return false;
+                }
             }
-        }, EnumSet.of(SepCfg.ALLOW_TRAILING));
+        }, EnumSet.of(SepCfg.ALLOW_TRAILING, SepCfg.TOLERATE_EMPTY));
 
         expectOrWarn(builder, OP_RBRACE);
 
@@ -96,9 +149,9 @@ class RsTypeParser extends IRsParserBase {
         sep(builder, OP_COMMA, new BooleanFunction<PsiBuilder>() {
             @Override
             public boolean fun(PsiBuilder builder) {
-                return type();
+                return expectType();
             }
-        });
+        }, EnumSet.of(SepCfg.TOLERATE_EMPTY));
 
         expectOrWarn(builder, OP_RPAREN);
 
@@ -116,7 +169,7 @@ class RsTypeParser extends IRsParserBase {
 
         expectOrWarn(builder, OP_COLON);
 
-        type();
+        expectType();
 
         marker.done(STRUCT_FIELD);
         return true;
