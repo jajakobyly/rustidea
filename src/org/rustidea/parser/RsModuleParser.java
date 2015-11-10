@@ -16,11 +16,9 @@
 
 package org.rustidea.parser;
 
-import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.psi.tree.TokenSet;
-import com.intellij.util.BooleanFunction;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumSet;
@@ -295,9 +293,9 @@ class RsModuleParser extends IRsParserBase {
             parser.getExpressionParser().literal();
             value.drop();
         } else if (expect(builder, OP_LPAREN)) {
-            sep(builder, OP_COMMA, new BooleanFunction<PsiBuilder>() {
+            sep(builder, OP_COMMA, new ParserWrapper() {
                 @Override
-                public boolean fun(PsiBuilder builder) {
+                public boolean parse() {
                     return attributeItem();
                 }
             }, EnumSet.of(SepCfg.TOLERATE_EMPTY));

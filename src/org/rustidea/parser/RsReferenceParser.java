@@ -16,11 +16,9 @@
 
 package org.rustidea.parser;
 
-import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.psi.tree.TokenSet;
-import com.intellij.util.BooleanFunction;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.parser.RsParserUtil.*;
 import org.rustidea.util.UnreachableException;
@@ -87,9 +85,9 @@ class RsReferenceParser extends IRsParserBase {
                 } else if (builder.getTokenType() == OP_LBRACE) {
                     builder.advanceLexer();
 
-                    sep(builder, OP_COMMA, new BooleanFunction<PsiBuilder>() {
+                    sep(builder, OP_COMMA, new ParserWrapper() {
                         @Override
-                        public boolean fun(@NotNull PsiBuilder builder) {
+                        public boolean parse() {
                             return expect(builder, IDENTIFIER_OR_SELF);
                         }
                     }, EnumSet.of(SepCfg.TOLERATE_EMPTY));

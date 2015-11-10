@@ -21,7 +21,6 @@ import com.intellij.lang.PsiBuilder.Marker;
 import com.intellij.lang.PsiBuilderUtil;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.psi.tree.IElementType;
-import com.intellij.util.BooleanFunction;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.types.RsPsiTypes;
 
@@ -89,13 +88,13 @@ public final class RsParserUtil {
 
     public static boolean sep(@NotNull final PsiBuilder builder,
                               @NotNull final IElementType separator,
-                              @NotNull final BooleanFunction<PsiBuilder> parser) {
+                              @NotNull final ParserWrapper parser) {
         return sep(builder, separator, parser, EnumSet.noneOf(SepCfg.class));
     }
 
     public static boolean sep(@NotNull final PsiBuilder builder,
                               @NotNull final IElementType separator,
-                              @NotNull final BooleanFunction<PsiBuilder> parser,
+                              @NotNull final ParserWrapper parser,
                               @NotNull final EnumSet<SepCfg> config) {
         boolean globalResult = false;
         boolean first = true;
@@ -105,7 +104,7 @@ public final class RsParserUtil {
             boolean result = true;
 
             if (!first) result = expectOrWarn(builder, separator);
-            result = result && parser.fun(builder);
+            result = result && parser.parse();
 
             if (!result && config.contains(SepCfg.TOLERATE_EMPTY) && builder.getTokenType() == separator) {
                 result = true;
@@ -136,5 +135,9 @@ public final class RsParserUtil {
 
     public enum SepCfg {
         ALLOW_TRAILING, TOLERATE_EMPTY
+    }
+
+    public interface ParserWrapper {
+        boolean parse();
     }
 }

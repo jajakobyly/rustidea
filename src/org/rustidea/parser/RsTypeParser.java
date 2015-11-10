@@ -16,10 +16,8 @@
 
 package org.rustidea.parser;
 
-import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
 import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.util.BooleanFunction;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.util.NotImplementedException;
 
@@ -80,9 +78,9 @@ class RsTypeParser extends IRsParserBase {
             return false;
         }
 
-        sep(builder, OP_COMMA, new BooleanFunction<PsiBuilder>() {
+        sep(builder, OP_COMMA, new ParserWrapper() {
             @Override
-            public boolean fun(PsiBuilder psiBuilder) {
+            public boolean parse() {
                 if (lifetimeTypeParameter() || typeParemeter()) {
                     return true;
                 } else {
@@ -128,9 +126,9 @@ class RsTypeParser extends IRsParserBase {
             return false;
         }
 
-        sep(builder, OP_COMMA, new BooleanFunction<PsiBuilder>() {
+        sep(builder, OP_COMMA, new ParserWrapper() {
             @Override
-            public boolean fun(PsiBuilder psiBuilder) {
+            public boolean parse() {
                 return expectType();
             }
         }, EnumSet.of(SepCfg.TOLERATE_EMPTY));
@@ -149,9 +147,9 @@ class RsTypeParser extends IRsParserBase {
             return false;
         }
 
-        sep(builder, OP_COMMA, new BooleanFunction<PsiBuilder>() {
+        sep(builder, OP_COMMA, new ParserWrapper() {
             @Override
-            public boolean fun(@NotNull PsiBuilder builder) {
+            public boolean parse() {
                 if (structField()) {
                     return true;
                 } else {
@@ -181,9 +179,9 @@ class RsTypeParser extends IRsParserBase {
             return true;
         }
 
-        sep(builder, OP_COMMA, new BooleanFunction<PsiBuilder>() {
+        sep(builder, OP_COMMA, new ParserWrapper() {
             @Override
-            public boolean fun(PsiBuilder builder) {
+            public boolean parse() {
                 return expectType();
             }
         }, EnumSet.of(SepCfg.TOLERATE_EMPTY));
