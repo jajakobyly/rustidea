@@ -116,7 +116,7 @@ class RsTypeParser extends IRsParserBase {
 
         sep(builder, OP_COMMA, new BooleanFunction<PsiBuilder>() {
             @Override
-            public boolean fun(PsiBuilder builder) {
+            public boolean fun(@NotNull PsiBuilder builder) {
                 if (structField()) {
                     return true;
                 } else {

@@ -38,6 +38,7 @@ public interface RsStubElementTypes {
             return new RsStructTypeImpl(node);
         }
 
+        @NotNull
         @Override
         public RsStructType createPsi(@NotNull EmptyStub stub) {
             return new RsStructTypeImpl(stub);

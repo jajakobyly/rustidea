@@ -82,7 +82,8 @@ public class RsParser {
         return typeParser;
     }
 
-    private ASTNode doParse(IElementType root) {
+    @NotNull
+    private ASTNode doParse(@NotNull IElementType root) {
         final Stopwatch stopwatch = Stopwatch.createStarted();
 
         PsiBuilder.Marker marker = getBuilder().mark();
