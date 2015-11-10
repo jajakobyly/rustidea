@@ -139,6 +139,10 @@ public abstract class RsElementVisitor extends PsiElementVisitor {
         visitElement(type);
     }
 
+    public void visitTypedReferenceElement(RsTypedReferenceElement typedReferenceElement) {
+        visitReferenceElement(typedReferenceElement);
+    }
+
     public void visitTypeParameter(RsTypeParameter typeParameter) {
         visitElement(typeParameter);
     }

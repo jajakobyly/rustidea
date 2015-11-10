@@ -79,7 +79,11 @@ class RsReferenceParser extends IRsParserBase {
                 builder.advanceLexer();
 
                 if (expect(builder, IDENTIFIER)) {
-                    qualifierMarker.done(REFERENCE_ELEMENT);
+                    if (parser.getTypeParser().typeParameterList()) {
+                        qualifierMarker.done(TYPED_REFERENCE_ELEMENT);
+                    } else {
+                        qualifierMarker.done(REFERENCE_ELEMENT);
+                    }
                 } else if (builder.getTokenType() == OP_LBRACE) {
                     builder.advanceLexer();
 
@@ -93,7 +97,6 @@ class RsReferenceParser extends IRsParserBase {
                     expectOrWarn(builder, OP_RBRACE);
 
                     qualifierMarker.done(LIST_REFERENCE_ELEMENT);
-
                     break;
                 } else if (expect(builder, OP_ASTERISK)) {
                     qualifierMarker.done(GLOB_REFERENCE_ELEMENT);
