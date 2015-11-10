@@ -22,7 +22,7 @@ import com.intellij.util.ReflectionUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class IRsCompositeElementType extends IRsElementType implements ICompositeElementType {
+public class IRsCompositeElementType extends IRsElementTypeImpl implements ICompositeElementType, IRsElementType {
     @Nullable
     private final String humanReadableName;
 

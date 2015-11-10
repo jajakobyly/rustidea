@@ -18,6 +18,7 @@ package org.rustidea.psi.types;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.stubs.EmptyStub;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.RsStructType;
 import org.rustidea.psi.impl.RsStructTypeImpl;
@@ -42,6 +43,13 @@ public interface RsStubElementTypes {
         @Override
         public RsStructType createPsi(@NotNull EmptyStub stub) {
             return new RsStructTypeImpl(stub);
+        }
+
+        @NotNull
+        @Override
+        @Contract(pure = true)
+        public String getHumanReadableName() {
+            return "structure type";
         }
     };
 }

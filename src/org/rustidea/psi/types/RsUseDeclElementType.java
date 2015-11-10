@@ -69,4 +69,10 @@ public class RsUseDeclElementType extends IRsStubElementType<RsUseDeclStub, RsUs
         final StringRef text = dataStream.readName();
         return new RsUseDeclStub(parentStub, text, flags);
     }
+
+    @NotNull
+    @Override
+    public String getHumanReadableName() {
+        return "use declaration";
+    }
 }

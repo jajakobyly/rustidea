@@ -70,4 +70,10 @@ public class RsExternCrateDeclElementType extends IRsStubElementType<RsExternCra
             dataStream.readName(),
             dataStream.readName());
     }
+
+    @NotNull
+    @Override
+    public String getHumanReadableName() {
+        return "extern crate declaration";
+    }
 }

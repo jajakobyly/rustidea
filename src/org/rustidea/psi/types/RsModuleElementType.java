@@ -64,4 +64,10 @@ public class RsModuleElementType extends IRsStubElementType<RsModuleStub, RsModu
     public RsModuleStub deserialize(@NotNull StubInputStream dataStream, StubElement parentStub) throws IOException {
         return new RsModuleStub(parentStub, dataStream.readName());
     }
+
+    @NotNull
+    @Override
+    public String getHumanReadableName() {
+        return "module";
+    }
 }

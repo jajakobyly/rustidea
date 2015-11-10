@@ -102,7 +102,7 @@ class RsReferenceParser extends IRsParserBase {
                     qualifierMarker.done(GLOB_REFERENCE_ELEMENT);
                     break;
                 } else {
-                    error(builder, "expected identifier");
+                    errorExpected(builder, IDENTIFIER);
                     qualifierMarker.drop(); // don't rollback in order to leave error message
                 }
             }

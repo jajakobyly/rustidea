@@ -120,7 +120,7 @@ class RsTypeParser extends IRsParserBase {
                 if (structField()) {
                     return true;
                 } else {
-                    error(builder, "expected struct field");
+                    errorExpected(builder, STRUCT_FIELD);
                     return false;
                 }
             }

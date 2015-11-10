@@ -64,4 +64,10 @@ public class RsConstItemElementType extends IRsStubElementType<RsConstItemStub, 
     public RsConstItemStub deserialize(@NotNull StubInputStream dataStream, StubElement parentStub) throws IOException {
         return new RsConstItemStub(parentStub, dataStream.readName());
     }
+
+    @NotNull
+    @Override
+    public String getHumanReadableName() {
+        return "const item";
+    }
 }

@@ -64,4 +64,10 @@ public class RsStructElementType extends IRsStubElementType<RsStructStub, RsStru
     public RsStructStub deserialize(@NotNull StubInputStream dataStream, StubElement parentStub) throws IOException {
         return new RsStructStub(parentStub, dataStream.readName());
     }
+
+    @NotNull
+    @Override
+    public String getHumanReadableName() {
+        return "struct";
+    }
 }

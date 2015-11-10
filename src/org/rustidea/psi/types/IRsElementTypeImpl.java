@@ -16,11 +16,18 @@
 
 package org.rustidea.psi.types;
 
-import org.jetbrains.annotations.Contract;
+import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
+import org.rustidea.RustLanguage;
 
-public interface IRsElementType {
+public class IRsElementTypeImpl extends IElementType implements IRsElementType {
+    public IRsElementTypeImpl(@NotNull final String debugName) {
+        super(debugName, RustLanguage.INSTANCE);
+    }
+
+    @Override
     @NotNull
-    @Contract(pure = true)
-    String getHumanReadableName();
+    public String getHumanReadableName() {
+        return toString();
+    }
 }

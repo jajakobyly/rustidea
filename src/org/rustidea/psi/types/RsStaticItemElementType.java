@@ -64,4 +64,10 @@ public class RsStaticItemElementType extends IRsStubElementType<RsStaticItemStub
     public RsStaticItemStub deserialize(@NotNull StubInputStream dataStream, StubElement parentStub) throws IOException {
         return new RsStaticItemStub(parentStub, dataStream.readName());
     }
+
+    @NotNull
+    @Override
+    public String getHumanReadableName() {
+        return "static item";
+    }
 }

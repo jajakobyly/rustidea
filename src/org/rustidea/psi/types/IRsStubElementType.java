@@ -28,7 +28,7 @@ import org.jetbrains.annotations.NotNull;
 import org.rustidea.RustLanguage;
 
 public abstract class IRsStubElementType<StubT extends StubElement, PsiT extends PsiElement>
-    extends IStubElementType<StubT, PsiT> implements ICompositeElementType {
+    extends IStubElementType<StubT, PsiT> implements ICompositeElementType, IRsElementType {
     protected IRsStubElementType(@NotNull @NonNls String debugName) {
         super(debugName, RustLanguage.INSTANCE);
     }

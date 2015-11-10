@@ -64,4 +64,10 @@ public class RsStructFieldElementType extends IRsStubElementType<RsStructFieldSt
     public RsStructFieldStub deserialize(@NotNull StubInputStream dataStream, StubElement parentStub) throws IOException {
         return new RsStructFieldStub(parentStub, dataStream.readName());
     }
+
+    @NotNull
+    @Override
+    public String getHumanReadableName() {
+        return "struct field";
+    }
 }

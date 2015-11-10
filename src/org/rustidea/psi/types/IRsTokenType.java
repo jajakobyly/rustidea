@@ -22,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.impl.RsTokenImpl;
 
-public class IRsTokenType extends IRsElementType implements ILeafElementType {
+public class IRsTokenType extends IRsElementTypeImpl implements ILeafElementType, IRsElementType {
     @Nullable
     private final String humanReadableName;
 
