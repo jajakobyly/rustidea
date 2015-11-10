@@ -71,29 +71,22 @@ class RsTypeParser extends IRsParserBase {
     }
 
     public boolean typeParameterList() {
-        final Marker marker = builder.mark();
-
-        if (!expect(builder, OP_LT)) {
-            marker.rollbackTo();
-            return false;
-        }
-
-        sep(builder, OP_COMMA, new ParserWrapper() {
+        return parenthesize(builder, OP_LT, OP_GT, new VoidParserWrapper() {
             @Override
-            public boolean parse() {
-                if (lifetimeTypeParameter() || typeParemeter()) {
-                    return true;
-                } else {
-                    error(builder, "expected type parameter or lifetime");
-                    return false;
-                }
+            public void parse() {
+                sep(builder, OP_COMMA, new ParserWrapper() {
+                    @Override
+                    public boolean parse() {
+                        if (lifetimeTypeParameter() || typeParemeter()) {
+                            return true;
+                        } else {
+                            error(builder, "expected type parameter or lifetime");
+                            return false;
+                        }
+                    }
+                }, EnumSet.of(SepCfg.TOLERATE_EMPTY));
             }
-        }, EnumSet.of(SepCfg.TOLERATE_EMPTY));
-
-        expectOrWarn(builder, OP_GT);
-
-        marker.done(TYPE_PARAMETER_LIST);
-        return true;
+        }, TYPE_PARAMETER_LIST);
     }
 
     public boolean type() {
@@ -119,50 +112,36 @@ class RsTypeParser extends IRsParserBase {
     }
 
     public boolean typeList() {
-        final Marker marker = builder.mark();
-
-        if (!expect(builder, OP_LT)) {
-            marker.rollbackTo();
-            return false;
-        }
-
-        sep(builder, OP_COMMA, new ParserWrapper() {
+        return parenthesize(builder, OP_LT, OP_GT, new VoidParserWrapper() {
             @Override
-            public boolean parse() {
-                return expectType();
+            public void parse() {
+                sep(builder, OP_COMMA, new ParserWrapper() {
+                    @Override
+                    public boolean parse() {
+                        return expectType();
+                    }
+                }, EnumSet.of(SepCfg.TOLERATE_EMPTY));
             }
-        }, EnumSet.of(SepCfg.TOLERATE_EMPTY));
-
-        expectOrWarn(builder, OP_GT);
-
-        marker.done(TYPE_LIST);
-        return true;
+        }, TYPE_LIST);
     }
 
     public boolean structureType() {
-        final Marker marker = builder.mark();
-
-        if (!expect(builder, OP_LBRACE)) {
-            marker.rollbackTo();
-            return false;
-        }
-
-        sep(builder, OP_COMMA, new ParserWrapper() {
+        return parenthesize(builder, OP_LBRACE, OP_RBRACE, new VoidParserWrapper() {
             @Override
-            public boolean parse() {
-                if (structField()) {
-                    return true;
-                } else {
-                    errorExpected(builder, STRUCT_FIELD);
-                    return false;
-                }
+            public void parse() {
+                sep(builder, OP_COMMA, new ParserWrapper() {
+                    @Override
+                    public boolean parse() {
+                        if (structField()) {
+                            return true;
+                        } else {
+                            errorExpected(builder, STRUCT_FIELD);
+                            return false;
+                        }
+                    }
+                }, EnumSet.of(SepCfg.ALLOW_TRAILING, SepCfg.TOLERATE_EMPTY));
             }
-        }, EnumSet.of(SepCfg.ALLOW_TRAILING, SepCfg.TOLERATE_EMPTY));
-
-        expectOrWarn(builder, OP_RBRACE);
-
-        marker.done(STRUCT_TYPE);
-        return true;
+        }, STRUCT_TYPE);
     }
 
     public boolean tupleType() {

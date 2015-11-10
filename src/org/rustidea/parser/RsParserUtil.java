@@ -18,7 +18,6 @@ package org.rustidea.parser;
 
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
-import com.intellij.lang.PsiBuilderUtil;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
@@ -26,6 +25,7 @@ import org.rustidea.psi.types.RsPsiTypes;
 
 import java.util.EnumSet;
 
+import static com.intellij.lang.PsiBuilderUtil.expect;
 import static org.rustidea.psi.util.RsPsiUtil.getHumanReadableName;
 
 public final class RsParserUtil {
@@ -53,7 +53,7 @@ public final class RsParserUtil {
     public static boolean expectOrWarn(@NotNull final PsiBuilder builder,
                                        @NotNull final IElementType token,
                                        @NotNull final String errMsg) {
-        if (!PsiBuilderUtil.expect(builder, token)) {
+        if (!expect(builder, token)) {
             error(builder, errMsg);
             return false;
         }
@@ -133,11 +133,35 @@ public final class RsParserUtil {
         return globalResult;
     }
 
+    public static boolean parenthesize(@NotNull final PsiBuilder builder,
+                                       @NotNull final IElementType leftDelim,
+                                       @NotNull final IElementType rightDelim,
+                                       @NotNull final VoidParserWrapper parser,
+                                       @NotNull final IElementType elementType) {
+        final Marker marker = builder.mark();
+
+        if (!expect(builder, leftDelim)) {
+            marker.rollbackTo();
+            return false;
+        }
+
+        parser.parse();
+
+        expectOrWarn(builder, rightDelim);
+
+        marker.done(elementType);
+        return true;
+    }
+
     public enum SepCfg {
         ALLOW_TRAILING, TOLERATE_EMPTY
     }
 
     public interface ParserWrapper {
         boolean parse();
+    }
+
+    public interface VoidParserWrapper {
+        void parse();
     }
 }
