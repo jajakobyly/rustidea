@@ -16,9 +16,11 @@
 
 package org.rustidea.psi;
 
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
-public interface IRsTypeParameterListOwner extends IRsPsiElement {
-    @Nullable
-    RsTypeParameterList getTypeParameterList();
+public interface RsTypeList extends IRsPsiElement {
+    @NotNull
+    IRsType[] getTypes();
+
+    int getTypeIndex(@NotNull IRsType type);
 }

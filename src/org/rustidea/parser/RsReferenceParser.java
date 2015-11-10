@@ -79,7 +79,7 @@ class RsReferenceParser extends IRsParserBase {
                 builder.advanceLexer();
 
                 if (expect(builder, IDENTIFIER)) {
-                    if (parser.getTypeParser().typeParameterList()) {
+                    if (parser.getTypeParser().typeList()) {
                         qualifierMarker.done(TYPED_REFERENCE_ELEMENT);
                     } else {
                         qualifierMarker.done(REFERENCE_ELEMENT);

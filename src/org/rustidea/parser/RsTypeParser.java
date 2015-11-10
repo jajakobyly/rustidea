@@ -58,6 +58,46 @@ class RsTypeParser extends IRsParserBase {
         }
     }
 
+    public boolean typeParemeter() {
+        final Marker marker = builder.mark();
+
+        if (!identifier(builder)) {
+            marker.rollbackTo();
+            return false;
+        }
+
+        // TODO Implement type bounds
+
+        marker.done(TYPE_PARAMETER);
+        return true;
+    }
+
+    public boolean typeParameterList() {
+        final Marker marker = builder.mark();
+
+        if (!expect(builder, OP_LT)) {
+            marker.rollbackTo();
+            return false;
+        }
+
+        sep(builder, OP_COMMA, new BooleanFunction<PsiBuilder>() {
+            @Override
+            public boolean fun(PsiBuilder psiBuilder) {
+                if (lifetimeTypeParameter() || typeParemeter()) {
+                    return true;
+                } else {
+                    error(builder, "expected type parameter or lifetime");
+                    return false;
+                }
+            }
+        }, EnumSet.of(SepCfg.TOLERATE_EMPTY));
+
+        expectOrWarn(builder, OP_GT);
+
+        marker.done(TYPE_PARAMETER_LIST);
+        return true;
+    }
+
     public boolean type() {
         boolean result = false;
         result = result || tupleType();
@@ -80,7 +120,7 @@ class RsTypeParser extends IRsParserBase {
         }
     }
 
-    public boolean typeParameterList() {
+    public boolean typeList() {
         final Marker marker = builder.mark();
 
         if (!expect(builder, OP_LT)) {
@@ -91,18 +131,13 @@ class RsTypeParser extends IRsParserBase {
         sep(builder, OP_COMMA, new BooleanFunction<PsiBuilder>() {
             @Override
             public boolean fun(PsiBuilder psiBuilder) {
-                if (lifetimeTypeParameter() || type()) {
-                    return true;
-                } else {
-                    error(builder, "expected type or lifetime");
-                    return false;
-                }
+                return expectType();
             }
         }, EnumSet.of(SepCfg.TOLERATE_EMPTY));
 
         expectOrWarn(builder, OP_GT);
 
-        marker.done(TYPE_PARAMETER_LIST);
+        marker.done(TYPE_LIST);
         return true;
     }
 

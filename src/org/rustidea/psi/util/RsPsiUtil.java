@@ -26,11 +26,7 @@ import com.intellij.psi.util.PsiUtilBase;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.rustidea.psi.IRsTypeParameterListOwner;
-import org.rustidea.psi.RsTypeParameter;
-import org.rustidea.psi.RsTypeParameterList;
 import org.rustidea.psi.types.IRsElementType;
-import org.rustidea.util.SimpleArrayFactory;
 
 public final class RsPsiUtil extends PsiUtilBase {
     private RsPsiUtil() {
@@ -53,20 +49,6 @@ public final class RsPsiUtil extends PsiUtilBase {
         final String name = getHumanReadableName(tokenType);
         if (Strings.isNullOrEmpty(name)) return null;
         return StringUtil.pluralize(name, n);
-    }
-
-    public static boolean hasTypeParameters(@NotNull final IRsTypeParameterListOwner owner) {
-        final RsTypeParameterList list = owner.getTypeParameterList();
-        return list != null && list.getTypeParameters().length > 0;
-    }
-
-    @NotNull
-    public static RsTypeParameter[] getTypeParameters(@NotNull final IRsTypeParameterListOwner owner) {
-        final RsTypeParameterList list = owner.getTypeParameterList();
-        if (list != null) {
-            return list.getTypeParameters();
-        }
-        return SimpleArrayFactory.empty(RsTypeParameter.class);
     }
 
     public static <ElemT extends PsiElement> int getElementIndex(

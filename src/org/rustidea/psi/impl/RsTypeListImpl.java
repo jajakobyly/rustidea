@@ -17,32 +17,34 @@
 package org.rustidea.psi.impl;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.rustidea.psi.IRsType;
 import org.rustidea.psi.RsElementVisitor;
-import org.rustidea.psi.RsIdentifier;
 import org.rustidea.psi.RsTypeList;
-import org.rustidea.psi.RsTypedReferenceElement;
 import org.rustidea.psi.types.RsPsiTypes;
+import org.rustidea.psi.util.RsPsiTreeUtil;
+import org.rustidea.psi.util.RsPsiUtil;
+import org.rustidea.util.SimpleArrayFactory;
 
-public class RsTypedReferenceElementImpl extends RsReferenceElementImplBase implements RsTypedReferenceElement {
-    public RsTypedReferenceElementImpl() {
-        super(RsPsiTypes.TYPED_REFERENCE_ELEMENT);
+public class RsTypeListImpl extends IRsCompositePsiElement implements RsTypeList {
+    public RsTypeListImpl() {
+        super(RsPsiTypes.TYPE_LIST);
     }
 
-    @Nullable
+    @NotNull
     @Override
-    public RsIdentifier getReferenceNameElement() {
-        return (RsIdentifier) findPsiChildByType(RsPsiTypes.IDENTIFIER);
+    public IRsType[] getTypes() {
+        final IRsType[] children = RsPsiTreeUtil.getChildrenOfType(this, IRsType.class);
+        return children != null ? children : SimpleArrayFactory.empty(IRsType.class);
     }
 
-    @Nullable
     @Override
-    public RsTypeList getTypeList() {
-        return (RsTypeList) findPsiChildByType(RsPsiTypes.TYPE_LIST);
+    public int getTypeIndex(@NotNull IRsType type) {
+        assert type.getParent() == this;
+        return RsPsiUtil.getElementIndex(type, IRsType.class);
     }
 
     @Override
     public void accept(@NotNull RsElementVisitor visitor) {
-        visitor.visitTypedReferenceElement(this);
+        visitor.visitTypeList(this);
     }
 }

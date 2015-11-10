@@ -1,3 +1,3 @@
 struct A<T> {
-    x: ()
+    x: T
 }

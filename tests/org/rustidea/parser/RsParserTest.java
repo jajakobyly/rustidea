@@ -107,6 +107,10 @@ public class RsParserTest extends ParsingTestCase {
         doTest(true);
     }
 
+    public void testStruct0006() {
+        doTest(true);
+    }
+
     @NotNull
     @Override
     protected String getTestDataPath() {
