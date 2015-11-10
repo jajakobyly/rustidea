@@ -18,9 +18,6 @@ package org.rustidea.psi.util;
 
 import com.google.common.base.Strings;
 import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.StubBasedPsiElement;
-import com.intellij.psi.stubs.StubElement;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.util.PsiUtilBase;
 import org.jetbrains.annotations.Contract;
@@ -49,25 +46,6 @@ public final class RsPsiUtil extends PsiUtilBase {
         final String name = getHumanReadableName(tokenType);
         if (Strings.isNullOrEmpty(name)) return null;
         return StringUtil.pluralize(name, n);
-    }
-
-    public static <ElemT extends PsiElement> int getElementIndex(
-        @NotNull final ElemT element, @NotNull final Class<ElemT> cls) {
-        int result = 0;
-        for (PsiElement e = element.getPrevSibling(); e != null; e = e.getPrevSibling()) {
-            if (cls.isInstance(e)) {
-                result++;
-            }
-        }
-        return result;
-    }
-
-    public static <ElemT extends StubBasedPsiElement> int getStubElementIndex(
-        @NotNull final ElemT element, @Nullable final StubElement stub, @NotNull final Class<ElemT> elemCls) {
-        if (stub != null) {
-            return stub.getParentStub().getChildrenStubs().indexOf(stub);
-        }
-        return getElementIndex(element, elemCls);
     }
 
     @NotNull

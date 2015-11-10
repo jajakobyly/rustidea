@@ -21,7 +21,6 @@ import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.*;
 import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsPsiTreeUtil;
-import org.rustidea.psi.util.RsPsiUtil;
 
 public class RsAttributeItemImpl extends IRsCompositePsiElement implements RsAttributeItem {
     public RsAttributeItemImpl() {
@@ -77,7 +76,7 @@ public class RsAttributeItemImpl extends IRsCompositePsiElement implements RsAtt
         if (getParentItem() == null) {
             return 0;
         }
-        return RsPsiUtil.getElementIndex(this, RsAttributeItem.class);
+        return RsPsiTreeUtil.getElementIndex(this, RsAttributeItem.class);
     }
 
     @Override

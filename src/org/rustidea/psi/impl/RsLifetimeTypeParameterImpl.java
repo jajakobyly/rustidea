@@ -23,7 +23,6 @@ import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.*;
 import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsPsiTreeUtil;
-import org.rustidea.psi.util.RsPsiUtil;
 
 public class RsLifetimeTypeParameterImpl extends IRsCompositePsiElement implements RsLifetimeTypeParameter {
     public RsLifetimeTypeParameterImpl() {
@@ -60,7 +59,7 @@ public class RsLifetimeTypeParameterImpl extends IRsCompositePsiElement implemen
 
     @Override
     public int getIndex() {
-        return RsPsiUtil.getElementIndex(this, RsLifetimeTypeParameter.class);
+        return RsPsiTreeUtil.getElementIndex(this, RsLifetimeTypeParameter.class);
     }
 
     @Override

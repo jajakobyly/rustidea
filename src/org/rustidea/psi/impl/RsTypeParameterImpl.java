@@ -23,7 +23,6 @@ import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.*;
 import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsPsiTreeUtil;
-import org.rustidea.psi.util.RsPsiUtil;
 import org.rustidea.util.NotImplementedException;
 
 public class RsTypeParameterImpl extends IRsCompositePsiElement implements RsTypeParameter {
@@ -63,7 +62,7 @@ public class RsTypeParameterImpl extends IRsCompositePsiElement implements RsTyp
 
     @Override
     public int getIndex() {
-        return RsPsiUtil.getElementIndex(this, RsTypeParameter.class);
+        return RsPsiTreeUtil.getElementIndex(this, RsTypeParameter.class);
     }
 
     @Override

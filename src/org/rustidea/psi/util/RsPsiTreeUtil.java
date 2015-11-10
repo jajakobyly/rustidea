@@ -17,6 +17,8 @@
 package org.rustidea.psi.util;
 
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.StubBasedPsiElement;
+import com.intellij.psi.stubs.StubElement;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -27,9 +29,31 @@ public final class RsPsiTreeUtil extends PsiTreeUtil {
 
     @Nullable
     public static <T extends PsiElement> T findLastChildByClass(@NotNull final PsiElement element, @NotNull final Class<T> cls) {
-        for (PsiElement cur = element.getLastChild(); cur != null; cur = cur.getPrevSibling()) {
-            if (cls.isInstance(cur)) return (T) cur;
+        for (PsiElement e = element.getLastChild(); e != null; e = e.getPrevSibling()) {
+            if (cls.isInstance(e)) {
+                //noinspection unchecked
+                return (T) e;
+            }
         }
         return null;
+    }
+
+    public static <ElemT extends PsiElement> int getElementIndex(
+        @NotNull final ElemT element, @NotNull final Class<ElemT> cls) {
+        int result = 0;
+        for (PsiElement e = element.getPrevSibling(); e != null; e = e.getPrevSibling()) {
+            if (cls.isInstance(e)) {
+                result++;
+            }
+        }
+        return result;
+    }
+
+    public static <ElemT extends StubBasedPsiElement> int getStubElementIndex(
+        @NotNull final ElemT element, @Nullable final StubElement stub, @NotNull final Class<ElemT> elemCls) {
+        if (stub != null) {
+            return stub.getParentStub().getChildrenStubs().indexOf(stub);
+        }
+        return getElementIndex(element, elemCls);
     }
 }
