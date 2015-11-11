@@ -107,6 +107,10 @@ public abstract class RsElementVisitor extends PsiElementVisitor {
         }
     }
 
+    public void visitPathType(RsPathType pathType) {
+        visitType(pathType);
+    }
+
     public void visitReferenceElement(RsReferenceElement referenceElement) {
         visitIReferenceElement(referenceElement);
     }

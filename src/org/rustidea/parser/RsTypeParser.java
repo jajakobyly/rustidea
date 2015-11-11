@@ -19,7 +19,6 @@ package org.rustidea.parser;
 import com.intellij.lang.PsiBuilder.Marker;
 import com.intellij.openapi.diagnostic.Logger;
 import org.jetbrains.annotations.NotNull;
-import org.rustidea.util.NotImplementedException;
 
 import java.util.EnumSet;
 
@@ -90,12 +89,9 @@ class RsTypeParser extends IRsParserBase {
     }
 
     public boolean type() {
-        boolean result = false;
+        boolean result = pathType();
         result = result || tupleType();
-
-        // TODO Implement the rest
-        if (!result) throw new NotImplementedException();
-
+        // TODO Implement array, slice, pointer & function types
         return result;
     }
 
@@ -123,6 +119,17 @@ class RsTypeParser extends IRsParserBase {
                 }, EnumSet.of(SepCfg.TOLERATE_EMPTY));
             }
         }, TYPE_LIST);
+    }
+
+    public boolean pathType() {
+        final Marker marker = builder.mark();
+        if (parser.getReferenceParser().path()) {
+            marker.done(PATH_TYPE);
+            return true;
+        } else {
+            marker.rollbackTo();
+            return false;
+        }
     }
 
     public boolean structureType() {

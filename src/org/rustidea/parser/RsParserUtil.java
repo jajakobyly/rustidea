@@ -134,20 +134,20 @@ public final class RsParserUtil {
     }
 
     public static boolean parenthesize(@NotNull final PsiBuilder builder,
-                                       @NotNull final IElementType leftDelim,
-                                       @NotNull final IElementType rightDelim,
+                                       @NotNull final IElementType lparen,
+                                       @NotNull final IElementType rparen,
                                        @NotNull final VoidParserWrapper parser,
                                        @NotNull final IElementType elementType) {
         final Marker marker = builder.mark();
 
-        if (!expect(builder, leftDelim)) {
+        if (!expect(builder, lparen)) {
             marker.rollbackTo();
             return false;
         }
 
         parser.parse();
 
-        expectOrWarn(builder, rightDelim);
+        expectOrWarn(builder, rparen);
 
         marker.done(elementType);
         return true;
