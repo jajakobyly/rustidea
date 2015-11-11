@@ -32,8 +32,8 @@ import static org.rustidea.psi.types.RsPsiTypes.SELF_OR_SUPER;
 import static org.rustidea.psi.types.RsTokenTypes.*;
 
 class RsReferenceParser extends IRsParserBase {
-    public static final TokenSet IDENTIFIER_OR_SELF = TokenSet.create(IDENTIFIER, KW_SELF);
     private static final Logger LOG = Logger.getInstance(RsReferenceParser.class);
+    private static final TokenSet IDENTIFIER_OR_SELF = TokenSet.create(IDENTIFIER, KW_SELF);
     private static final TokenSet PATH_FIRST_TOKEN = TokenSet.orSet(SELF_OR_SUPER, TokenSet.create(IDENTIFIER, OP_DOUBLE_COLON));
 
     public RsReferenceParser(@NotNull final RsParser parser) {
@@ -82,9 +82,7 @@ class RsReferenceParser extends IRsParserBase {
                     } else {
                         qualifierMarker.done(REFERENCE_ELEMENT);
                     }
-                } else if (builder.getTokenType() == OP_LBRACE) {
-                    builder.advanceLexer();
-
+                } else if (expect(builder, OP_LBRACE)) {
                     sep(builder, OP_COMMA, new ParserWrapper() {
                         @Override
                         public boolean parse() {
