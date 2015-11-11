@@ -18,11 +18,11 @@ package org.rustidea.psi;
 
 import org.jetbrains.annotations.NotNull;
 
-public interface RsRelationReferenceElement extends RsReferenceElement {
+public interface RsRelationReferenceElement extends IRsReferenceElement {
     @NotNull
-    Type getType();
+    RelationType getRelationType();
 
-    enum Type {
+    enum RelationType {
         GLOBAL, SELF, SUPER
     }
 }

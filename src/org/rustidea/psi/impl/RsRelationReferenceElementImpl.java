@@ -18,34 +18,34 @@ package org.rustidea.psi.impl;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.rustidea.psi.IRsReferenceElement;
 import org.rustidea.psi.RsElementVisitor;
-import org.rustidea.psi.RsReferenceElement;
 import org.rustidea.psi.RsRelationReferenceElement;
 import org.rustidea.psi.RsToken;
 import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsPsiUtil;
 import org.rustidea.util.UnreachableException;
 
-public class RsRelationReferenceElementImpl extends RsReferenceElementImplBase implements RsRelationReferenceElement {
+public class RsRelationReferenceElementImpl extends IRsReferenceElementImpl implements RsRelationReferenceElement {
     public RsRelationReferenceElementImpl() {
         super(RsPsiTypes.RELATION_REFERENCE_ELEMENT);
     }
 
     @NotNull
     @Override
-    public Type getType() {
+    public RelationType getRelationType() {
         final RsToken element = getReferenceNameElement();
 
         if (element == null) {
-            return Type.GLOBAL;
+            return RelationType.GLOBAL;
         }
 
         if (element.getTokenType() == RsPsiTypes.KW_SELF) {
-            return Type.SELF;
+            return RelationType.SELF;
         }
 
         if (element.getTokenType() == RsPsiTypes.KW_SUPER) {
-            return Type.SUPER;
+            return RelationType.SUPER;
         }
 
         throw new UnreachableException();
@@ -59,7 +59,7 @@ public class RsRelationReferenceElementImpl extends RsReferenceElementImplBase i
 
     @Nullable
     @Override
-    public RsReferenceElement getQualifier() {
+    public IRsReferenceElement getQualifier() {
         return null;
     }
 
@@ -81,6 +81,6 @@ public class RsRelationReferenceElementImpl extends RsReferenceElementImplBase i
     @NotNull
     @Override
     public String toString() {
-        return RsPsiUtil.getPsiClassName(this) + ":" + getType().toString();
+        return RsPsiUtil.getPsiClassName(this) + ":" + getRelationType().toString();
     }
 }

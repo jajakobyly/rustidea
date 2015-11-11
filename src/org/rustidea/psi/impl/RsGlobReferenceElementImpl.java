@@ -24,7 +24,7 @@ import org.rustidea.psi.RsToken;
 import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsPsiUtil;
 
-public class RsGlobReferenceElementImpl extends RsReferenceElementImplBase implements RsGlobReferenceElement {
+public class RsGlobReferenceElementImpl extends IRsReferenceElementImpl implements RsGlobReferenceElement {
     public RsGlobReferenceElementImpl() {
         super(RsPsiTypes.GLOB_REFERENCE_ELEMENT);
     }

@@ -23,7 +23,7 @@ import org.rustidea.psi.RsIdentifier;
 import org.rustidea.psi.RsReferenceElement;
 import org.rustidea.psi.types.RsPsiTypes;
 
-public class RsReferenceElementImpl extends RsReferenceElementImplBase implements RsReferenceElement {
+public class RsReferenceElementImpl extends IRsReferenceElementImpl implements RsReferenceElement {
     public RsReferenceElementImpl() {
         super(RsPsiTypes.REFERENCE_ELEMENT);
     }

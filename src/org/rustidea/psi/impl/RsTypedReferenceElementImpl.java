@@ -24,7 +24,7 @@ import org.rustidea.psi.RsTypeList;
 import org.rustidea.psi.RsTypedReferenceElement;
 import org.rustidea.psi.types.RsPsiTypes;
 
-public class RsTypedReferenceElementImpl extends RsReferenceElementImplBase implements RsTypedReferenceElement {
+public class RsTypedReferenceElementImpl extends IRsReferenceElementImpl implements RsTypedReferenceElement {
     public RsTypedReferenceElementImpl() {
         super(RsPsiTypes.TYPED_REFERENCE_ELEMENT);
     }

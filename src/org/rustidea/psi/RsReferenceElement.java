@@ -16,29 +16,5 @@
 
 package org.rustidea.psi;
 
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiPolyVariantReference;
-import com.intellij.psi.PsiQualifiedReferenceElement;
-import org.jetbrains.annotations.Nullable;
-
-/**
- * Represents reference found in Rust code.
- *
- * In Rust Reference they are called <i>paths</i>.
- */
-public interface RsReferenceElement extends PsiPolyVariantReference, PsiQualifiedReferenceElement, IRsPsiElement {
-    @Nullable
-    PsiElement getReferenceNameElement();
-
-    @Nullable
-    @Override
-    RsReferenceElement getQualifier();
-
-    boolean isQualified();
-
-    /**
-     * @return null if qualifier is not specified
-     */
-    @Nullable
-    String getQualifiedName();
+public interface RsReferenceElement extends IRsReferenceElement {
 }

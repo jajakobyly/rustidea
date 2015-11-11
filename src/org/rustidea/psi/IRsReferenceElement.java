@@ -16,13 +16,29 @@
 
 package org.rustidea.psi;
 
-import org.jetbrains.annotations.NotNull;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiPolyVariantReference;
+import com.intellij.psi.PsiQualifiedReferenceElement;
 import org.jetbrains.annotations.Nullable;
 
-public interface RsWhereClause extends IRsPsiElement {
-    @NotNull
-    IRsReferenceElement[] getBounds();
+/**
+ * Represents reference found in Rust code.
+ *
+ * In Rust's terminology they are called <i>paths</i>, but we stick with IntelliJ's one.
+ */
+public interface IRsReferenceElement extends PsiPolyVariantReference, PsiQualifiedReferenceElement, IRsPsiElement {
+    @Nullable
+    PsiElement getReferenceNameElement();
 
     @Nullable
-    RsTypeParameter getOwner();
+    @Override
+    IRsReferenceElement getQualifier();
+
+    boolean isQualified();
+
+    /**
+     * @return null if qualifier is not specified
+     */
+    @Nullable
+    String getQualifiedName();
 }

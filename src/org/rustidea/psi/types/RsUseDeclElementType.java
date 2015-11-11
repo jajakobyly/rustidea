@@ -22,7 +22,7 @@ import com.intellij.psi.stubs.StubInputStream;
 import com.intellij.psi.stubs.StubOutputStream;
 import com.intellij.util.io.StringRef;
 import org.jetbrains.annotations.NotNull;
-import org.rustidea.psi.RsReferenceElement;
+import org.rustidea.psi.IRsReferenceElement;
 import org.rustidea.psi.RsUseDecl;
 import org.rustidea.psi.impl.RsUseDeclImpl;
 import org.rustidea.stubs.RsUseDeclStub;
@@ -51,7 +51,7 @@ public class RsUseDeclElementType extends IRsStubElementType<RsUseDeclStub, RsUs
     @NotNull
     @Override
     public RsUseDeclStub createStub(@NotNull RsUseDecl psi, StubElement parentStub) {
-        final RsReferenceElement referenceElement = psi.getUseReference();
+        final IRsReferenceElement referenceElement = psi.getUseReference();
         final String refText = referenceElement == null ? null : referenceElement.getText();
         return new RsUseDeclStub(parentStub, StringRef.fromNullableString(refText), psi.getType().pack());
     }

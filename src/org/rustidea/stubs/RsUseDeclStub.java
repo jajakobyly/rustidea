@@ -22,7 +22,7 @@ import com.intellij.reference.SoftReference;
 import com.intellij.util.io.StringRef;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.rustidea.psi.RsReferenceElement;
+import org.rustidea.psi.IRsReferenceElement;
 import org.rustidea.psi.RsUseDecl;
 import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.util.NotImplementedException;
@@ -33,7 +33,7 @@ public class RsUseDeclStub extends StubBase<RsUseDecl> implements IRsItemStub<Rs
     private final StringRef text;
     private final byte flags;
     @Nullable
-    private Reference<RsReferenceElement> reference = null;
+    private Reference<IRsReferenceElement> reference = null;
 
     public RsUseDeclStub(StubElement parent, final StringRef referenceText, final byte flags) {
         super(parent, RsPsiTypes.USE_DECL);
@@ -52,8 +52,8 @@ public class RsUseDeclStub extends StubBase<RsUseDecl> implements IRsItemStub<Rs
     }
 
     @Nullable
-    public RsReferenceElement getUseReference() {
-        RsReferenceElement ref = SoftReference.dereference(reference);
+    public IRsReferenceElement getUseReference() {
+        IRsReferenceElement ref = SoftReference.dereference(reference);
         if (ref == null) {
             // TODO Implement this (build reference PSI from `text` with `getPsi()` as context).
             throw new NotImplementedException();

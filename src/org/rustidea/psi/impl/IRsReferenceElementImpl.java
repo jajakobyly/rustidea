@@ -23,13 +23,13 @@ import com.intellij.psi.tree.IElementType;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.rustidea.psi.RsReferenceElement;
+import org.rustidea.psi.IRsReferenceElement;
 import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsPsiUtil;
 import org.rustidea.util.NotImplementedException;
 
-public abstract class RsReferenceElementImplBase extends IRsCompositePsiElement implements RsReferenceElement {
-    public RsReferenceElementImplBase(@NotNull IElementType type) {
+public abstract class IRsReferenceElementImpl extends IRsCompositePsiElement implements IRsReferenceElement {
+    public IRsReferenceElementImpl(@NotNull IElementType type) {
         super(type);
     }
 
@@ -42,8 +42,8 @@ public abstract class RsReferenceElementImplBase extends IRsCompositePsiElement 
 
     @Nullable
     @Override
-    public RsReferenceElement getQualifier() {
-        return (RsReferenceElement) findPsiChildByType(RsPsiTypes.REFERENCE_ELEMENT);
+    public IRsReferenceElement getQualifier() {
+        return (IRsReferenceElement) findPsiChildByType(RsPsiTypes.REFERENCE_ELEMENT);
     }
 
     @Override
@@ -54,7 +54,7 @@ public abstract class RsReferenceElementImplBase extends IRsCompositePsiElement 
     @Nullable
     @Override
     public String getQualifiedName() {
-        final RsReferenceElement qualifier = getQualifier();
+        final IRsReferenceElement qualifier = getQualifier();
         return qualifier == null ? "" : qualifier.getText();
     }
 

@@ -16,5 +16,5 @@
 
 package org.rustidea.psi;
 
-public interface RsListReferenceElement extends RsReferenceElement {
+public interface RsListReferenceElement extends IRsReferenceElement {
 }

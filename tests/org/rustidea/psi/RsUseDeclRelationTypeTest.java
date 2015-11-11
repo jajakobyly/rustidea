@@ -22,7 +22,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
-public class RsUseDeclTypeTest {
+public class RsUseDeclRelationTypeTest {
     @Test
     public void testPacking() throws Exception {
         for (RsUseDecl.Type type1 : RsUseDecl.Type.values()) {

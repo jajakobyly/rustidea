@@ -24,7 +24,7 @@ import org.rustidea.util.UnreachableException;
 
 public interface RsUseDecl extends IRsItem<RsUseDeclStub> {
     @Nullable
-    RsReferenceElement getUseReference();
+    IRsReferenceElement getUseReference();
 
     @NotNull
     Type getType();

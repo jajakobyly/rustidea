@@ -35,7 +35,7 @@ public class RsUseDeclImpl extends IRsItemPsiElement<RsUseDeclStub> implements R
 
     @Nullable
     @Override
-    public RsReferenceElement getUseReference() {
+    public IRsReferenceElement getUseReference() {
         RsPsiUtil.ensureValid(this);
         final RsUseDeclStub stub = getStub();
         if (stub != null) {
@@ -47,7 +47,7 @@ public class RsUseDeclImpl extends IRsItemPsiElement<RsUseDeclStub> implements R
     @NotNull
     @Override
     public Type getType() {
-        final RsReferenceElement ref = getUseReference();
+        final IRsReferenceElement ref = getUseReference();
 
         if (ref instanceof RsListReferenceElement) {
             return Type.LIST;

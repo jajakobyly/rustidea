@@ -18,8 +18,8 @@ package org.rustidea.psi.impl;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.rustidea.psi.IRsReferenceElement;
 import org.rustidea.psi.RsElementVisitor;
-import org.rustidea.psi.RsReferenceElement;
 import org.rustidea.psi.RsTypeParameter;
 import org.rustidea.psi.RsWhereClause;
 import org.rustidea.psi.types.RsPsiTypes;
@@ -33,9 +33,9 @@ public class RsWhereClauseImpl extends IRsCompositePsiElement implements RsWhere
 
     @NotNull
     @Override
-    public RsReferenceElement[] getBounds() {
-        RsReferenceElement[] bounds = RsPsiTreeUtil.getChildrenOfType(this, RsReferenceElement.class);
-        return bounds != null ? bounds : SimpleArrayFactory.empty(RsReferenceElement.class);
+    public IRsReferenceElement[] getBounds() {
+        IRsReferenceElement[] bounds = RsPsiTreeUtil.getChildrenOfType(this, IRsReferenceElement.class);
+        return bounds != null ? bounds : SimpleArrayFactory.empty(IRsReferenceElement.class);
     }
 
     @Nullable

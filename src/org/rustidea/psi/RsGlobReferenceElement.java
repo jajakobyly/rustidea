@@ -16,5 +16,5 @@
 
 package org.rustidea.psi;
 
-public interface RsGlobReferenceElement extends RsReferenceElement {
+public interface RsGlobReferenceElement extends IRsReferenceElement {
 }

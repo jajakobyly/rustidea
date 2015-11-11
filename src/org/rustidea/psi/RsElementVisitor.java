@@ -54,7 +54,7 @@ public abstract class RsElementVisitor extends PsiElementVisitor {
     }
 
     public void visitGlobReferenceElement(RsGlobReferenceElement globReferenceElement) {
-        visitReferenceElement(globReferenceElement);
+        visitIReferenceElement(globReferenceElement);
     }
 
     public void visitIdentifier(RsIdentifier identifier) {
@@ -63,6 +63,10 @@ public abstract class RsElementVisitor extends PsiElementVisitor {
 
     public void visitItem(IRsItem item) {
         visitElement(item);
+    }
+
+    public void visitIReferenceElement(IRsReferenceElement referenceElement) {
+        visitElement(referenceElement);
     }
 
     public void visitKeyword(RsKeyword keyword) {
@@ -78,7 +82,7 @@ public abstract class RsElementVisitor extends PsiElementVisitor {
     }
 
     public void visitListReferenceElement(RsListReferenceElement listReferenceElement) {
-        visitReferenceElement(listReferenceElement);
+        visitIReferenceElement(listReferenceElement);
     }
 
     public void visitLiteral(RsLiteral literal) {
@@ -104,11 +108,11 @@ public abstract class RsElementVisitor extends PsiElementVisitor {
     }
 
     public void visitReferenceElement(RsReferenceElement referenceElement) {
-        visitElement(referenceElement);
+        visitIReferenceElement(referenceElement);
     }
 
     public void visitRelationReferenceElement(RsRelationReferenceElement relationReferenceElement) {
-        visitReferenceElement(relationReferenceElement);
+        visitIReferenceElement(relationReferenceElement);
     }
 
     public void visitRustToken(RsToken token) {
@@ -140,7 +144,7 @@ public abstract class RsElementVisitor extends PsiElementVisitor {
     }
 
     public void visitTypedReferenceElement(RsTypedReferenceElement typedReferenceElement) {
-        visitReferenceElement(typedReferenceElement);
+        visitIReferenceElement(typedReferenceElement);
     }
 
     public void visitTypeList(RsTypeList typeList) {
