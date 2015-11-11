@@ -55,7 +55,7 @@ class RsTypeParser extends IRsParserBase {
         }
     }
 
-    public boolean typeParemeter() {
+    public boolean typeParameter() {
         final Marker marker = builder.mark();
 
         if (!identifier(builder)) {
@@ -76,7 +76,7 @@ class RsTypeParser extends IRsParserBase {
                 sep(builder, OP_COMMA, new ParserWrapper() {
                     @Override
                     public boolean parse() {
-                        if (lifetimeTypeParameter() || typeParemeter()) {
+                        if (lifetimeTypeParameter() || typeParameter()) {
                             return true;
                         } else {
                             error(builder, "expected type parameter or lifetime");
