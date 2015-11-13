@@ -35,7 +35,7 @@ public class RsUnitTypeImpl extends IRsCompositePsiElement implements RsUnitType
     }
 
     @Override
-    public int getTypeIndex(@NotNull IRsType type) throws UnsupportedOperationException {
+    public int indexOf(@NotNull IRsType type) throws UnsupportedOperationException {
         throw new UnsupportedOperationException("unit type does not have children");
     }
 

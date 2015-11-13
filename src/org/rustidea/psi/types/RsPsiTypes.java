@@ -38,7 +38,7 @@ public interface RsPsiTypes extends RsStubElementTypes, RsCompositeTypes, RsToke
     TokenSet STRING_LITERAL_TOKEN_SET = TokenSet.orSet(STRING_TOKEN_SET, RAW_STRING_TOKEN_SET);
     TokenSet LITERAL_TOKEN_SET = TokenSet.orSet(BOOL_TOKEN_SET, NUMBER_TOKEN_SET, CHAR_TOKEN_SET, STRING_LITERAL_TOKEN_SET);
 
-    TokenSet DOC_TOKEN_SET = TokenSet.create(BLOCK_DOC, LINE_DOC, BLOCK_PARENT_DOC, LINE_PARENT_DOC);
+    TokenSet DOC_TOKEN_SET = TokenSet.create(BLOCK_DOC, LINE_DOC, BLOCK_INNER_DOC, LINE_INNER_DOC);
     TokenSet ATTRIBUTE_OR_DOC_TOKEN_SET = TokenSet.create(ATTRIBUTE, DOC);
 
     TokenSet SELF_OR_SUPER = TokenSet.create(KW_SELF, KW_SUPER);

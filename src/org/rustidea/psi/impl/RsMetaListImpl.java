@@ -17,31 +17,31 @@
 package org.rustidea.psi.impl;
 
 import org.jetbrains.annotations.NotNull;
-import org.rustidea.psi.RsAttributeItem;
-import org.rustidea.psi.RsAttributeItemList;
 import org.rustidea.psi.RsElementVisitor;
+import org.rustidea.psi.RsMeta;
+import org.rustidea.psi.RsMetaList;
 import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.util.SimpleArrayFactory;
 
-public class RsAttributeItemListImpl extends IRsCompositePsiElement implements RsAttributeItemList {
-    public RsAttributeItemListImpl() {
-        super(RsPsiTypes.ATTRIBUTE_ITEM_LIST);
+public class RsMetaListImpl extends IRsCompositePsiElement implements RsMetaList {
+    public RsMetaListImpl() {
+        super(RsPsiTypes.META_LIST);
     }
 
     @NotNull
     @Override
-    public RsAttributeItem[] getItems() {
-        return getChildrenAsPsiElements(RsPsiTypes.ATTRIBUTE_ITEM, SimpleArrayFactory.get(RsAttributeItem.class));
+    public RsMeta[] getMetas() {
+        return getChildrenAsPsiElements(RsPsiTypes.META, SimpleArrayFactory.get(RsMeta.class));
     }
 
     @Override
-    public int getItemIndex(@NotNull RsAttributeItem item) {
+    public int indexOf(@NotNull RsMeta item) {
         assert item.getParent() == this;
         return item.getIndex();
     }
 
     @Override
     public void accept(@NotNull RsElementVisitor visitor) {
-        visitor.visitAttributeItemList(this);
+        visitor.visitMetaList(this);
     }
 }

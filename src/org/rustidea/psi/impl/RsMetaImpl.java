@@ -22,9 +22,9 @@ import org.rustidea.psi.*;
 import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsPsiTreeUtil;
 
-public class RsAttributeItemImpl extends IRsCompositePsiElement implements RsAttributeItem {
-    public RsAttributeItemImpl() {
-        super(RsPsiTypes.ATTRIBUTE_ITEM);
+public class RsMetaImpl extends IRsCompositePsiElement implements RsMeta {
+    public RsMetaImpl() {
+        super(RsPsiTypes.META);
     }
 
     @NotNull
@@ -47,8 +47,8 @@ public class RsAttributeItemImpl extends IRsCompositePsiElement implements RsAtt
 
     @Nullable
     @Override
-    public RsAttributeItem getParentItem() {
-        return RsPsiTreeUtil.getParentOfType(this, RsAttributeItem.class);
+    public RsMeta getParentMeta() {
+        return RsPsiTreeUtil.getParentOfType(this, RsMeta.class);
     }
 
     @NotNull
@@ -67,20 +67,20 @@ public class RsAttributeItemImpl extends IRsCompositePsiElement implements RsAtt
 
     @Nullable
     @Override
-    public RsAttributeItemList getParams() {
-        return (RsAttributeItemList) findPsiChildByType(RsPsiTypes.ATTRIBUTE_ITEM_LIST);
+    public RsMetaList getParams() {
+        return (RsMetaList) findPsiChildByType(RsPsiTypes.META_LIST);
     }
 
     @Override
     public int getIndex() {
-        if (getParentItem() == null) {
+        if (getParentMeta() == null) {
             return 0;
         }
-        return RsPsiTreeUtil.getElementIndex(this, RsAttributeItem.class);
+        return RsPsiTreeUtil.getElementIndex(this, RsMeta.class);
     }
 
     @Override
     public void accept(@NotNull RsElementVisitor visitor) {
-        visitor.visitAttributeItem(this);
+        visitor.visitMeta(this);
     }
 }

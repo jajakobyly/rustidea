@@ -137,7 +137,7 @@ public class RsLexerTest extends IRsLexerTestCase {
             "//! foo",
             "//! bar",
             "//! baz")
-            .test("//! foo\n//! bar\n//! baz", LINE_PARENT_DOC);
+            .test("//! foo\n//! bar\n//! baz", LINE_INNER_DOC);
         doTest(test);
     }
 
@@ -147,7 +147,7 @@ public class RsLexerTest extends IRsLexerTestCase {
             "//! bar",
             "/// foo",
             "/// bar")
-            .test("//! foo\n//! bar", LINE_PARENT_DOC).test("\n", WHITE_SPACE)
+            .test("//! foo\n//! bar", LINE_INNER_DOC).test("\n", WHITE_SPACE)
             .test("/// foo\n/// bar", LINE_DOC);
         doTest(test);
     }

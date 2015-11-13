@@ -19,7 +19,7 @@ package org.rustidea.psi;
 import org.jetbrains.annotations.Nullable;
 
 public interface IRsAttribute extends IRsPsiElement {
-    boolean isParentAttribute();
+    boolean isInner();
 
     @Nullable
     IRsAttributeOwner getOwner();

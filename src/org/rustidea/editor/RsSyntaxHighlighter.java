@@ -82,10 +82,10 @@ public class RsSyntaxHighlighter extends SyntaxHighlighterBase {
         createTextAttributesKey("RUST.BLOCK_DOC", DefaultLanguageHighlighterColors.DOC_COMMENT);
     public static final TextAttributesKey LINE_DOC =
         createTextAttributesKey("RUST.LINE_DOC", DefaultLanguageHighlighterColors.DOC_COMMENT);
-    public static final TextAttributesKey BLOCK_PARENT_DOC =
-        createTextAttributesKey("RUST.BLOCK_PARENT_DOC", BLOCK_DOC);
-    public static final TextAttributesKey LINE_PARENT_DOC =
-        createTextAttributesKey("RUST.LINE_PARENT_DOC", LINE_DOC);
+    public static final TextAttributesKey BLOCK_INNER_DOC =
+        createTextAttributesKey("RUST.BLOCK_INNER_DOC", BLOCK_DOC);
+    public static final TextAttributesKey LINE_INNER_DOC =
+        createTextAttributesKey("RUST.LINE_INNER_DOC", LINE_DOC);
 
     public static final TextAttributesKey BAD_CHARACTER =
         createTextAttributesKey("RUST.BAD_CHARACTER", HighlighterColors.BAD_CHARACTER);
@@ -116,8 +116,8 @@ public class RsSyntaxHighlighter extends SyntaxHighlighterBase {
         safeMap(KEYS, RsPsiTypes.LINE_COMMENT, LINE_COMMENT);
         safeMap(KEYS, RsPsiTypes.BLOCK_DOC, BLOCK_DOC);
         safeMap(KEYS, RsPsiTypes.LINE_DOC, LINE_DOC);
-        safeMap(KEYS, RsPsiTypes.BLOCK_PARENT_DOC, BLOCK_PARENT_DOC);
-        safeMap(KEYS, RsPsiTypes.LINE_PARENT_DOC, LINE_PARENT_DOC);
+        safeMap(KEYS, RsPsiTypes.BLOCK_INNER_DOC, BLOCK_INNER_DOC);
+        safeMap(KEYS, RsPsiTypes.LINE_INNER_DOC, LINE_INNER_DOC);
         safeMap(KEYS, RsPsiTypes.BAD_CHARACTER, BAD_CHARACTER);
 
         fillMap(KEYS, RsPsiTypes.OPERATOR_TOKEN_SET, OPERATION_SIGN);

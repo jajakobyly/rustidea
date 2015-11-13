@@ -37,7 +37,7 @@ public class RsTupleTypeImpl extends IRsCompositePsiElement implements RsTupleTy
     }
 
     @Override
-    public int getTypeIndex(@NotNull IRsType type) {
+    public int indexOf(@NotNull IRsType type) {
         assert type.getParent() == this;
         return RsPsiTreeUtil.getElementIndex(type, IRsType.class);
     }

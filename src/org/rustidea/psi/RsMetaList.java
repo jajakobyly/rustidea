@@ -18,9 +18,9 @@ package org.rustidea.psi;
 
 import org.jetbrains.annotations.NotNull;
 
-public interface RsAttributeItemList extends IRsPsiElement {
+public interface RsMetaList extends IRsPsiElement {
     @NotNull
-    RsAttributeItem[] getItems();
+    RsMeta[] getMetas();
 
-    int getItemIndex(@NotNull RsAttributeItem item);
+    int indexOf(@NotNull RsMeta item);
 }

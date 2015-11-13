@@ -20,8 +20,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.IRsAttributeOwner;
 import org.rustidea.psi.RsAttribute;
-import org.rustidea.psi.RsAttributeItem;
 import org.rustidea.psi.RsElementVisitor;
+import org.rustidea.psi.RsMeta;
 import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsPsiTreeUtil;
 
@@ -32,12 +32,12 @@ public class RsAttributeImpl extends IRsCompositePsiElement implements RsAttribu
 
     @Nullable
     @Override
-    public RsAttributeItem getItem() {
-        return (RsAttributeItem) findPsiChildByType(RsPsiTypes.ATTRIBUTE_ITEM);
+    public RsMeta getRootMeta() {
+        return (RsMeta) findPsiChildByType(RsPsiTypes.META);
     }
 
     @Override
-    public boolean isParentAttribute() {
+    public boolean isInner() {
         return findChildByType(RsPsiTypes.OP_BANG) != null;
     }
 

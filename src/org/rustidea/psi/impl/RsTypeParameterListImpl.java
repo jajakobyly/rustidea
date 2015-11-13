@@ -42,13 +42,13 @@ public class RsTypeParameterListImpl extends IRsCompositePsiElement implements R
     }
 
     @Override
-    public int getLifetimeIndex(@NotNull RsLifetimeTypeParameter lifetime) {
+    public int indexOf(@NotNull RsLifetimeTypeParameter lifetime) {
         assert lifetime.getParent() == this;
         return lifetime.getIndex();
     }
 
     @Override
-    public int getTypeParameterIndex(@NotNull RsTypeParameter param) {
+    public int indexOf(@NotNull RsTypeParameter param) {
         assert param.getParent() == this;
         return param.getIndex();
     }

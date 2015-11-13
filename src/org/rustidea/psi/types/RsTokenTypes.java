@@ -143,7 +143,7 @@ public interface RsTokenTypes extends TokenType {
     IElementType LINE_COMMENT = new IRsElementTypeImpl("LINE_COMMENT");
 
     IElementType BLOCK_DOC = new IRsTokenType("BLOCK_DOC");
-    IElementType BLOCK_PARENT_DOC = new IRsTokenType("BLOCK_PARENT_DOC");
+    IElementType BLOCK_INNER_DOC = new IRsTokenType("BLOCK_INNER_DOC");
     IElementType LINE_DOC = new IRsTokenType("LINE_DOC");
-    IElementType LINE_PARENT_DOC = new IRsTokenType("LINE_PARENT_DOC");
+    IElementType LINE_INNER_DOC = new IRsTokenType("LINE_INNER_DOC");
 }

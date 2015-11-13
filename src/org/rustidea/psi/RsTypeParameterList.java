@@ -25,7 +25,7 @@ public interface RsTypeParameterList extends IRsPsiElement {
     @NotNull
     RsTypeParameter[] getTypeParameters();
 
-    int getLifetimeIndex(@NotNull RsLifetimeTypeParameter lifetime);
+    int indexOf(@NotNull RsLifetimeTypeParameter lifetime);
 
-    int getTypeParameterIndex(@NotNull RsTypeParameter param);
+    int indexOf(@NotNull RsTypeParameter param);
 }

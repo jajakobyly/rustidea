@@ -5,14 +5,14 @@ import org.rustidea.psi.impl.*;
 
 public interface RsCompositeTypes {
     IElementType ATTRIBUTE = new IRsCompositeElementType("ATTRIBUTE", RsAttributeImpl.class);
-    IElementType ATTRIBUTE_ITEM = new IRsCompositeElementType("ATTRIBUTE_ITEM", RsAttributeItemImpl.class);
-    IElementType ATTRIBUTE_ITEM_LIST = new IRsCompositeElementType("ATTRIBUTE_ITEM_LIST", RsAttributeItemListImpl.class);
     IElementType DOC = new IRsCompositeElementType("DOC", RsDocImpl.class);
     IElementType GLOB_REFERENCE_ELEMENT = new IRsCompositeElementType("GLOB_REFERENCE_ELEMENT", RsGlobReferenceElementImpl.class);
     IElementType LIFETIME = new IRsCompositeElementType("LIFETIME", "lifetime", RsLifetimeImpl.class);
     IElementType LIFETIME_TYPE_PARAMETER = new IRsCompositeElementType("LIFETIME_TYPE_PARAMETER", RsLifetimeTypeParameterImpl.class);
     IElementType LIST_REFERENCE_ELEMENT = new IRsCompositeElementType("LIST_REFERENCE_ELEMENT", RsListReferenceElementImpl.class);
     IElementType LITERAL = new IRsCompositeElementType("LITERAL", "literal", RsLiteralImpl.class);
+    IElementType META = new IRsCompositeElementType("META", RsMetaImpl.class);
+    IElementType META_LIST = new IRsCompositeElementType("META_LIST", RsMetaListImpl.class);
     IElementType MODIFIER_LIST = new IRsCompositeElementType("MODIFIER_LIST", RsModifierListImpl.class);
     IElementType PATH_TYPE = new IRsCompositeElementType("PATH_TYPE", RsPathTypeImpl.class);
     IElementType REFERENCE_ELEMENT = new IRsCompositeElementType("REFERENCE_ELEMENT", RsReferenceElementImpl.class);

@@ -22,5 +22,5 @@ public interface RsTupleType extends IRsType {
     @NotNull
     IRsType[] getTypes();
 
-    int getTypeIndex(@NotNull IRsType type);
+    int indexOf(@NotNull IRsType type);
 }

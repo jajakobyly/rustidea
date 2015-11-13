@@ -30,14 +30,14 @@ import org.rustidea.psi.types.RsTokenTypes;
 
 %{
     enum CommentType {
-        PARENT_DOC,
+        INNER_DOC,
         DOC,
         NORMAL;
 
         private IElementType elementType;
 
         static {
-            PARENT_DOC.elementType = RsTokenTypes.BLOCK_PARENT_DOC;
+            INNER_DOC.elementType = RsTokenTypes.BLOCK_INNER_DOC;
             DOC.elementType        = RsTokenTypes.BLOCK_DOC;
             NORMAL.elementType     = RsTokenTypes.BLOCK_COMMENT;
         }
@@ -160,7 +160,7 @@ _FLOAT_LIT2 = [0-9] [0-9_]* {EXPONENT} {SUFFIX}
 _FLOAT_LIT3 = [0-9] [0-9_]* \.
 FLOAT_LIT   = {_FLOAT_LIT1} | {_FLOAT_LIT2} | {_FLOAT_LIT3}
 
-LINE_PARENT_DOC = "//!" [^\r\n]*
+LINE_INNER_DOC = "//!" [^\r\n]*
 LINE_DOC = "///" [^\r\n]*
 
 
@@ -276,12 +276,12 @@ LINE_DOC = "///" [^\r\n]*
     "^"    { return RsTokenTypes.OP_XOR; }
     "^="   { return RsTokenTypes.OP_XOREQ; }
 
-    ( {LINE_PARENT_DOC} {EOL} )* {LINE_PARENT_DOC}  { return RsTokenTypes.LINE_PARENT_DOC; }
+    ( {LINE_INNER_DOC} {EOL} )* {LINE_INNER_DOC}  { return RsTokenTypes.LINE_INNER_DOC; }
     "///" "/"+ [^\r\n]*                             { return RsTokenTypes.LINE_COMMENT; }
     ( {LINE_DOC} {EOL} )* {LINE_DOC}                { return RsTokenTypes.LINE_DOC; }
     "//" [^\r\n]*                                   { return RsTokenTypes.LINE_COMMENT; }
 
-    "/*!"      { beginBlockComment(CommentType.PARENT_DOC); }
+    "/*!"      { beginBlockComment(CommentType.INNER_DOC); }
     "/**"[^*/] { beginBlockComment(CommentType.DOC); }
     "/*"       { beginBlockComment(CommentType.NORMAL); }
 

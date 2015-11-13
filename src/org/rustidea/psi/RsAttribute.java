@@ -20,5 +20,5 @@ import org.jetbrains.annotations.Nullable;
 
 public interface RsAttribute extends IRsAttribute {
     @Nullable
-    RsAttributeItem getItem();
+    RsMeta getRootMeta();
 }

@@ -43,13 +43,13 @@ public class RsDocImpl extends IRsCompositePsiElement implements RsDoc {
     @Override
     public Type getType() {
         IElementType type = getTokenType();
-        return type == RsPsiTypes.LINE_DOC || type == RsPsiTypes.LINE_PARENT_DOC ? Type.LINE : Type.BLOCK;
+        return type == RsPsiTypes.LINE_DOC || type == RsPsiTypes.LINE_INNER_DOC ? Type.LINE : Type.BLOCK;
     }
 
     @Override
-    public boolean isParentAttribute() {
+    public boolean isInner() {
         IElementType type = getTokenType();
-        return type == RsPsiTypes.LINE_PARENT_DOC || type == RsPsiTypes.BLOCK_PARENT_DOC;
+        return type == RsPsiTypes.LINE_INNER_DOC || type == RsPsiTypes.BLOCK_INNER_DOC;
     }
 
     @Nullable

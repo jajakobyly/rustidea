@@ -30,7 +30,7 @@ import static org.rustidea.psi.types.RsPsiTypes.*;
 class RsModuleParser extends IRsParserBase {
     private static final Logger LOG = Logger.getInstance(RsModuleParser.class);
     private static final TokenSet LINE_OR_BLOCK_DOC = TokenSet.create(LINE_DOC, BLOCK_DOC);
-    private static final TokenSet LINE_OR_BLOCK_PARENT_DOC = TokenSet.create(LINE_PARENT_DOC, BLOCK_PARENT_DOC);
+    private static final TokenSet LINE_OR_BLOCK_INNER_DOC = TokenSet.create(LINE_INNER_DOC, BLOCK_INNER_DOC);
 
     public RsModuleParser(@NotNull final RsParser parser) {
         super(parser);
@@ -251,10 +251,10 @@ class RsModuleParser extends IRsParserBase {
         }
     }
 
-    public boolean attribute(boolean parent) {
+    public boolean attribute(boolean inner) {
         final Marker marker = builder.mark();
 
-        if (expect(builder, parent ? LINE_OR_BLOCK_PARENT_DOC : LINE_OR_BLOCK_DOC)) {
+        if (expect(builder, inner ? LINE_OR_BLOCK_INNER_DOC : LINE_OR_BLOCK_DOC)) {
             marker.done(DOC);
             return true;
         }
@@ -264,14 +264,14 @@ class RsModuleParser extends IRsParserBase {
             return false;
         }
 
-        if (parent && !expect(builder, OP_BANG)) {
+        if (inner && !expect(builder, OP_BANG)) {
             marker.rollbackTo();
             return false;
         }
 
         expectOrWarn(builder, OP_LBRACKET);
 
-        attributeItem();
+        meta();
 
         expectOrWarnMissing(builder, OP_RBRACKET);
 
@@ -279,7 +279,7 @@ class RsModuleParser extends IRsParserBase {
         return true;
     }
 
-    private boolean attributeItem() {
+    private boolean meta() {
         final Marker marker = builder.mark();
 
         if (!identifier(builder)) {
@@ -296,17 +296,17 @@ class RsModuleParser extends IRsParserBase {
             sep(builder, OP_COMMA, new ParserWrapper() {
                 @Override
                 public boolean parse() {
-                    return attributeItem();
+                    return meta();
                 }
             }, EnumSet.of(SepCfg.TOLERATE_EMPTY));
 
             expectOrWarnMissing(builder, OP_RPAREN);
-            value.done(ATTRIBUTE_ITEM_LIST);
+            value.done(META_LIST);
         } else {
             value.rollbackTo();
         }
 
-        marker.done(ATTRIBUTE_ITEM);
+        marker.done(META);
         return true;
     }
 }

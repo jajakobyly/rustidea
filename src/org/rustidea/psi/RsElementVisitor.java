@@ -25,14 +25,6 @@ public abstract class RsElementVisitor extends PsiElementVisitor {
         visitAttributeOrDoc(attribute);
     }
 
-    public void visitAttributeItem(RsAttributeItem attributeItem) {
-        visitElement(attributeItem);
-    }
-
-    public void visitAttributeItemList(RsAttributeItemList attributeItemList) {
-        visitElement(attributeItemList);
-    }
-
     public void visitAttributeOrDoc(IRsAttribute attributeOrDoc) {
         visitElement(attributeOrDoc);
     }
@@ -87,6 +79,14 @@ public abstract class RsElementVisitor extends PsiElementVisitor {
 
     public void visitLiteral(RsLiteral literal) {
         visitElement(literal); // TODO visit expression
+    }
+
+    public void visitMeta(RsMeta meta) {
+        visitElement(meta);
+    }
+
+    public void visitMetaList(RsMetaList metaList) {
+        visitElement(metaList);
     }
 
     public void visitModifierList(RsModifierList modifierList) {

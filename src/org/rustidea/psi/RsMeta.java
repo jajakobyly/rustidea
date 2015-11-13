@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public interface RsAttributeItem extends IRsPsiElement {
+public interface RsMeta extends IRsPsiElement {
     @NotNull
     RsIdentifier getNameIdentifier();
 
@@ -32,7 +32,7 @@ public interface RsAttributeItem extends IRsPsiElement {
     IRsAttribute getAttribute();
 
     @Nullable
-    RsAttributeItem getParentItem();
+    RsMeta getParentMeta();
 
     @NotNull
     Type getType();
@@ -41,7 +41,7 @@ public interface RsAttributeItem extends IRsPsiElement {
     RsLiteral getValue();
 
     @Nullable
-    RsAttributeItemList getParams();
+    RsMetaList getParams();
 
     /**
      * @return 0 if the item is attribute root
