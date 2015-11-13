@@ -45,9 +45,9 @@ public class RsLexerTest extends IRsLexerTestCase {
     public void testUnfinishedCharAndLifetimeConflicts() {
         MultiTest test = new MultiTest()
             .test("'", CHAR_LIT)
-            .test("'a", LIFETIME_TOKEN)
+            .test("'a", PRIM_IDENT)
             .test("'1", CHAR_LIT)
-            .test("'aaaa", LIFETIME_TOKEN)
+            .test("'aaaa", PRIM_IDENT)
             .test("'a'", CHAR_LIT);
         doTest(test);
     }
@@ -235,7 +235,7 @@ public class RsLexerTest extends IRsLexerTestCase {
     }
 
     public void testRustLifetimeName() {
-        doTest("'abc", LIFETIME_TOKEN);
+        doTest("'abc", PRIM_IDENT);
     }
 
     public void testRustRawString() {

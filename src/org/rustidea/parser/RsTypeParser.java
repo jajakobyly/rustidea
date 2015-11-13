@@ -35,7 +35,7 @@ class RsTypeParser extends IRsParserBase {
 
     public boolean lifetime() {
         final Marker marker = builder.mark();
-        if (expect(builder, LIFETIME_TOKEN)) {
+        if (expect(builder, PRIM_IDENT)) {
             marker.done(LIFETIME);
             return true;
         } else {

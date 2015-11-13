@@ -142,7 +142,7 @@ IDENTIFIER   = {XID_START} {XID_CONTINUE}*
 
 SUFFIX = {IDENTIFIER}?
 
-// Character literals without ending single quote conflict with lifetimes
+// Character literals without ending single quote conflict with lifetimes and labels
 CHAR_LIT   = \' ( [^\\\'\r\n] | \\[^\r\n] | "\\x" [a-zA-Z0-9]+ | "\\u{" [a-zA-Z0-9]* "}"? )? ( \' {SUFFIX} | \\ )?
 STRING_LIT = \" ( [^\\\"\r\n] | \\[^] )* ( \" {SUFFIX} | \\ )?
 
@@ -285,7 +285,7 @@ LINE_DOC = "///" [^\r\n]*
     "/**"[^*/] { beginBlockComment(CommentType.DOC); }
     "/*"       { beginBlockComment(CommentType.NORMAL); }
 
-    \' {IDENTIFIER} { return RsTokenTypes.LIFETIME_TOKEN; }
+    \' {IDENTIFIER} { return RsTokenTypes.PRIM_IDENT; }
 
     b {CHAR_LIT} { return RsTokenTypes.BYTE_LIT; }
     {CHAR_LIT}   { return RsTokenTypes.CHAR_LIT; }

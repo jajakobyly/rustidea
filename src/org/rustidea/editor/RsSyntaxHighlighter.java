@@ -108,7 +108,7 @@ public class RsSyntaxHighlighter extends SyntaxHighlighterBase {
         fillMap(KEYS, RsPsiTypes.RAW_STRING_TOKEN_SET, RAW_STRING);
 
         safeMap(KEYS, RsPsiTypes.IDENTIFIER, IDENTIFIER);
-        safeMap(KEYS, RsPsiTypes.LIFETIME_TOKEN, LIFETIME);
+        safeMap(KEYS, RsPsiTypes.PRIM_IDENT, LIFETIME); // TODO What about labels?
         safeMap(KEYS, StringEscapesTokenTypes.VALID_STRING_ESCAPE_TOKEN, VALID_ESCAPE);
         safeMap(KEYS, StringEscapesTokenTypes.INVALID_CHARACTER_ESCAPE_TOKEN, INVALID_ESCAPE);
         safeMap(KEYS, StringEscapesTokenTypes.INVALID_UNICODE_ESCAPE_TOKEN, INVALID_ESCAPE);

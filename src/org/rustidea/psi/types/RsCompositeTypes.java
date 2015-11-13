@@ -9,7 +9,7 @@ public interface RsCompositeTypes {
     IElementType ATTRIBUTE_ITEM_LIST = new IRsCompositeElementType("ATTRIBUTE_ITEM_LIST", RsAttributeItemListImpl.class);
     IElementType DOC = new IRsCompositeElementType("DOC", RsDocImpl.class);
     IElementType GLOB_REFERENCE_ELEMENT = new IRsCompositeElementType("GLOB_REFERENCE_ELEMENT", RsGlobReferenceElementImpl.class);
-    IElementType LIFETIME = new IRsCompositeElementType("LIFETIME", RsLifetimeImpl.class);
+    IElementType LIFETIME = new IRsCompositeElementType("LIFETIME", "lifetime", RsLifetimeImpl.class);
     IElementType LIFETIME_TYPE_PARAMETER = new IRsCompositeElementType("LIFETIME_TYPE_PARAMETER", RsLifetimeTypeParameterImpl.class);
     IElementType LIST_REFERENCE_ELEMENT = new IRsCompositeElementType("LIST_REFERENCE_ELEMENT", RsListReferenceElementImpl.class);
     IElementType LITERAL = new IRsCompositeElementType("LITERAL", "literal", RsLiteralImpl.class);
