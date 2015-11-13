@@ -51,6 +51,11 @@ public class RsMetaImpl extends IRsCompositePsiElement implements RsMeta {
         return RsPsiTreeUtil.getParentOfType(this, RsMeta.class);
     }
 
+    @Override
+    public boolean isRoot() {
+        return getParentMeta() == null;
+    }
+
     @NotNull
     @Override
     public Type getType() {
@@ -69,14 +74,6 @@ public class RsMetaImpl extends IRsCompositePsiElement implements RsMeta {
     @Override
     public RsMetaList getParams() {
         return (RsMetaList) findPsiChildByType(RsPsiTypes.META_LIST);
-    }
-
-    @Override
-    public int getIndex() {
-        if (getParentMeta() == null) {
-            return 0;
-        }
-        return RsPsiTreeUtil.getElementIndex(this, RsMeta.class);
     }
 
     @Override

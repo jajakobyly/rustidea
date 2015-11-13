@@ -61,11 +61,6 @@ public class RsTypeParameterImpl extends IRsCompositePsiElement implements RsTyp
     }
 
     @Override
-    public int getIndex() {
-        return RsPsiTreeUtil.getElementIndex(this, RsTypeParameter.class);
-    }
-
-    @Override
     public void accept(@NotNull RsElementVisitor visitor) {
         visitor.visitTypeParameter(this);
     }

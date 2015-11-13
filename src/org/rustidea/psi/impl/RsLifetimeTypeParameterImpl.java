@@ -58,11 +58,6 @@ public class RsLifetimeTypeParameterImpl extends IRsCompositePsiElement implemen
     }
 
     @Override
-    public int getIndex() {
-        return RsPsiTreeUtil.getElementIndex(this, RsLifetimeTypeParameter.class);
-    }
-
-    @Override
     public void accept(@NotNull RsElementVisitor visitor) {
         visitor.visitLifetimeTypeParameter(this);
     }

@@ -22,6 +22,7 @@ import org.rustidea.psi.RsLifetimeTypeParameter;
 import org.rustidea.psi.RsTypeParameter;
 import org.rustidea.psi.RsTypeParameterList;
 import org.rustidea.psi.types.RsPsiTypes;
+import org.rustidea.psi.util.RsPsiTreeUtil;
 import org.rustidea.util.SimpleArrayFactory;
 
 public class RsTypeParameterListImpl extends IRsCompositePsiElement implements RsTypeParameterList {
@@ -44,13 +45,13 @@ public class RsTypeParameterListImpl extends IRsCompositePsiElement implements R
     @Override
     public int indexOf(@NotNull RsLifetimeTypeParameter lifetime) {
         assert lifetime.getParent() == this;
-        return lifetime.getIndex();
+        return RsPsiTreeUtil.getElementIndex(lifetime, RsLifetimeTypeParameter.class);
     }
 
     @Override
-    public int indexOf(@NotNull RsTypeParameter param) {
-        assert param.getParent() == this;
-        return param.getIndex();
+    public int indexOf(@NotNull RsTypeParameter typeParameter) {
+        assert typeParameter.getParent() == this;
+        return RsPsiTreeUtil.getElementIndex(typeParameter, RsTypeParameter.class);
     }
 
     @Override

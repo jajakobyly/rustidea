@@ -25,6 +25,4 @@ public interface RsLifetimeTypeParameter extends IRsNameIdentifierOwner, IRsPsiE
 
     @Nullable
     IRsTypeParameterListOwner getOwner();
-
-    int getIndex();
 }

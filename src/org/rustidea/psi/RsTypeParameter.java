@@ -25,6 +25,4 @@ public interface RsTypeParameter extends PsiNameIdentifierOwner, IRsPsiElement {
 
     @Nullable
     IRsTypeParameterListOwner getOwner();
-
-    int getIndex();
 }

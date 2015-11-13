@@ -21,6 +21,7 @@ import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsMeta;
 import org.rustidea.psi.RsMetaList;
 import org.rustidea.psi.types.RsPsiTypes;
+import org.rustidea.psi.util.RsPsiTreeUtil;
 import org.rustidea.util.SimpleArrayFactory;
 
 public class RsMetaListImpl extends IRsCompositePsiElement implements RsMetaList {
@@ -35,9 +36,9 @@ public class RsMetaListImpl extends IRsCompositePsiElement implements RsMetaList
     }
 
     @Override
-    public int indexOf(@NotNull RsMeta item) {
-        assert item.getParent() == this;
-        return item.getIndex();
+    public int indexOf(@NotNull RsMeta meta) {
+        assert meta.getParent() == this;
+        return RsPsiTreeUtil.getElementIndex(meta, RsMeta.class);
     }
 
     @Override

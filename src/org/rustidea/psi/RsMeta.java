@@ -34,6 +34,8 @@ public interface RsMeta extends IRsPsiElement {
     @Nullable
     RsMeta getParentMeta();
 
+    boolean isRoot();
+
     @NotNull
     Type getType();
 
@@ -42,11 +44,6 @@ public interface RsMeta extends IRsPsiElement {
 
     @Nullable
     RsMetaList getParams();
-
-    /**
-     * @return 0 if the item is attribute root
-     */
-    int getIndex();
 
     enum Type {
         SIMPLE, ASSIGN, FN
