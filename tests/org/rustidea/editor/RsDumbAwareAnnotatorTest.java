@@ -21,6 +21,14 @@ import org.rustidea.RustFileType;
 
 // Why LightPlatformCodeInsightFixtureTestCase does not work? It should and we don't need Java support
 public class RsDumbAwareAnnotatorTest extends LightCodeInsightFixtureTestCase {
+    public void testCharLitLen() {
+        doTest();
+    }
+
+    public void testUnclosedQuotes() {
+        doTest();
+    }
+
     public void testSuffixes() {
         doTest();
     }

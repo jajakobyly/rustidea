@@ -143,7 +143,9 @@ IDENTIFIER   = {XID_START} {XID_CONTINUE}*
 SUFFIX = {IDENTIFIER}?
 
 // Character literals without ending single quote conflict with lifetimes and labels
-CHAR_LIT   = \' ( [^\\\'\r\n] | \\[^\r\n] | "\\x" [a-zA-Z0-9]+ | "\\u{" [a-zA-Z0-9]* "}"? )? ( \' {SUFFIX} | \\ )?
+// TODO We need to take into account various cases here
+CHAR_LIT   = ( \' ( [^\\\'\r\n] | \\[^\r\n] | "\\x" [a-zA-Z0-9]+ | "\\u{" [a-zA-Z0-9]* "}"? )? ( \' {SUFFIX} | \\ )? )
+           | ( \' {XID_CONTINUE}* \' {SUFFIX} )
 STRING_LIT = \" ( [^\\\"\r\n] | \\[^] )* ( \" {SUFFIX} | \\ )?
 
 RAW_STRING_BEGIN = r #* \"
