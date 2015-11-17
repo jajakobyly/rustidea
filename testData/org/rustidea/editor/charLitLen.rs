@@ -1,0 +1,5 @@
+#![cfg=<error descr="empty char literal">''</error>]
+#![cfg=<error descr="too many characters in char literal">'abrakadabra'</error>]
+#![cfg=<error descr="too many characters in byte literal">b'abrakadabra'</error>]
+#![cfg='a']
+#![cfg=b'a']
