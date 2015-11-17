@@ -14,14 +14,16 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi;
+package org.rustidea.parser;
 
+import com.intellij.openapi.components.ServiceManager;
+import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.NotNull;
-import org.rustidea.RustFileType;
+import org.rustidea.psi.RsElementFactory;
 
-public interface RsElementFactory {
-    String DUMMY_FILE_NAME = "dummy." + RustFileType.INSTANCE.getDefaultExtension();
-
+public class RsParserFacade {
     @NotNull
-    RsFile createFileFromText(@NotNull String text);
+    public static RsElementFactory getFactory(@NotNull Project project) {
+        return ServiceManager.getService(project, RsElementFactory.class);
+    }
 }

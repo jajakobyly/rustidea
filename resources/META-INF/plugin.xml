@@ -35,6 +35,7 @@
 
     <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
          on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
 
     <extensions defaultExtensionNs="com.intellij">
@@ -46,6 +47,9 @@
         <lang.braceMatcher language="Rust" implementationClass="org.rustidea.editor.RsBraceMatcher"/>
         <lang.commenter language="Rust" implementationClass="org.rustidea.editor.RsCommenter"/>
         <annotator language="Rust" implementationClass="org.rustidea.editor.RsDumbAwareAnnotator"/>
+
+        <projectService serviceInterface="org.rustidea.psi.RsElementFactory"
+                        serviceImplementation="org.rustidea.psi.impl.RsElementFactoryImpl"/>
     </extensions>
 
     <application-components>

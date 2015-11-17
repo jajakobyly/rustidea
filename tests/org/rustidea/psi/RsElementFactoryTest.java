@@ -17,10 +17,11 @@
 package org.rustidea.psi;
 
 import com.intellij.testFramework.fixtures.LightPlatformCodeInsightFixtureTestCase;
+import org.rustidea.parser.RsParserFacade;
 
 public class RsElementFactoryTest extends LightPlatformCodeInsightFixtureTestCase {
     public void testCreateFileFromText() throws Exception {
-        RsFile file = RsElementFactory.createFileFromText(getProject(), "mod foo;");
+        RsFile file = RsParserFacade.getFactory(getProject()).createFileFromText("mod foo;");
         RsModule mod = (RsModule) file.getItems()[0];
         assertEquals("foo", mod.getName());
     }

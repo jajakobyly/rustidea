@@ -14,14 +14,27 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi;
+package org.rustidea.psi.impl;
 
+import com.intellij.openapi.project.Project;
+import com.intellij.psi.PsiFileFactory;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.RustFileType;
+import org.rustidea.psi.RsElementFactory;
+import org.rustidea.psi.RsFile;
 
-public interface RsElementFactory {
-    String DUMMY_FILE_NAME = "dummy." + RustFileType.INSTANCE.getDefaultExtension();
-
+public class RsElementFactoryImpl implements RsElementFactory {
     @NotNull
-    RsFile createFileFromText(@NotNull String text);
+    private final Project project;
+
+    public RsElementFactoryImpl(@NotNull Project project) {
+        this.project = project;
+    }
+
+    @Override
+    @NotNull
+    public RsFile createFileFromText(@NotNull final String text) {
+        return (RsFile) PsiFileFactory.getInstance(project)
+            .createFileFromText(DUMMY_FILE_NAME, RustFileType.INSTANCE, text);
+    }
 }

@@ -17,6 +17,7 @@
 package org.rustidea.editor;
 
 import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
+import org.jetbrains.annotations.NotNull;
 import org.rustidea.RustFileType;
 
 // Why LightPlatformCodeInsightFixtureTestCase does not work? It should and we don't need Java support
@@ -42,6 +43,7 @@ public class RsDumbAwareAnnotatorTest extends LightCodeInsightFixtureTestCase {
             getTestName(true) + RustFileType.DOT_EXT);
     }
 
+    @NotNull
     @Override
     protected String getTestDataPath() {
         return "testData/" + RsDumbAwareAnnotatorTest.class.getPackage().getName().replace('.', '/');
