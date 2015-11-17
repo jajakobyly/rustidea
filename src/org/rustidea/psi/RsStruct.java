@@ -16,7 +16,15 @@
 
 package org.rustidea.psi;
 
+import org.jetbrains.annotations.Nullable;
 import org.rustidea.stubs.RsStructStub;
 
-public interface RsStruct extends IRsNamedItem<RsStructStub> {
+public interface RsStruct extends IRsNamedItem<RsStructStub>, IRsTypeParameterListOwner {
+    /**
+     * Get struct definition type.
+     *
+     * @return a psi element of type: {@link RsStructType} | {@link RsTupleType} | {@code null}
+     */
+    @Nullable
+    IRsType getDefinition();
 }
