@@ -30,6 +30,7 @@ public interface RsStubElementTypes {
     RsStaticItemElementType STATIC_ITEM = RsStaticItemElementType.INSTANCE;
     RsStructElementType STRUCT = RsStructElementType.INSTANCE;
     RsStructFieldElementType STRUCT_FIELD = RsStructFieldElementType.INSTANCE;
+    RsTypeAliasElementType TYPE_ALIAS = RsTypeAliasElementType.INSTANCE;
     RsUseDeclElementType USE_DECL = RsUseDeclElementType.INSTANCE;
 
     IRsEmptyStubElementType<RsStructType> STRUCT_TYPE = new IRsEmptyStubElementType<RsStructType>("STRUCT_TYPE") {

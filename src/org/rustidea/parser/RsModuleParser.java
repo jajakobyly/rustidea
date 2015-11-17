@@ -79,6 +79,11 @@ class RsModuleParser extends IRsParserBase {
             return true;
         }
 
+        if (typeAliasItem()) {
+            marker.done(TYPE_ALIAS);
+            return true;
+        }
+
         if (hasModifierList) {
             RsParserUtil.error(builder, "expected item");
             marker.drop();
@@ -232,6 +237,29 @@ class RsModuleParser extends IRsParserBase {
             semicolon(builder);
         }
 
+
+        marker.drop(); // PSI element will be marked in #item()
+        return true;
+    }
+
+    private boolean typeAliasItem() {
+        final Marker marker = builder.mark();
+
+        if (!expect(builder, KW_TYPE)) {
+            marker.rollbackTo();
+            return false;
+        }
+
+        if (!identifier(builder)) {
+            marker.rollbackTo();
+            return false;
+        }
+
+        parser.getTypeParser().typeParameterList();
+
+        expectOrWarn(builder, OP_EQ);
+        parser.getTypeParser().expectType();
+        semicolon(builder);
 
         marker.drop(); // PSI element will be marked in #item()
         return true;
