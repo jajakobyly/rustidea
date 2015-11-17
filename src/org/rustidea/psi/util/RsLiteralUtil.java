@@ -228,7 +228,7 @@ public final class RsLiteralUtil {
         final String text = literal.getText();
         final String suffix = literal.getSuffix();
         final String noSuffix = StringUtil.trimEnd(text, suffix);
-        if (RsPsiTypes.STRING_LITERAL_TOKEN_SET.contains(literal.getTokenType())) {
+        if (RsPsiTypes.TEXT_LITERAL_TOKEN_SET.contains(literal.getTokenType())) {
             return removeStrLitPrefix(noSuffix);
         }
         return noSuffix;

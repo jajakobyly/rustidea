@@ -25,6 +25,9 @@ import javax.swing.*;
 
 public class RustFileType extends LanguageFileType {
     public static final RustFileType INSTANCE = new RustFileType();
+    public static final String LANG_NAME = "Rust";
+    public static final String EXT = "rs";
+    public static final String DOT_EXT = ".rs";
 
     protected RustFileType() {
         super(RustLanguage.INSTANCE);
@@ -33,19 +36,19 @@ public class RustFileType extends LanguageFileType {
     @NotNull
     @Override
     public String getName() {
-        return "Rust";
+        return LANG_NAME;
     }
 
     @NotNull
     @Override
     public String getDescription() {
-        return "Rust";
+        return LANG_NAME;
     }
 
     @NotNull
     @Override
     public String getDefaultExtension() {
-        return "rs";
+        return EXT;
     }
 
     @Nullable

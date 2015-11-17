@@ -18,13 +18,13 @@ package org.rustidea.parser;
 
 import com.intellij.testFramework.ParsingTestCase;
 import org.jetbrains.annotations.NotNull;
+import org.rustidea.RustFileType;
 import org.rustidea.RustParserDefinition;
 
 public class RsParserTest extends ParsingTestCase {
     public RsParserTest() {
-        super(
-            RsParserTest.class.getPackage().getName().replace('.', '/'),
-            "rs", new RustParserDefinition());
+        super(RsParserTest.class.getPackage().getName().replace('.', '/'),
+            RustFileType.EXT, new RustParserDefinition());
     }
 
     public void testAttrs0001() {
