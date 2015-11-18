@@ -48,7 +48,7 @@ public class RsLiteralImpl extends IRsCompositePsiElement implements RsLiteral {
     @Nullable
     @Override
     public Object getValue() {
-        // TODO Implement this.
+        // TODO:RJP-40 Implement this.
         throw new NotImplementedException();
     }
 

@@ -63,7 +63,7 @@ class RsTypeParser extends IRsParserBase {
             return false;
         }
 
-        // TODO Implement type bounds
+        // TODO:RJP-13 Implement type bounds
 
         marker.done(TYPE_PARAMETER);
         return true;
@@ -91,7 +91,7 @@ class RsTypeParser extends IRsParserBase {
     public boolean type() {
         boolean result = pathType();
         result = result || tupleType();
-        // TODO Implement array, slice, pointer & function types
+        // TODO:RJP-13 Implement array, slice, pointer & function types
         return result;
     }
 

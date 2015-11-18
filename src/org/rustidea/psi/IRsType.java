@@ -17,5 +17,5 @@
 package org.rustidea.psi;
 
 public interface IRsType extends IRsPsiElement {
-    // TODO
+    // TODO:RJP-13
 }

@@ -32,7 +32,7 @@ public class RsBraceMatcher implements PairedBraceMatcher {
         new BracePair(OP_LPAREN, OP_RPAREN, false),
         new BracePair(OP_LBRACKET, OP_RBRACKET, false),
         new BracePair(OP_LBRACE, OP_RBRACE, true)
-        // TODO Match < & > in type parameters lists
+        // TODO:RJP-34 Match < & > in type parameters lists
     };
 
     private static final TokenSet TOKENS_BEFORE = TokenSet.orSet(

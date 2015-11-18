@@ -84,7 +84,7 @@ public final class RsLiteralUtil {
 
     @NotNull
     @Contract(pure = true)
-    // TODO This code is a very basic pseudo-lexer so it can be enhanced and extracted as a new literal lexer
+    // TODO:RJP-27 This code is a very basic pseudo-lexer so it can be enhanced and extracted as a new literal lexer
     public static String extractSuffixFromNumLit(@NotNull final String text) {
         final int len = text.length();
 
@@ -124,7 +124,7 @@ public final class RsLiteralUtil {
 
     @NotNull
     @Contract(pure = true)
-    // TODO This code is a very basic pseudo-lexer so it can be enhanced and extracted as a new literal lexer
+    // TODO:RJP-27 This code is a very basic pseudo-lexer so it can be enhanced and extracted as a new literal lexer
     public static String extractSuffixFromQuotedLit(@NotNull final String text, final char quote) {
         final int len = text.length();
 
@@ -156,7 +156,7 @@ public final class RsLiteralUtil {
 
     @NotNull
     @Contract(pure = true)
-    // TODO This code is a very basic pseudo-lexer so it can be enhanced and extracted as a new literal lexer
+    // TODO:RJP-27 This code is a very basic pseudo-lexer so it can be enhanced and extracted as a new literal lexer
     public static String extractSuffixFromRawStr(@NotNull final String text) {
         final int NORMAL = 0;
         final int COUNTING_START_HASHES = 1;

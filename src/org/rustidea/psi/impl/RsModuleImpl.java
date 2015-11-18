@@ -37,7 +37,7 @@ public class RsModuleImpl extends IRsNamedItemPsiElement<RsModuleStub> implement
     @NotNull
     @Override
     public IRsItem[] getItems() {
-        // TODO Implement this
+        // TODO:RJP-41 Implement this
         throw new NotImplementedException();
     }
 

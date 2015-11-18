@@ -47,7 +47,7 @@ public class RsFileImpl extends PsiFileBase implements RsFile {
     @NotNull
     @Override
     public IRsAttribute[] getAttributes() {
-        // FIXME Does this method operate on stubs wherever possible?
+        // Does this method operate on stubs wherever possible?
         return findChildrenByClass(IRsAttribute.class);
     }
 

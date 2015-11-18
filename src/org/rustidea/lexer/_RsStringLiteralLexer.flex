@@ -90,7 +90,7 @@ HEX = [a-fA-F0-9]
 
     "\\" {EOL} { return esc(ESCAPE.EOL_ESCAPE); }
 
-    "\\x" ([:letter:] | [:digit:]){1,2} | // TODO match 3 or more
+    "\\x" ([:letter:] | [:digit:]){1,2} |
     "\\" [^]                            { return INVALID_CHARACTER_ESCAPE_TOKEN; }
 
     "\\u{" ([:letter:] | [:digit:])* "}" { return INVALID_UNICODE_ESCAPE_TOKEN; }

@@ -40,7 +40,7 @@ public abstract class IRsStubPsiElement<StubT extends StubElement>
 
     @Override
     public PsiElement getParent() {
-        // TODO This is copy-pasted from Java-psi-impl; is this ok?
+        // This is copy-pasted from Java-psi-impl; is this ok?
         return getParentByStub();
     }
 

@@ -34,7 +34,7 @@ import java.util.Map;
 
 import static com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey;
 
-// FIXME Syntax highlighting for raw (byte) string breaks during writing in the editor.
+// FIXME:RJP-29 Syntax highlighting for raw (byte) string breaks during writing in the editor.
 
 public class RsSyntaxHighlighter extends SyntaxHighlighterBase {
     public static final TextAttributesKey IDENTIFIER =

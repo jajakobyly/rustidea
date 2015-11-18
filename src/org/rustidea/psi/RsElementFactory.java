@@ -24,4 +24,6 @@ public interface RsElementFactory {
 
     @NotNull
     RsFile createFileFromText(@NotNull String text);
+
+    // TODO:RJP-43 Implement createReferenceFromText(@NotNull @NonNls String text, @Nullable PsiElement context)
 }

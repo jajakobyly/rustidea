@@ -34,7 +34,7 @@ public class RsElementFactoryImpl implements RsElementFactory {
     @Override
     @NotNull
     public RsFile createFileFromText(@NotNull final String text) {
-        return (RsFile) PsiFileFactory.getInstance(project)
-            .createFileFromText(DUMMY_FILE_NAME, RustFileType.INSTANCE, text);
+        final PsiFileFactory ff = PsiFileFactory.getInstance(project);
+        return (RsFile) ff.createFileFromText(DUMMY_FILE_NAME, RustFileType.INSTANCE, text);
     }
 }

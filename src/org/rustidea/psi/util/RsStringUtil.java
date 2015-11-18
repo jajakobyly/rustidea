@@ -52,14 +52,14 @@ public final class RsStringUtil {
     @Contract(pure = true)
     public static boolean isRustIdentifierStart(final char ch) {
         // XID_START ::= [[:L:][:Nl:][:Other_ID_Start:]--[:Pattern_Syntax:]--[:Pattern_White_Space:]]
-        // FIXME Does not comply in 100% with spec
+        // FIXME:RJP-28 Does not comply in 100% with spec
         return Character.isLetter(ch);
     }
 
     @Contract(pure = true)
     public static boolean isRustIdentifierPart(final char ch) {
         // XID_CONTINUE ::= [[:ID_Start:][:Mn:][:Mc:][:Nd:][:Pc:][:Other_ID_Continue:]--[:Pattern_Syntax:]--[:Pattern_White_Space:]]
-        // FIXME Does not comply in 100% with spec
+        // FIXME:RJP-28 Does not comply in 100% with spec
         return Character.isLetterOrDigit(ch) || ch == '_';
     }
 
@@ -78,7 +78,7 @@ public final class RsStringUtil {
         return str.substring(begin, end + 1);
     }
 
-    // TODO write #escapeRust method which escapes strings using Rust's escaping rules
+    // TODO:RJP-42 write #escapeRust method which escapes strings using Rust's escaping rules
 
     @NotNull
     @Contract(pure = true)

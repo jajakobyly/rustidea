@@ -135,7 +135,7 @@ WHITE_SPACE      = {WHITE_SPACE_CHAR}+
 
 // XID_START ::= [[:L:][:Nl:][:Other_ID_Start:]--[:Pattern_Syntax:]--[:Pattern_White_Space:]]
 // XID_CONTINUE ::= [[:ID_Start:][:Mn:][:Mc:][:Nd:][:Pc:][:Other_ID_Continue:]--[:Pattern_Syntax:]--[:Pattern_White_Space:]]
-// FIXME These rules do not comply in 100% with spec
+// FIXME:RJP-28 These rules do not comply in 100% with spec
 XID_START    = [:letter:]
 XID_CONTINUE = {XID_START} | [:digit:] | _
 IDENTIFIER   = {XID_START} {XID_CONTINUE}*
@@ -143,7 +143,7 @@ IDENTIFIER   = {XID_START} {XID_CONTINUE}*
 SUFFIX = {IDENTIFIER}?
 
 // Character literals without ending single quote conflict with lifetimes and labels
-// TODO We need to take into account various cases here
+// TODO:RJP-39 We need to take into account various cases here
 CHAR_LIT   = ( \' ( [^\\\'\r\n] | \\[^\r\n] | "\\x" [a-zA-Z0-9]+ | "\\u{" [a-zA-Z0-9]* "}"? )? ( \' {SUFFIX} | \\ )? )
            | ( \' {XID_CONTINUE}* \' {SUFFIX} )
 STRING_LIT = \" ( [^\\\"\r\n] | \\[^] )* ( \" {SUFFIX} | \\ )?

@@ -78,7 +78,7 @@ public abstract class RsElementVisitor extends PsiElementVisitor {
     }
 
     public void visitLiteral(RsLiteral literal) {
-        visitElement(literal); // TODO visit expression
+        visitElement(literal); // TODO:RJP-12 visit expression
     }
 
     public void visitMeta(RsMeta meta) {
