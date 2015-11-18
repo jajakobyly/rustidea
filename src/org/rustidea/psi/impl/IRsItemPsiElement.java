@@ -27,7 +27,7 @@ import org.rustidea.psi.IRsItemOwner;
 import org.rustidea.psi.RsModifierList;
 import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.stubs.IRsItemStub;
-import org.rustidea.util.SimpleArrayFactory;
+import org.rustidea.util.ArrayFactories;
 
 public abstract class IRsItemPsiElement<StubT extends IRsItemStub>
     extends IRsStubPsiElement<StubT> implements IRsItem<StubT> {
@@ -55,8 +55,8 @@ public abstract class IRsItemPsiElement<StubT extends IRsItemStub>
     @Override
     public IRsAttribute[] getAttributes() {
         RsModifierList modifierList = this.getModifierList();
-        IRsAttribute[] a1 = modifierList != null ? modifierList.getAttributes() : SimpleArrayFactory.empty(IRsAttribute.class);
-        IRsAttribute[] a2 = this.getStubOrPsiChildren(RsPsiTypes.ATTRIBUTE_OR_DOC_TOKEN_SET, SimpleArrayFactory.get(IRsAttribute.class));
-        return ArrayUtil.mergeArrays(a1, a2, SimpleArrayFactory.get(IRsAttribute.class));
+        IRsAttribute[] a1 = modifierList != null ? modifierList.getAttributes() : ArrayFactories.empty(IRsAttribute.class);
+        IRsAttribute[] a2 = this.getStubOrPsiChildren(RsPsiTypes.ATTRIBUTE_OR_DOC_TOKEN_SET, ArrayFactories.get(IRsAttribute.class));
+        return ArrayUtil.mergeArrays(a1, a2, ArrayFactories.get(IRsAttribute.class));
     }
 }

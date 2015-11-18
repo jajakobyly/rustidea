@@ -22,7 +22,7 @@ import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsTupleType;
 import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsPsiTreeUtil;
-import org.rustidea.util.SimpleArrayFactory;
+import org.rustidea.util.ArrayFactories;
 
 public class RsTupleTypeImpl extends IRsCompositePsiElement implements RsTupleType {
     public RsTupleTypeImpl() {
@@ -33,7 +33,7 @@ public class RsTupleTypeImpl extends IRsCompositePsiElement implements RsTupleTy
     @Override
     public IRsType[] getTypes() {
         IRsType[] types = RsPsiTreeUtil.getChildrenOfType(this, IRsType.class);
-        return types != null ? types : SimpleArrayFactory.empty(IRsType.class);
+        return types != null ? types : ArrayFactories.empty(IRsType.class);
     }
 
     @Override

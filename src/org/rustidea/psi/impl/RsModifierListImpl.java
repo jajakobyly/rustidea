@@ -21,7 +21,7 @@ import org.rustidea.psi.IRsAttribute;
 import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsModifierList;
 import org.rustidea.psi.types.RsPsiTypes;
-import org.rustidea.util.SimpleArrayFactory;
+import org.rustidea.util.ArrayFactories;
 
 public class RsModifierListImpl extends IRsCompositePsiElement implements RsModifierList {
     public RsModifierListImpl() {
@@ -36,7 +36,7 @@ public class RsModifierListImpl extends IRsCompositePsiElement implements RsModi
     @NotNull
     @Override
     public IRsAttribute[] getAttributes() {
-        return getChildrenAsPsiElements(RsPsiTypes.ATTRIBUTE_OR_DOC_TOKEN_SET, SimpleArrayFactory.get(IRsAttribute.class));
+        return getChildrenAsPsiElements(RsPsiTypes.ATTRIBUTE_OR_DOC_TOKEN_SET, ArrayFactories.get(IRsAttribute.class));
     }
 
     @Override

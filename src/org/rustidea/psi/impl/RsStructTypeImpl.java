@@ -23,7 +23,7 @@ import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsStructField;
 import org.rustidea.psi.RsStructType;
 import org.rustidea.psi.types.RsPsiTypes;
-import org.rustidea.util.SimpleArrayFactory;
+import org.rustidea.util.ArrayFactories;
 
 public class RsStructTypeImpl extends IRsStubPsiElement<EmptyStub> implements RsStructType {
     public RsStructTypeImpl(@NotNull EmptyStub stub) {
@@ -37,7 +37,7 @@ public class RsStructTypeImpl extends IRsStubPsiElement<EmptyStub> implements Rs
     @NotNull
     @Override
     public RsStructField[] getFields() {
-        return getStubOrPsiChildren(RsPsiTypes.STRUCT_FIELD, SimpleArrayFactory.get(RsStructField.class));
+        return getStubOrPsiChildren(RsPsiTypes.STRUCT_FIELD, ArrayFactories.get(RsStructField.class));
     }
 
     @Override

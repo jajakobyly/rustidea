@@ -22,8 +22,8 @@ import org.jetbrains.annotations.NotNull;
 import java.lang.reflect.Array;
 
 // TODO:RJP-44 Caching may give better performance.
-public class SimpleArrayFactory {
-    private SimpleArrayFactory() {
+public class ArrayFactories {
+    private ArrayFactories() {
     }
 
     @NotNull

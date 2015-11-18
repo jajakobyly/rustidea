@@ -24,7 +24,7 @@ import org.rustidea.psi.RsTypeParameter;
 import org.rustidea.psi.RsWhereClause;
 import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsPsiTreeUtil;
-import org.rustidea.util.SimpleArrayFactory;
+import org.rustidea.util.ArrayFactories;
 
 public class RsWhereClauseImpl extends IRsCompositePsiElement implements RsWhereClause {
     public RsWhereClauseImpl() {
@@ -35,7 +35,7 @@ public class RsWhereClauseImpl extends IRsCompositePsiElement implements RsWhere
     @Override
     public IRsReferenceElement[] getBounds() {
         IRsReferenceElement[] bounds = RsPsiTreeUtil.getChildrenOfType(this, IRsReferenceElement.class);
-        return bounds != null ? bounds : SimpleArrayFactory.empty(IRsReferenceElement.class);
+        return bounds != null ? bounds : ArrayFactories.empty(IRsReferenceElement.class);
     }
 
     @Nullable

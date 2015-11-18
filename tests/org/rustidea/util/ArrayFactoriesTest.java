@@ -22,17 +22,17 @@ import org.junit.Test;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
-public class SimpleArrayFactoryTest {
+public class ArrayFactoriesTest {
     @Test
     public void testEmpty() throws Exception {
-        Object[] created = SimpleArrayFactory.empty(Object.class);
+        Object[] created = ArrayFactories.empty(Object.class);
         assertEquals(0, created.length);
         assertArrayEquals(new Object[0], created);
     }
 
     @Test
     public void testGet() throws Exception {
-        ArrayFactory<Object> factory = SimpleArrayFactory.get(Object.class);
+        ArrayFactory<Object> factory = ArrayFactories.get(Object.class);
         Object[] arr5 = factory.create(5);
         assertEquals(5, arr5.length);
         assertArrayEquals(new Object[5], arr5);

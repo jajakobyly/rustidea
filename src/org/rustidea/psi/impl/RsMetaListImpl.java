@@ -22,7 +22,7 @@ import org.rustidea.psi.RsMeta;
 import org.rustidea.psi.RsMetaList;
 import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsPsiTreeUtil;
-import org.rustidea.util.SimpleArrayFactory;
+import org.rustidea.util.ArrayFactories;
 
 public class RsMetaListImpl extends IRsCompositePsiElement implements RsMetaList {
     public RsMetaListImpl() {
@@ -32,7 +32,7 @@ public class RsMetaListImpl extends IRsCompositePsiElement implements RsMetaList
     @NotNull
     @Override
     public RsMeta[] getMetas() {
-        return getChildrenAsPsiElements(RsPsiTypes.META, SimpleArrayFactory.get(RsMeta.class));
+        return getChildrenAsPsiElements(RsPsiTypes.META, ArrayFactories.get(RsMeta.class));
     }
 
     @Override

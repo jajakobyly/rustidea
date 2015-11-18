@@ -22,7 +22,7 @@ import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsTypeList;
 import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsPsiTreeUtil;
-import org.rustidea.util.SimpleArrayFactory;
+import org.rustidea.util.ArrayFactories;
 
 public class RsTypeListImpl extends IRsCompositePsiElement implements RsTypeList {
     public RsTypeListImpl() {
@@ -33,7 +33,7 @@ public class RsTypeListImpl extends IRsCompositePsiElement implements RsTypeList
     @Override
     public IRsType[] getTypes() {
         final IRsType[] children = RsPsiTreeUtil.getChildrenOfType(this, IRsType.class);
-        return children != null ? children : SimpleArrayFactory.empty(IRsType.class);
+        return children != null ? children : ArrayFactories.empty(IRsType.class);
     }
 
     @Override

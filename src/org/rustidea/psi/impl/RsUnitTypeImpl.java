@@ -21,7 +21,7 @@ import org.rustidea.psi.IRsType;
 import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsUnitType;
 import org.rustidea.psi.types.RsPsiTypes;
-import org.rustidea.util.SimpleArrayFactory;
+import org.rustidea.util.ArrayFactories;
 
 public class RsUnitTypeImpl extends IRsCompositePsiElement implements RsUnitType {
     public RsUnitTypeImpl() {
@@ -31,7 +31,7 @@ public class RsUnitTypeImpl extends IRsCompositePsiElement implements RsUnitType
     @NotNull
     @Override
     public IRsType[] getTypes() {
-        return SimpleArrayFactory.empty(IRsType.class);
+        return ArrayFactories.empty(IRsType.class);
     }
 
     @Override
