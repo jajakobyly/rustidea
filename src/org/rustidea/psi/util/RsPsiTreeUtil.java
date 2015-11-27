@@ -20,8 +20,12 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.StubBasedPsiElement;
 import com.intellij.psi.stubs.StubElement;
 import com.intellij.psi.util.PsiTreeUtil;
+import com.intellij.util.SmartList;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Collections;
+import java.util.List;
 
 public final class RsPsiTreeUtil extends PsiTreeUtil {
     private RsPsiTreeUtil() {
@@ -55,5 +59,20 @@ public final class RsPsiTreeUtil extends PsiTreeUtil {
             return stub.getParentStub().getChildrenStubs().indexOf(stub);
         }
         return getElementIndex(element, elemCls);
+    }
+
+    @NotNull
+    public static <T extends PsiElement> List<T> getChildrenOfTypeAsListRecursive(@Nullable PsiElement element, @NotNull Class<T> aClass) {
+        if (element == null) return Collections.emptyList();
+
+        List<T> result = new SmartList<T>();
+        for (PsiElement child = element.getFirstChild(); child != null; child = child.getNextSibling()) {
+            if (aClass.isInstance(child)) {
+                //noinspection unchecked
+                result.add((T) child);
+            }
+            result.addAll(getChildrenOfTypeAsListRecursive(child, aClass));
+        }
+        return result;
     }
 }

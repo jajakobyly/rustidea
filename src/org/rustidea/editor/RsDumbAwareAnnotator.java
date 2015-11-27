@@ -17,19 +17,25 @@
 package org.rustidea.editor;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
+import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.project.DumbAware;
+import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
+import org.rustidea.psi.RsAttribute;
 import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsLiteral;
 import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsLiteralUtil;
+import org.rustidea.psi.util.RsPsiTreeUtil;
 import org.rustidea.psi.util.RsPsiUtil;
 
 import java.util.Collection;
+import java.util.List;
 
 public class RsDumbAwareAnnotator implements Annotator, DumbAware {
     @Override
@@ -43,6 +49,34 @@ public class RsDumbAwareAnnotator implements Annotator, DumbAware {
 
         public Visitor(@NotNull final AnnotationHolder holder) {
             this.holder = holder;
+        }
+
+        @Override
+        public void visitAttribute(@NotNull RsAttribute attribute) {
+            // Putting text attribute key on the whole attribute won't work,
+            // because it will override text attributes of literals etc
+
+            TextAttributesKey textAttributesKey = attribute.isInner()
+                ? RsSyntaxHighlighter.INNER_ATTRIBUTE
+                : RsSyntaxHighlighter.ATTRIBUTE;
+
+            TextRange attrRange = attribute.getTextRange();
+            List<TextRange> exclude = Lists.transform(
+                RsPsiTreeUtil.getChildrenOfTypeAsListRecursive(attribute, RsLiteral.class),
+                RsPsiUtil.TEXT_RANGE_EXTRACTOR);
+
+            for (TextRange range : exclude) {
+                assert attrRange.contains(range);
+
+                TextRange rangeToHighlight = TextRange.create(attrRange.getStartOffset(), range.getStartOffset());
+                holder.createInfoAnnotation(rangeToHighlight, null).setTextAttributes(textAttributesKey);
+
+                attrRange = TextRange.create(range.getEndOffset(), attrRange.getEndOffset());
+            }
+
+            if (!attrRange.isEmpty()) {
+                holder.createInfoAnnotation(attrRange, null).setTextAttributes(textAttributesKey);
+            }
         }
 
         @Override
