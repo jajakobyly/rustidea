@@ -56,22 +56,22 @@ public class RsDumbAwareAnnotator implements Annotator, DumbAware {
             // Putting text attribute key on the whole attribute won't work,
             // because it will override text attributes of literals etc
 
-            TextAttributesKey textAttributesKey = attribute.isInner()
-                ? RsSyntaxHighlighter.INNER_ATTRIBUTE
-                : RsSyntaxHighlighter.ATTRIBUTE;
+            final TextAttributesKey textAttributesKey =
+                attribute.isInner() ? RsSyntaxHighlighter.INNER_ATTRIBUTE : RsSyntaxHighlighter.ATTRIBUTE;
 
             TextRange attrRange = attribute.getTextRange();
-            List<TextRange> exclude = Lists.transform(
+            final List<TextRange> exclude = Lists.transform(
                 RsPsiTreeUtil.getChildrenOfTypeAsListRecursive(attribute, RsLiteral.class),
                 RsPsiUtil.TEXT_RANGE_EXTRACTOR);
 
-            for (TextRange range : exclude) {
-                assert attrRange.contains(range);
+            for (TextRange rangeToExclude : exclude) {
+                assert attrRange.contains(rangeToExclude);
 
-                TextRange rangeToHighlight = TextRange.create(attrRange.getStartOffset(), range.getStartOffset());
+                final TextRange rangeToHighlight =
+                    TextRange.create(attrRange.getStartOffset(), rangeToExclude.getStartOffset());
                 holder.createInfoAnnotation(rangeToHighlight, null).setTextAttributes(textAttributesKey);
 
-                attrRange = TextRange.create(range.getEndOffset(), attrRange.getEndOffset());
+                attrRange = TextRange.create(rangeToExclude.getEndOffset(), attrRange.getEndOffset());
             }
 
             if (!attrRange.isEmpty()) {
