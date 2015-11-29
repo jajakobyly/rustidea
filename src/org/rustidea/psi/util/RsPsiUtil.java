@@ -16,8 +16,11 @@
 
 package org.rustidea.psi.util;
 
+import com.google.common.base.Function;
 import com.google.common.base.Strings;
+import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.util.text.StringUtil;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.util.PsiUtilBase;
 import org.jetbrains.annotations.Contract;
@@ -26,6 +29,14 @@ import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.types.IRsElementType;
 
 public final class RsPsiUtil extends PsiUtilBase {
+    public static final Function<PsiElement, TextRange> TEXT_RANGE_EXTRACTOR = new Function<PsiElement, TextRange>() {
+        @Contract(pure = true)
+        @Override
+        public TextRange apply(PsiElement elem) {
+            return elem.getTextRange();
+        }
+    };
+
     private RsPsiUtil() {
     }
 

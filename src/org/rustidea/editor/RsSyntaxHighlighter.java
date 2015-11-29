@@ -87,6 +87,11 @@ public class RsSyntaxHighlighter extends SyntaxHighlighterBase {
     public static final TextAttributesKey LINE_INNER_DOC =
         createTextAttributesKey("RUST.LINE_INNER_DOC", LINE_DOC);
 
+    public static final TextAttributesKey ATTRIBUTE =
+        createTextAttributesKey("RUST.ATTRIBUTE", DefaultLanguageHighlighterColors.METADATA);
+    public static final TextAttributesKey INNER_ATTRIBUTE =
+        createTextAttributesKey("RUST.INNER_ATTRIBUTE", DefaultLanguageHighlighterColors.METADATA);
+
     public static final TextAttributesKey BAD_CHARACTER =
         createTextAttributesKey("RUST.BAD_CHARACTER", HighlighterColors.BAD_CHARACTER);
 
