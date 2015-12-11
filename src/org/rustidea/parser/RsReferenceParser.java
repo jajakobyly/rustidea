@@ -55,7 +55,11 @@ class RsReferenceParser extends IRsParserBase {
                 assert builder.getTokenType() == IDENTIFIER;
                 builder.advanceLexer();
 
-                qualifierMarker.done(REFERENCE_ELEMENT);
+                if (parser.getTypeParser().typeList()) {
+                    qualifierMarker.done(TYPED_REFERENCE_ELEMENT);
+                } else {
+                    qualifierMarker.done(REFERENCE_ELEMENT);
+                }
             } else if (SELF_OR_SUPER.contains(builder.getTokenType())) {
                 final Marker qualifierMarker = builder.mark();
 
