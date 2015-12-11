@@ -18,6 +18,8 @@ package org.rustidea.parser;
 
 import com.intellij.lang.PsiBuilder.Marker;
 import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.psi.tree.IElementType;
+import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.util.NotImplementedException;
 
@@ -26,6 +28,7 @@ import static org.rustidea.parser.RsParserUtil.error;
 import static org.rustidea.parser.RsParserUtil.errorExpected;
 import static org.rustidea.psi.types.RsCompositeTypes.LITERAL;
 import static org.rustidea.psi.types.RsPsiTypes.LITERAL_TOKEN_SET;
+import static org.rustidea.psi.types.RsTokenTypes.INT_LIT;
 
 class RsExpressionParser extends IRsParserBase {
     private static final Logger LOG = Logger.getInstance(RsExpressionParser.class);
@@ -52,13 +55,23 @@ class RsExpressionParser extends IRsParserBase {
     }
 
     public boolean literal() {
+        return literal(LITERAL_TOKEN_SET, LITERAL, LITERAL);
+    }
+
+    public boolean integer() {
+        return literal(TokenSet.create(INT_LIT), LITERAL, INT_LIT);
+    }
+
+    private boolean literal(@NotNull final TokenSet tokenSet,
+                            @NotNull final IElementType elementType,
+                            @NotNull final IElementType errorType) {
         final Marker marker = builder.mark();
-        if (expect(builder, LITERAL_TOKEN_SET)) {
-            marker.done(LITERAL);
+        if (expect(builder, tokenSet)) {
+            marker.done(elementType);
             return true;
         } else {
             marker.drop();
-            errorExpected(builder, LITERAL);
+            errorExpected(builder, errorType);
             return false;
         }
     }

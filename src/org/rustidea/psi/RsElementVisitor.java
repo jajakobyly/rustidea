@@ -21,6 +21,10 @@ import com.intellij.psi.PsiFile;
 import org.rustidea.util.UnreachableException;
 
 public abstract class RsElementVisitor extends PsiElementVisitor {
+    public void visitArrayType(RsArrayType arrayType) {
+        visitListType(arrayType);
+    }
+
     public void visitAttribute(RsAttribute attribute) {
         visitAttributeOrDoc(attribute);
     }
@@ -77,6 +81,10 @@ public abstract class RsElementVisitor extends PsiElementVisitor {
         visitIReferenceElement(listReferenceElement);
     }
 
+    public void visitListType(IRsListType listType) {
+        visitType(listType);
+    }
+
     public void visitLiteral(RsLiteral literal) {
         visitElement(literal); // TODO:RJP-12 visit expression
     }
@@ -121,6 +129,10 @@ public abstract class RsElementVisitor extends PsiElementVisitor {
 
     public void visitRustToken(RsToken token) {
         visitElement(token);
+    }
+
+    public void visitSliceType(RsSliceType sliceType) {
+        visitListType(sliceType);
     }
 
     public void visitStaticItem(RsStaticItem staticItem) {

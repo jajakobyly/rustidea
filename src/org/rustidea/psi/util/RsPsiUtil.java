@@ -29,11 +29,13 @@ import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.types.IRsElementType;
 
 public final class RsPsiUtil extends PsiUtilBase {
+    @NotNull
     public static final Function<PsiElement, TextRange> TEXT_RANGE_EXTRACTOR = new Function<PsiElement, TextRange>() {
+        @Nullable
         @Contract(pure = true)
         @Override
-        public TextRange apply(PsiElement elem) {
-            return elem.getTextRange();
+        public TextRange apply(@Nullable PsiElement elem) {
+            return elem == null ? null : elem.getTextRange();
         }
     };
 

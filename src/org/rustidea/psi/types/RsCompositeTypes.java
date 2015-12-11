@@ -4,6 +4,7 @@ import com.intellij.psi.tree.IElementType;
 import org.rustidea.psi.impl.*;
 
 public interface RsCompositeTypes {
+    IElementType ARRAY_TYPE = new IRsCompositeElementType("ARRAY_TYPE", RsArrayTypeImpl.class);
     IElementType ATTRIBUTE = new IRsCompositeElementType("ATTRIBUTE", RsAttributeImpl.class);
     IElementType DOC = new IRsCompositeElementType("DOC", RsDocImpl.class);
     IElementType GLOB_REFERENCE_ELEMENT = new IRsCompositeElementType("GLOB_REFERENCE_ELEMENT", RsGlobReferenceElementImpl.class);
@@ -17,6 +18,7 @@ public interface RsCompositeTypes {
     IElementType PATH_TYPE = new IRsCompositeElementType("PATH_TYPE", RsPathTypeImpl.class);
     IElementType REFERENCE_ELEMENT = new IRsCompositeElementType("REFERENCE_ELEMENT", RsReferenceElementImpl.class);
     IElementType RELATION_REFERENCE_ELEMENT = new IRsCompositeElementType("RELATION_REFERENCE_ELEMENT", RsRelationReferenceElementImpl.class);
+    IElementType SLICE_TYPE = new IRsCompositeElementType("SLICE_TYPE", RsSliceTypeImpl.class);
     IElementType TUPLE_TYPE = new IRsCompositeElementType("TUPLE_TYPE", RsTupleTypeImpl.class);
     IElementType TYPE_LIST = new IRsCompositeElementType("TYPE_LIST", RsTypeListImpl.class);
     IElementType TYPE_PARAMETER = new IRsCompositeElementType("TYPE_PARAMETER", RsTypeParameterImpl.class);

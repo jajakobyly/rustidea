@@ -127,6 +127,14 @@ public class RsParserTest extends ParsingTestCase {
         doTest(true);
     }
 
+    public void testTypes0003() {
+        doTest(true);
+    }
+
+    public void testTypes0004() {
+        doTest(true);
+    }
+
     public void testTypeAlias0001() {
         doTest(true);
     }

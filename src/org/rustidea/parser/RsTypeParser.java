@@ -91,7 +91,8 @@ class RsTypeParser extends IRsParserBase {
     public boolean type() {
         boolean result = pathType();
         result = result || tupleType();
-        // TODO:RJP-13 Implement array, slice, pointer & function types
+        result = result || listType();
+        // TODO:RJP-13 Implement pointer & function types
         return result;
     }
 
@@ -178,10 +179,35 @@ class RsTypeParser extends IRsParserBase {
         return true;
     }
 
+    public boolean listType() {
+        final Marker marker = builder.mark();
+        boolean isArray = false;
+
+        if (!expect(builder, OP_LBRACKET)) {
+            marker.rollbackTo();
+            return false;
+        }
+
+        if (!expectType()) {
+            marker.drop();
+            return false;
+        }
+
+        if (expect(builder, OP_SEMICOLON)) {
+            isArray = true;
+            parser.getExpressionParser().integer();
+        }
+
+        expectOrWarnMissing(builder, OP_RBRACKET);
+
+        marker.done(isArray ? ARRAY_TYPE : SLICE_TYPE);
+        return true;
+    }
+
     public boolean structField() {
         final Marker marker = builder.mark();
 
-        if (!expect(builder, IDENTIFIER)) {
+        if (!identifier(builder)) {
             marker.rollbackTo();
             return false;
         }
