@@ -1,17 +1,19 @@
 Rust File(0,84)
-  RsTypeAlias:Moo(0,10)
+  RsTypeAlias:Moo(0,12)
     RsKeyword:type('type')(0,4)
     PsiWhiteSpace(' ')(4,5)
     RsIdentifier:Moo('Moo')(5,8)
     PsiWhiteSpace(' ')(8,9)
     RsToken:=('=')(9,10)
-    PsiErrorElement:expected type(10,10)
+    PsiWhiteSpace(' ')(10,11)
+    RsSliceType(11,12)
+      RsToken:[('[')(11,12)
+      PsiErrorElement:expected type(12,12)
+        <empty list>
+      PsiErrorElement:missing ']'(12,12)
+        <empty list>
+    PsiErrorElement:missing semicolon(12,12)
       <empty list>
-    PsiErrorElement:missing semicolon(10,10)
-      <empty list>
-  PsiWhiteSpace(' ')(10,11)
-  PsiErrorElement:unexpected '['(11,12)
-    RsToken:[('[')(11,12)
   PsiWhiteSpace('\n')(12,13)
   RsTypeAlias:Goo(13,28)
     RsKeyword:type('type')(13,17)

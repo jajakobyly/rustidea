@@ -192,10 +192,7 @@ class RsTypeParser extends IRsParserBase {
             return false;
         }
 
-        if (!expectType()) {
-            marker.drop();
-            return false;
-        }
+        expectType();
 
         if (expect(builder, OP_SEMICOLON)) {
             isArray = true;

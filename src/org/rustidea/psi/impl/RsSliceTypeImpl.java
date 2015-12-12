@@ -17,6 +17,7 @@
 package org.rustidea.psi.impl;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.IRsType;
 import org.rustidea.psi.RsElementVisitor;
 import org.rustidea.psi.RsSliceType;
@@ -28,10 +29,10 @@ public class RsSliceTypeImpl extends IRsCompositePsiElement implements RsSliceTy
         super(RsPsiTypes.SLICE_TYPE);
     }
 
-    @NotNull
+    @Nullable
     @Override
     public IRsType getItemType() {
-        return RsPsiTreeUtil.getRequiredChildOfType(this, IRsType.class);
+        return RsPsiTreeUtil.getChildOfType(this, IRsType.class);
     }
 
     @Override

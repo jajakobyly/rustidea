@@ -17,6 +17,7 @@
 package org.rustidea.psi.impl;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.IRsType;
 import org.rustidea.psi.RsArrayType;
 import org.rustidea.psi.RsElementVisitor;
@@ -30,10 +31,10 @@ public class RsArrayTypeImpl extends IRsCompositePsiElement implements RsArrayTy
         super(RsPsiTypes.ARRAY_TYPE);
     }
 
-    @NotNull
+    @Nullable
     @Override
     public IRsType getItemType() {
-        return RsPsiTreeUtil.getRequiredChildOfType(this, IRsType.class);
+        return RsPsiTreeUtil.getChildOfType(this, IRsType.class);
     }
 
     @Override

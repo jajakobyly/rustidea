@@ -16,9 +16,9 @@
 
 package org.rustidea.psi;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public interface IRsListType extends IRsType {
-    @NotNull
+    @Nullable
     IRsType getItemType();
 }
