@@ -18,6 +18,7 @@ package org.rustidea.parser;
 
 import com.intellij.lang.PsiBuilder.Marker;
 import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumSet;
@@ -28,6 +29,7 @@ import static org.rustidea.psi.types.RsPsiTypes.*;
 
 class RsTypeParser extends IRsParserBase {
     private static final Logger LOG = Logger.getInstance(RsTypeParser.class);
+    private static final TokenSet CONST_OR_MUT = TokenSet.create(KW_CONST, KW_MUT);
 
     public RsTypeParser(@NotNull final RsParser parser) {
         super(parser);
@@ -92,7 +94,9 @@ class RsTypeParser extends IRsParserBase {
         boolean result = pathType();
         result = result || tupleType();
         result = result || listType();
-        // TODO:RJP-13 Implement pointer & function types
+        result = result || referenceType();
+        result = result || rawPointerType();
+        // TODO:RJP-13 Implement function types
         return result;
     }
 
@@ -201,6 +205,39 @@ class RsTypeParser extends IRsParserBase {
         expectOrWarnMissing(builder, OP_RBRACKET);
 
         marker.done(isArray ? ARRAY_TYPE : SLICE_TYPE);
+        return true;
+    }
+
+    public boolean referenceType() {
+        final Marker marker = builder.mark();
+
+        if (!expect(builder, OP_AND)) {
+            marker.rollbackTo();
+            return false;
+        }
+
+        lifetime();
+        expectType();
+
+        marker.done(REFERENCE_TYPE);
+        return true;
+    }
+
+    public boolean rawPointerType() {
+        final Marker marker = builder.mark();
+
+        if (!expect(builder, OP_ASTERISK)) {
+            marker.rollbackTo();
+            return false;
+        }
+
+        if (!expect(builder, CONST_OR_MUT)) {
+            error(builder, "expected 'const' or 'mut'");
+        }
+
+        expectType();
+
+        marker.done(RAW_POINTER_TYPE);
         return true;
     }
 

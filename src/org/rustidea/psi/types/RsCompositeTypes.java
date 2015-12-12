@@ -16,7 +16,9 @@ public interface RsCompositeTypes {
     IElementType META_LIST = new IRsCompositeElementType("META_LIST", RsMetaListImpl.class);
     IElementType MODIFIER_LIST = new IRsCompositeElementType("MODIFIER_LIST", RsModifierListImpl.class);
     IElementType PATH_TYPE = new IRsCompositeElementType("PATH_TYPE", RsPathTypeImpl.class);
+    IElementType RAW_POINTER_TYPE = new IRsCompositeElementType("RAW_POINTER_TYPE", RsRawPointerTypeImpl.class);
     IElementType REFERENCE_ELEMENT = new IRsCompositeElementType("REFERENCE_ELEMENT", RsReferenceElementImpl.class);
+    IElementType REFERENCE_TYPE = new IRsCompositeElementType("REFERENCE_TYPE", RsReferenceTypeImpl.class);
     IElementType RELATION_REFERENCE_ELEMENT = new IRsCompositeElementType("RELATION_REFERENCE_ELEMENT", RsRelationReferenceElementImpl.class);
     IElementType SLICE_TYPE = new IRsCompositeElementType("SLICE_TYPE", RsSliceTypeImpl.class);
     IElementType TUPLE_TYPE = new IRsCompositeElementType("TUPLE_TYPE", RsTupleTypeImpl.class);
