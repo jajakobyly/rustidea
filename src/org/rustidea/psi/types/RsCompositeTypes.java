@@ -7,7 +7,9 @@ public interface RsCompositeTypes {
     IElementType ARRAY_TYPE = new IRsCompositeElementType("ARRAY_TYPE", RsArrayTypeImpl.class);
     IElementType ATTRIBUTE = new IRsCompositeElementType("ATTRIBUTE", RsAttributeImpl.class);
     IElementType DOC = new IRsCompositeElementType("DOC", RsDocImpl.class);
+    IElementType FUNCTION_TYPE = new IRsCompositeElementType("FUNCTION_TYPE", RsFunctionTypeImpl.class);
     IElementType GLOB_REFERENCE_ELEMENT = new IRsCompositeElementType("GLOB_REFERENCE_ELEMENT", RsGlobReferenceElementImpl.class);
+    IElementType INPUT_TYPE_LIST = new IRsCompositeElementType("INPUT_TYPE_LIST", "input types list", RsInputTypeListImpl.class);
     IElementType LIFETIME = new IRsCompositeElementType("LIFETIME", "lifetime", RsLifetimeImpl.class);
     IElementType LIFETIME_TYPE_PARAMETER = new IRsCompositeElementType("LIFETIME_TYPE_PARAMETER", RsLifetimeTypeParameterImpl.class);
     IElementType LIST_REFERENCE_ELEMENT = new IRsCompositeElementType("LIST_REFERENCE_ELEMENT", RsListReferenceElementImpl.class);

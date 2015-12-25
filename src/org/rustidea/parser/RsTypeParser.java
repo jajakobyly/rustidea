@@ -18,6 +18,7 @@ package org.rustidea.parser;
 
 import com.intellij.lang.PsiBuilder.Marker;
 import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 
@@ -91,12 +92,12 @@ class RsTypeParser extends IRsParserBase {
     }
 
     public boolean type() {
-        boolean result = pathType();
-        result = result || tupleType();
+        boolean result = tupleType();
         result = result || listType();
         result = result || referenceType();
         result = result || rawPointerType();
-        // TODO:RJP-13 Implement function types
+        result = result || functionType();
+        result = result || pathType();
         return result;
     }
 
@@ -113,7 +114,13 @@ class RsTypeParser extends IRsParserBase {
     }
 
     public boolean typeList() {
-        return parenthesize(builder, OP_LT, OP_GT, new VoidParserWrapper() {
+        return doTypeList(OP_LT, OP_GT, TYPE_LIST);
+    }
+
+    private boolean doTypeList(@NotNull final IElementType lparen,
+                               @NotNull final IElementType rparen,
+                               @NotNull final IElementType elementType) {
+        return parenthesize(builder, lparen, rparen, new VoidParserWrapper() {
             @Override
             public void parse() {
                 sep(builder, OP_COMMA, new ParserWrapper() {
@@ -123,7 +130,7 @@ class RsTypeParser extends IRsParserBase {
                     }
                 }, EnumSet.of(SepCfg.TOLERATE_EMPTY));
             }
-        }, TYPE_LIST);
+        }, elementType);
     }
 
     public boolean pathType() {
@@ -235,6 +242,31 @@ class RsTypeParser extends IRsParserBase {
         expectType();
 
         marker.done(RAW_POINTER_TYPE);
+        return true;
+    }
+
+    public boolean functionType() {
+        final Marker marker = builder.mark();
+
+        // TODO:RJP-13 Implement parsing of 'extern' and 'unsafe' modifiers
+
+        // I.   fn(i32) -> i32
+        // II.  FnMut(i32) -> i32
+        if (!expect(builder, KW_FN) &&
+            !(parser.getReferenceParser().path() && builder.getTokenType() == OP_LPAREN)) {
+            marker.rollbackTo();
+            return false;
+        }
+
+        if (!doTypeList(OP_LPAREN, OP_RPAREN, INPUT_TYPE_LIST)) {
+            errorExpected(builder, INPUT_TYPE_LIST);
+        }
+
+        if (expect(builder, OP_ARROW)) {
+            expectType();
+        }
+
+        marker.done(FUNCTION_TYPE);
         return true;
     }
 

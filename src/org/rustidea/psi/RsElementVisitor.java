@@ -49,12 +49,20 @@ public abstract class RsElementVisitor extends PsiElementVisitor {
         visitModuleOrFile(file);
     }
 
+    public void visitFunctionType(RsFunctionType functionType) {
+        visitType(functionType);
+    }
+
     public void visitGlobReferenceElement(RsGlobReferenceElement globReferenceElement) {
         visitIReferenceElement(globReferenceElement);
     }
 
     public void visitIdentifier(RsIdentifier identifier) {
         visitRustToken(identifier);
+    }
+
+    public void visitInputTypeList(RsInputTypeList inputTypeList) {
+        visitTypeList(inputTypeList);
     }
 
     public void visitItem(IRsItem item) {
