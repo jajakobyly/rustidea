@@ -20,6 +20,7 @@ import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.psi.tree.IElementType;
+import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 import org.rustidea.psi.types.RsPsiTypes;
 
@@ -71,19 +72,34 @@ public final class RsParserUtil {
         return expectOrWarn(builder, RsPsiTypes.IDENTIFIER);
     }
 
-    public static boolean identifier(@NotNull final PsiBuilder builder, @NotNull final IElementType psiType) {
-        final Marker marker = builder.mark();
-        if (identifier(builder)) {
-            marker.done(psiType);
-            return true;
-        } else {
-            marker.drop();
-            return false;
-        }
-    }
-
     public static boolean semicolon(@NotNull final PsiBuilder builder) {
         return expectOrWarn(builder, RsPsiTypes.OP_SEMICOLON, "missing semicolon");
+    }
+
+    public static boolean wrap(@NotNull final PsiBuilder builder,
+                               @NotNull final IElementType tokenType,
+                               @NotNull final IElementType psiType) {
+        return doWrap(builder.mark(), expect(builder, tokenType), psiType);
+    }
+
+    public static boolean wrap(@NotNull final PsiBuilder builder,
+                               @NotNull final TokenSet tokenType,
+                               @NotNull final IElementType psiType) {
+        return doWrap(builder.mark(), expect(builder, tokenType), psiType);
+    }
+
+    public static boolean wrapExpect(@NotNull final PsiBuilder builder,
+                                     @NotNull final IElementType tokenType,
+                                     @NotNull final IElementType psiType,
+                                     @NotNull final IElementType errorType) {
+        return doWrapExpect(builder, builder.mark(), expect(builder, tokenType), psiType, errorType);
+    }
+
+    public static boolean wrapExpect(@NotNull final PsiBuilder builder,
+                                     @NotNull final TokenSet tokenType,
+                                     @NotNull final IElementType psiType,
+                                     @NotNull final IElementType errorType) {
+        return doWrapExpect(builder, builder.mark(), expect(builder, tokenType), psiType, errorType);
     }
 
     public static boolean sep(@NotNull final PsiBuilder builder,
@@ -151,6 +167,31 @@ public final class RsParserUtil {
 
         marker.done(elementType);
         return true;
+    }
+
+    private static boolean doWrap(@NotNull final Marker marker,
+                                  boolean result,
+                                  @NotNull final IElementType psiType) {
+        if (result) {
+            marker.done(psiType);
+        } else {
+            marker.rollbackTo();
+        }
+        return result;
+    }
+
+    private static boolean doWrapExpect(@NotNull final PsiBuilder builder,
+                                        @NotNull final Marker marker,
+                                        boolean result,
+                                        @NotNull final IElementType psiType,
+                                        @NotNull final IElementType errorType) {
+        if (result) {
+            marker.done(psiType);
+        } else {
+            marker.drop();
+            errorExpected(builder, errorType);
+        }
+        return result;
     }
 
     public enum SepCfg {
