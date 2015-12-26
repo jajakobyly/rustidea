@@ -16,30 +16,11 @@
 
 package org.rustidea.psi;
 
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public interface RsFunctionType extends IRsType {
-    @NotNull
-    IRsPsiElement getKindElement();
-
+public interface RsExternModifier extends IRsPsiElement {
     @Nullable
-    RsInputTypeList getInputTypeList();
+    RsLiteral getABI();
 
-    @Nullable
-    IRsType getOutputType();
-
-    boolean hasOutputType();
-
-    @NotNull
-    Kind getKind();
-
-    @Nullable
-    IRsPsiElement getModifier();
-
-    boolean hasModifier();
-
-    enum Kind {
-        FUNCTION, CLOSURE
-    }
+    boolean hasABI();
 }

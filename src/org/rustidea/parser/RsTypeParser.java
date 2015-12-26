@@ -203,7 +203,7 @@ class RsTypeParser extends IRsParserBase {
 
         if (expect(builder, OP_SEMICOLON)) {
             isArray = true;
-            parser.getExpressionParser().integer();
+            parser.getExpressionParser().expectInteger();
         }
 
         expectOrWarnMissing(builder, OP_RBRACKET);
@@ -248,7 +248,8 @@ class RsTypeParser extends IRsParserBase {
     public boolean functionType() {
         final Marker marker = builder.mark();
 
-        // TODO:RJP-13 Implement parsing of 'extern' and 'unsafe' modifiers
+        @SuppressWarnings("unused")
+        boolean modifier = parser.getModuleParser().externModifier() || expect(builder, KW_UNSAFE);
 
         // I.   fn(i32) -> i32
         // II.  FnMut(i32) -> i32

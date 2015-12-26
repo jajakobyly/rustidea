@@ -45,6 +45,10 @@ public abstract class RsElementVisitor extends PsiElementVisitor {
         visitItem(externCrateDecl);
     }
 
+    public void visitExternModifier(RsExternModifier externModifier) {
+        visitElement(externModifier);
+    }
+
     public void visitFile(RsFile file) {
         visitModuleOrFile(file);
     }

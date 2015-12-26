@@ -318,7 +318,7 @@ class RsModuleParser extends IRsParserBase {
         final Marker value = builder.mark();
 
         if (expect(builder, OP_EQ)) {
-            parser.getExpressionParser().literal();
+            parser.getExpressionParser().expectLiteral();
             value.drop();
         } else if (expect(builder, OP_LPAREN)) {
             sep(builder, OP_COMMA, new ParserWrapper() {
@@ -335,6 +335,20 @@ class RsModuleParser extends IRsParserBase {
         }
 
         marker.done(META);
+        return true;
+    }
+
+    public boolean externModifier() {
+        final Marker marker = builder.mark();
+
+        if (!expect(builder, KW_EXTERN)) {
+            marker.rollbackTo();
+            return false;
+        }
+
+        parser.getExpressionParser().string();
+
+        marker.done(EXTERN_MODIFIER);
         return true;
     }
 }

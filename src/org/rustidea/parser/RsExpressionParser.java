@@ -29,9 +29,12 @@ import static org.rustidea.parser.RsParserUtil.errorExpected;
 import static org.rustidea.psi.types.RsCompositeTypes.LITERAL;
 import static org.rustidea.psi.types.RsPsiTypes.LITERAL_TOKEN_SET;
 import static org.rustidea.psi.types.RsTokenTypes.INT_LIT;
+import static org.rustidea.psi.types.RsTokenTypes.STRING_LIT;
 
 class RsExpressionParser extends IRsParserBase {
     private static final Logger LOG = Logger.getInstance(RsExpressionParser.class);
+    private static final TokenSet INT_LIT_TOKEN_SET = TokenSet.create(INT_LIT);
+    private static final TokenSet STRING_LIT_TOKEN_SET = TokenSet.create(STRING_LIT);
 
     public RsExpressionParser(@NotNull final RsParser parser) {
         super(parser);
@@ -55,16 +58,44 @@ class RsExpressionParser extends IRsParserBase {
     }
 
     public boolean literal() {
-        return literal(LITERAL_TOKEN_SET, LITERAL, LITERAL);
+        return literal(LITERAL_TOKEN_SET, LITERAL);
     }
 
     public boolean integer() {
-        return literal(TokenSet.create(INT_LIT), LITERAL, INT_LIT);
+        return literal(INT_LIT_TOKEN_SET, LITERAL);
+    }
+
+    public boolean string() {
+        return literal(STRING_LIT_TOKEN_SET, LITERAL);
+    }
+
+    public boolean expectLiteral() {
+        return expectLiteral(LITERAL_TOKEN_SET, LITERAL, LITERAL);
+    }
+
+    public boolean expectInteger() {
+        return expectLiteral(INT_LIT_TOKEN_SET, LITERAL, INT_LIT);
+    }
+
+    public boolean expectString() {
+        return expectLiteral(STRING_LIT_TOKEN_SET, LITERAL, STRING_LIT);
     }
 
     private boolean literal(@NotNull final TokenSet tokenSet,
-                            @NotNull final IElementType elementType,
-                            @NotNull final IElementType errorType) {
+                            @NotNull final IElementType elementType) {
+        final Marker marker = builder.mark();
+        if (expect(builder, tokenSet)) {
+            marker.done(elementType);
+            return true;
+        } else {
+            marker.rollbackTo();
+            return false;
+        }
+    }
+
+    private boolean expectLiteral(@NotNull final TokenSet tokenSet,
+                                  @NotNull final IElementType elementType,
+                                  @NotNull final IElementType errorType) {
         final Marker marker = builder.mark();
         if (expect(builder, tokenSet)) {
             marker.done(elementType);

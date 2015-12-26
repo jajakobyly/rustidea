@@ -14,32 +14,33 @@
  * limitations under the License.
  */
 
-package org.rustidea.psi;
+package org.rustidea.psi.impl;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.rustidea.psi.RsElementVisitor;
+import org.rustidea.psi.RsExternModifier;
+import org.rustidea.psi.RsLiteral;
+import org.rustidea.psi.types.RsPsiTypes;
 
-public interface RsFunctionType extends IRsType {
-    @NotNull
-    IRsPsiElement getKindElement();
-
-    @Nullable
-    RsInputTypeList getInputTypeList();
-
-    @Nullable
-    IRsType getOutputType();
-
-    boolean hasOutputType();
-
-    @NotNull
-    Kind getKind();
+public class RsExternModifierImpl extends IRsCompositePsiElement implements RsExternModifier {
+    public RsExternModifierImpl() {
+        super(RsPsiTypes.EXTERN_MODIFIER);
+    }
 
     @Nullable
-    IRsPsiElement getModifier();
+    @Override
+    public RsLiteral getABI() {
+        return (RsLiteral) findPsiChildByType(RsPsiTypes.LITERAL);
+    }
 
-    boolean hasModifier();
+    @Override
+    public boolean hasABI() {
+        return getABI() != null;
+    }
 
-    enum Kind {
-        FUNCTION, CLOSURE
+    @Override
+    public void accept(@NotNull RsElementVisitor visitor) {
+        visitor.visitExternModifier(this);
     }
 }

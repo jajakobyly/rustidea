@@ -16,6 +16,7 @@
 
 package org.rustidea.psi.impl;
 
+import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.rustidea.psi.*;
@@ -23,6 +24,8 @@ import org.rustidea.psi.types.RsPsiTypes;
 import org.rustidea.psi.util.RsPsiTreeUtil;
 
 public class RsFunctionTypeImpl extends IRsCompositePsiElement implements RsFunctionType {
+    public static final TokenSet EXTERN_OR_UNSAFE = TokenSet.create(RsPsiTypes.EXTERN_MODIFIER, RsPsiTypes.KW_UNSAFE);
+
     public RsFunctionTypeImpl() {
         super(RsPsiTypes.FUNCTION_TYPE);
     }
@@ -62,6 +65,17 @@ public class RsFunctionTypeImpl extends IRsCompositePsiElement implements RsFunc
             assert kindElem instanceof IRsReferenceElement;
             return Kind.CLOSURE;
         }
+    }
+
+    @Nullable
+    @Override
+    public IRsPsiElement getModifier() {
+        return (IRsPsiElement) findPsiChildByType(EXTERN_OR_UNSAFE);
+    }
+
+    @Override
+    public boolean hasModifier() {
+        return getModifier() != null;
     }
 
     @Override
