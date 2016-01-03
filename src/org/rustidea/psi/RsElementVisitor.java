@@ -37,6 +37,10 @@ public abstract class RsElementVisitor extends PsiElementVisitor {
         visitItem(constItem);
     }
 
+    public void visitDivergingType(RsDivergingType divergingType) {
+        visitType(divergingType);
+    }
+
     public void visitDoc(RsDoc doc) {
         visitAttributeOrDoc(doc);
     }
@@ -209,6 +213,10 @@ public abstract class RsElementVisitor extends PsiElementVisitor {
 
     public void visitUseDecl(RsUseDecl useDecl) {
         visitItem(useDecl);
+    }
+
+    public void visitWildcardType(RsWildcardType wildcardType) {
+        visitType(wildcardType);
     }
 
     public void visitWhereClause(RsWhereClause whereClause) {

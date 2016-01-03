@@ -6,6 +6,7 @@ import org.rustidea.psi.impl.*;
 public interface RsCompositeTypes {
     IElementType ARRAY_TYPE = new IRsCompositeElementType("ARRAY_TYPE", RsArrayTypeImpl.class);
     IElementType ATTRIBUTE = new IRsCompositeElementType("ATTRIBUTE", RsAttributeImpl.class);
+    IElementType DIVERGING_TYPE = new IRsCompositeElementType("DIVERGING_TYPE", RsDivergingTypeImpl.class);
     IElementType DOC = new IRsCompositeElementType("DOC", RsDocImpl.class);
     IElementType EXTERN_MODIFIER = new IRsCompositeElementType("EXTERN_MODIFIER", RsExternModifierImpl.class);
     IElementType FUNCTION_TYPE = new IRsCompositeElementType("FUNCTION_TYPE", RsFunctionTypeImpl.class);
@@ -30,5 +31,6 @@ public interface RsCompositeTypes {
     IElementType TYPE_PARAMETER_LIST = new IRsCompositeElementType("TYPE_PARAMETER_LIST", RsTypeParameterListImpl.class);
     IElementType TYPED_REFERENCE_ELEMENT = new IRsCompositeElementType("TYPED_REFERENCE_ELEMENT", RsTypedReferenceElementImpl.class);
     IElementType UNIT_TYPE = new IRsCompositeElementType("UNIT_TYPE", RsUnitTypeImpl.class);
+    IElementType WILDCARD_TYPE = new IRsCompositeElementType("WILDCARD_TYPE", RsWildcardTypeImpl.class);
     IElementType WHERE_CLAUSE = new IRsCompositeElementType("WHERE_CLAUSE", RsWhereClauseImpl.class);
 }

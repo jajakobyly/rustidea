@@ -67,26 +67,6 @@ public class RsParserTest extends ParsingTestCase {
         doTest(true);
     }
 
-    public void testUse0001() {
-        doTest(true);
-    }
-
-    public void testUse0002() {
-        doTest(true);
-    }
-
-    public void testUse0003() {
-        doTest(true);
-    }
-
-    public void testUse0004() {
-        doTest(true);
-    }
-
-    public void testUse0005() {
-        doTest(true);
-    }
-
     public void testStruct0001() {
         doTest(true);
     }
@@ -108,6 +88,22 @@ public class RsParserTest extends ParsingTestCase {
     }
 
     public void testStruct0006() {
+        doTest(true);
+    }
+
+    public void testTypeAlias0001() {
+        doTest(true);
+    }
+
+    public void testTypeAlias0002() {
+        doTest(true);
+    }
+
+    public void testTypeAlias0003() {
+        doTest(true);
+    }
+
+    public void testTypeAlias0004() {
         doTest(true);
     }
 
@@ -151,19 +147,27 @@ public class RsParserTest extends ParsingTestCase {
         doTest(true);
     }
 
-    public void testTypeAlias0001() {
+    public void testTypes0009() {
         doTest(true);
     }
 
-    public void testTypeAlias0002() {
+    public void testUse0001() {
         doTest(true);
     }
 
-    public void testTypeAlias0003() {
+    public void testUse0002() {
         doTest(true);
     }
 
-    public void testTypeAlias0004() {
+    public void testUse0003() {
+        doTest(true);
+    }
+
+    public void testUse0004() {
+        doTest(true);
+    }
+
+    public void testUse0005() {
         doTest(true);
     }
 

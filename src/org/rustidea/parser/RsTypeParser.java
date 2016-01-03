@@ -91,6 +91,10 @@ class RsTypeParser extends IRsParserBase {
         result = result || rawPointerType();
         result = result || functionType();
         result = result || pathType();
+        result = result || wildcardType();
+        // rustc does not treat ! as a type, I'm not sure if our approach is good.
+        // We could parse ! only in function output type declaration, like rustc does.
+        result = result || divergingType();
         return result;
     }
 
@@ -242,10 +246,10 @@ class RsTypeParser extends IRsParserBase {
         final Marker marker = builder.mark();
 
         @SuppressWarnings("unused")
-        boolean modifier = parser.getModuleParser().externModifier() || expect(builder, KW_UNSAFE);
+        boolean hasModifier = parser.getModuleParser().externModifier() || expect(builder, KW_UNSAFE);
 
-        // I.   fn(i32) -> i32
-        // II.  FnMut(i32) -> i32
+        // I.   fn(...) -> ...
+        // II.  FnMut(...) -> ...
         if (!expect(builder, KW_FN) &&
             !(parser.getReferenceParser().path() && builder.getTokenType() == OP_LPAREN)) {
             marker.rollbackTo();
@@ -262,6 +266,14 @@ class RsTypeParser extends IRsParserBase {
 
         marker.done(FUNCTION_TYPE);
         return true;
+    }
+
+    public boolean wildcardType() {
+        return wrap(builder, OP_UNDERSCORE, WILDCARD_TYPE);
+    }
+
+    public boolean divergingType() {
+        return wrap(builder, OP_BANG, DIVERGING_TYPE);
     }
 
     public boolean structField() {
